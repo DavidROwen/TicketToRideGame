@@ -12,6 +12,7 @@ public class User {
         this.password = password;
         this.id = UUID.randomUUID().toString();
     }
+    public User(){}
 
 
     public String getUsername() {
