@@ -1,9 +1,11 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import ticket.com.tickettoridegames.utility.web.Result;
+
 public interface ILoginPresenter {
 
-    String login(String username, String password);
+    Result login(String username, String password);
 
-    String register(String username, String password, String passwordConfirm);
+    Result register(String username, String password, String passwordConfirm);
 
 }

@@ -1,6 +1,8 @@
 package ticket.com.tickettoridegames.client.presenter;
 
 import ticket.com.tickettoridegames.client.service.LoginService;
+import ticket.com.tickettoridegames.utility.model.User;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class LoginPresenter implements ILoginPresenter{
 
@@ -18,15 +20,13 @@ public class LoginPresenter implements ILoginPresenter{
      * @return
      */
     @Override
-    public String login(String username, String password) {
-
+    public Result login(String username, String password) {
         if (username == null || password == null) {
-            return "Invalid fields, please enter all data.";
+            return new Result(false,"","Invalid fields, please enter all data.");
         } else if (username.equals("") || password.equals("")) {
-            return "One of the fields was empty, please enter all data.";
+            return new Result(false,"","One of the fields was empty, please enter all data.");
         } else {
-            //loginService.login(new User(username.trim(), password.trim()));
-            return "PLACEHOLDER - Login Status";
+            return loginService.login(new User(username.trim(), password.trim()));
         }
     }
 
@@ -39,21 +39,19 @@ public class LoginPresenter implements ILoginPresenter{
      * @return
      */
     @Override
-    public String register(String username, String password, String passwordConfirm){
+    public Result register(String username, String password, String passwordConfirm){
 
         if (username == null || password == null || passwordConfirm == null){
-            return "Invalid fields, please enter all data.";
+            return new Result(false, "","Invalid fields, please enter all data.");
         }
         else if (username.equals("") || password.equals("") || passwordConfirm.equals("")){
-            return "One of the fields was empty, please enter all data.";
+            return new Result(false,"","One of the fields was empty, please enter all data.");
         }
         else if (!password.equals(passwordConfirm)){
-            return "Passwords do not match, please try again.";
+            return new Result(false,"","Passwords do not match, please try again.");
         }
         else{
-            // Call service with more details.
-            //loginService.register(new User(username.trim(), password.trim()));
-            return "PLACEHOLDER - Register Status";
+            return loginService.register(new User(username.trim(), password.trim()));
         }
     }
 }
