@@ -2,11 +2,12 @@ package ticket.com.tickettoridegames.client.presenter;
 
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public interface IJoinPresenter {
 
-    void createGame(Game newGame);
+    Result createGame(String gameName, int numberOfPlayer);
 
-    void joinGame(Player player);
+    Result joinGame(String gameID);
 
 }

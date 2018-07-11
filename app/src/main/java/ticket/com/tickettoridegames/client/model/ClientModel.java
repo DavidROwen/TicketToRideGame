@@ -25,4 +25,8 @@ public class ClientModel extends Observable {
         // notify the observers here
     }
 
+    public String getUserId(){
+        return current_user.getId();
+    }
+
 }
