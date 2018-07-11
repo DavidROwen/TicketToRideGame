@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.presenter;
 
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class LobbyPresenter implements ILobbyPresenter {
 
@@ -12,13 +13,44 @@ public class LobbyPresenter implements ILobbyPresenter {
     }
 
     @Override
-    public String startGame(String gameID){
-        return "PLACEHOLDER";
+    public Result startGame(String gameID){
+        if (gameID == null || gameID.equals("")){
+            return new Result(false,"","Invalid game ID");
+        }
+        else {
+            Result result = lobbyService.startGame(gameID);
+            if (result.isSuccess()){
+                return result;
+            }
+            else {
+                // Error happened address as necessary.
+                return result;
+            }
+        }
     }
 
-    @Override
-    public void addPlayer(Player player){}
+//    @Override
+//    public Result addPlayer(String gameID, String userID){
+//        return new Result(false,"","Placeholder ERROR");
+//    }
 
     @Override
-    public void sendMessage(String playerID, String message){}
+    public Result sendMessage(String gameID, String userID, String message){
+        if (gameID == null || gameID.equals("")){
+            return new Result(false,"","Invalid game ID");
+        }
+        else if (userID == null || userID.equals("")){
+            return new Result(false,"","Invalid player ID");
+        }
+        else {
+            Result result = lobbyService.sendChat(gameID,userID,message);
+            if (result.isSuccess()){
+                return result;
+            }
+            else {
+                // Error happened address as necessary.
+                return result;
+            }
+        }
+    }
 }

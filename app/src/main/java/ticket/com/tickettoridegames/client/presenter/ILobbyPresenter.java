@@ -1,12 +1,12 @@
 package ticket.com.tickettoridegames.client.presenter;
 
-import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public interface ILobbyPresenter {
 
-    String startGame(String gameID);
+    Result startGame(String gameID);
 
-    void addPlayer(Player player);
+//    Result addPlayer(String gameID, String playerID);
 
-    void sendMessage(String playerID, String message);
+    Result sendMessage(String gameID, String playerID, String message);
 }
