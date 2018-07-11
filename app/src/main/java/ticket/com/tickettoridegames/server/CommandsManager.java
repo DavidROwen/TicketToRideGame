@@ -33,7 +33,7 @@ public class CommandsManager {
         }while(next != null);
     }
 
-    public static void addCommand(Command command) {
+    public static void addCommand(Command command, String playerId) {
         instance().commands.add(command);
     }
 

@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.server.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.User;
@@ -69,5 +70,11 @@ public class ServerModel {
         else{
             game.addPlayers(player);
         }
+    }
+
+    public void addToGameChat(String gameId, String playerId, String message){
+        Game game = games.get(gameId);
+        Chat chat = new Chat(playerId, message);
+        game.addToChat(chat);
     }
 }
