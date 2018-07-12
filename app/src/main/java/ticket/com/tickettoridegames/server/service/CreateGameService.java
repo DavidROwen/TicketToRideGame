@@ -19,7 +19,7 @@ public class CreateGameService {
         }
         catch (Exception e){
             result.setSuccess(false);
-            result.setErrorMessage("Error creating game");
+            result.setErrorMessage("Error creating game. Exception:" + e.toString());
         }
 
         return result;

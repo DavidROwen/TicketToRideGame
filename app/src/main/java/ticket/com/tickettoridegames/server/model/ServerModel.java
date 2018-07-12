@@ -50,7 +50,7 @@ public class ServerModel {
 
     public void addNewGame(Game game, String userId) throws Exception{
         if(games.containsKey(game.getId())){
-            throw new Exception();
+            throw new Exception("Game already exists.");
         }
         else{
             games.put(game.getId(), game);
