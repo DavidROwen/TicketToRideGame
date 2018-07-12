@@ -1,7 +1,5 @@
 package ticket.com.tickettoridegames.client.service;
 
-import com.sun.security.ntlm.Client;
-
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
 import ticket.com.tickettoridegames.utility.model.Game;

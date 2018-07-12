@@ -50,8 +50,23 @@ public class ServerModel {
         }
         else{
             games.put(game.getId(), game);
-            addPlayerToGame(userId, game.getId());
             //send commands to other connected Users
+            for(String id : activeUsers.keySet()){
+                Command command;
+                try{
+                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class.getName(),
+                            ticket.com.tickettoridegames.client.service.JoinService.class,
+                            ticket.com.tickettoridegames.client.service.JoinService.class.newInstance(),
+                            "addGame",
+                            new Class<?>[]{ticket.com.tickettoridegames.utility.model.Game.class},
+                            new Object[]{game});
+                }
+                catch(Exception e){
+                    command = null;
+                }
+                CommandsManager.instance().addCommand(command, id);
+            }
+            addPlayerToGame(userId, game.getId());
         }
     }
 
@@ -71,15 +86,29 @@ public class ServerModel {
             throw new Exception();
         }
         else{
-            if(game.addPlayers(player)){
+            boolean addSuccess = game.addPlayers(player);
+            if(addSuccess){
+                for(String id : activeUsers.keySet()){
+                    Command command;
+                    try{
+                        command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class.getName(),
+                                ticket.com.tickettoridegames.client.service.LobbyService.class,
+                                ticket.com.tickettoridegames.client.service.LobbyService.class.newInstance(),
+                                "addPlayer",
+                                new Class<?>[]{String.class, ticket.com.tickettoridegames.utility.model.Player.class},
+                                new Object[]{game.getId(), player});
+                    }
+                    catch (Exception e){
+                        command = null;
+                    }
+                    CommandsManager.instance().addCommand(command,id);
+                }
                 return true;
             }
             else{
                 return false;
             }
         }
-        //send commands to all the users updating game list
-
     }
 
     public void addToGameChat(String gameId, String playerId, String message){
@@ -87,7 +116,6 @@ public class ServerModel {
         Chat chat = new Chat(playerId, message);
         game.addToChat(chat);
         //send commands to all the users in the game.
-        CommandsManager cm = CommandsManager.instance();
         for(String id : game.getPlayers()){
             Command command;
             try {
@@ -95,14 +123,14 @@ public class ServerModel {
                         ticket.com.tickettoridegames.client.service.LobbyService.class,
                         ticket.com.tickettoridegames.client.service.LobbyService.class.newInstance(),
                         "updateChat",
-                        new Class<?>[]{ticket.com.tickettoridegames.utility.model.Chat.class},
-                        new Object[]{chat});
+                        new Class<?>[]{String.class, ticket.com.tickettoridegames.utility.model.Chat.class},
+                        new Object[]{game.getId(), chat});
             }
             catch(Exception e){
                 command = null;
                 //do some kind of error notification. Error command?
             }
-            cm.addCommand(command,id);
+            CommandsManager.instance().addCommand(command,id);
         }
     }
 }
