@@ -1,7 +1,5 @@
 package ticket.com.tickettoridegames.client.service;
 
-import com.sun.security.ntlm.Client;
-
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
 import ticket.com.tickettoridegames.utility.model.Game;
@@ -10,7 +8,7 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public class JoinService {
 
-    ClientModel clientModel;
+    private ClientModel clientModel;
 
     public JoinService(){
         clientModel = ClientModel.get_instance();

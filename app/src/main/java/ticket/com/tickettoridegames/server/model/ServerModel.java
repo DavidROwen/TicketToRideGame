@@ -34,6 +34,10 @@ public class ServerModel {
         activeUsers = new HashMap<>();
     }
 
+    public void clear(){
+        instance = new ServerModel();
+    }
+
     public void addUser(User user) throws Exception {
         if(registeredUsers.containsKey(user.getUsername())){
             throw new Exception();
