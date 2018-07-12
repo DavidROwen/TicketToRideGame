@@ -26,6 +26,12 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     ArrayAdapter<String> adapter;
 
+    //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
+    ArrayList<String> listChats=new ArrayList<String>();
+
+    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    ArrayAdapter<String> adapter2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,11 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
                 android.R.layout.simple_list_item_1,
                 listItems);
         setListAdapter(adapter);
+
+        adapter2=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                listChats);
+        setListAdapter(adapter2);
 
         Button startButton = (Button) findViewById(R.id.start_game_button);
         startButton.setOnClickListener(new View.OnClickListener() {
