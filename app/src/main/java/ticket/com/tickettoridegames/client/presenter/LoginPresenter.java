@@ -1,12 +1,20 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.Observable;
+import java.util.Observer;
+
+import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LoginService;
+import ticket.com.tickettoridegames.client.view.ILobbyView;
+import ticket.com.tickettoridegames.client.view.ILoginView;
 import ticket.com.tickettoridegames.utility.model.User;
 import ticket.com.tickettoridegames.utility.web.Result;
 
-public class LoginPresenter implements ILoginPresenter{
+public class LoginPresenter implements ILoginPresenter, Observer{
 
     private LoginService loginService;
+    private ClientModel clientModel;
+    private ILoginView loginView;
 
     public LoginPresenter(){
         loginService = new LoginService();
@@ -53,5 +61,11 @@ public class LoginPresenter implements ILoginPresenter{
         else{
             return loginService.register(new User(username.trim(), password.trim()));
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object arg){
+        clientModel = (ClientModel) observable;
+        // update view here
     }
 }

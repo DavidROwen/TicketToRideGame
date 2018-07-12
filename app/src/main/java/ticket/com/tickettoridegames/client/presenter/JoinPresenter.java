@@ -1,15 +1,20 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.JoinService;
+import ticket.com.tickettoridegames.client.view.IJoinView;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.web.Result;
 
-public class JoinPresenter implements IJoinPresenter {
+public class JoinPresenter implements IJoinPresenter, Observer {
 
     private JoinService joinService;
     private ClientModel clientModel;
+    private IJoinView joinView;
 
     public JoinPresenter(){
         joinService = new JoinService();
@@ -52,6 +57,12 @@ public class JoinPresenter implements IJoinPresenter {
                 return result;
             }
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object arg){
+        clientModel = (ClientModel) observable;
+        // update view here
     }
 
 }

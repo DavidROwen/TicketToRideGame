@@ -1,12 +1,19 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.Observable;
+import java.util.Observer;
+
+import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LobbyService;
+import ticket.com.tickettoridegames.client.view.ILobbyView;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.web.Result;
 
-public class LobbyPresenter implements ILobbyPresenter {
+public class LobbyPresenter implements ILobbyPresenter, Observer {
 
     private LobbyService lobbyService;
+    private ClientModel clientModel;
+    private ILobbyView lobbyView;
 
     public LobbyPresenter(){
         lobbyService = new LobbyService();
@@ -52,5 +59,11 @@ public class LobbyPresenter implements ILobbyPresenter {
                 return result;
             }
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object arg){
+        clientModel = (ClientModel) observable;
+        // update view here
     }
 }

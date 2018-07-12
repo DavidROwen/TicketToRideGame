@@ -18,14 +18,16 @@ public class ClientModel extends Observable {
         return _instance;
     }
 
-    static private User currentUser;
-    static private List<Game> gameList;
+    static private User currentUser = null;
+    static private List<Game> gameList = null;
 
     private ClientModel() { }
 
     public void setUser(User user){
         currentUser = user;
         // notify the login presenter
+        setChanged();
+        notifyObservers();
     }
 
     public String getUserId(){
@@ -35,6 +37,8 @@ public class ClientModel extends Observable {
     public void setGames(List<Game> games){
         gameList = games;
         // notify lobby presenter
+        setChanged();
+        notifyObservers();
     }
 
     public List<Game> getGames(){
@@ -48,6 +52,8 @@ public class ClientModel extends Observable {
         }
         gameList.add(game);
         // notify lobby presenter
+        setChanged();
+        notifyObservers();
         return true;
     }
 }

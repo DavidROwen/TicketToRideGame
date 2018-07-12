@@ -4,7 +4,8 @@ public interface ILoginView {
 
     String getUserName();
 
-    void setUserName(String username);
+    // we can implement this in part 2 if we want to.
+//    void setUserName(String username);
 
     String getPassword();
 
