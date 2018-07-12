@@ -11,9 +11,14 @@ public class JoinService {
         ServerModel sm = ServerModel.getInstance();
 
         try{
-            sm.addToGame(userId, gameId);
-            result.setSuccess(true);
-            result.setMessage("Added to Game");
+            if(sm.addPlayerToGame(userId, gameId)){
+                result.setSuccess(true);
+                result.setMessage("Added to Game");
+            }
+            else{
+                result.setSuccess(false);
+                result.setMessage("Max number of players reached");
+            }
         }
         catch (Exception e){
             result.setSuccess(false);

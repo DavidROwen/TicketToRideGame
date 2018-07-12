@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class Game {
@@ -14,6 +15,7 @@ public class Game {
     private List<Chat> chatList;
     private String id;
     private String name;
+    private int  maxPlayers;
     private int numberOfPlayers;
 
     public Game(String name, int numberOfPlayers){
@@ -21,7 +23,8 @@ public class Game {
         this.players = new HashMap<>();
         this.chatList = new ArrayList<>();
         this.name = name;
-        this.numberOfPlayers = numberOfPlayers;
+        this.maxPlayers = numberOfPlayers;
+        this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
     }
     public Game(){}
@@ -34,12 +37,19 @@ public class Game {
         this.id = id;
     }
 
-    public Map<String,Player> getPlayers(){
-        return players;
+    public Set<String> getPlayers(){
+        return players.keySet();
     }
 
-    public void addPlayers(Player p){
-        players.put(p.getId(), p);
+    public boolean addPlayers(Player p){
+        if(numberOfPlayers != maxPlayers) {
+            players.put(p.getId(), p);
+            numberOfPlayers++;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public String getName() {

@@ -3,10 +3,12 @@ package ticket.com.tickettoridegames.server.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.User;
+import ticket.com.tickettoridegames.utility.web.Command;
 
 
 public class ServerModel {
@@ -42,13 +44,14 @@ public class ServerModel {
         }
     }
 
-    public void addGame(Game game, String userId) throws Exception{
+    public void addNewGame(Game game, String userId) throws Exception{
         if(games.containsKey(game.getId())){
             throw new Exception();
         }
         else{
             games.put(game.getId(), game);
-            addToGame(userId, game.getId());
+            addPlayerToGame(userId, game.getId());
+            //send commands to other connected Users
         }
     }
 
@@ -60,7 +63,7 @@ public class ServerModel {
         return activeUsers.get(id);
     }
 
-    public void addToGame(String userId, String gameId) throws Exception{
+    public boolean addPlayerToGame(String userId, String gameId) throws Exception{
         User user = getUserById(userId);
         Player player = new Player(user.getUsername(),user.getId());
         Game game = games.get(gameId);
@@ -68,13 +71,38 @@ public class ServerModel {
             throw new Exception();
         }
         else{
-            game.addPlayers(player);
+            if(game.addPlayers(player)){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
+        //send commands to all the users updating game list
+
     }
 
     public void addToGameChat(String gameId, String playerId, String message){
         Game game = games.get(gameId);
         Chat chat = new Chat(playerId, message);
         game.addToChat(chat);
+        //send commands to all the users in the game.
+        CommandsManager cm = CommandsManager.instance();
+        for(String id : game.getPlayers()){
+            Command command;
+            try {
+                command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class.getName(),
+                        ticket.com.tickettoridegames.client.service.LobbyService.class,
+                        ticket.com.tickettoridegames.client.service.LobbyService.class.newInstance(),
+                        "updateChat",
+                        new Class<?>[]{ticket.com.tickettoridegames.utility.model.Chat.class},
+                        new Object[]{chat});
+            }
+            catch(Exception e){
+                command = null;
+                //do some kind of error notification. Error command?
+            }
+            cm.addCommand(command,id);
+        }
     }
 }

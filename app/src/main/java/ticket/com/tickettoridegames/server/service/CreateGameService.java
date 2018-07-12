@@ -13,7 +13,7 @@ public class CreateGameService {
 
         Game newGame = new Game(gameName,numberOfPlayers);
         try {
-            sm.addGame(newGame, userId);
+            sm.addNewGame(newGame, userId);
             result.setSuccess(true);
             result.setMessage(newGame.getId());
         }

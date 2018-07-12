@@ -3,6 +3,8 @@ package ticket.com.tickettoridegames.client.service;
 import android.app.Notification;
 
 import ticket.com.tickettoridegames.client.web.ServerProxy;
+import ticket.com.tickettoridegames.utility.model.Chat;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Result;
 
@@ -41,6 +43,18 @@ public class LobbyService {
             e.printStackTrace();
             return new Result(false, "", e.toString());
         }
+    }
+
+    public void updateChat(Chat chat){
+
+    }
+
+    public void addGameToLobby(Game game){
+
+    }
+
+    public void updateGameInLobby(){
+
     }
 
 }
