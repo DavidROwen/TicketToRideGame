@@ -16,8 +16,6 @@ public interface ILobbyView {
 
     void setChat(List<Chat> chats);
 
-    String getGameID();
-
     // Not necessary for phase 1
     // void changeView();
 
