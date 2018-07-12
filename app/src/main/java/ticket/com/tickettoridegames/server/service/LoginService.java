@@ -11,22 +11,21 @@ public class LoginService {
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
 
-        User user = sm.getUserByName(username);
-        if(user == null){
-            result.setSuccess(false);
-            result.setErrorMessage("Username not found");
-        }
-        else{
-            if(user.getPassword().equals(password)){
-                result.setSuccess(true);
-                result.setMessage(user.getId());
+        try {
+            String userId = sm.loginUser(username, password);
+            if(userId == null){
+                result.setSuccess(false);
+                result.setErrorMessage("Password incorrect");
             }
             else{
-                result.setSuccess(false);
-                result.setErrorMessage("Incorrect information");
+                result.setSuccess(true);
+                result.setMessage(userId);
             }
         }
-
+        catch (Exception e){
+            result.setSuccess(false);
+            result.setErrorMessage("User does not exist");
+        }
         return result;
     }
 }

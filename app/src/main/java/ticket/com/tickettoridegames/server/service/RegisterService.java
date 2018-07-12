@@ -12,7 +12,7 @@ public class RegisterService {
 
         User newUser = new User(username, password);
         try{
-            sm.addUser(newUser);
+            sm.addNewUser(newUser);
             result.setSuccess(true);
             result.setMessage(newUser.getId());
         }
