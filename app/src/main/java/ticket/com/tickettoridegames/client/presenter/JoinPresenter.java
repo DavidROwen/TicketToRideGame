@@ -23,39 +23,39 @@ public class JoinPresenter implements IJoinPresenter, Observer {
     }
 
     @Override
-    public Result createGame(String gameName, int numberOfPlayers){
+    public void createGame(String gameName, int numberOfPlayers){
         if (gameName.equals("")){
-            return new Result(false,"","Invalid game name");
+            joinView.displayMessage("Invalid game name");
         }
         else if (numberOfPlayers < 2 || numberOfPlayers > 5){
-            return new Result(false,"","Invalid number of players");
+            joinView.displayMessage("Invalid number of players");
         }
         else {
             String userId = clientModel.getUserId();
             Result result = joinService.createGame(userId, gameName, numberOfPlayers);
             if (result.isSuccess()){
-                return result;
+                // View should update on observer
             }
             else {
                 // Request failed
-                return result;
+                joinView.displayMessage("Error creating game. " + result.getErrorMessage());
             }
         }
     }
 
     @Override
-    public Result joinGame(String gameId) {
+    public void joinGame(String gameId) {
         if (gameId.equals("")) {
-            return new Result(false, "", "Invalid game id.");
+            joinView.displayMessage("Invalid game id.");
         } else {
             String userId = clientModel.getUserId();
             Result result = joinService.joinGame(userId, gameId);
             if (result.isSuccess()){
-                return result;
+                // View should update based on observer
             }
             else {
                 // Request failed
-                return result;
+                joinView.displayMessage("Error joining game. " + result.getErrorMessage());
             }
         }
     }

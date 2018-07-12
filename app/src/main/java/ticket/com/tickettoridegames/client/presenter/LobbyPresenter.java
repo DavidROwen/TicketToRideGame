@@ -21,18 +21,38 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     }
 
     @Override
-    public Result startGame(String gameID){
+    public void startGame(String gameID){
         if (gameID == null || gameID.equals("")){
-            return new Result(false,"","Invalid game ID");
+            lobbyView.displayMessage("Invalid game ID");
         }
         else {
             Result result = lobbyService.startGame(gameID);
             if (result.isSuccess()){
-                return result;
+                lobbyView.displayMessage("Successfully create game.");
             }
             else {
                 // Error happened address as necessary.
-                return result;
+                lobbyView.displayMessage("Failed to create game. " + result.getErrorMessage());
+            }
+        }
+    }
+
+    @Override
+    public void sendMessage(String gameID, String userID, String message){
+        if (gameID == null || gameID.equals("")){
+            lobbyView.displayMessage("Invalid game ID");
+        }
+        else if (userID == null || userID.equals("")){
+            lobbyView.displayMessage("Invalid player ID");
+        }
+        else {
+            Result result = lobbyService.sendChat(gameID,userID,message);
+            if (result.isSuccess()){
+                // don't do anything right?
+            }
+            else {
+                // Error happened address as necessary.
+                lobbyView.displayMessage("Error sending message. ");
             }
         }
     }
@@ -41,26 +61,6 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
 //    public Result addPlayer(String gameID, String userID){
 //        return new Result(false,"","Placeholder ERROR");
 //    }
-
-    @Override
-    public Result sendMessage(String gameID, String userID, String message){
-        if (gameID == null || gameID.equals("")){
-            return new Result(false,"","Invalid game ID");
-        }
-        else if (userID == null || userID.equals("")){
-            return new Result(false,"","Invalid player ID");
-        }
-        else {
-            Result result = lobbyService.sendChat(gameID,userID,message);
-            if (result.isSuccess()){
-                return result;
-            }
-            else {
-                // Error happened address as necessary.
-                return result;
-            }
-        }
-    }
 
     @Override
     public void update(Observable observable, Object arg){

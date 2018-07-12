@@ -6,8 +6,8 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public interface IJoinPresenter {
 
-    Result createGame(String gameName, int numberOfPlayer);
+    void createGame(String gameName, int numberOfPlayer);
 
-    Result joinGame(String gameID);
+    void joinGame(String gameID);
 
 }

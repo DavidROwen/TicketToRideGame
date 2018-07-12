@@ -29,13 +29,13 @@ public class LoginPresenter implements ILoginPresenter, Observer{
      * @return
      */
     @Override
-    public Result login(String username, String password) {
+    public void login(String username, String password) {
         if (username == null || password == null) {
-            return new Result(false,"","Invalid fields, please enter all data.");
-        } else if (username.equals("") || password.equals("")) {
-            return new Result(false,"","One of the fields was empty, please enter all data.");
+            loginView.displayMessage("Fields was null, please enter all data.");
+        } else if (username.isEmpty() || password.isEmpty()) {
+            loginView.displayMessage("One of the fields was empty, please enter all data.");
         } else {
-            return loginService.login(new User(username.trim(), password.trim()));
+            loginService.login(new User(username.trim(), password.trim()));
         }
     }
 
@@ -48,19 +48,19 @@ public class LoginPresenter implements ILoginPresenter, Observer{
      * @return
      */
     @Override
-    public Result register(String username, String password, String passwordConfirm){
+    public void register(String username, String password, String passwordConfirm){
 
         if (username == null || password == null || passwordConfirm == null){
-            return new Result(false, "","Invalid fields, please enter all data.");
+            loginView.displayMessage("Invalid fields, please enter all data.");
         }
         else if (username.equals("") || password.equals("") || passwordConfirm.equals("")){
-            return new Result(false,"","One of the fields was empty, please enter all data.");
+             loginView.displayMessage("One of the fields was empty, please enter all data.");
         }
         else if (!password.equals(passwordConfirm)){
-            return new Result(false,"","Passwords do not match, please try again.");
+            loginView.displayMessage("Passwords do not match, please try again.");
         }
         else{
-            return loginService.register(new User(username.trim(), password.trim()));
+            loginService.register(new User(username.trim(), password.trim()));
         }
     }
 
@@ -68,5 +68,6 @@ public class LoginPresenter implements ILoginPresenter, Observer{
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
         // update view here
+        // Should fire on login success then we will notify the view to change to the join view.
     }
 }

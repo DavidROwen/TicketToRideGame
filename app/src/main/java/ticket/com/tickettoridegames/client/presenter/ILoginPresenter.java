@@ -4,8 +4,8 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public interface ILoginPresenter {
 
-    Result login(String username, String password);
+    void login(String username, String password);
 
-    Result register(String username, String password, String passwordConfirm);
+    void register(String username, String password, String passwordConfirm);
 
 }
