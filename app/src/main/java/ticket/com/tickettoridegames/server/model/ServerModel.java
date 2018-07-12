@@ -38,13 +38,63 @@ public class ServerModel {
         instance = new ServerModel();
     }
 
-    public void addUser(User user) throws Exception {
+    public void addNewUser(User user) throws Exception {
         if(registeredUsers.containsKey(user.getUsername())){
             throw new Exception();
         }
         else{
             registeredUsers.put(user.getUsername(), user);
             activeUsers.put(user.getId(), user);
+            for(String gameId : games.keySet()){
+                Command command;
+                Game currentGame = games.get(gameId);
+                try{
+                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class.getName(),
+                            ticket.com.tickettoridegames.client.service.JoinService.class,
+                            ticket.com.tickettoridegames.client.service.JoinService.class.newInstance(),
+                            "addGame",
+                            new Class<?>[]{ticket.com.tickettoridegames.utility.model.Game.class},
+                            new Object[]{currentGame});
+                }
+                catch(Exception e){
+                    command = null;
+                }
+                CommandsManager.instance().addCommand(command,user.getId());
+            }
+        }
+    }
+
+    public String loginUser(String username, String password) throws Exception{
+        User user = getUserByName(username);
+        if(user == null){
+            throw new Exception();
+        }
+        else{
+            if(user.getPassword().equals(password)){
+                if(!activeUsers.containsKey(user.getId())){
+                    activeUsers.put(user.getId(), user);
+                }
+                for(String gameId : games.keySet()){
+                    Command command;
+                    Game currentGame = games.get(gameId);
+                    try{
+                        command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class.getName(),
+                                ticket.com.tickettoridegames.client.service.JoinService.class,
+                                ticket.com.tickettoridegames.client.service.JoinService.class.newInstance(),
+                                "addGame",
+                                new Class<?>[]{ticket.com.tickettoridegames.utility.model.Game.class},
+                                new Object[]{currentGame});
+                    }
+                    catch(Exception e){
+                        command = null;
+                    }
+                    CommandsManager.instance().addCommand(command,user.getId());
+                }
+                return user.getId();
+            }
+            else{
+                return null;
+            }
         }
     }
 
@@ -74,7 +124,7 @@ public class ServerModel {
         }
     }
 
-    public User getUserByName(String username) {
+    private User getUserByName(String username) {
         return registeredUsers.get(username);
     }
 
