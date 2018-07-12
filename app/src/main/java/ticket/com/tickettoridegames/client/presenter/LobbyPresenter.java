@@ -68,7 +68,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
         // update view here
-        lobbyView.setPlayers(clientModel.getGamePlayers(lobbyView.getGameID()));
-        lobbyView.setChat(clientModel.getGameChat(lobbyView.getGameID()));
+        lobbyView.setPlayers(clientModel.getGamePlayers(clientModel.getCurrentGameID()));
+        lobbyView.setChat(clientModel.getGameChat(clientModel.getCurrentGameID()));
     }
 }
