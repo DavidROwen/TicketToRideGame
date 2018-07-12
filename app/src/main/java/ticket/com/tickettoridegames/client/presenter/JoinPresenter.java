@@ -46,7 +46,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
 
     @Override
     public void joinGame(String gameId) {
-        if (gameId.equals("")) {
+        if (gameId == null || gameId.equals("")) {
             joinView.displayMessage("Invalid game id.");
         } else {
             String userId = clientModel.getUserId();
@@ -66,6 +66,9 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         clientModel = (ClientModel) observable;
         // update view here
         joinView.setGames(clientModel.getGames());
+        if (!clientModel.getCurrentGameID().isEmpty()){
+            joinView.changeView();
+        }
     }
 
 }
