@@ -12,7 +12,7 @@ public interface ILobbyView {
 
     void displayChat(String message);
 
-    void sendChat(String message);
+    String sendChat(String message);
 
     void setChat(List<Chat> chats);
 

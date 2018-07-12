@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.view;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -66,6 +67,13 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
         });
     }
 
+    // not necessary for phase 1
+    //@Override
+    //public void changeView(){
+    //    Intent intent = new Intent(LobbyActivity.this, GameActivity.class);
+    //    startActivity(intent);
+    //}
+
     @Override
     public void setPlayers(Set<String> players){
         for (String player:players) {
@@ -74,14 +82,20 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
     }
 
     @Override
-    public void displayChat(String message){}
+    public void displayChat(String message){
+        adapter2.add(message);
+    }
 
     @Override
-    public void sendChat(String message){}
+    public String sendChat(String message){
+        return message;
+    }
 
     @Override
     public void setChat(List<Chat> chats){
-
+        for (Chat chat:chats) {
+            adapter2.add(chat.getMessage());
+        }
     }
 
     @Override
