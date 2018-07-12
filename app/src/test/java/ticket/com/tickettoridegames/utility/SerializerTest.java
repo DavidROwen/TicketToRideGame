@@ -1,4 +1,4 @@
-package ticket.com.tickettoridegames;
+package ticket.com.tickettoridegames.utility;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package ticket.com.tickettoridegames;
+package ticket.com.tickettoridegames.client;
 
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import ticket.com.tickettoridegames.utility.web.Result;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ClientLoginServiceTest {
+public class LoginServiceTest {
 
     @Test
     public void testLoginRegister(){
