@@ -2,7 +2,9 @@ package ticket.com.tickettoridegames.client.view;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,10 +31,20 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
 
-        presenter = new LobbyPresenter(this);adapter=new ArrayAdapter<String>(this,
+        presenter = new LobbyPresenter(this);
+
+        adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
         setListAdapter(adapter);
+
+        Button startButton = (Button) findViewById(R.id.start_game_msg);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //do stuff
+            }
+        });
     }
 
     @Override
