@@ -1,10 +1,8 @@
 package ticket.com.tickettoridegames.client.view;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -22,17 +20,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
     private ILoginPresenter presenter;
 
     // UI references.
-    private EditText mPasswordView;
-    private EditText mPasswordView2;
-    private EditText nameText;
-    private EditText nameText2;
+    private EditText loginPasswordEditText;
+    private EditText registerPasswordEditText;
+    private EditText usernameLoginEditText;
+    private EditText usernameRegEditText;
     private EditText confirmPasswordText;
-    private String loginName;
-    private String registerName;
-    private String loginPassword;
-    private String registerPassword;
-    private String confirmPassword;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,71 +34,17 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         presenter = new LoginPresenter(this);
 
         // Set up the login form.
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    loginPassword = mPasswordView.getText().toString();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        mPasswordView2 = (EditText) findViewById(R.id.password2);
-        mPasswordView2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    registerPassword = mPasswordView2.getText().toString();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        nameText = (EditText) findViewById(R.id.userName);
-        nameText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    loginName = nameText.getText().toString();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        nameText2 = (EditText) findViewById(R.id.userName2);
-        nameText2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    registerName = nameText2.getText().toString();
-                    return true;
-                }
-                return false;
-            }
-        });
-
+        loginPasswordEditText = (EditText) findViewById(R.id.password);
+        registerPasswordEditText = (EditText) findViewById(R.id.password2);
+        usernameLoginEditText = (EditText) findViewById(R.id.userName);
+        usernameRegEditText = (EditText) findViewById(R.id.userName2);
         confirmPasswordText = (EditText) findViewById(R.id.confirm);
-        confirmPasswordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    confirmPassword = confirmPasswordText.getText().toString();
-                    return true;
-                }
-                return false;
-            }
-        });
 
         Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.login(loginName, loginPassword);
+                presenter.login(getLoginUserName(), getLoginPassword());
             }
         });
 
@@ -114,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         mRegisterInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.register(registerName, registerPassword, confirmPassword);
+                presenter.register(getRegisterUserName(), getRegisterPassword(), getRegisterConfirmation());
             }
         });
     }
@@ -127,24 +65,23 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
     }
 
     @Override
-    public String getLoginUserName(){ return loginName;}
+    public String getLoginUserName(){ return usernameLoginEditText.getText().toString();}
 
     @Override
-    public String getRegisterUserName(){ return registerName;}
+    public String getRegisterUserName(){ return usernameRegEditText.getText().toString();}
 
     @Override
-    public String getLoginPassword(){ return loginPassword;}
+    public String getLoginPassword(){ return loginPasswordEditText.getText().toString();}
 
     @Override
-    public String getRegisterPassword(){ return registerPassword;}
+    public String getRegisterPassword(){ return registerPasswordEditText.getText().toString();}
 
     @Override
-    public String getRegisterConfirmation(){ return confirmPassword;}
+    public String getRegisterConfirmation(){ return confirmPasswordText.getText().toString();}
 
     @Override
     public void displayMessage(String message){
-        String string = message;
-        Toast toast = Toast.makeText(LoginActivity.this, string, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG);
         toast.show();
     }
 }
