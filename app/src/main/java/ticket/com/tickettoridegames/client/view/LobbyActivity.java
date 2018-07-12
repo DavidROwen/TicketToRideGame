@@ -38,8 +38,16 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
                 listItems);
         setListAdapter(adapter);
 
-        Button startButton = (Button) findViewById(R.id.start_game_msg);
+        Button startButton = (Button) findViewById(R.id.start_game_button);
         startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //do stuff
+            }
+        });
+
+        Button sendButton = (Button) findViewById(R.id.chat_send_button);
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //do stuff
@@ -61,7 +69,9 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
     public void sendChat(String message){}
 
     @Override
-    public void setChat(List<Chat> chats){}
+    public void setChat(List<Chat> chats){
+
+    }
 
     @Override
     public void displayMessage(String message){
