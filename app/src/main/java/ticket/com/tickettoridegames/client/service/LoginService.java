@@ -21,7 +21,7 @@ public class LoginService {
             if (result.isSuccess()){
                 ClientModel clientModel = ClientModel.get_instance();
                 // Parse/get the user from the response here.
-                clientModel.loginUser(new User("",""));
+                clientModel.setUser(new User("",""));
                 return result;
             }
             else {
@@ -45,7 +45,7 @@ public class LoginService {
             if (result.isSuccess()){
                 ClientModel clientModel = ClientModel.get_instance();
                 // Parse/get the user from the response here.
-                clientModel.loginUser(new User("",""));
+                clientModel.setUser(new User("",""));
                 return result;
             }
             else {

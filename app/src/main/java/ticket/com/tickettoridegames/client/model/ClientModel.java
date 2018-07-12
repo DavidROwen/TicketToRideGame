@@ -1,7 +1,9 @@
 package ticket.com.tickettoridegames.client.model;
 
+import java.util.List;
 import java.util.Observable;
 
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.User;
 
 public class ClientModel extends Observable {
@@ -16,17 +18,36 @@ public class ClientModel extends Observable {
         return _instance;
     }
 
-    static private User current_user;
+    static private User currentUser;
+    static private List<Game> gameList;
 
     private ClientModel() { }
 
-    public void loginUser(User user){
-        current_user = user;
-        // notify the observers here
+    public void setUser(User user){
+        currentUser = user;
+        // notify the login presenter
     }
 
     public String getUserId(){
-        return current_user.getId();
+        return currentUser.getId();
     }
 
+    public void setGames(List<Game> games){
+        gameList = games;
+        // notify lobby presenter
+    }
+
+    public List<Game> getGames(){
+        return gameList;
+    }
+
+    public boolean addGameToList(Game game){
+        if (gameList.contains(game)){
+            // Game is already in the list
+            return false;
+        }
+        gameList.add(game);
+        // notify lobby presenter
+        return true;
+    }
 }

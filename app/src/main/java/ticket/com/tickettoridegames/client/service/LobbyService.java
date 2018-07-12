@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.service;
 
 import android.app.Notification;
 
+import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.Game;
@@ -50,7 +51,9 @@ public class LobbyService {
     }
 
     public void addGameToLobby(Game game){
+        ClientModel clientModel = ClientModel.get_instance();
 
+        clientModel.addGameToList(game);
     }
 
     public void updateGameInLobby(){
