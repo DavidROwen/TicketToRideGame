@@ -3,6 +3,9 @@ package ticket.com.tickettoridegames.server;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import ticket.com.tickettoridegames.utility.web.Command;
 
@@ -18,10 +21,8 @@ public class CommandsManager {
         this.commands = new HashMap<>();
     }
 
-    private Map<String, PriorityQueue<Command>> commands;
-
     private static boolean isEmpty(String playerId){
-        PriorityQueue<Command> queue = instance().commands.get(playerId);
+        Queue<Command> queue = instance().commands.get(playerId);
         if(queue == null){
             //queue does not exist yet therefore is empty
             return true;
@@ -36,22 +37,22 @@ public class CommandsManager {
         }
     }
 
-    //gets the queue of commands for a given user
-    public static PriorityQueue<Command> getCommands(String playerId) {
-        if(isEmpty(playerId)) {
+    //gets the queue of commands for a given user, removing them in the process
+    public static Queue<Command> getCommands(String playerId) {
+        if(isEmpty(playerId)) { //doesn't break if empty
             //no commands to be sent, return null
-            return null;
+            return new LinkedBlockingQueue<>();
         }
         else{
-            PriorityQueue<Command> passedCommands = new PriorityQueue<>();
+            Queue<Command> passedCommands = new LinkedBlockingQueue<>();
             copyCommandsOver(passedCommands, playerId);
-            clear(playerId);
+//            clear(playerId); //nothing to clear
             return passedCommands;
         }
     }
 
-    //copies commands over to be sent. Makes it easier to clear a queue.
-    private static void copyCommandsOver(PriorityQueue<Command> passedCommands, String playerId) {
+    //copies commands over to be passedCommands, removing them from commands
+    private static void copyCommandsOver(Queue<Command> passedCommands, String playerId) {
         Command next;
         do {
             next = instance().commands.get(playerId).poll();
@@ -61,9 +62,9 @@ public class CommandsManager {
 
     //adds a command to a users queue. If the user does not have a queue yet it creates one
     public static void addCommand(Command command, String playerId) {
-        PriorityQueue<Command> pq = instance().commands.get(playerId);
+        LinkedBlockingQueue<Command> pq = instance().commands.get(playerId);
         if(pq == null){
-            pq = new PriorityQueue<>();
+            pq = new LinkedBlockingQueue<>();
             pq.add(command);
             instance().commands.put(playerId, pq);
         }
@@ -76,4 +77,6 @@ public class CommandsManager {
     private static void clear(String playerId) {
         instance().commands.get(playerId).clear();
     }
+
+    private Map<String, LinkedBlockingQueue<Command>> commands;
 }
