@@ -32,6 +32,7 @@ public class ServerCommunicator {
 		server.createContext(GENERIC_DESIGNATOR, COMMAND_HANDLER); //transfers input to handler
 
 		server.start();
+		System.out.println("Server Started" );
 	}
 
 	public static void main(String[] args) {

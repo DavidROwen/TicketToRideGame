@@ -8,6 +8,12 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public class LoginService {
 
+    private ClientModel clientModel;
+
+    public LoginService(){
+        clientModel = ClientModel.get_instance();
+    }
+
     public Result login(User user){
         try {
             Result result = ServerProxy.sendCommand(
@@ -15,11 +21,10 @@ public class LoginService {
                             ticket.com.tickettoridegames.server.service.LoginService.class,
                             ticket.com.tickettoridegames.server.service.LoginService.class.newInstance(),
                             "login",
-                            new Class<?>[]{User.class},
-                            new Object[]{user})
+                            new Class<?>[]{String.class, String.class},
+                            new Object[]{user.getUsername(), user.getPassword()})
             );
             if (result.isSuccess()){
-                ClientModel clientModel = ClientModel.get_instance();
                 // Parse/get the user from the response here.
                 // result.message should be set as the userID from the server.
                 user.setId(result.getMessage());
@@ -42,13 +47,38 @@ public class LoginService {
                             ticket.com.tickettoridegames.server.service.RegisterService.class,
                             ticket.com.tickettoridegames.server.service.RegisterService.class.newInstance(),
                             "register",
-                            new Class<?>[]{User.class}, new Object[]{user})
+                            new Class<?>[]{String.class, String.class},
+                            new Object[]{user.getUsername(), user.getPassword()})
             );
             if (result.isSuccess()){
-                ClientModel clientModel = ClientModel.get_instance();
                 // Parse/get the user from the response here.
-                // If the user does not exist then we will use the id the client generated.
+                // result.message should be set as the userID from the server.
+                user.setId(result.getMessage());
                 clientModel.setUser(user);
+                return result;
+            }
+            else {
+                return result;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new Result(false, "", e.toString());
+        }
+    }
+
+
+    public Result clearUsers(){
+        try {
+            Result result = ServerProxy.sendCommand(
+                    new Command(ticket.com.tickettoridegames.server.service.Tester.class,
+                            ticket.com.tickettoridegames.server.service.Tester.class.newInstance(),
+                            "clear",
+                            null)
+            );
+            if (result.isSuccess()){
+                // Parse/get the user from the response here.
+                // result.message should be set as the userID from the server.
+                clientModel.setUser(null);
                 return result;
             }
             else {

@@ -12,7 +12,7 @@ import ticket.com.tickettoridegames.server.service.Tester;
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Result;
 
-public class serverProxyTest {
+public class ServerProxyTest {
     @Test
     public void simpleSendTest() {
         //public static void addCommand(Command command, String playerId)

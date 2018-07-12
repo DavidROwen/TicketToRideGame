@@ -8,7 +8,7 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public class JoinService {
 
-    ClientModel clientModel;
+    private ClientModel clientModel;
 
     public JoinService(){
         clientModel = ClientModel.get_instance();
