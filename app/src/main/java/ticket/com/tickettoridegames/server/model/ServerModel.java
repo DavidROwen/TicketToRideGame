@@ -45,6 +45,7 @@ public class ServerModel {
         else{
             registeredUsers.put(user.getUsername(), user);
             activeUsers.put(user.getId(), user);
+            System.out.println("User: "+user.getId()+" registered ");
             for(String gameId : games.keySet()){
                 Command command;
                 Game currentGame = games.get(gameId);
@@ -73,6 +74,7 @@ public class ServerModel {
             if(user.getPassword().equals(password)){
                 if(!activeUsers.containsKey(user.getId())){
                     activeUsers.put(user.getId(), user);
+                    System.out.println("User: " + user.getId() + " Logged in");
                 }
                 for(String gameId : games.keySet()){
                     Command command;
@@ -104,6 +106,7 @@ public class ServerModel {
         }
         else{
             games.put(game.getId(), game);
+            System.out.println("Game with id: " + game.getId() + " created");
             //send commands to other connected Users
             for(String id : activeUsers.keySet()){
                 Command command;
@@ -142,6 +145,7 @@ public class ServerModel {
         else{
             boolean addSuccess = game.addPlayers(player);
             if(addSuccess){
+                System.out.println("User: " + player.getId() + " added to game: " + gameId);
                 for(String id : activeUsers.keySet()){
                     Command command;
                     try{
@@ -169,6 +173,7 @@ public class ServerModel {
         Game game = games.get(gameId);
         Chat chat = new Chat(playerId, message);
         game.addToChat(chat);
+        System.out.println("User: " + playerId + " added chat to game: " + gameId);
         //send commands to all the users in the game.
         for(String id : game.getPlayers()){
             Command command;

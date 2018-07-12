@@ -46,7 +46,8 @@ public class CommandsManager {
         else{
             Queue<Command> passedCommands = new LinkedBlockingQueue<>();
             copyCommandsOver(passedCommands, playerId);
-//            clear(playerId); //nothing to clear
+            System.out.println("User: " + playerId + " Queue of " + passedCommands.size() + " commands send from manager");
+            clear(playerId); //nothing to clear
             return passedCommands;
         }
     }
@@ -71,11 +72,13 @@ public class CommandsManager {
         else{
             pq.add(command);
         }
+        System.out.println("Command added to queue of user: " + playerId + " Commands in queue: " + pq.size());
     }
 
     //clear a users queue. used after sending a queue of commands.
     private static void clear(String playerId) {
         instance().commands.get(playerId).clear();
+        System.out.println("User: " + playerId + "queue cleared");
     }
 
     private Map<String, LinkedBlockingQueue<Command>> commands;
