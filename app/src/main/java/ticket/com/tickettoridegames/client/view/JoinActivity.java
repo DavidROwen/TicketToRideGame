@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -50,12 +51,14 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         privateGameButton = findViewById(R.id.private_game_switch);
         gameNameText = findViewById(R.id.game_name_input);
 
+        // Setup player number spinner
         playerNumber = findViewById(R.id.game_player_number);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.player_count, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerNumber.setAdapter(adapter);
 
+        // Setup player color spinner
         playerColor = findViewById(R.id.current_player_color);
         ArrayAdapter<CharSequence> color_adapter = ArrayAdapter.createFromResource(this,
                 R.array.colors, android.R.layout.simple_spinner_item);
@@ -101,9 +104,13 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public String getNewPlayerColor(){
         return playerColor.getSelectedItem().toString();
     }
+
     // Join was successful go to the join view.
     @Override
-    public void changeView(){}
+    public void changeView(){
+        Intent intent = new Intent(JoinActivity.this, LobbyActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void displayMessage(String message){

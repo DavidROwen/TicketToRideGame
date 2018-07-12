@@ -6,6 +6,7 @@ public class User {
     private String username;
     private String password;
     private String id;
+    private String gameId;
 
     public User(String username, String password){
         this.username = username;
@@ -37,5 +38,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

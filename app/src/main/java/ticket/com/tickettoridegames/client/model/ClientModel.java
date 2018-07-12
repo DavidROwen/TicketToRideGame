@@ -83,6 +83,10 @@ public class ClientModel extends Observable {
         notifyObservers();
     }
 
+    public String getCurrentGameID(){
+        return currentUser.getGameId();
+    }
+
     public Set<String> getGamePlayers(String gameID){
         Game game = gameList.get(gameID);
         return game.getPlayers();
