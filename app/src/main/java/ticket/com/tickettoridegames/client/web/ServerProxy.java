@@ -4,6 +4,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.utility.web.Command;
@@ -17,12 +19,13 @@ public class ServerProxy {
         return object != null ? (Result) object : new Result(false, null, "client communicator failed");
     }
 
-    public static PriorityQueue<Command> getCommands() {
-        Command command = new Command(CommandsManager.class, null, "getCommands", null);
+    public static Queue<Command> getCommands(String id) {
+        //public static Queue<Command> getCommands(String playerId)
+        Command command = new Command(CommandsManager.class, null, "getCommands", new Object[]{id});
 
         final Type COMMANDS_TYPE = new TypeToken<PriorityQueue<Command>>(){}.getType();
         Object results =  ClientCommunicator.send(command, COMMANDS_TYPE);
 
-        return results != null ? (PriorityQueue) results : new PriorityQueue<>(); //ignore error
+        return results != null ? (Queue) results : new LinkedBlockingQueue<>(); //ignore error
     }
 }
