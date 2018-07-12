@@ -2,6 +2,12 @@ package ticket.com.tickettoridegames.client.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 import java.util.List;
 import java.util.Map;
@@ -16,13 +22,47 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     private IJoinPresenter presenter;
 
+    // Widgets
+    private Button createGameButton;
+    private Switch privateGameButton;
+    private Spinner playerNumber;
+    private Spinner playerColor;
+
+    // EditTexts
+    private EditText gameNameText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
         presenter = new JoinPresenter(this);
+
+        createGameButton = findViewById(R.id.create_game_button);
+        createGameButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                presenter.createGame(getNewGameName(), getNewPlayerCount(), getNewPlayerColor());
+            }
+        });
+
+        privateGameButton = findViewById(R.id.private_game_switch);
+        gameNameText = findViewById(R.id.game_name_input);
+
+        playerNumber = findViewById(R.id.game_player_number);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.player_count, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        playerNumber.setAdapter(adapter);
+
+        playerColor = findViewById(R.id.current_player_color);
+        ArrayAdapter<CharSequence> color_adapter = ArrayAdapter.createFromResource(this,
+                R.array.colors, android.R.layout.simple_spinner_item);
+        color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        playerColor.setAdapter(color_adapter);
+
     }
+
 
     @Override
     public Map<String, Game> getGames(){
@@ -47,10 +87,19 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void setPlayerCount(String gameID){}
 
     @Override
-    public Integer getPlayerCount(String gameID){
-        return 2;
+    public String getNewGameName(){
+        return gameNameText.getText().toString();
     }
 
+    @Override
+    public Integer getNewPlayerCount(){
+        return (Integer) playerNumber.getSelectedItem();
+    }
+
+    @Override
+    public String getNewPlayerColor(){
+        return playerColor.getSelectedItem().toString();
+    }
     // Join was successful go to the join view.
     @Override
     public void changeView(){}

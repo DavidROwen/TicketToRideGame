@@ -24,7 +24,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
     }
 
     @Override
-    public void createGame(String gameName, int numberOfPlayers){
+    public void createGame(String gameName, int numberOfPlayers, String color){
         if (gameName.equals("")){
             joinView.displayMessage("Invalid game name");
         }

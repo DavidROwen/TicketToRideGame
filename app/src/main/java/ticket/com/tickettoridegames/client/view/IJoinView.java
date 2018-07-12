@@ -20,7 +20,11 @@ public interface IJoinView {
 
     void setPlayerCount(String gameID);
 
-    Integer getPlayerCount(String gameID);
+    public String getNewPlayerColor();
+
+    String getNewGameName();
+
+    Integer getNewPlayerCount();
 
     void changeView();
 
