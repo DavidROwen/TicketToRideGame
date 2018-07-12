@@ -12,6 +12,8 @@ public interface ILoginView {
 
     String getRegisterConfirmation();
 
+    void changeView();
+
     void displayMessage(String message);
 
     // we can implement this in part 2 if we want to.

@@ -18,6 +18,8 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     public LobbyPresenter(ILobbyView view){
         lobbyView = view;
         lobbyService = new LobbyService();
+        clientModel = ClientModel.get_instance();
+        clientModel.addObserver(this);
     }
 
     @Override
@@ -66,5 +68,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
         // update view here
+        lobbyView.setPlayers(clientModel.getGamePlayers(lobbyView.getGameID()));
+        lobbyView.setChat(clientModel.getGameChat(lobbyView.getGameID()));
     }
 }

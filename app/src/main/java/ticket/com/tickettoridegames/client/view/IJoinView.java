@@ -1,13 +1,16 @@
 package ticket.com.tickettoridegames.client.view;
 
 import java.util.List;
+import java.util.Map;
 
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 
 public interface IJoinView {
 
-    List<Game> getGames();
+    Map<String, Game> getGames();
+
+    void setGames(Map<String, Game> games);
 
     void addGame(Game newGame);
 
@@ -18,6 +21,8 @@ public interface IJoinView {
     void setPlayerCount(String gameID);
 
     Integer getPlayerCount(String gameID);
+
+    void changeView();
 
     void displayMessage(String message);
 

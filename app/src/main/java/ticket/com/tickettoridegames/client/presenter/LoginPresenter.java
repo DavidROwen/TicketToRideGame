@@ -19,10 +19,12 @@ public class LoginPresenter implements ILoginPresenter, Observer{
     public LoginPresenter(ILoginView view){
         loginView = view;
         loginService = new LoginService();
+        clientModel = ClientModel.get_instance();
+        clientModel.addObserver(this);
     }
 
     /**
-     * @description Validates input and then checks with the server if the username password combo it valid.
+     * @description Validates input and then checks with the server if the username password combo is valid.
      *
      * @param username
      * @param password
@@ -40,7 +42,7 @@ public class LoginPresenter implements ILoginPresenter, Observer{
     }
 
     /**
-     * @description Validates the views data then prepares a response if it was not successful.
+     * @description Validates the views data then sends a message if it was not successful.
      *
      * @param username
      * @param password
@@ -69,5 +71,8 @@ public class LoginPresenter implements ILoginPresenter, Observer{
         clientModel = (ClientModel) observable;
         // update view here
         // Should fire on login success then we will notify the view to change to the join view.
+        if (clientModel.getUser() != null) {
+            loginView.changeView();
+        }
     }
 }

@@ -9,7 +9,7 @@ import ticket.com.tickettoridegames.client.presenter.LoginPresenter;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView{
 
-    ILoginPresenter presenter;
+    private ILoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +19,26 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         presenter = new LoginPresenter(this);
     }
 
+    // Login or register was successful go to the join view.
+    @Override
+    public void changeView(){}
+
+    @Override
     public String getLoginUserName(){ return "";}
 
+    @Override
     public String getRegisterUserName(){ return "";}
 
+    @Override
     public String getLoginPassword(){ return "";}
 
+    @Override
     public String getRegisterPassword(){ return "";}
 
+    @Override
     public String getRegisterConfirmation(){ return "";}
 
+    @Override
     public void displayMessage(String message){}
 
 }

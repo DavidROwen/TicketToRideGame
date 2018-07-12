@@ -20,6 +20,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         joinView = view;
         joinService = new JoinService();
         clientModel = ClientModel.get_instance();
+        clientModel.addObserver(this);
     }
 
     @Override
@@ -64,6 +65,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
         // update view here
+        joinView.setGames(clientModel.getGames());
     }
 
 }

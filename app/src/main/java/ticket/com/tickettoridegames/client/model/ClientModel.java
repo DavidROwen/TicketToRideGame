@@ -1,9 +1,13 @@
 package ticket.com.tickettoridegames.client.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
+import java.util.Set;
 
+import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.User;
 
 public class ClientModel extends Observable {
@@ -19,7 +23,7 @@ public class ClientModel extends Observable {
     }
 
     static private User currentUser = null;
-    static private List<Game> gameList = null;
+    static private Map<String, Game> gameList = null;
 
     private ClientModel() { }
 
@@ -34,26 +38,40 @@ public class ClientModel extends Observable {
         return currentUser.getId();
     }
 
-    public void setGames(List<Game> games){
+    public User getUser(){
+        return currentUser;
+    }
+
+    public void setGames(Map<String, Game> games){
         gameList = games;
         // notify lobby presenter
         setChanged();
         notifyObservers();
     }
 
-    public List<Game> getGames(){
+    public Map<String, Game> getGames(){
         return gameList;
     }
 
     public boolean addGameToList(Game game){
-        if (gameList.contains(game)){
+        if (gameList.containsValue(game)){
             // Game is already in the list
             return false;
         }
-        gameList.add(game);
+        gameList.put(game.getId(), game);
         // notify lobby presenter
         setChanged();
         notifyObservers();
         return true;
+    }
+
+    public List<Chat> getGameChat(String gameID){
+        Game game = gameList.get(gameID);
+        return game.getChatList();
+    }
+
+    public Set<String> getGamePlayers(String gameID){
+        Game game = gameList.get(gameID);
+        return game.getPlayers();
     }
 }
