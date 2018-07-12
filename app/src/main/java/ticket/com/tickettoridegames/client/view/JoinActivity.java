@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -105,5 +106,8 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void changeView(){}
 
     @Override
-    public void displayMessage(String message){}
+    public void displayMessage(String message){
+        Toast toast = Toast.makeText(JoinActivity.this, message, Toast.LENGTH_LONG);
+        toast.show();
+    }
 }

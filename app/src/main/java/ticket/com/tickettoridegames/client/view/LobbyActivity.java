@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Set;
@@ -36,7 +37,10 @@ public class LobbyActivity extends AppCompatActivity implements ILobbyView{
     public void setChat(List<Chat> chats){}
 
     @Override
-    public void displayMessage(String toast){}
+    public void displayMessage(String message){
+        Toast toast = Toast.makeText(LobbyActivity.this, message, Toast.LENGTH_LONG);
+        toast.show();
+    }
 
     @Override
     public String getGameID(){return "";}
