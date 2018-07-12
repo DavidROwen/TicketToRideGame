@@ -15,7 +15,8 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     private ClientModel clientModel;
     private ILobbyView lobbyView;
 
-    public LobbyPresenter(){
+    public LobbyPresenter(ILobbyView view){
+        lobbyView = view;
         lobbyService = new LobbyService();
     }
 

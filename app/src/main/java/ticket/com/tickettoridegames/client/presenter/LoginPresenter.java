@@ -16,7 +16,8 @@ public class LoginPresenter implements ILoginPresenter, Observer{
     private ClientModel clientModel;
     private ILoginView loginView;
 
-    public LoginPresenter(){
+    public LoginPresenter(ILoginView view){
+        loginView = view;
         loginService = new LoginService();
     }
 

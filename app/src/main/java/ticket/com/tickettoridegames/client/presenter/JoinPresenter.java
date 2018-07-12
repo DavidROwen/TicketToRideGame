@@ -16,7 +16,8 @@ public class JoinPresenter implements IJoinPresenter, Observer {
     private ClientModel clientModel;
     private IJoinView joinView;
 
-    public JoinPresenter(){
+    public JoinPresenter(IJoinView view){
+        joinView = view;
         joinService = new JoinService();
         clientModel = ClientModel.get_instance();
     }
