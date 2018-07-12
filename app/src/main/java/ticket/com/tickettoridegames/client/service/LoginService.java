@@ -21,7 +21,9 @@ public class LoginService {
             if (result.isSuccess()){
                 ClientModel clientModel = ClientModel.get_instance();
                 // Parse/get the user from the response here.
-                clientModel.setUser(new User("",""));
+                // result.message should be set as the userID from the server.
+                user.setId(result.getMessage());
+                clientModel.setUser(user);
                 return result;
             }
             else {
@@ -45,7 +47,8 @@ public class LoginService {
             if (result.isSuccess()){
                 ClientModel clientModel = ClientModel.get_instance();
                 // Parse/get the user from the response here.
-                clientModel.setUser(new User("",""));
+                // If the user does not exist then we will use the id the client generated.
+                clientModel.setUser(user);
                 return result;
             }
             else {

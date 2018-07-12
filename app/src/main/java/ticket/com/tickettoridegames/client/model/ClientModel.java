@@ -65,13 +65,42 @@ public class ClientModel extends Observable {
         return true;
     }
 
+    public void updateGame(Game game){
+        gameList.put(game.getId(), game);
+        setChanged();
+        notifyObservers();
+    }
+
     public List<Chat> getGameChat(String gameID){
         Game game = gameList.get(gameID);
         return game.getChatList();
     }
 
+    public void addGameChat(String gameID, Chat chat){
+        Game game = gameList.get(gameID);
+        game.addToChat(chat);
+        setChanged();
+        notifyObservers();
+    }
+
     public Set<String> getGamePlayers(String gameID){
         Game game = gameList.get(gameID);
         return game.getPlayers();
+    }
+
+    public void addPlayerToGame(String gameID, Player player){
+        Game game = gameList.get(gameID);
+        game.addPlayers(player);
+        gameList.put(gameID, game);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void removePlayerFromGame(String gameID, Player player){
+        Game game = gameList.get(gameID);
+        game.removePlayer(player);
+        gameList.put(gameID, game);
+        setChanged();
+        notifyObservers();
     }
 }

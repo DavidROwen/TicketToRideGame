@@ -52,6 +52,16 @@ public class Game {
         }
     }
 
+    public boolean removePlayer(Player p){
+        if (players.containsValue(p)){
+            players.remove(p);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public String getName() {
         return name;
     }

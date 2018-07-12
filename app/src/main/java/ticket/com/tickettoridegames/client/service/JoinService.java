@@ -1,10 +1,20 @@
 package ticket.com.tickettoridegames.client.service;
 
+import com.sun.security.ntlm.Client;
+
+import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class JoinService {
+
+    ClientModel clientModel;
+
+    public JoinService(){
+        clientModel = ClientModel.get_instance();
+    }
 
     /**
      * Creates a new game that will be sent to the server.
@@ -60,5 +70,19 @@ public class JoinService {
             e.printStackTrace();
             return new Result(false, "", e.toString());
         }
+    }
+
+
+    /**
+     * @description Called by server when anyone creates a new game.
+     *
+     * @param game the new game we are adding to the client model and view.
+     */
+    public void addGame(Game game){
+        clientModel.addGameToList(game);
+    }
+
+    public void updateGame(Game game){
+        clientModel.updateGame(game);
     }
 }
