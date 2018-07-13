@@ -97,7 +97,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
     @Override
     public void setPlayers(Set<String> players){
         for (String player:players) {
-            adapter2.add(player);
+            adapter.add(player);
         }
     }
 
@@ -108,7 +108,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
 
     @Override
     public void displayChat(String message){
-        adapter.add(message);
+        adapter2.add(message);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
     @Override
     public void setChat(List<Chat> chats){
         for (Chat chat:chats) {
-            adapter.add(chat.getMessage());
+            adapter2.add(chat.getMessage());
         }
     }
 
