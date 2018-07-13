@@ -77,7 +77,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         // Setup player number spinner
         playerNumber = findViewById(R.id.game_player_number);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.player_count, android.R.layout.simple_spinner_item);
+                R.array.numbers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerNumber.setAdapter(adapter);
 

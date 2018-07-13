@@ -1,5 +1,7 @@
 package ticket.com.tickettoridegames.client.web;
 
+import android.os.AsyncTask;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -8,26 +10,88 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Serializer;
 
 public class ClientCommunicator {
-	public static final String GENERIC_DESIGNATOR = "/generic";
-
-	//Commands
 	public static Object send(Command command, Type returnType) {
-		HttpURLConnection connection = openConnection(GENERIC_DESIGNATOR);
-		sendToServer(connection, command);
-		Object result = receive(connection, returnType);
-		connection.disconnect();
+		SendTask sendTask = new SendTask();
 
-		return result;
+		sendTask.setReturnType(returnType);
+		sendTask.execute(command);
+
+//        while(sendTask.getStatus() != AsyncTask.Status.FINISHED){} //infinite loop
+//        while(!sendTask.getFinished()){} //infinite loop
+//        return sendTask.getResult();
+
+		try {
+			return sendTask.get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		return null; //error
 	}
 
+	private static class SendTask extends AsyncTask<Command, Void, Object> {
+		private Object result = null;
+		private Boolean finished = false;
+
+		private Type returnType = null;
+
+		public Object getResult() {
+			if(!finished) { return false; }
+
+			return result;
+		}
+
+		public Boolean getFinished() {
+			return finished;
+		}
+
+		public void setReturnType(Type returnType) {
+			this.returnType = returnType;
+		}
+
+		@Override
+		protected void onPostExecute(Object o) {
+			result = o;
+			finished = true;
+
+			super.onPostExecute(o);
+		}
+
+		@Override
+		protected Object doInBackground(Command... commands) {
+			result = null;
+			finished = false;
+
+			HttpURLConnection connection = openConnection(GENERIC_DESIGNATOR);
+			sendToServer(connection, commands[0]);
+			Object result = receive(connection, returnType);
+			connection.disconnect();
+
+			return result;
+		}
+	}
+//	//Commands
+//	public static Object send(Command command, Type returnType) {
+//		HttpURLConnection connection = openConnection(GENERIC_DESIGNATOR);
+//		sendToServer(connection, command);
+//		Object result = receive(connection, returnType);
+//		connection.disconnect();
+//
+//		return result;
+//	}
+
+	private static final String GENERIC_DESIGNATOR = "/generic";
 	private static final int SERVER_PORT_NUMBER = 8082;
 
-	private static final String SERVER_HOST = "localhost";
+	private static final String SERVER_HOST = "10.0.2.2";
 	private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
 	private static final String HTTP_POST = "POST";
 

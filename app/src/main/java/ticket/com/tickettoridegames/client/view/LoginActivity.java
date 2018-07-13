@@ -12,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.ILoginPresenter;
 import ticket.com.tickettoridegames.client.presenter.LoginPresenter;
+import ticket.com.tickettoridegames.client.web.Poller;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView{
 
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         setContentView(R.layout.activity_login);
 
         presenter = new LoginPresenter(this);
+        //Poller poller = new Poller();
 
         // Set up the login form.
         loginPasswordEditText = (EditText) findViewById(R.id.password);
@@ -44,7 +47,15 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.login(getLoginUserName(), getLoginPassword());
+                try {
+                    presenter.login(getLoginUserName(), getLoginPassword());
+                    if (ClientModel.get_instance().getUser() != null) {
+                        changeView();
+                    }
+                }
+                catch (Exception e){
+                    displayMessage(e.toString());
+                }
             }
         });
 
@@ -52,7 +63,15 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         mRegisterInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.register(getRegisterUserName(), getRegisterPassword(), getRegisterConfirmation());
+                try {
+                    presenter.register(getRegisterUserName(), getRegisterPassword(), getRegisterConfirmation());
+                    if (ClientModel.get_instance().getUser() != null){
+                        changeView();
+                    }
+                }
+                catch (Exception e){
+                    displayMessage(e.toString());
+                }
             }
         });
     }

@@ -37,7 +37,10 @@ public class LoginPresenter implements ILoginPresenter, Observer{
         } else if (username.isEmpty() || password.isEmpty()) {
             loginView.displayMessage("One of the fields was empty, please enter all data.");
         } else {
-            loginService.login(new User(username.trim(), password.trim()));
+            Result result = loginService.login(new User(username.trim(), password.trim()));
+            if (!result.isSuccess()){
+                loginView.displayMessage(result.getErrorMessage());
+            }
         }
     }
 
@@ -56,13 +59,16 @@ public class LoginPresenter implements ILoginPresenter, Observer{
             loginView.displayMessage("Invalid fields, please enter all data.");
         }
         else if (username.equals("") || password.equals("") || passwordConfirm.equals("")){
-             loginView.displayMessage("One of the fields was empty, please enter all data.");
+            loginView.displayMessage("One of the fields was empty, please enter all data.");
         }
         else if (!password.equals(passwordConfirm)){
             loginView.displayMessage("Passwords do not match, please try again.");
         }
         else{
-            loginService.register(new User(username.trim(), password.trim()));
+            Result result = loginService.register(new User(username.trim(), password.trim()));
+            if (!result.isSuccess()){
+                loginView.displayMessage(result.getErrorMessage());
+            }
         }
     }
 
@@ -71,8 +77,8 @@ public class LoginPresenter implements ILoginPresenter, Observer{
         clientModel = (ClientModel) observable;
         // update view here
         // Should fire on login success then we will notify the view to change to the join view.
-        if (clientModel.getUser() != null) {
-            loginView.changeView();
-        }
+//        if (clientModel.getUser() != null) {
+//            loginView.changeView();
+//        }
     }
 }
