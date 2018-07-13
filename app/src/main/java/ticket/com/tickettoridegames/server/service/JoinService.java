@@ -7,6 +7,8 @@ public class JoinService {
 
     public Result join(String userId, String gameId){
 
+        System.out.println("Join game request received: UserID:"+userId+" GameID:"+gameId);
+
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
 

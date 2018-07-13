@@ -8,6 +8,8 @@ public class CreateGameService {
 
     public Result createGame(String userId, String gameName, int numberOfPlayers){
 
+        System.out.println("Create game request received: UserID:"+userId+" GameName:"+gameName+" Number of Players:"+numberOfPlayers);
+
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
 
