@@ -214,10 +214,10 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public void bindResult(Map<String, Game> games, String key){
         Game newGame = games.get(key);
 
-        line1.setText(newGame.getId());
-        line2.setText(newGame.getName());
-        line3.setText(newGame.getPlayers().toString());
-        line4.setText(newGame.getPlayers().size() + "/" + newGame.getNumberOfPlayers());
+        line4.setText(newGame.getId());
+        line1.setText(newGame.getName());
+        line2.setText(newGame.getPlayers().toString());
+        line3.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
     }
 
     @Override
