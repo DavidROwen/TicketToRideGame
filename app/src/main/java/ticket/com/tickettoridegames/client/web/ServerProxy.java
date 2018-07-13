@@ -3,7 +3,6 @@ package ticket.com.tickettoridegames.client.web;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -23,7 +22,7 @@ public class ServerProxy {
         //public static Queue<Command> getCommands(String playerId)
         Command command = new Command(CommandsManager.class, null, "getCommands", new Object[]{id});
 
-        final Type COMMANDS_TYPE = new TypeToken<PriorityQueue<Command>>(){}.getType();
+        final Type COMMANDS_TYPE = new TypeToken<Queue<Command>>(){}.getType();
         Object results =  ClientCommunicator.send(command, COMMANDS_TYPE);
 
         return results != null ? (Queue) results : new LinkedBlockingQueue<>(); //ignore error
