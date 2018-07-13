@@ -12,15 +12,6 @@ import ticket.com.tickettoridegames.utility.web.Command;
 public class Poller {
 
     private static Integer POLL_INTERVAL_MS = 2000;
-    private static Poller instance;
-
-    public static Poller getInstance(){
-        if (instance == null){
-            instance = new Poller();
-        }
-        return instance;
-    }
-
 
     public static void poll() {
         if (ClientModel.get_instance().getUser() != null) {
@@ -47,7 +38,7 @@ public class Poller {
         return results;
     }
 
-    private Poller(){
+    public Poller(){
         PollTask task = new PollTask();
         task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new Object());
     }
