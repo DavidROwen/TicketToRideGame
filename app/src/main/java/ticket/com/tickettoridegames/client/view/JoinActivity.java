@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -165,7 +166,7 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     int selected_position = 0; // You have to set this globally in the Adapter class
     Map<String, Game> games;
-    String[] keySet;
+    String[] keySet; //ArrayList<String> maybe
 
 
     public adapter(Map<String, Game> games) {
