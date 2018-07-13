@@ -138,7 +138,8 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     @Override
     public Integer getNewPlayerCount(){
-        return (Integer) playerNumber.getSelectedItem();
+        String number = (String) playerNumber.getSelectedItem();
+        return Integer.parseInt(number);
     }
 
     @Override
