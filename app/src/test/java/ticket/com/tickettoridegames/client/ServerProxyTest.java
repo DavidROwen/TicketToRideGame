@@ -1,8 +1,6 @@
 package ticket.com.tickettoridegames.client;
 
 import org.junit.Test;
-
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 import ticket.com.tickettoridegames.client.web.ServerProxy;

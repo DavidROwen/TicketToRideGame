@@ -6,6 +6,9 @@ import ticket.com.tickettoridegames.utility.web.Result;
 public class ChatService {
 
     public Result chat(String gameId, String playerId, String message){
+
+        System.out.println("Chat request received: PlayerID:"+playerId+" GameID:"+gameId+" Message:"+message);
+
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
         try{
