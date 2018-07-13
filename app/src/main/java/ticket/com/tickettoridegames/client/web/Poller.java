@@ -14,8 +14,8 @@ public class Poller {
     private static Integer POLL_INTERVAL_MS = 2000;
 
     public static void poll() {
-        String userId = ClientModel.get_instance().getUserId();
-        if (userId != null) {
+        if (ClientModel.get_instance().getUser() != null) {
+            String userId = ClientModel.get_instance().getUserId();
             Queue<Command> commands = ServerProxy.getCommands(userId);
             execute(commands);
         }
