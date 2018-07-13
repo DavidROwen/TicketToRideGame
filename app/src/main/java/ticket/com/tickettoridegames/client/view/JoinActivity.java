@@ -45,7 +45,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     // EditTexts
     private EditText gameNameText;
-    public static EditText GameID;
+    public static TextView GameID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
