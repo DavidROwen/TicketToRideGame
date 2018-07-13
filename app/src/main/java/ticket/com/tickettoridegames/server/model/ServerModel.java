@@ -123,7 +123,7 @@ public class ServerModel {
                 }
                 CommandsManager.instance().addCommand(command, id);
             }
-            addPlayerToGame(userId, game.getId());
+            //addPlayerToGame(userId, game.getId());
         }
     }
 
