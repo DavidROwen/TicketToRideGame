@@ -89,21 +89,21 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
         //######################################testing purposes##########################################
-//        Game one = new Game("one", 5);
-//        Player One = new Player("jon", "111");
-//        one.addPlayers(One);
-//        Game two = new Game("two", 3);
-//        Player Two = new Player("sam", "222");
-//        two.addPlayers(Two);
-//        Game three = new Game("three", 2);
-//        Player Three = new Player("fred", "333");
-//        three.addPlayers(Three);
-//        games = new HashMap<String, Game>();
-//        games.put(one.getId(),one);
-//        games.put(two.getId(),two);
-//        games.put(three.getId(),three);
-//
-//        setGames(games);
+        Game one = new Game("one", 5);
+        Player One = new Player("jon", "111");
+        one.addPlayers(One);
+        Game two = new Game("two", 3);
+        Player Two = new Player("sam", "222");
+        two.addPlayers(Two);
+        Game three = new Game("three", 2);
+        Player Three = new Player("fred", "333");
+        three.addPlayers(Three);
+        games = new HashMap<String, Game>();
+        games.put(one.getId(),one);
+        games.put(two.getId(),two);
+        games.put(three.getId(),three);
+
+        setGames(games);
         //######################################testing purposes##########################################
     }
 
@@ -202,8 +202,6 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
         holder.bindResult(games, keySet[i]);
-        // Here I am just highlighting the background
-        holder.itemView.setBackgroundColor(selected_position == i ? Color.GREEN : Color.TRANSPARENT);
     }
 
     @Override
@@ -238,8 +236,11 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        line1 = (TextView)  v.findViewById(R.id.textView);
+        if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+        v.setBackgroundColor(Color.GREEN);
+
         //makes a hidden text that is read when button is clicked
+        line1 = (TextView)  v.findViewById(R.id.textView4);
         JoinActivity.GameID.setText("line1");
     }
 }
