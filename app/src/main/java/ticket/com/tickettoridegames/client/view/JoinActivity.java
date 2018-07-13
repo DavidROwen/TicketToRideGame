@@ -67,7 +67,8 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         joinGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                presenter.joinGame(GameID.getText().toString());
+                String string = GameID.getText().toString();
+                presenter.joinGame(string);
             }
         });
 
@@ -93,12 +94,12 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
 //        //######################################testing purposes##########################################
 //        Game one = new Game("one", 5);
-//        Player One = new Player("jon", "111");
+//        Player One = new Player("test1", "111");
 //        one.addPlayers(One);
-//        Game two = new Game("two", 3);
+//        Game two = new Game("test2", 3);
 //        Player Two = new Player("sam", "222");
 //        two.addPlayers(Two);
-//        Game three = new Game("three", 2);
+//        Game three = new Game("test3", 2);
 //        Player Three = new Player("fred", "333");
 //        three.addPlayers(Three);
 //        games = new HashMap<String, Game>();
