@@ -15,15 +15,6 @@ public class Game {
     private List<Chat> chatList;
     private String id;
     private String name;
-
-    public int getMaxPlayers() {
-        return maxPlayers;
-    }
-
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
-    }
-
     private int  maxPlayers;
     private int numberOfPlayers;
 
