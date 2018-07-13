@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.ILobbyPresenter;
 import ticket.com.tickettoridegames.client.presenter.LobbyPresenter;
 import ticket.com.tickettoridegames.utility.model.Chat;
@@ -47,17 +48,17 @@ public class LobbyActivity extends Activity implements ILobbyView{
 
         presenter = new LobbyPresenter(this);
 
-        ListView chatList = findViewById(R.id.listViewChat);
+        ListView playerList = findViewById(R.id.listViewPlayers);
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
-        chatList.setAdapter(adapter);
+        playerList.setAdapter(adapter);
 
-        ListView playerList = findViewById(R.id.listViewPlayers);
+        ListView chatList = findViewById(R.id.listViewChat);
         adapter2=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listChats);
-        playerList.setAdapter(adapter2);
+        chatList.setAdapter(adapter2);
 
         chat_input = findViewById(R.id.chat_input_msg);
 
@@ -83,6 +84,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
 //
 //        setPlayers(players);
         //################################testing purposes############################################
+        addPlayerName(ClientModel.get_instance().getUser().getUsername());
     }
 
     // not necessary for phase 1
@@ -97,6 +99,11 @@ public class LobbyActivity extends Activity implements ILobbyView{
         for (String player:players) {
             adapter2.add(player);
         }
+    }
+
+    @Override
+    public void addPlayerName(String player){
+            adapter.add(player);
     }
 
     @Override

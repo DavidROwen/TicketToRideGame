@@ -1,11 +1,13 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.ILobbyView;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.web.Result;
 
@@ -20,6 +22,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
         lobbyService = new LobbyService();
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
+        // lobbyView.addPlayerName(clientModel.getUser().getUsername());
     }
 
     @Override
@@ -29,7 +32,8 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             lobbyView.displayMessage("Invalid game ID");
         }
         else {
-            if (clientModel.getGames().get(gameID).getPlayers().size() > 1) {
+            Map<String, Game> game = clientModel.getGames();
+            if (game.get(gameID).getNumberOfPlayers() > 1) {
                 lobbyView.displayMessage("Successfully create game.");
 //                Result result = lobbyService.startGame(gameID);
 //                if (result.isSuccess()) {
