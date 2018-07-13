@@ -23,8 +23,8 @@ public class ClientModel extends Observable {
         return _instance;
     }
 
-    static private User currentUser = null;
-    static private Map<String, Game> gameList = null;
+    static private User currentUser;
+    static private Map<String, Game> gameList;
 
     private ClientModel() {
 //        if(gameList == null) {

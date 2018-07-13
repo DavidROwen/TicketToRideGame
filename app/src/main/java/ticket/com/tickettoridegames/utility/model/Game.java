@@ -41,6 +41,14 @@ public class Game {
         return players.keySet();
     }
 
+    public String getPlayerNames() {
+        String string = "";
+        for (String key:players.keySet()) {
+            string = string + players.get(key).getUsername() + " ";
+        }
+        return string;
+    }
+
     public boolean addPlayers(Player p){
         if(numberOfPlayers != maxPlayers) {
             //check if already in game.

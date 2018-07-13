@@ -239,7 +239,7 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         line4.setText(newGame.getId());
         line1.setText(newGame.getName());
-        line2.setText(newGame.getPlayers().toString());
+        line2.setText(newGame.getPlayerNames());
         line3.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
     }
 
