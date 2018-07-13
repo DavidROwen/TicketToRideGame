@@ -26,7 +26,6 @@ import java.util.Set;
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IJoinPresenter;
 import ticket.com.tickettoridegames.client.presenter.JoinPresenter;
-import ticket.com.tickettoridegames.client.web.Poller;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 
@@ -89,8 +88,6 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
 
-
-        Poller poller = Poller.getInstance();
     }
 
 

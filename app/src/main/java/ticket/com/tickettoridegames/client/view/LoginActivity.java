@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         setContentView(R.layout.activity_login);
 
         presenter = new LoginPresenter(this);
+        Poller poller = new Poller();
 
         // Set up the login form.
         loginPasswordEditText = (EditText) findViewById(R.id.password);
