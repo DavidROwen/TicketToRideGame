@@ -88,22 +88,25 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
                 R.array.colors, android.R.layout.simple_spinner_item);
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
-        //######################################testing purposes##########################################
-        Game one = new Game("one", 5);
-        Player One = new Player("jon", "111");
-        one.addPlayers(One);
-        Game two = new Game("two", 3);
-        Player Two = new Player("sam", "222");
-        two.addPlayers(Two);
-        Game three = new Game("three", 2);
-        Player Three = new Player("fred", "333");
-        three.addPlayers(Three);
-        games = new HashMap<String, Game>();
-        games.put(one.getId(),one);
-        games.put(two.getId(),two);
-        games.put(three.getId(),three);
 
-        setGames(games);
+
+
+//        //######################################testing purposes##########################################
+//        Game one = new Game("one", 5);
+//        Player One = new Player("jon", "111");
+//        one.addPlayers(One);
+//        Game two = new Game("two", 3);
+//        Player Two = new Player("sam", "222");
+//        two.addPlayers(Two);
+//        Game three = new Game("three", 2);
+//        Player Three = new Player("fred", "333");
+//        three.addPlayers(Three);
+//        games = new HashMap<String, Game>();
+//        games.put(one.getId(),one);
+//        games.put(two.getId(),two);
+//        games.put(three.getId(),three);
+//
+//        setGames(games);
         //######################################testing purposes##########################################
     }
 
@@ -138,9 +141,14 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void setGames(Map<String, Game> games){
         this.games = games;
         myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        myAdapter = new adapter(games);
-        myRecyclerView.setAdapter(myAdapter);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                myAdapter = new adapter(games);
+                myRecyclerView.setAdapter(myAdapter);
+            }
+        });
     }
 
     @Override
