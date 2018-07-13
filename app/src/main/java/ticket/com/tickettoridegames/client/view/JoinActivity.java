@@ -95,8 +95,14 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
         //######################################testing purposes##########################################
 //        Game one = new Game("one", 5);
+//        Player One = new Player("jon", "111");
+//        one.addPlayers(One);
 //        Game two = new Game("two", 3);
+//        Player Two = new Player("sam", "222");
+//        two.addPlayers(Two);
 //        Game three = new Game("three", 2);
+//        Player Three = new Player("fred", "333");
+//        three.addPlayers(Three);
 //        games = new HashMap<String, Game>();
 //        games.put(one.getId(),one);
 //        games.put(two.getId(),two);
@@ -229,10 +235,10 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public void bindResult(Map<String, Game> games, String key){
         Game newGame = games.get(key);
 
-        line1.setText(newGame.getId());
-        line2.setText(newGame.getName());
-        line3.setText(newGame.getPlayers().toString());
-        line4.setText(newGame.getPlayers().size() + "/" + newGame.getNumberOfPlayers());
+        line4.setText(newGame.getId());
+        line1.setText(newGame.getName());
+        line2.setText(newGame.getPlayers().toString());
+        line3.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
     }
 
     @Override
