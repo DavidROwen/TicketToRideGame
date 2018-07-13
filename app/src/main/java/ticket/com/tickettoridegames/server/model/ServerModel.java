@@ -186,4 +186,29 @@ public class ServerModel {
             CommandsManager.instance().addCommand(command,id);
         }
     }
+
+    public boolean startGame(String gameId) throws Exception {
+        Game game = games.get(gameId);
+        if(game == null){
+            throw new Exception();
+        }
+        if(game.getNumberOfPlayers() > 1){
+            game.setStarted(true);
+            for(String playerId : game.getPlayers()){
+                Command command;
+                try{
+                    command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                            null,
+                            "startingGame",
+                            new Object[]{game.getId()});
+                }
+                catch (Exception e){
+                    command = null;
+                }
+                CommandsManager.instance().addCommand(command, playerId);
+            }
+            return true;
+        }
+            return false;
+    }
 }

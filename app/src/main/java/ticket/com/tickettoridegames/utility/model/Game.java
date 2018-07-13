@@ -17,6 +17,7 @@ public class Game {
     private String name;
     private int  maxPlayers;
     private int numberOfPlayers;
+    private boolean isStarted;
 
     public Game(String name, int numberOfPlayers){
         //collection subject to change
@@ -26,6 +27,7 @@ public class Game {
         this.maxPlayers = numberOfPlayers;
         this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
+        this.isStarted = false;
     }
     public Game(){}
 
@@ -108,5 +110,13 @@ public class Game {
 
     public void addToChat(Chat c){
         chatList.add(c);
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
     }
 }
