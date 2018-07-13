@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.ILobbyPresenter;
 import ticket.com.tickettoridegames.client.presenter.LobbyPresenter;
 import ticket.com.tickettoridegames.utility.model.Chat;
+import ticket.com.tickettoridegames.utility.model.Player;
 
 public class LobbyActivity extends Activity implements ILobbyView{
 
@@ -74,6 +76,13 @@ public class LobbyActivity extends Activity implements ILobbyView{
                 presenter.sendMessage(chat_input.getText().toString());
             }
         });
+
+        //################################testing purposes############################################
+//        Set<String> players = new HashSet<>();
+//        players.add("fred");
+//
+//        setPlayers(players);
+        //################################testing purposes############################################
     }
 
     // not necessary for phase 1
@@ -86,13 +95,13 @@ public class LobbyActivity extends Activity implements ILobbyView{
     @Override
     public void setPlayers(Set<String> players){
         for (String player:players) {
-            adapter.add(player);
+            adapter2.add(player);
         }
     }
 
     @Override
     public void displayChat(String message){
-        adapter2.add(message);
+        adapter.add(message);
     }
 
     @Override
@@ -103,7 +112,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
     @Override
     public void setChat(List<Chat> chats){
         for (Chat chat:chats) {
-            adapter2.add(chat.getMessage());
+            adapter.add(chat.getMessage());
         }
     }
 
