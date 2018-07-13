@@ -106,7 +106,7 @@ public class ServerModel {
         }
         else{
             games.put(game.getId(), game);
-            System.out.println("Game with id: " + game.getId() + " created");
+            System.out.println("Game with id: " + game.getId() + " created "+game.toString());
             //send commands to other connected Users
             for(String id : activeUsers.keySet()){
                 Command command;
