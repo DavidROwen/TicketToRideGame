@@ -37,7 +37,10 @@ public class LoginPresenter implements ILoginPresenter, Observer{
         } else if (username.isEmpty() || password.isEmpty()) {
             loginView.displayMessage("One of the fields was empty, please enter all data.");
         } else {
-            loginService.login(new User(username.trim(), password.trim()));
+            Result result = loginService.login(new User(username.trim(), password.trim()));
+            if (!result.isSuccess()){
+                loginView.displayMessage(result.getErrorMessage());
+            }
         }
     }
 
@@ -62,7 +65,10 @@ public class LoginPresenter implements ILoginPresenter, Observer{
             loginView.displayMessage("Passwords do not match, please try again.");
         }
         else{
-             loginService.register(new User(username.trim(), password.trim()));
+            Result result = loginService.register(new User(username.trim(), password.trim()));
+            if (!result.isSuccess()){
+                loginView.displayMessage(result.getErrorMessage());
+            }
         }
     }
 

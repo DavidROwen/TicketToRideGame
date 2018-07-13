@@ -47,7 +47,15 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.login(getLoginUserName(), getLoginPassword());
+                try {
+                    presenter.login(getLoginUserName(), getLoginPassword());
+                    if (ClientModel.get_instance().getUser() != null) {
+                        changeView();
+                    }
+                }
+                catch (Exception e){
+                    displayMessage(e.toString());
+                }
             }
         });
 
