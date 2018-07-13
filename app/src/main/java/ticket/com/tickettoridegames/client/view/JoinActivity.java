@@ -67,7 +67,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         joinGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                presenter.joinGame(GameID.toString());
+                presenter.joinGame(GameID.getText().toString());
             }
         });
 
@@ -249,6 +249,6 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         //makes a hidden text that is read when button is clicked
         line1 = (TextView)  v.findViewById(R.id.textView4);
-        JoinActivity.GameID.setText("line1");
+        JoinActivity.GameID.setText(line1.getText().toString());
     }
 }

@@ -32,7 +32,7 @@ public class Command {
     }
 
     public Object execute() {
-        System.out.println(className + " " + instance + "." + methodName + "(" + paramTypes.toString() + " " + paramValues.toString() + ")");
+        // System.out.println(className + " " + instance + "." + methodName + "(" + paramTypes.toString() + " " + paramValues.toString() + ")");
         try {
             Class<?> receiver = Class.forName(className);
             Method method = receiver.getMethod(methodName, paramTypes);
