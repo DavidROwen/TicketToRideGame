@@ -38,7 +38,7 @@ public class Poller {
 
     public Poller(){
         PollTask task = new PollTask();
-        task.execute(new Object());
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new Object());
     }
 
     private static class PollTask extends AsyncTask<Object, Void, Object> {
