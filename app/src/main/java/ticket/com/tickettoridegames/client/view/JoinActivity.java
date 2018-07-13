@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.view;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     // Widgets
     private Button createGameButton;
+    private Button joinGameButton;
     private Switch privateGameButton;
     private Spinner playerNumber;
     private Spinner playerColor;
@@ -43,6 +45,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     // EditTexts
     private EditText gameNameText;
+    public static EditText GameID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,15 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
             }
         });
 
+        joinGameButton = findViewById(R.id.join_game_button);
+        joinGameButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                presenter.joinGame(GameID.toString());
+            }
+        });
+
+        GameID = findViewById(R.id.textField);
         privateGameButton = findViewById(R.id.private_game_switch);
         gameNameText = findViewById(R.id.game_name_input);
 
@@ -150,6 +162,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
 class adapter extends RecyclerView.Adapter<CustomViewHolder> {
 
+    int selected_position = 0; // You have to set this globally in the Adapter class
     Map<String, Game> games;
     String[] keySet;
 
@@ -171,6 +184,8 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
         holder.bindResult(games, keySet[i]);
+        // Here I am just highlighting the background
+        holder.itemView.setBackgroundColor(selected_position == i ? Color.GREEN : Color.TRANSPARENT);
     }
 
     @Override
@@ -206,6 +221,7 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     @Override
     public void onClick(View v) {
         line1 = (TextView)  v.findViewById(R.id.textView);
-        //should send gameID to presenter somehow
+        //makes a hidden text that is read when button is clicked
+        JoinActivity.GameID.setText("line1");
     }
 }
