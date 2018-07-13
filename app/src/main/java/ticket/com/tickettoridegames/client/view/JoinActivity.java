@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -88,6 +89,20 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
 
+
+        Poller poller = Poller.getInstance();
+
+        //######################################testing purposes##########################################
+//        Game one = new Game("one", 5);
+//        Game two = new Game("two", 3);
+//        Game three = new Game("three", 2);
+//        games = new HashMap<String, Game>();
+//        games.put(one.getId(),one);
+//        games.put(two.getId(),two);
+//        games.put(three.getId(),three);
+//
+//        setGames(games);
+        //######################################testing purposes##########################################
     }
 
 
@@ -165,7 +180,7 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     int selected_position = 0; // You have to set this globally in the Adapter class
     Map<String, Game> games;
-    String[] keySet;
+    String[] keySet; //ArrayList<String> maybe
 
 
     public adapter(Map<String, Game> games) {
@@ -204,7 +219,7 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public CustomViewHolder(View v) {
         super(v);
         v.setOnClickListener(this);
-        line1 = (TextView)  v.findViewById(R.id.textView);
+        line1 = (TextView)  v.findViewById(R.id.textView1);
         line2 = (TextView)  v.findViewById(R.id.textView2);
         line3 = (TextView)  v.findViewById(R.id.textView3);
         line4 = (TextView)  v.findViewById(R.id.textView4);
