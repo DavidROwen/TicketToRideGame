@@ -50,11 +50,9 @@ public class ServerModel {
                 Command command;
                 Game currentGame = games.get(gameId);
                 try{
-                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class.getName(),
-                            ticket.com.tickettoridegames.client.service.JoinService.class,
-                            ticket.com.tickettoridegames.client.service.JoinService.class.newInstance(),
+                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class,
+                            null,
                             "addGame",
-                            new Class<?>[]{ticket.com.tickettoridegames.utility.model.Game.class},
                             new Object[]{currentGame});
                 }
                 catch(Exception e){
@@ -80,11 +78,9 @@ public class ServerModel {
                     Command command;
                     Game currentGame = games.get(gameId);
                     try{
-                        command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class.getName(),
-                                ticket.com.tickettoridegames.client.service.JoinService.class,
-                                ticket.com.tickettoridegames.client.service.JoinService.class.newInstance(),
+                        command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class,
+                                null,
                                 "addGame",
-                                new Class<?>[]{ticket.com.tickettoridegames.utility.model.Game.class},
                                 new Object[]{currentGame});
                     }
                     catch(Exception e){
@@ -111,11 +107,9 @@ public class ServerModel {
             for(String id : activeUsers.keySet()){
                 Command command;
                 try{
-                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class.getName(),
-                            ticket.com.tickettoridegames.client.service.JoinService.class,
-                            ticket.com.tickettoridegames.client.service.JoinService.class.newInstance(),
+                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class,
+                            null,
                             "addGame",
-                            new Class<?>[]{ticket.com.tickettoridegames.utility.model.Game.class},
                             new Object[]{game});
                 }
                 catch(Exception e){
