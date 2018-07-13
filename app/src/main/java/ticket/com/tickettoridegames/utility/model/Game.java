@@ -52,12 +52,24 @@ public class Game {
 
     public boolean addPlayers(Player p){
         if(numberOfPlayers != maxPlayers) {
-            players.put(p.getId(), p);
-            numberOfPlayers++;
-            return true;
+            //check if already in game.
+            if(players.containsKey(p.getId())){
+                //call the join game function
+                return true;
+            }
+            else{
+                players.put(p.getId(), p);
+                numberOfPlayers++;
+                return true;
+            }
         }
         else{
-            return false;
+            if(players.containsKey(p.getId())){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
 
