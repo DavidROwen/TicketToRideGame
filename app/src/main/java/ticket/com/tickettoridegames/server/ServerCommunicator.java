@@ -37,5 +37,6 @@ public class ServerCommunicator {
 
 	public static void main(String[] args) {
 		new ServerCommunicator().run();
-	}
+	} //todo add auto unbind
+
 }
