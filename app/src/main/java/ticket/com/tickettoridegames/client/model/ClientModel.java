@@ -27,7 +27,9 @@ public class ClientModel extends Observable {
     static private Map<String, Game> gameList = null;
 
     private ClientModel() {
-        gameList = new HashMap<>();
+//        if(gameList == null) {
+            gameList = new HashMap<>();
+//        } //todo bandaid
     }
 
     public void setUser(User user){

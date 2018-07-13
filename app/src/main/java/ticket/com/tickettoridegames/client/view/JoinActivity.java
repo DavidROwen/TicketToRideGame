@@ -204,7 +204,7 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public CustomViewHolder(View v) {
         super(v);
         v.setOnClickListener(this);
-        line1 = (TextView)  v.findViewById(R.id.textView);
+        line1 = (TextView)  v.findViewById(R.id.textView1);
         line2 = (TextView)  v.findViewById(R.id.textView2);
         line3 = (TextView)  v.findViewById(R.id.textView3);
         line4 = (TextView)  v.findViewById(R.id.textView4);

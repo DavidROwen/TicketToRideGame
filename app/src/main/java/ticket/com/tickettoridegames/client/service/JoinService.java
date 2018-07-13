@@ -8,7 +8,7 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public class JoinService {
 
-    private ClientModel clientModel;
+    private static ClientModel clientModel;
 
     public JoinService(){
         clientModel = ClientModel.get_instance();
@@ -19,7 +19,7 @@ public class JoinService {
      *
      *
      */
-    public Result createGame(String userId, String gameName, int numberOfPlayers){
+    public static Result createGame(String userId, String gameName, int numberOfPlayers){
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(ticket.com.tickettoridegames.server.service.CreateGameService.class.getName(),
@@ -47,7 +47,7 @@ public class JoinService {
      * @param gameID
      * @param userID
      */
-    public Result joinGame(String userID, String gameID){
+    public static Result joinGame(String userID, String gameID){
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(ticket.com.tickettoridegames.server.service.JoinService.class.getName(),
@@ -76,11 +76,11 @@ public class JoinService {
      *
      * @param game the new game we are adding to the client model and view.
      */
-    public void addGame(Game game){
+    public static void addGame(Game game){
         clientModel.addGameToList(game);
     }
 
-    public void updateGame(Game game){
+    public static void updateGame(Game game){
         clientModel.updateGame(game);
     }
 }
