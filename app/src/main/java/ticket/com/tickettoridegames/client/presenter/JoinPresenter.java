@@ -38,6 +38,9 @@ public class JoinPresenter implements IJoinPresenter, Observer {
                 // Request failed
                 joinView.displayMessage("Error creating game. " + result.getErrorMessage());
             }
+            else {
+                joinView.displayMessage("Game created!");
+            }
         }
     }
 
@@ -50,6 +53,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             Result result = joinService.joinGame(userId, gameId);
             if (result.isSuccess()){
                 clientModel.getUser().setGameId(gameId);
+                joinView.displayMessage("Game Joined!");
                 joinView.changeView();
             }
             else {
@@ -62,7 +66,6 @@ public class JoinPresenter implements IJoinPresenter, Observer {
     @Override
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
-        // update view here
         joinView.setGames(clientModel.getGames());
 //        if (!clientModel.getCurrentGameID().isEmpty()){
 //            joinView.changeView();

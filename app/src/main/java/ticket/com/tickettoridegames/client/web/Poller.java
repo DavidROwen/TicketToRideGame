@@ -17,7 +17,9 @@ public class Poller {
         if (ClientModel.get_instance().getUser() != null) {
             String userId = ClientModel.get_instance().getUserId();
             Queue<Command> commands = ServerProxy.getCommands(userId);
-            execute(commands);
+            if (commands.size() > 0) {
+                execute(commands);
+            }
         }
     }
 
