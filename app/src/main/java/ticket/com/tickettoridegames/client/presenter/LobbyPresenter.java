@@ -23,24 +23,32 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     }
 
     @Override
-    public void startGame(String gameID){
+    public void startGame(){
+        String gameID = clientModel.getUser().getGameId();
         if (gameID == null || gameID.equals("")){
             lobbyView.displayMessage("Invalid game ID");
         }
         else {
-            Result result = lobbyService.startGame(gameID);
-            if (result.isSuccess()){
+            if (clientModel.getGames().get(gameID).getPlayers().size() > 1) {
                 lobbyView.displayMessage("Successfully create game.");
+//                Result result = lobbyService.startGame(gameID);
+//                if (result.isSuccess()) {
+//                    lobbyView.displayMessage("Successfully create game.");
+//                } else {
+//                    // Error happened address as necessary.
+//                    lobbyView.displayMessage("Failed to create game. " + result.getErrorMessage());
+//                }
             }
             else {
-                // Error happened address as necessary.
-                lobbyView.displayMessage("Failed to create game. " + result.getErrorMessage());
+                lobbyView.displayMessage("Too few players to start game.");
             }
         }
     }
 
     @Override
-    public void sendMessage(String gameID, String userID, String message){
+    public void sendMessage(String message){
+        String userID = clientModel.getUserId();
+        String gameID = clientModel.getUser().getGameId();
         if (gameID == null || gameID.equals("")){
             lobbyView.displayMessage("Invalid game ID");
         }
