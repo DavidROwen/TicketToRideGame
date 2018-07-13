@@ -3,16 +3,24 @@ package ticket.com.tickettoridegames.client.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IJoinPresenter;
@@ -23,12 +31,15 @@ import ticket.com.tickettoridegames.utility.model.Player;
 public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     private IJoinPresenter presenter;
+    Map<String, Game> games;
 
     // Widgets
     private Button createGameButton;
     private Switch privateGameButton;
     private Spinner playerNumber;
     private Spinner playerColor;
+    private RecyclerView myRecyclerView;
+    private RecyclerView.Adapter myAdapter;
 
     // EditTexts
     private EditText gameNameText;
@@ -69,26 +80,44 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
 
     @Override
-    public Map<String, Game> getGames(){
+    public Map<String, Game> getGames(){                    //unnecessary
+        return games;
+    }
+
+    @Override
+    public void addGame(Game newGame){                      //unnecessary
+
+    }
+
+    @Override
+    public Set<String> getPlayers(String gameID){           //unnecessary
+        //return games.get(gameID).getPlayers();
         return null;
     }
 
     @Override
-    public void setGames(Map<String, Game> games){}
+    public void setPlayers(List<Player> players){            //unnecessary
 
-    @Override
-    public void addGame(Game newGame){}
-
-    @Override
-    public List<Player> getPlayers(String gameID){
-        return null;
     }
 
     @Override
-    public void setPlayers(List<Player> players){}
+    public void setPlayerCount(String gameID){               //unnecessary
+
+    }
 
     @Override
-    public void setPlayerCount(String gameID){}
+    public void setGames(Map<String, Game> games){
+        this.games = games;
+        myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        myAdapter = new adapter(games);
+        myRecyclerView.setAdapter(myAdapter);
+    }
+
+    @Override
+    public String getChosenGame(String gameID){   //not quite sure how to call right now
+        return gameID;
+    }
 
     @Override
     public String getNewGameName(){
@@ -116,5 +145,67 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void displayMessage(String message){
         Toast toast = Toast.makeText(JoinActivity.this, message, Toast.LENGTH_LONG);
         toast.show();
+    }
+}
+
+class adapter extends RecyclerView.Adapter<CustomViewHolder> {
+
+    Map<String, Game> games;
+    String[] keySet;
+
+
+    public adapter(Map<String, Game> games) {
+        this.games = games;
+        this.keySet = games.keySet().toArray(new String[0]);
+    }
+
+    @Override
+    public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.
+                from(viewGroup.getContext()).
+                inflate(R.layout.customlayout, viewGroup, false);
+
+        return new CustomViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(CustomViewHolder holder, int i) {
+        holder.bindResult(games, keySet[i]);
+    }
+
+    @Override
+    public int getItemCount() {
+        return keySet.length;
+    }
+}
+
+class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    protected TextView line1;
+    protected TextView line2;
+    protected TextView line3;
+    protected TextView line4;
+
+    public CustomViewHolder(View v) {
+        super(v);
+        v.setOnClickListener(this);
+        line1 = (TextView)  v.findViewById(R.id.textView);
+        line2 = (TextView)  v.findViewById(R.id.textView2);
+        line3 = (TextView)  v.findViewById(R.id.textView3);
+        line4 = (TextView)  v.findViewById(R.id.textView4);
+    }
+
+    public void bindResult(Map<String, Game> games, String key){
+        Game newGame = games.get(key);
+
+        line1.setText(newGame.getId());
+        line2.setText(newGame.getName());
+        line3.setText(newGame.getPlayers().toString());
+        line4.setText(newGame.getPlayers().size() + "/" + newGame.getNumberOfPlayers());
+    }
+
+    @Override
+    public void onClick(View v) {
+        line1 = (TextView)  v.findViewById(R.id.textView);
+        //should send gameID to presenter somehow
     }
 }
