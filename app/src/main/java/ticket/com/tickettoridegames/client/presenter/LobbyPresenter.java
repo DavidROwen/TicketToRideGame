@@ -76,6 +76,9 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
         // update view here
+        if (clientModel.isGameStarted(clientModel.getCurrentGameID())) {
+            lobbyView.displayMessage("Game started by another player.");
+        }
         lobbyView.setPlayers(clientModel.getGamePlayers(clientModel.getCurrentGameID()));
         lobbyView.setChat(clientModel.getGameChat(clientModel.getCurrentGameID()));
     }

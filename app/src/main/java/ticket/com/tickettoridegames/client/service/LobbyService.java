@@ -12,14 +12,14 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public class LobbyService {
 
-    private ClientModel clientModel;
+    private static ClientModel clientModel;
 
     public LobbyService(){
         clientModel = ClientModel.get_instance();
     }
 
     // Functions called by client
-    public Result startGame(String gameID){
+    public static Result startGame(String gameID){
         try{
             Result  result = ServerProxy.sendCommand(
                     new Command(ticket.com.tickettoridegames.server.service.StartGameService.class.getName(),
@@ -44,7 +44,7 @@ public class LobbyService {
         }
     }
 
-    public Result sendChat(String gameID, String userID, String message){
+    public static Result sendChat(String gameID, String userID, String message){
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(ticket.com.tickettoridegames.server.service.ChatService.class.getName(),
@@ -72,19 +72,19 @@ public class LobbyService {
 //    }
 
     // Functions called by server
-    public void updateChat(String gameID, Chat chat){
+    public static void updateChat(String gameID, Chat chat){
         clientModel.addGameChat(gameID, chat);
     }
 
-    public void addPlayer(String gameID, Player player) {
+    public static void addPlayer(String gameID, Player player) {
         clientModel.addPlayerToGame(gameID,player);
     }
 
-    public void removePlayer(String gameID, Player player){
+    public static void removePlayer(String gameID, Player player){
         clientModel.removePlayerFromGame(gameID,player);
     }
 
-    private void startingGame(String gameId){
+    private static void startingGame(String gameId){
         clientModel.startGame(gameId);
     }
 

@@ -115,8 +115,24 @@ public class ClientModel extends Observable {
 
     public void startGame(String gameId){
         Game game = gameList.get(gameId);
+        if (game == null){
+            game = new Game();
+            game.setId(gameId);
+            addGameToList(game);
+        }
         game.setStarted(true);
         setChanged();
         notifyObservers();
+    }
+
+    public boolean isGameStarted(String gameId){
+        Game game = gameList.get(gameId);
+        if (game == null){
+            return false;
+        }
+        else {
+            return game.isStarted();
+        }
+
     }
 }

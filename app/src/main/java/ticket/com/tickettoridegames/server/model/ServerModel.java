@@ -143,11 +143,9 @@ public class ServerModel {
                 for(String id : activeUsers.keySet()){
                     Command command;
                     try{
-                        command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class.getName(),
-                                ticket.com.tickettoridegames.client.service.LobbyService.class,
-                                ticket.com.tickettoridegames.client.service.LobbyService.class.newInstance(),
+                        command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                                null,
                                 "addPlayer",
-                                new Class<?>[]{String.class, ticket.com.tickettoridegames.utility.model.Player.class},
                                 new Object[]{game.getId(), player});
                     }
                     catch (Exception e){
@@ -172,11 +170,9 @@ public class ServerModel {
         for(String id : game.getPlayers()){
             Command command;
             try {
-                command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class.getName(),
-                        ticket.com.tickettoridegames.client.service.LobbyService.class,
-                        ticket.com.tickettoridegames.client.service.LobbyService.class.newInstance(),
+                command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                        null,
                         "updateChat",
-                        new Class<?>[]{String.class, ticket.com.tickettoridegames.utility.model.Chat.class},
                         new Object[]{game.getId(), chat});
             }
             catch(Exception e){
@@ -197,7 +193,8 @@ public class ServerModel {
             for(String playerId : game.getPlayers()){
                 Command command;
                 try{
-                    command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                    command = new Command(
+                            ticket.com.tickettoridegames.client.service.LobbyService.class,
                             null,
                             "startingGame",
                             new Object[]{game.getId()});
