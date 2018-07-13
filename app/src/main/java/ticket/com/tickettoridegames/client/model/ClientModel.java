@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -25,7 +26,9 @@ public class ClientModel extends Observable {
     static private User currentUser = null;
     static private Map<String, Game> gameList = null;
 
-    private ClientModel() { }
+    private ClientModel() {
+        gameList = new HashMap<>();
+    }
 
     public void setUser(User user){
         currentUser = user;
