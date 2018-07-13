@@ -20,7 +20,28 @@ public class LobbyService {
 
     // Functions called by client
     public Result startGame(String gameID){
-        return new Result(false,"","Placeholder ERROR");
+        try{
+            Result  result = ServerProxy.sendCommand(
+                    new Command(ticket.com.tickettoridegames.server.service.StartGameService.class.getName(),
+                            ticket.com.tickettoridegames.server.service.StartGameService.class,
+                            ticket.com.tickettoridegames.server.service.StartGameService.class.newInstance(),
+                            "startGame",
+                            new Class<?>[]{String.class},
+                            new Object[]{gameID})
+            );
+            if(result.isSuccess()){
+                return result;
+            }
+            else{
+                //print error message
+                return result;
+            }
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return new Result(false,"",e.toString());
+        }
     }
 
     public Result sendChat(String gameID, String userID, String message){
@@ -61,6 +82,10 @@ public class LobbyService {
 
     public void removePlayer(String gameID, Player player){
         clientModel.removePlayerFromGame(gameID,player);
+    }
+
+    private void startingGame(String gameId){
+        clientModel.startGame(gameId);
     }
 
 }
