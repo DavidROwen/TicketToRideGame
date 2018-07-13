@@ -13,10 +13,12 @@ public class Poller {
 
     private static Integer POLL_INTERVAL_MS = 2000;
 
-    public static List<Object> poll() {
+    public static void poll() {
         String userId = ClientModel.get_instance().getUserId();
-        Queue<Command> commands = ServerProxy.getCommands(userId);
-        return execute(commands);
+        if (userId != null) {
+            Queue<Command> commands = ServerProxy.getCommands(userId);
+            execute(commands);
+        }
     }
 
     private static List<Object> execute(Queue<Command> commands) {
