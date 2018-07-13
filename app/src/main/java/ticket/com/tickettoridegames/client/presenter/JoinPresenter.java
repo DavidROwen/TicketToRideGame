@@ -34,10 +34,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         else {
             String userId = clientModel.getUserId();
             Result result = joinService.createGame(userId, gameName, numberOfPlayers);
-            if (result.isSuccess()){
-                // View should update on observer
-            }
-            else {
+            if (!result.isSuccess()){
                 // Request failed
                 joinView.displayMessage("Error creating game. " + result.getErrorMessage());
             }
@@ -52,7 +49,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             String userId = clientModel.getUserId();
             Result result = joinService.joinGame(userId, gameId);
             if (result.isSuccess()){
-                // View should update based on observer
+                joinView.changeView();
             }
             else {
                 // Request failed
@@ -66,9 +63,9 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         clientModel = (ClientModel) observable;
         // update view here
         joinView.setGames(clientModel.getGames());
-        if (!clientModel.getCurrentGameID().isEmpty()){
-            joinView.changeView();
-        }
+//        if (!clientModel.getCurrentGameID().isEmpty()){
+//            joinView.changeView();
+//        }
     }
 
 }
