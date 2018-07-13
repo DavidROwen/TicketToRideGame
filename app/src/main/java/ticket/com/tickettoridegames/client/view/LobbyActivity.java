@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,21 +20,21 @@ import ticket.com.tickettoridegames.client.presenter.ILobbyPresenter;
 import ticket.com.tickettoridegames.client.presenter.LobbyPresenter;
 import ticket.com.tickettoridegames.utility.model.Chat;
 
-public class LobbyActivity extends ListActivity implements ILobbyView{
+public class LobbyActivity extends Activity implements ILobbyView{
 
     private ILobbyPresenter presenter;
 
     //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    ArrayList<String> listItems=new ArrayList<String>();
+    private ArrayList<String> listItems=new ArrayList<>();
 
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
 
     //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    ArrayList<String> listChats=new ArrayList<String>();
+    private ArrayList<String> listChats=new ArrayList<>();
 
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    ArrayAdapter<String> adapter2;
+    private ArrayAdapter<String> adapter2;
 
     private EditText chat_input;
 
@@ -43,15 +45,17 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
 
         presenter = new LobbyPresenter(this);
 
+        ListView chatList = findViewById(R.id.listViewChat);
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
-        setListAdapter(adapter);
+        chatList.setAdapter(adapter);
 
+        ListView playerList = findViewById(R.id.listViewPlayers);
         adapter2=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listChats);
-        setListAdapter(adapter2);
+        playerList.setAdapter(adapter2);
 
         chat_input = findViewById(R.id.chat_input_msg);
 
