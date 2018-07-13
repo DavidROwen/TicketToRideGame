@@ -94,7 +94,7 @@
                 android:id="@+id/game_player_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"></Spinner>
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
@@ -116,7 +116,7 @@
                 android:id="@+id/current_player_color"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"></Spinner>
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
