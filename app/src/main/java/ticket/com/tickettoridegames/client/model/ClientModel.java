@@ -14,9 +14,9 @@ import ticket.com.tickettoridegames.utility.model.User;
 public class ClientModel extends Observable {
 
     // Singleton Class
-    static private ClientModel _instance;
+    private static ClientModel _instance;
 
-    static public ClientModel get_instance() {
+    public static synchronized ClientModel get_instance() {
         if (_instance == null) {
             _instance = new ClientModel();
         }
@@ -24,10 +24,9 @@ public class ClientModel extends Observable {
     }
 
     static private User currentUser = null;
-    static private Map<String, Game> gameList = null;
+    static private Map<String, Game> gameList = new HashMap<>();
 
     private ClientModel() {
-        gameList = new HashMap<>();
     }
 
     public void setUser(User user){
