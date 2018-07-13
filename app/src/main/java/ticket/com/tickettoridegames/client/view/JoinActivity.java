@@ -88,7 +88,10 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
                 R.array.colors, android.R.layout.simple_spinner_item);
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
-        //######################################testing purposes##########################################
+
+
+
+//        //######################################testing purposes##########################################
 //        Game one = new Game("one", 5);
 //        Player One = new Player("jon", "111");
 //        one.addPlayers(One);
