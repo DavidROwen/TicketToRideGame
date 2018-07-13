@@ -49,6 +49,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             String userId = clientModel.getUserId();
             Result result = joinService.joinGame(userId, gameId);
             if (result.isSuccess()){
+                clientModel.getUser().setGameId(gameId);
                 joinView.changeView();
             }
             else {
