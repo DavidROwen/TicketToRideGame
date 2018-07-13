@@ -54,7 +54,9 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do stuff
+                // Check if more than 1 player is in the game
+                
+                displayMessage("Game starting!");
             }
         });
 
