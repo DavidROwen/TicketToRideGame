@@ -91,7 +91,7 @@ public class ClientCommunicator {
 	private static final String GENERIC_DESIGNATOR = "/generic";
 	private static final int SERVER_PORT_NUMBER = 8082;
 
-	private static final String SERVER_HOST = "localhost";
+	private static final String SERVER_HOST = "10.0.2.2";
 	private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
 	private static final String HTTP_POST = "POST";
 
