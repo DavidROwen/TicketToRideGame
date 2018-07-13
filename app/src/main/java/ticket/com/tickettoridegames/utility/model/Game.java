@@ -78,6 +78,14 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
     }
 
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
     public List<Chat> getChatList() {
         return chatList;
     }
