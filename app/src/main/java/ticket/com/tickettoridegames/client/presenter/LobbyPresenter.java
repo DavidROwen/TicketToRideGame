@@ -23,7 +23,8 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     }
 
     @Override
-    public void startGame(String gameID){
+    public void startGame(){
+        String gameID = clientModel.getUser().getGameId();
         if (gameID == null || gameID.equals("")){
             lobbyView.displayMessage("Invalid game ID");
         }
@@ -40,7 +41,9 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
     }
 
     @Override
-    public void sendMessage(String gameID, String userID, String message){
+    public void sendMessage(String message){
+        String userID = clientModel.getUserId();
+        String gameID = clientModel.getUser().getGameId();
         if (gameID == null || gameID.equals("")){
             lobbyView.displayMessage("Invalid game ID");
         }

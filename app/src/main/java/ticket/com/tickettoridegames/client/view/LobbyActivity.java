@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     ArrayAdapter<String> adapter2;
 
+    private EditText chat_input;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +53,13 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
                 listChats);
         setListAdapter(adapter2);
 
+        chat_input = findViewById(R.id.chat_input_msg);
+
         Button startButton = (Button) findViewById(R.id.start_game_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Check if more than 1 player is in the game
-                
-                displayMessage("Game starting!");
+                presenter.startGame();
             }
         });
 
@@ -64,7 +67,7 @@ public class LobbyActivity extends ListActivity implements ILobbyView{
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do stuff
+                presenter.sendMessage(chat_input.getText().toString());
             }
         });
     }

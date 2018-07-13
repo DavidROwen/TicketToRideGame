@@ -2,9 +2,9 @@ package ticket.com.tickettoridegames.client.presenter;
 
 public interface ILobbyPresenter {
 
-    void startGame(String gameID);
+    void startGame();
 
-    void sendMessage(String gameID, String playerID, String message);
+    void sendMessage(String message);
 
 //    void addPlayer(String gameID, String playerID);
 }
