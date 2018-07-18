@@ -143,11 +143,9 @@ public class ServerModel {
                 for(String id : activeUsers.keySet()){
                     Command command;
                     try{
-                        command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class.getName(),
-                                ticket.com.tickettoridegames.client.service.LobbyService.class,
-                                ticket.com.tickettoridegames.client.service.LobbyService.class.newInstance(),
+                        command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                                null,
                                 "addPlayer",
-                                new Class<?>[]{String.class, ticket.com.tickettoridegames.utility.model.Player.class},
                                 new Object[]{game.getId(), player});
                     }
                     catch (Exception e){
@@ -172,11 +170,9 @@ public class ServerModel {
         for(String id : game.getPlayers()){
             Command command;
             try {
-                command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class.getName(),
-                        ticket.com.tickettoridegames.client.service.LobbyService.class,
-                        ticket.com.tickettoridegames.client.service.LobbyService.class.newInstance(),
+                command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                        null,
                         "updateChat",
-                        new Class<?>[]{String.class, ticket.com.tickettoridegames.utility.model.Chat.class},
                         new Object[]{game.getId(), chat});
             }
             catch(Exception e){
@@ -185,5 +181,31 @@ public class ServerModel {
             }
             CommandsManager.instance().addCommand(command,id);
         }
+    }
+
+    public boolean startGame(String gameId) throws Exception {
+        Game game = games.get(gameId);
+        if(game == null){
+            throw new Exception();
+        }
+        if(game.getNumberOfPlayers() > 1){
+            game.setStarted(true);
+            for(String playerId : game.getPlayers()){
+                Command command;
+                try{
+                    command = new Command(
+                            ticket.com.tickettoridegames.client.service.LobbyService.class,
+                            null,
+                            "startingGame",
+                            new Object[]{game.getId()});
+                }
+                catch (Exception e){
+                    command = null;
+                }
+                CommandsManager.instance().addCommand(command, playerId);
+            }
+            return true;
+        }
+            return false;
     }
 }

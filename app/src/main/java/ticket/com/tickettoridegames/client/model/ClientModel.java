@@ -23,8 +23,8 @@ public class ClientModel extends Observable {
         return _instance;
     }
 
-    static private User currentUser = null;
-    static private Map<String, Game> gameList = null;
+    static private User currentUser;
+    static private Map<String, Game> gameList;
 
     private ClientModel() {
 //        if(gameList == null) {
@@ -100,7 +100,7 @@ public class ClientModel extends Observable {
     public void addPlayerToGame(String gameID, Player player){
         Game game = gameList.get(gameID);
         game.addPlayers(player);
-        gameList.put(gameID, game);
+        //gameList.put(gameID, game);
         setChanged();
         notifyObservers();
     }
@@ -108,8 +108,31 @@ public class ClientModel extends Observable {
     public void removePlayerFromGame(String gameID, Player player){
         Game game = gameList.get(gameID);
         game.removePlayer(player);
-        gameList.put(gameID, game);
+        //gameList.put(gameID, game);
         setChanged();
         notifyObservers();
+    }
+
+    public void startGame(String gameId){
+        Game game = gameList.get(gameId);
+        if (game == null){
+            game = new Game();
+            game.setId(gameId);
+            addGameToList(game);
+        }
+        game.setStarted(true);
+        setChanged();
+        notifyObservers();
+    }
+
+    public boolean isGameStarted(String gameId){
+        Game game = gameList.get(gameId);
+        if (game == null){
+            return false;
+        }
+        else {
+            return game.isStarted();
+        }
+
     }
 }

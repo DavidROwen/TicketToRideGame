@@ -67,7 +67,8 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         joinGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                presenter.joinGame(GameID.toString());
+                String string = GameID.getText().toString();
+                presenter.joinGame(string);
             }
         });
 
@@ -89,6 +90,25 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
 
+
+
+//        //######################################testing purposes##########################################
+//        Game one = new Game("one", 5);
+//        Player One = new Player("test1", "111");
+//        one.addPlayers(One);
+//        Game two = new Game("test2", 3);
+//        Player Two = new Player("sam", "222");
+//        two.addPlayers(Two);
+//        Game three = new Game("test3", 2);
+//        Player Three = new Player("fred", "333");
+//        three.addPlayers(Three);
+//        games = new HashMap<String, Game>();
+//        games.put(one.getId(),one);
+//        games.put(two.getId(),two);
+//        games.put(three.getId(),three);
+//
+//        setGames(games);
+        //######################################testing purposes##########################################
     }
 
 
@@ -122,9 +142,14 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void setGames(Map<String, Game> games){
         this.games = games;
         myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        myAdapter = new adapter(games);
-        myRecyclerView.setAdapter(myAdapter);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                myAdapter = new adapter(games);
+                myRecyclerView.setAdapter(myAdapter);
+            }
+        });
     }
 
     @Override
@@ -186,8 +211,6 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
         holder.bindResult(games, keySet[i]);
-        // Here I am just highlighting the background
-        holder.itemView.setBackgroundColor(selected_position == i ? Color.GREEN : Color.TRANSPARENT);
     }
 
     @Override
@@ -216,14 +239,17 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         line4.setText(newGame.getId());
         line1.setText(newGame.getName());
-        line2.setText(newGame.getPlayers().toString());
+        line2.setText(newGame.getPlayerNames());
         line3.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
     }
 
     @Override
     public void onClick(View v) {
-        line1 = (TextView)  v.findViewById(R.id.textView);
+        if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+        v.setBackgroundColor(Color.GREEN);
+
         //makes a hidden text that is read when button is clicked
-        JoinActivity.GameID.setText("line1");
+        line1 = (TextView)  v.findViewById(R.id.textView4);
+        JoinActivity.GameID.setText(line1.getText().toString());
     }
 }

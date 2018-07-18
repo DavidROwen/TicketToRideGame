@@ -17,6 +17,7 @@ public class Game {
     private String name;
     private int  maxPlayers;
     private int numberOfPlayers;
+    private boolean isStarted;
 
     public Game(String name, int numberOfPlayers){
         //collection subject to change
@@ -26,6 +27,7 @@ public class Game {
         this.maxPlayers = numberOfPlayers;
         this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
+        this.isStarted = false;
     }
     public Game(){}
 
@@ -41,14 +43,34 @@ public class Game {
         return players.keySet();
     }
 
+    public String getPlayerNames() {
+        String string = "";
+        for (String key:players.keySet()) {
+            string = string + players.get(key).getUsername() + " ";
+        }
+        return string;
+    }
+
     public boolean addPlayers(Player p){
         if(numberOfPlayers != maxPlayers) {
-            players.put(p.getId(), p);
-            numberOfPlayers++;
-            return true;
+            //check if already in game.
+            if(players.containsKey(p.getId())){
+                //call the join game function
+                return true;
+            }
+            else{
+                players.put(p.getId(), p);
+                numberOfPlayers++;
+                return true;
+            }
         }
         else{
-            return false;
+            if(players.containsKey(p.getId())){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
 
@@ -60,6 +82,14 @@ public class Game {
         else {
             return false;
         }
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 
     public String getName() {
@@ -96,5 +126,13 @@ public class Game {
 
     public void addToChat(Chat c){
         chatList.add(c);
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
     }
 }

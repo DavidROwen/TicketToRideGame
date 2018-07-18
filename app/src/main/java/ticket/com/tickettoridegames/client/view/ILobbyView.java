@@ -16,6 +16,8 @@ public interface ILobbyView {
 
     void setChat(List<Chat> chats);
 
+    void addPlayerName(String player);
+
     // Not necessary for phase 1
     // void changeView();
 
