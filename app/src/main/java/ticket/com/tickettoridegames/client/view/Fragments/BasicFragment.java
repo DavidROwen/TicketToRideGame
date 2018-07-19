@@ -17,10 +17,7 @@ public abstract class BasicFragment extends Fragment {
         BasicFragment fragment = provideYourFragment();
         fragment.setArguments(args);
         return fragment;
-
     }
-
-
 
     public void onCreate(Bundle savedInstanceState)
     {

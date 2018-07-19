@@ -21,13 +21,11 @@ public class GamePlayActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ViewPager pager = (ViewPager)findViewById(R.id.mediaViewPager);
-        TabAdapter adapter = new TabAdapter(getSupportFragmentManager(),getApplicationContext(), new String[]{"1","2"},2);
+        TabAdapter adapter = new TabAdapter(getSupportFragmentManager(),getApplicationContext(), new String[]{"Map","Stats","Assets"},3);
         pager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.swipeTabs);
         tabLayout.setupWithViewPager(pager);
-
-
     }
 
     @Override

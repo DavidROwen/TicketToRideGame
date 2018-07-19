@@ -9,17 +9,17 @@ import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
 
-public class ButtonFragment extends BasicFragment{
+public class MapFragment extends BasicFragment {
     @Override
     public BasicFragment provideYourFragment() {
 
-        return new ButtonFragment();
+        return new MapFragment();
     }
 
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_a,parent,false);
+        View view = inflater.inflate(R.layout.map_fragment,parent,false);
 
         //Get your parent layout of fragment
         RelativeLayout layout = (RelativeLayout)view;
@@ -28,7 +28,6 @@ public class ButtonFragment extends BasicFragment{
 
         Button b1 = (Button)layout.findViewById(R.id.button1);
         Button b2 = (Button)layout.findViewById(R.id.button2);
-
 
         return view;
 

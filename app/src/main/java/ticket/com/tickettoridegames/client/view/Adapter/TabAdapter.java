@@ -8,8 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-import ticket.com.tickettoridegames.client.view.Fragments.ButtonFragment;
-import ticket.com.tickettoridegames.client.view.Fragments.ImageFragment;
+import ticket.com.tickettoridegames.client.view.Fragments.AssetsFragment;
+import ticket.com.tickettoridegames.client.view.Fragments.StatsFragment;
+import ticket.com.tickettoridegames.client.view.Fragments.MapFragment;
 
 public class TabAdapter extends FragmentPagerAdapter {
 
@@ -23,8 +24,9 @@ public class TabAdapter extends FragmentPagerAdapter {
 
         super(fm);
         tabFragments = new ArrayList<Fragment>();
-        tabFragments.add(new ImageFragment().newInstance());
-        tabFragments.add(new ButtonFragment().newInstance());
+        tabFragments.add(new MapFragment().newInstance());
+        tabFragments.add(new StatsFragment().newInstance());
+        tabFragments.add(new AssetsFragment().newInstance());
 
         this.context = context;
         this.PageTitle = PageTitle;
