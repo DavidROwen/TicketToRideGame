@@ -89,7 +89,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
     // not necessary for phase 1
     //@Override
     //public void changeView(){
-    //    Intent intent = new Intent(LobbyActivity.this, GameActivity.class);
+    //    Intent intent = new Intent(LobbyActivity.this, GamePlayActivity.class);
     //    startActivity(intent);
     //}
 
