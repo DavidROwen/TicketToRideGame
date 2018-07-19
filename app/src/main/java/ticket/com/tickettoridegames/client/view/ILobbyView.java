@@ -18,8 +18,7 @@ public interface ILobbyView {
 
     void addPlayerName(String player);
 
-    // Not necessary for phase 1
-    // void changeView();
+    void changeView();
 
     void displayMessage(String toast);
 }

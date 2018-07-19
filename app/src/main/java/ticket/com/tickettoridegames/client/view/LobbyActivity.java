@@ -86,12 +86,11 @@ public class LobbyActivity extends Activity implements ILobbyView{
         //################################testing purposes############################################
     }
 
-    // not necessary for phase 1
-    //@Override
-    //public void changeView(){
-    //    Intent intent = new Intent(LobbyActivity.this, GamePlayActivity.class);
-    //    startActivity(intent);
-    //}
+    @Override
+    public void changeView(){
+        Intent intent = new Intent(LobbyActivity.this, GamePlayActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void resetPlayers(Set<String> players){
