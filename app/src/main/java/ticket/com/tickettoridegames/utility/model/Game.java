@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import sun.security.krb5.internal.crypto.Des;
-
 public class Game {
 
     //General game data
