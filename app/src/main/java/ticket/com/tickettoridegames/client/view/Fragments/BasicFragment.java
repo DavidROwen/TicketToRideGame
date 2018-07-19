@@ -7,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Illuminati on 4/22/2017.
- */
 public abstract class BasicFragment extends Fragment {
 
     public BasicFragment newInstance()

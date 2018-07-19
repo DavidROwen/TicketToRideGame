@@ -9,9 +9,6 @@ import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
 
-/**
- * Created by Illuminati on 4/22/2017.
- */
 public class ButtonFragment extends BasicFragment{
     @Override
     public BasicFragment provideYourFragment() {
