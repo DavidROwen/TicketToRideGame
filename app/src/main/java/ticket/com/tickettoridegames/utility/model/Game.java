@@ -9,30 +9,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import sun.security.krb5.internal.crypto.Des;
-
 public class Game {
 
-    // General Game data
+    private Map<String, Player> players;
+    private List<Chat> chatList;
     private String id;
     private String name;
     private int  maxPlayers;
     private int numberOfPlayers;
     private boolean isStarted;
-
-    // Stores all players in the game
-    private Map<String, Player> players;
-    // Stores the playerIDs in turn order
-    private List<String> turnOrder;
-    private List<Chat> chatList;
-
-    // Map data
-    private GameMap map;
-    private Set<DestinationCard> destinationCards;
-    private Map<String, DestinationCard> claimedDestinationCards;
-
-    // Stores player actions viewed in the stats history tab
-    private List<PlayerAction> gameHistory;
 
     public Game(String name, int numberOfPlayers){
         //collection subject to change
@@ -43,13 +28,8 @@ public class Game {
         this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
         this.isStarted = false;
-        setupRoutes();
     }
     public Game(){}
-
-    public void setupRoutes(){
-        // this function can set the default route data
-    }
 
     public String getId() {
         return id;
@@ -59,18 +39,26 @@ public class Game {
         this.id = id;
     }
 
-    public Set<String> getPlayers(){
+    public Set<String> getPlayersId(){
         return players.keySet();
     }
 
-    public String getPlayerNames() {
+    public String getPlayerNamesString() {
         String string = "";
         for (String key:players.keySet()) {
-            string = string + players.get(key).getUsername() + " ";
+            string += players.get(key).getUsername() + " ";
         }
         return string;
     }
-        
+
+    public Set<String> getPlayerNames() {
+        Set<String> names = new HashSet<>();
+        for (String key:players.keySet()) {
+            names.add(players.get(key).getUsername());
+        }
+        return names;
+    }
+
     public boolean addPlayers(Player p){
         if(numberOfPlayers != maxPlayers) {
             //check if already in game.

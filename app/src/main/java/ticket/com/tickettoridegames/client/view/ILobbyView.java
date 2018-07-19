@@ -8,7 +8,7 @@ import ticket.com.tickettoridegames.utility.model.Player;
 
 public interface ILobbyView {
 
-    void setPlayers(Set<String> players);
+    void resetPlayers(Set<String> players);
 
     void displayChat(String message);
 

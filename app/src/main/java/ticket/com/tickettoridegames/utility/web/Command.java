@@ -32,7 +32,7 @@ public class Command {
     }
 
     public Object execute() {
-        // System.out.println(className + " " + instance + "." + methodName + "(" + paramTypes.toString() + " " + paramValues.toString() + ")");
+        System.out.println(toString());
         try {
             Class<?> receiver = Class.forName(className);
             Method method = receiver.getMethod(methodName, paramTypes);
@@ -72,6 +72,18 @@ public class Command {
 
     public Class<?>[] getParamTypes() {
         return paramTypes;
+    }
+
+    public String toString() {
+        String str = "";
+        str += className + " " + instance + "." + methodName + "(";
+        for(int i = 0; i < paramTypes.length; i++) {
+            str += paramTypes[i].toString() + " ";
+            str += paramValues[i].toString() + ", ";
+        }
+        str += ")";
+
+        return str;
     }
 
     private String className;

@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.service;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
 import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Result;
 
@@ -82,5 +83,9 @@ public class JoinService {
 
     public static void updateGame(Game game){
         clientModel.updateGame(game);
+    }
+
+    public static void addPlayer(String gameID, Player player) {
+        clientModel.addPlayerToGame(gameID,player);
     }
 }

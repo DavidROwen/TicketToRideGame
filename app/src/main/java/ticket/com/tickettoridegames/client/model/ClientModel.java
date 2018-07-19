@@ -92,9 +92,9 @@ public class ClientModel extends Observable {
         return currentUser.getGameId();
     }
 
-    public Set<String> getGamePlayers(String gameID){
+    public Set<String> getGamePlayersName(String gameID){
         Game game = gameList.get(gameID);
-        return game.getPlayers();
+        return game.getPlayerNames();
     }
 
     public void addPlayerToGame(String gameID, Player player){

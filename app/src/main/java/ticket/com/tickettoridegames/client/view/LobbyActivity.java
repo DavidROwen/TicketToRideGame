@@ -82,9 +82,8 @@ public class LobbyActivity extends Activity implements ILobbyView{
 //        Set<String> players = new HashSet<>();
 //        players.add("fred");
 //
-//        setPlayers(players);
+//        resetPlayers(players);
         //################################testing purposes############################################
-        addPlayerName(ClientModel.get_instance().getUser().getUsername());
     }
 
     // not necessary for phase 1
@@ -95,7 +94,8 @@ public class LobbyActivity extends Activity implements ILobbyView{
     //}
 
     @Override
-    public void setPlayers(Set<String> players){
+    public void resetPlayers(Set<String> players){
+        adapter.clear();
         for (String player:players) {
             adapter.add(player);
         }

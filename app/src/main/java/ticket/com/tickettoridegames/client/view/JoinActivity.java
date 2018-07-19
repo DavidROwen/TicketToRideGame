@@ -17,9 +17,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -124,7 +121,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     @Override
     public Set<String> getPlayers(String gameID){           //unnecessary
-        //return games.get(gameID).getPlayers();
+        //return games.get(gameID).getPlayersId();
         return null;
     }
 
@@ -142,14 +139,14 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void setGames(Map<String, Game> games){
         this.games = games;
         myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
                 myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 myAdapter = new adapter(games);
                 myRecyclerView.setAdapter(myAdapter);
-            }
-        });
+//            }
+//        });
     }
 
     @Override
@@ -239,7 +236,7 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
         line4.setText(newGame.getId());
         line1.setText(newGame.getName());
-        line2.setText(newGame.getPlayerNames());
+        line2.setText(newGame.getPlayerNamesString());
         line3.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
     }
 

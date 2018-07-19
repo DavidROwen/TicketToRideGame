@@ -76,15 +76,11 @@ public class LobbyService {
         clientModel.addGameChat(gameID, chat);
     }
 
-    public static void addPlayer(String gameID, Player player) {
-        clientModel.addPlayerToGame(gameID,player);
-    }
-
     public static void removePlayer(String gameID, Player player){
         clientModel.removePlayerFromGame(gameID,player);
     }
 
-    private static void startingGame(String gameId){
+    public static void startingGame(String gameId){
         clientModel.startGame(gameId);
     }
 

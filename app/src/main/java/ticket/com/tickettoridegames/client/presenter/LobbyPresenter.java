@@ -6,7 +6,6 @@ import java.util.Observer;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.ILobbyView;
-import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class LobbyPresenter implements ILobbyPresenter, Observer {
@@ -29,7 +28,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             lobbyView.displayMessage("Invalid game ID");
         }
         else {
-            //if (clientModel.getGames().get(gameID).getPlayers().size() > 1) {
+            //if (clientModel.getGames().get(gameID).getPlayersId().size() > 1) {
                 //lobbyView.displayMessage("Successfully create game.");
                 Result result = lobbyService.startGame(gameID);
                 if (result.isSuccess()) {
@@ -79,7 +78,11 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
         if (clientModel.isGameStarted(clientModel.getCurrentGameID())) {
             lobbyView.displayMessage("Game started by another player.");
         }
-        lobbyView.setPlayers(clientModel.getGamePlayers(clientModel.getCurrentGameID()));
+        resetPlayersList();
         lobbyView.setChat(clientModel.getGameChat(clientModel.getCurrentGameID()));
+    }
+
+    private void resetPlayersList() {
+        lobbyView.resetPlayers(clientModel.getGamePlayersName(clientModel.getCurrentGameID()));
     }
 }

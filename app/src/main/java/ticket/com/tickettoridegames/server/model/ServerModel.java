@@ -3,6 +3,8 @@ package ticket.com.tickettoridegames.server.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import ticket.com.tickettoridegames.client.service.JoinService;
+import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.Game;
@@ -143,7 +145,7 @@ public class ServerModel {
                 for(String id : activeUsers.keySet()){
                     Command command;
                     try{
-                        command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                        command = new Command(JoinService.class,
                                 null,
                                 "addPlayer",
                                 new Object[]{game.getId(), player});
@@ -167,7 +169,7 @@ public class ServerModel {
         game.addToChat(chat);
         System.out.println("User: " + playerId + " added chat to game: " + gameId);
         //send commands to all the users in the game.
-        for(String id : game.getPlayers()){
+        for(String id : game.getPlayersId()){
             Command command;
             try {
                 command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
@@ -190,11 +192,11 @@ public class ServerModel {
         }
         if(game.getNumberOfPlayers() > 1){
             game.setStarted(true);
-            for(String playerId : game.getPlayers()){
+            for(String playerId : game.getPlayersId()){
                 Command command;
                 try{
                     command = new Command(
-                            ticket.com.tickettoridegames.client.service.LobbyService.class,
+                            LobbyService.class,
                             null,
                             "startingGame",
                             new Object[]{game.getId()});
