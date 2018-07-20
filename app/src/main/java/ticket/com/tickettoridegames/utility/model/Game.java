@@ -280,6 +280,7 @@ public class Game {
         setTurnOrder();
         //todo assign colors
         //todo lay out face up cards
+        //todo flip top card
 
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);

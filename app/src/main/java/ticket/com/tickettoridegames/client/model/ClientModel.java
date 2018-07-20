@@ -36,7 +36,9 @@ public class ClientModel extends Observable {
     private Player myPlayer = null;
 
     private ClientModel() {
-        gameList = new HashMap<>();
+        if(gameList == null) {
+            gameList = new HashMap<>();
+        }
     }
 
     public void setUser(User user){
