@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.view.IStatsView;
 
-public class StatsFragment extends BasicFragment implements IStatsFragment{
+public class StatsFragment extends BasicFragment implements IStatsView{
     @Override
     public BasicFragment provideYourFragment() {
 

@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.view.IMapView;
 
-public class MapFragment extends BasicFragment implements IMapFragment {
+public class MapFragment extends BasicFragment implements IMapView{
     @Override
     public BasicFragment provideYourFragment() {
 

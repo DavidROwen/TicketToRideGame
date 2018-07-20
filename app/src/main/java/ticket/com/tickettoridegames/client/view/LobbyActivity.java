@@ -1,7 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,16 +11,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
-import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.ILobbyPresenter;
 import ticket.com.tickettoridegames.client.presenter.LobbyPresenter;
 import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.Player;
 
 public class LobbyActivity extends Activity implements ILobbyView{
 

@@ -109,31 +109,31 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     }
 
 
-    @Override
-    public Map<String, Game> getGames(){                    //unnecessary
-        return games;
-    }
-
-    @Override
-    public void addGame(Game newGame){                      //unnecessary
-
-    }
-
-    @Override
-    public Set<String> getPlayers(String gameID){           //unnecessary
-        //return games.get(gameID).getPlayersId();
-        return null;
-    }
-
-    @Override
-    public void setPlayers(List<Player> players){            //unnecessary
-
-    }
-
-    @Override
-    public void setPlayerCount(String gameID){               //unnecessary
-
-    }
+//    @Override
+//    public Map<String, Game> getGames(){                    //unnecessary
+//        return games;
+//    }
+//
+//    @Override
+//    public void addGame(Game newGame){                      //unnecessary
+//
+//    }
+//
+//    @Override
+//    public Set<String> getPlayers(String gameID){           //unnecessary
+//        //return games.get(gameID).getPlayersId();
+//        return null;
+//    }
+//
+//    @Override
+//    public void setPlayers(List<Player> players){            //unnecessary
+//
+//    }
+//
+//    @Override
+//    public void setPlayerCount(String gameID){               //unnecessary
+//
+//    }
 
     @Override
     public void setGames(Map<String, Game> games){
