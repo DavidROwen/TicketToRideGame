@@ -34,6 +34,7 @@ public class GameMap {
     }
 
     public Map<String, Route> getClaimedRoutes() {
+
         return claimedRoutes;
     }
 

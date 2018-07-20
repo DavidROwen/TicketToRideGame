@@ -1,20 +1,29 @@
 package ticket.com.tickettoridegames.utility.model;
 
 public class DestinationCard {
-    private City location;
+    private City startLocation;
+    private City endLocation;
     private Integer value;
 
-    public DestinationCard(City location, Integer value) {
-        this.location = location;
+    public DestinationCard(City startLocation, Integer value) {
+        this.startLocation = startLocation;
         this.value = value;
     }
 
-    public City getLocation() {
-        return location;
+    public City getStartLocation() {
+        return startLocation;
     }
 
-    public void setLocation(City location) {
-        this.location = location;
+    public void setStartLocation(City startLocation) {
+        this.startLocation = startLocation;
+    }
+
+    public City getEndLocation() {
+        return endLocation;
+    }
+
+    public void setEndLocation(City endLocation) {
+        this.endLocation = endLocation;
     }
 
     public Integer getValue() {

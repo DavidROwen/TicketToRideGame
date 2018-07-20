@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.service;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
+import ticket.com.tickettoridegames.utility.model.User;
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Result;
 
@@ -31,6 +32,25 @@ public class UtilityService {
                 return result;
             }
         } catch (Exception e){
+            e.printStackTrace();
+            return new Result(false, "", e.toString());
+        }
+    }
+
+    public void clearClient() {
+        clientModel.setUser(null);
+    }
+
+    public Result prepareServerForCommands() {
+        //todo check that server is running
+        //todo check that it's not already prepared
+        User user = new User("userName", "password");
+        try {
+            return LoginService.class.newInstance().register(user);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            return new Result(false, "", e.toString());
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
             return new Result(false, "", e.toString());
         }
