@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IStatsView;
+import ticket.com.tickettoridegames.client.view.LoginActivity;
 
 public class StatsFragment extends BasicFragment implements IStatsView{
 
@@ -32,5 +35,4 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
         return view;
     }
-
 }

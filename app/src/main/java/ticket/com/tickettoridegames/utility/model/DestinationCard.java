@@ -2,10 +2,12 @@ package ticket.com.tickettoridegames.utility.model;
 
 public class DestinationCard {
     private City location;
+    private City location2;
     private Integer value;
 
-    public DestinationCard(City location, Integer value) {
+    public DestinationCard(City location, City location2, Integer value) {
         this.location = location;
+        this.location2 = location2;
         this.value = value;
     }
 
@@ -15,6 +17,14 @@ public class DestinationCard {
 
     public void setLocation(City location) {
         this.location = location;
+    }
+
+    public City getLocation2() {
+        return location2;
+    }
+
+    public void setLocation2(City location2) {
+        this.location2 = location2;
     }
 
     public Integer getValue() {
