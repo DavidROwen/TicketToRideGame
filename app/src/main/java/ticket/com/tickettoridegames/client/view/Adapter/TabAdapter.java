@@ -31,9 +31,6 @@ public class TabAdapter extends FragmentPagerAdapter {
         this.context = context;
         this.PageTitle = PageTitle;
         this.PageCount = PageCount;
-
-
-
     }
 
     @Override

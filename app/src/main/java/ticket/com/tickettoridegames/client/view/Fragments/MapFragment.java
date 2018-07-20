@@ -28,9 +28,9 @@ public class MapFragment extends BasicFragment {
 
         Button b1 = (Button)layout.findViewById(R.id.button1);
         Button b2 = (Button)layout.findViewById(R.id.button2);
+        Button b3 = (Button)layout.findViewById(R.id.button3);
 
         return view;
-
     }
 
 

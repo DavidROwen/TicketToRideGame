@@ -26,7 +26,6 @@ public class StatsFragment extends BasicFragment{
 
         //Now specific components here
 
-        Button b1 = (Button)layout.findViewById(R.id.button1);
         Button b2 = (Button)layout.findViewById(R.id.button2);
 
 
