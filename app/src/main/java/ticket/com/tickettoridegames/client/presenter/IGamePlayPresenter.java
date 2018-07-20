@@ -1,5 +1,5 @@
 package ticket.com.tickettoridegames.client.presenter;
 
-public interface IMapPresenter {
+public interface IGamePlayPresenter {
 
 }

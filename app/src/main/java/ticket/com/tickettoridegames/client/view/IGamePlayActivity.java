@@ -1,6 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
-public interface IStatsView {
+public interface IGamePlayActivity {
 
     void displayMessage(String message);
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public abstract class BasicFragment extends Fragment {
 
@@ -34,4 +35,8 @@ public abstract class BasicFragment extends Fragment {
 
     public abstract View provideYourFragmentView(LayoutInflater inflater,ViewGroup parent, Bundle savedInstanceState);
 
+    public void displayMessage(String message){
+        Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
+        toast.show();
+    }
 }

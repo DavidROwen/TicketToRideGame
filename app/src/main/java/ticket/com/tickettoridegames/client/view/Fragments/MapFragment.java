@@ -33,6 +33,4 @@ public class MapFragment extends BasicFragment implements IMapView{
 
         return view;
     }
-
-
 }
