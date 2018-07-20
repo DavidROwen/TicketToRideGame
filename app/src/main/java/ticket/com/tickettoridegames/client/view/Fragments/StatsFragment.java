@@ -11,6 +11,7 @@ import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.view.IStatsView;
 
 public class StatsFragment extends BasicFragment implements IStatsView{
+
     @Override
     public BasicFragment provideYourFragment() {
 
@@ -29,10 +30,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
         Button b2 = (Button)layout.findViewById(R.id.button2);
 
-
         return view;
-
     }
-
 
 }
