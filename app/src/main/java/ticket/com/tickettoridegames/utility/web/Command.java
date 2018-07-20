@@ -31,8 +31,6 @@ public class Command {
         }
     }
 
-    protected Command(){}
-
     public Object execute() {
         System.out.println(toString());
         try {

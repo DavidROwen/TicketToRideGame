@@ -7,12 +7,11 @@ import java.util.Observable;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.Route;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
+import static ticket.com.tickettoridegames.utility.TYPE.START;
 
 public class ClientModel extends Observable {
 
@@ -29,11 +28,10 @@ public class ClientModel extends Observable {
     static private User currentUser;
     static private Map<String, Game> gameList;
 
-    private Game myActiveGame = null;
-    private Player myPlayer = null;
-
     private ClientModel() {
-        gameList = new HashMap<>();
+//        if(gameList == null) {
+            gameList = new HashMap<>();
+//        } //todo bandaid
     }
 
     public void setUser(User user){
@@ -85,11 +83,16 @@ public class ClientModel extends Observable {
         return game.getChatList();
     }
 
+    public Chat getNewestChat(String gameID){
+        Game game = gameList.get(gameID);
+        return game.getNewestChat();
+    }
+
     public void addGameChat(String gameID, Chat chat){
         Game game = gameList.get(gameID);
         game.addToChat(chat);
         setChanged();
-        notifyObservers();
+        notifyObservers(NEWCHAT);
     }
 
     public String getCurrentGameID(){
@@ -126,80 +129,17 @@ public class ClientModel extends Observable {
         }
         game.setStarted(true);
         setChanged();
-        notifyObservers();
+        notifyObservers(START);
     }
 
     public boolean isGameStarted(String gameId){
         Game game = gameList.get(gameId);
-        return game != null && game.isStarted();
-    }
-
-    public List<TrainCard> getMyHand() {
-        return getMyPlayer().getTrainCards();
-    }
-
-    public Map<String, Integer> getCountsOfCardsInHand() {
-        return getMyActiveGame().getCountsOfCardsInHand();
-    }
-
-    public TrainCard getDeckTop() {
-        return getMyActiveGame().getTopTrainCard();
-    }
-
-    public TrainCard drawACard() { return getMyActiveGame().removeTopTrainCard(); }
-
-    public List<Route> getClaimedRoutes() {
-        return null; //getMyActiveGame().getMap().getClaimedRoutes(); //todo needs some work
-    }
-
-    public Map<String, Integer> getPoints() {
-        return getMyActiveGame().getPoints();
-    }
-
-    public Map<String, Integer> getTrainCounts() {
-        return getMyActiveGame().getTrainCounts();
-    }
-
-    public Boolean isMyTurn() {
-        String activeId = getMyActiveGame().getIdPlayerUp();
-        String myId = getMyPlayer().getId();
-        return myId.equals(activeId);
-    }
-
-    public void switchTurn() {
-        getMyActiveGame().switchTurn();
-    }
-
-    public void addDestinationCards(DestinationCard... cards) {
-        getMyPlayer().addDestinationCards(cards);
-    }
-
-    public Set<DestinationCard> getDestinationCards() {
-        return getMyPlayer().getDestinationCards();
-    }
-
-    public void initGame() {
-        getMyActiveGame().initGame();
-    }
-
-    private Game getMyActiveGame() {
-        if(myActiveGame != null) { return myActiveGame; }//convenience function
-
-        //check every player in every game
-        for(String curKey : gameList.keySet()) {
-            Game curGame = gameList.get(curKey);
-            if(curGame.getPlayer(ClientModel.get_instance().getUserId()) != null) {
-                myActiveGame = curGame;
-                return curGame;
-            }
+        if (game == null){
+            return false;
+        }
+        else {
+            return game.isStarted();
         }
 
-        //failed
-        return null;
-    }
-
-    private Player getMyPlayer() {
-        if(myPlayer != null) { return myPlayer; } //convenience function
-        return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
     }
 }

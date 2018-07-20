@@ -13,7 +13,7 @@ public class Chat {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setId(String username) {
         this.username = username;
     }
 
