@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
 
-public class StatsFragment extends BasicFragment{
+public class StatsFragment extends BasicFragment implements IStatsFragment{
     @Override
     public BasicFragment provideYourFragment() {
 

@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
 
-public class MapFragment extends BasicFragment {
+public class MapFragment extends BasicFragment implements IMapFragment {
     @Override
     public BasicFragment provideYourFragment() {
 

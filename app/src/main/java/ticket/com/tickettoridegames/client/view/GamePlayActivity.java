@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.view.Adapter.TabAdapter;
 
-public class GamePlayActivity extends AppCompatActivity {
+public class GamePlayActivity extends AppCompatActivity implements IGamePlayActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

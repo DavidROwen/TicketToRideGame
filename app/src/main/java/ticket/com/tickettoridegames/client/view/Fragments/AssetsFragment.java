@@ -10,8 +10,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.model.ClientModel;
 
-public class AssetsFragment extends BasicFragment{
+public class AssetsFragment extends BasicFragment implements  IAssetsFragment{
+
     @Override
     public BasicFragment provideYourFragment() {
 
