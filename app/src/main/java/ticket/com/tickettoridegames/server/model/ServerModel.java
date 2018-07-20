@@ -165,7 +165,8 @@ public class ServerModel {
 
     public void addToGameChat(String gameId, String playerId, String message){
         Game game = games.get(gameId);
-        Chat chat = new Chat(playerId, message);
+        User player = activeUsers.get(playerId);
+        Chat chat = new Chat(player.getUsername(), message);
         game.addToChat(chat);
         System.out.println("User: " + playerId + " added chat to game: " + gameId);
         //send commands to all the users in the game.
