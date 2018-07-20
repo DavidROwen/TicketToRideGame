@@ -1,9 +1,12 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import android.util.ArraySet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -35,7 +38,33 @@ public class Game {
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory;
 
-    public Game(){}
+    public Game(){
+        this.players = new HashMap<>();
+        this.chatList = new ArrayList<>();
+        this.turnOrder = new LinkedList<>();
+        this.map = map;
+        this.destinationCards = new ArraySet<>();
+        this.claimedDestinationCards = new HashMap<>();
+        this.gameHistory = new LinkedList<>();
+    }
+//
+//    public Game(String name, int numberOfPlayers){
+//        //collection subject to change
+//        this.players = new HashMap<>();
+//        this.chatList = new ArrayList<>();
+//        this.name = name;
+//        this.maxPlayers = numberOfPlayers;
+//        this.numberOfPlayers = 0;
+//        this.id = UUID.randomUUID().toString();
+//        this.isStarted = false;
+//        this.turnOrder = new LinkedList<>();
+//        this.map = map;
+//        this.destinationCards = new ArraySet<>();
+//        this.claimedDestinationCards = new HashMap<>();
+//        this.gameHistory = new LinkedList<>();
+//
+//        setupRoutes();
+//    }
 
     public Game(String name, int numberOfPlayers){
         //collection subject to change
@@ -47,6 +76,14 @@ public class Game {
         this.id = UUID.randomUUID().toString();
         this.isStarted = false;
         this.newestChat = null;
+
+        this.isStarted = false;
+        this.turnOrder = new LinkedList<>();
+        this.map = map;
+        this.destinationCards = new ArraySet<>();
+        this.claimedDestinationCards = new HashMap<>();
+        this.gameHistory = new LinkedList<>();
+
         setupRoutes();
     }
 

@@ -64,27 +64,40 @@ public class Player {
         this.points = points;
     }
 
-    public List<TrainCard> getTrainCards() {
-        return trainCards;
-    }
-
-    public void setTrainCards(List<TrainCard> trainCards) {
-        this.trainCards = trainCards;
-    }
-
     public Set<DestinationCard> getDestinationCards() {
         return destinationCards;
     }
 
-    public void setDestinationCards(Set<DestinationCard> destinationCards) {
-        this.destinationCards = destinationCards;
-    }
-
-    public void addTrainCard(TrainCard trainCard) {
-        trainCards.add(trainCard);
-    }
-
-    public void addDestinationCards(DestinationCard... cards) {
+    public void addDestinationCards(DestinationCard...cards) {
         destinationCards.addAll(Arrays.asList(cards));
+    }
+
+    public void addTrainCard(TrainCard card) {
+        trainCards.add(card);
+    }
+
+    public Boolean removeTrainCards(TrainCard...cards) {
+        if(!hasTrainCards(cards)) { return false; }
+
+        for(TrainCard card : cards) {
+            trainCards.remove(card);
+        }
+
+        return true;
+    }
+
+    public Boolean hasTrainCards(TrainCard...cards) {
+        //convert it to strings for comparison
+        List<String> myTypes = new LinkedList<>();
+        List<String> cardsTypes = new LinkedList<>();
+        for(TrainCard card : trainCards) { myTypes.add(card.getType().toString()); }
+        for(TrainCard card : cards) { cardsTypes.add(card.getType().toString()); }
+
+//        List<TrainCard> setCards = new LinkedList<>(Arrays.asList(cards)); //couldn't figure out
+        return myTypes.containsAll(cardsTypes);
+    }
+
+    public List<TrainCard> getTrainCards() {
+        return trainCards;
     }
 }

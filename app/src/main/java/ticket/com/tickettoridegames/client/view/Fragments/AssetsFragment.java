@@ -21,10 +21,10 @@ public class AssetsFragment extends BasicFragment{
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.assets_fragment,parent,false);
+//        View view = inflater.inflate(R.layout.assets_fragment,parent,false); //todo error here
 
         //Get your parent layout of fragment
-        RelativeLayout layout = (RelativeLayout)view;
+//        RelativeLayout layout = (RelativeLayout)view;  //todo error here
 
         //Now specific components here
 //        ListView routes = (ListView)findViewById(R.id.routes);
@@ -38,8 +38,8 @@ public class AssetsFragment extends BasicFragment{
 //        playerList.setAdapter(adapter);
 
 
-        return view;
-
+//        return view;  //todo error here
+        return null;
     }
 
 

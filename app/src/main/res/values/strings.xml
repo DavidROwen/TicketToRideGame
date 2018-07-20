@@ -35,15 +35,16 @@
         <item>Red</item>
     </string-array>
     <array name="trains">
-        <item>@drawable/black</item>
-        <item>@drawable/blue</item>
-        <item>@drawable/yellow</item>
-        <item>@drawable/green</item>
-        <item>@drawable/orange</item>
-        <item>@drawable/white</item>
-        <item>@drawable/red</item>
-        <item>@drawable/pink</item>
-        <item>@drawable/rainbow</item>
+        <!--todo errors here-->
+        <!--<item>@drawable/black</item>-->
+        <!--<item>@drawable/blue</item>-->
+        <!--<item>@drawable/yellow</item>-->
+        <!--<item>@drawable/green</item>-->
+        <!--<item>@drawable/orange</item>-->
+        <!--<item>@drawable/white</item>-->
+        <!--<item>@drawable/red</item>-->
+        <!--<item>@drawable/pink</item>-->
+        <!--<item>@drawable/rainbow</item>-->
     </array>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
