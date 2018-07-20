@@ -13,13 +13,15 @@ public class CreateGameService {
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
 
-        Game newGame = new Game(gameName,numberOfPlayers);
         try {
+            Game newGame = new Game(gameName,numberOfPlayers);
             sm.addNewGame(newGame, userId);
             result.setSuccess(true);
             result.setMessage(newGame.getId());
         }
         catch (Exception e){
+            System.out.println(e.toString());
+            e.printStackTrace();
             result.setSuccess(false);
             result.setErrorMessage("Error creating game. Exception:" + e.toString());
         }

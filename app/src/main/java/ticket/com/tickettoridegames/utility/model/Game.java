@@ -3,7 +3,6 @@ package ticket.com.tickettoridegames.utility.model;
 import android.util.ArraySet;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -42,8 +41,8 @@ public class Game {
         this.players = new HashMap<>();
         this.chatList = new ArrayList<>();
         this.turnOrder = new LinkedList<>();
-        this.map = map;
-        this.destinationCards = new ArraySet<>();
+        this.map = new GameMap();
+        this.destinationCards = new HashSet<>();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
     }
@@ -79,8 +78,8 @@ public class Game {
 
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
-        this.map = map;
-        this.destinationCards = new ArraySet<>();
+        this.map = new GameMap();
+        this.destinationCards = new HashSet<>();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
 
