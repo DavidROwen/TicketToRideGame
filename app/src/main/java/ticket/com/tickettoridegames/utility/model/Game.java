@@ -32,6 +32,7 @@ public class Game {
     // Map data
     private GameMap map;
     private Set<DestinationCard> destinationCards;
+    private Set<TrainCard> trainBank;
     private Map<String, DestinationCard> claimedDestinationCards;
     private TrainCard topTrainCard;
 
@@ -44,6 +45,7 @@ public class Game {
         this.turnOrder = new LinkedList<>();
         this.map = map;
         this.destinationCards = new ArraySet<>();
+        this.trainBank = new ArraySet<>();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
     }
@@ -81,6 +83,7 @@ public class Game {
         this.turnOrder = new LinkedList<>();
         this.map = map;
         this.destinationCards = new ArraySet<>();
+        this.trainBank = new ArraySet<>();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
 
@@ -219,6 +222,10 @@ public class Game {
 
     public Set<DestinationCard> getDestinationCards() {
         return destinationCards;
+    }
+
+    public Set<TrainCard> getTrainBank() {
+        return trainBank;
     }
 
     public Map<String, DestinationCard> getClaimedDestinationCards() {
