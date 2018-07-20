@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,12 +23,14 @@ public class Game {
     private Chat newestChat;
 
     // Stores the playerIDs in turn order
-     private List<String> turnOrder;
+    private List<String> turnOrder;
+    private Integer turnNumber = 0;
 
-     // Map data
+    // Map data
     private GameMap map;
     private Set<DestinationCard> destinationCards;
     private Map<String, DestinationCard> claimedDestinationCards;
+    private TrainCard topTrainCard;
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory;
@@ -50,8 +53,6 @@ public class Game {
     public void setupRoutes(){
         // this function can set the default route data
     }
-
-
 
     public String getId() {
         return id;
@@ -161,5 +162,113 @@ public class Game {
 
     public void setStarted(boolean started) {
         isStarted = started;
+    }
+
+    public Player getPlayer(String userId) {
+        return players.get(userId);
+    }
+
+    public Map<String, Player> getPlayers() {
+        return players;
+    }
+
+    public List<String> getTurnOrder() {
+        return turnOrder;
+    }
+
+    public GameMap getMap() {
+        return map;
+    }
+
+    public Set<DestinationCard> getDestinationCards() {
+        return destinationCards;
+    }
+
+    public Map<String, DestinationCard> getClaimedDestinationCards() {
+        return claimedDestinationCards;
+    }
+
+    public List<PlayerAction> getGameHistory() {
+        return gameHistory;
+    }
+
+    public Map<String,Integer> getPoints() {
+        Map<String,Integer> points = new HashMap<>();
+
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            points.put(curPlayer.getId(), curPlayer.getPoints());
+        }
+
+        return points;
+    }
+
+    public Map<String,Integer> getCountsOfCardsInHand() {
+        Map<String,Integer> counts = new HashMap<>();
+
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            counts.put(curPlayer.getId(), curPlayer.getTrainCards().size());
+        }
+
+        return counts;
+    }
+
+    public TrainCard getTopTrainCard() {
+        if(topTrainCard == null) { removeTopTrainCard(); } //cycle through it
+        return topTrainCard;
+    }
+
+    public TrainCard removeTopTrainCard() {
+        TrainCard card = topTrainCard;
+
+        //set a new rand card
+        Integer randInt = Math.abs(new Random().nextInt() % TrainCard.TRAIN_TYPE.values().length);
+        topTrainCard = new TrainCard(TrainCard.TRAIN_TYPE.values()[randInt]);
+
+        if(card == null) { return removeTopTrainCard(); } //cycle through it
+        return card;
+    }
+
+    public Map<String,Integer> getTrainCounts() {
+        Map<String,Integer> counts = new HashMap<>();
+
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            counts.put(curPlayer.getId(), curPlayer.getTrains());
+        }
+
+        return counts;
+    }
+
+    public void switchTurn() {
+        turnNumber = (turnNumber + 1) % players.size();
+    }
+
+    //player up is the player who's turn it currently is
+    public String getIdPlayerUp() {
+        return turnOrder.get(turnNumber);
+    }
+
+    private void setTurnOrder() {
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            turnOrder.add(curPlayer.getId());
+        }
+    }
+
+    public void initGame() {
+        setTurnOrder();
+
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            initHand(curPlayer);
+        }
+    }
+
+    private void initHand(Player player) {
+        for(int i = 0; i < 4; i++) {
+            player.addTrainCard(removeTopTrainCard());
+        }
     }
 }

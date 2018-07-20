@@ -1,5 +1,11 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 public class Player {
 
     private String username;
@@ -9,6 +15,9 @@ public class Player {
     private String color;
     private Integer trains;
     private Integer points;
+
+    private List<TrainCard> trainCards = new LinkedList<>();
+    private Set<DestinationCard> destinationCards = new HashSet<>();
 
     public Player(String username, String id) {
         this.username = username;
@@ -53,5 +62,29 @@ public class Player {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public List<TrainCard> getTrainCards() {
+        return trainCards;
+    }
+
+    public void setTrainCards(List<TrainCard> trainCards) {
+        this.trainCards = trainCards;
+    }
+
+    public Set<DestinationCard> getDestinationCards() {
+        return destinationCards;
+    }
+
+    public void setDestinationCards(Set<DestinationCard> destinationCards) {
+        this.destinationCards = destinationCards;
+    }
+
+    public void addTrainCard(TrainCard trainCard) {
+        trainCards.add(trainCard);
+    }
+
+    public void addDestinationCards(DestinationCard... cards) {
+        destinationCards.addAll(Arrays.asList(cards));
     }
 }
