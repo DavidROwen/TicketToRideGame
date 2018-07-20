@@ -36,6 +36,7 @@ public class Game {
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory;
+    private Set<TrainCard> trainBank;
 
     public Game(){
         this.players = new HashMap<>();
@@ -43,27 +44,10 @@ public class Game {
         this.turnOrder = new LinkedList<>();
         this.map = new GameMap();
         this.destinationCards = new HashSet<>();
+        this.trainBank = new HashSet<>();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
     }
-//
-//    public Game(String name, int numberOfPlayers){
-//        //collection subject to change
-//        this.players = new HashMap<>();
-//        this.chatList = new ArrayList<>();
-//        this.name = name;
-//        this.maxPlayers = numberOfPlayers;
-//        this.numberOfPlayers = 0;
-//        this.id = UUID.randomUUID().toString();
-//        this.isStarted = false;
-//        this.turnOrder = new LinkedList<>();
-//        this.map = map;
-//        this.destinationCards = new ArraySet<>();
-//        this.claimedDestinationCards = new HashMap<>();
-//        this.gameHistory = new LinkedList<>();
-//
-//        setupRoutes();
-//    }
 
     public Game(String name, int numberOfPlayers){
         //collection subject to change
@@ -79,6 +63,7 @@ public class Game {
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
         this.map = new GameMap();
+        this.trainBank = new HashSet<>();
         this.destinationCards = new HashSet<>();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
