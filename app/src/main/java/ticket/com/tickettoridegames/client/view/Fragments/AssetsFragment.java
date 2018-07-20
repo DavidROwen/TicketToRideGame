@@ -113,6 +113,10 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
             adapter.add(message);
         }
     }
+
+    public void displayMessage(String message){
+
+    }
 }
 
 class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {

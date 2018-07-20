@@ -12,4 +12,6 @@ public interface IAssetsView {
     public void setBank(Set<TrainCard> trainBank);
 
     public void setRoutes(Set<DestinationCard> destinationCards);
+
+    public void displayMessage(String message);
 }
