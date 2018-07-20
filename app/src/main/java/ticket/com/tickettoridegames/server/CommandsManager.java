@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import ticket.com.tickettoridegames.server.model.ServerModel;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.web.Command;
 
 public class CommandsManager {
@@ -71,6 +73,14 @@ public class CommandsManager {
             pq.add(command);
         }
         System.out.println("Command added to queue of user: " + playerId + " Commands in queue: " + pq.size());
+    }
+
+    //adds a command to a users queue. If the user does not have a queue yet it creates one
+    public static void addCommandAllPlayers(Command command, String gameId) {
+        Game game = ServerModel.getInstance().getGames().get(gameId);
+        for(String curPlayerId : game.getPlayersId()) {
+            addCommand(command, curPlayerId);
+        }
     }
 
     //clear a users queue. used after sending a queue of commands.

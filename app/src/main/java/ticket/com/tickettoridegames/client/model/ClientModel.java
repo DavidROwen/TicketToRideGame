@@ -20,6 +20,7 @@ public class ClientModel extends Observable {
 
     // Singleton Class
     static private ClientModel _instance;
+    private TrainCard topTrainCard;
 
     static public ClientModel get_instance() {
         if (_instance == null) {
@@ -150,6 +151,10 @@ public class ClientModel extends Observable {
         return getMyPlayer().getTrainCards();
     }
 
+    public void addTrainCard(TrainCard drawnCard) {
+        getMyPlayer().addTrainCard(drawnCard);
+    }
+
     public Map<String, Integer> getCountsOfCardsInHand() {
         return getMyActiveGame().getCountsOfCardsInHand();
     }
@@ -158,7 +163,6 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getTopTrainCard();
     }
 
-    public TrainCard drawACard() { return getMyActiveGame().removeTopTrainCard(); }
 
     public List<Route> getClaimedRoutes() {
         return null; //getMyActiveGame().getMap().getClaimedRoutes(); //todo needs some work
@@ -190,10 +194,6 @@ public class ClientModel extends Observable {
         return getMyPlayer().getDestinationCards();
     }
 
-    public void initGame() {
-        getMyActiveGame().initGame();
-    }
-
     private Game getMyActiveGame() {
         if(myActiveGame != null) { return myActiveGame; }//convenience function
 
@@ -213,5 +213,9 @@ public class ClientModel extends Observable {
     private Player getMyPlayer() {
         if(myPlayer != null) { return myPlayer; } //convenience function
         return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
+    }
+
+    public void setTopTrainCard(TrainCard topTrainCard) {
+        this.topTrainCard = topTrainCard;
     }
 }

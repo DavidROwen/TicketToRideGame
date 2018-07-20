@@ -7,8 +7,10 @@ import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.utility.model.Chat;
+import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 import ticket.com.tickettoridegames.utility.web.Command;
 
@@ -26,9 +28,9 @@ public class ServerModel {
     //Map of users that stores the Username as the key
     private Map<String, User> registeredUsers;
     //Map of games that stores the GameId ast he key
-    private Map<String, Game> games;
+    private Map<String, Game> games; //key is gameId
     //Map of users that stores the UserID as the kay
-    private Map<String, User> activeUsers;
+    private Map<String, User> activeUsers; //key is userId
 
     private ServerModel(){
         registeredUsers = new HashMap<>();
@@ -210,5 +212,27 @@ public class ServerModel {
             return true;
         }
             return false;
+    }
+
+    public void initGame(String gameId) {
+        games.get(gameId).initGame();
+    }
+
+    public TrainCard drawATrainCard(String gameId) {
+        return games.get(gameId).takeTopTrainCard();
+    }
+
+    public TrainCard getTopTrainCard(String gameId) { return games.get(gameId).getTopTrainCard(); }
+
+    public DestinationCard drawADestinationCard(String gameId) {
+        return games.get(gameId).takeTopDestinationCard();
+    }
+
+    public void returnADestinationCard(String gameId, DestinationCard card) {
+
+    }
+
+    public Map<String, Game> getGames() {
+        return games;
     }
 }

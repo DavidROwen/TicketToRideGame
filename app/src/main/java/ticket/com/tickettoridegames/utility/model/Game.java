@@ -1,7 +1,5 @@
 package ticket.com.tickettoridegames.utility.model;
 
-import android.util.ArraySet;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 import java.util.UUID;
 
 public class Game {
@@ -30,21 +29,20 @@ public class Game {
 
     // Map data
     private GameMap map;
-    private Set<DestinationCard> destinationCards;
+    private Stack<DestinationCard> destinationCards;
     private Map<String, DestinationCard> claimedDestinationCards;
     private TrainCard topTrainCard;
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory;
-    private Set<TrainCard> trainBank;
 
     public Game(){
         this.players = new HashMap<>();
         this.chatList = new ArrayList<>();
         this.turnOrder = new LinkedList<>();
-        this.map = new GameMap();
-        this.destinationCards = new HashSet<>();
-        this.trainBank = new HashSet<>();
+        this.map = map;
+        this.destinationCards = new Stack<>();
+        fillDestinationCards();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
     }
@@ -62,9 +60,9 @@ public class Game {
 
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
-        this.map = new GameMap();
-        this.trainBank = new HashSet<>();
-        this.destinationCards = new HashSet<>();
+        this.map = map;
+        this.destinationCards = new Stack<>();
+        fillDestinationCards();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
 
@@ -201,7 +199,7 @@ public class Game {
         return map;
     }
 
-    public Set<DestinationCard> getDestinationCards() {
+    public Stack<DestinationCard> getDestinationCards() {
         return destinationCards;
     }
 
@@ -236,18 +234,18 @@ public class Game {
     }
 
     public TrainCard getTopTrainCard() {
-        if(topTrainCard == null) { removeTopTrainCard(); } //cycle through it
+        if(topTrainCard == null) { takeTopTrainCard(); } //cycle through it
         return topTrainCard;
     }
 
-    public TrainCard removeTopTrainCard() {
+    public TrainCard takeTopTrainCard() {
         TrainCard card = topTrainCard;
 
         //set a new rand card
         Integer randInt = Math.abs(new Random().nextInt() % TrainCard.TRAIN_TYPE.values().length);
         topTrainCard = new TrainCard(TrainCard.TRAIN_TYPE.values()[randInt]);
 
-        if(card == null) { return removeTopTrainCard(); } //cycle through it
+        if(card == null) { return takeTopTrainCard(); } //cycle through it
         return card;
     }
 
@@ -280,6 +278,8 @@ public class Game {
 
     public void initGame() {
         setTurnOrder();
+        //todo assign colors
+        //todo lay out face up cards
 
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
@@ -289,7 +289,24 @@ public class Game {
 
     private void initHand(Player player) {
         for(int i = 0; i < 4; i++) {
-            player.addTrainCard(removeTopTrainCard());
+            player.addTrainCard(takeTopTrainCard());
         }
+    }
+
+    public DestinationCard takeTopDestinationCard() {
+        return destinationCards.pop();
+    }
+
+    public DestinationCard getTopDestinationCard() {
+        return destinationCards.peek();
+    }
+
+    private void fillDestinationCards() {
+        assert destinationCards != null;
+
+        //temporary fix
+        destinationCards.add(new DestinationCard(new City("Saltlake City"), 10));
+        destinationCards.add(new DestinationCard(new City("Portland"), 10));
+        destinationCards.add(new DestinationCard(new City("Seattle"), 10));
     }
 }

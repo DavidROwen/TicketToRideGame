@@ -25,7 +25,6 @@ public class TrainCard {
 
     @Override
     public int hashCode() {
-        System.out.println(type.ordinal());
         return type.ordinal(); //returns position in enum
     }
 }

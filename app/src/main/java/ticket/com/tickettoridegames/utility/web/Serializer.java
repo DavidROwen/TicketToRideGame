@@ -31,6 +31,10 @@ public class Serializer {
         return GSON.fromJson(in, returnType);
     }
 
+    public static Object fromJson(String in, Type returnType ) {
+        return GSON.fromJson(in, returnType);
+    }
+
     public static void toJsonOutput(Object result, OutputStreamWriter outputStreamWriter) {
         GSON.toJson(result, outputStreamWriter);
     }
@@ -139,6 +143,7 @@ public class Serializer {
 
         private Object calcInstance(JsonObject jsonObject, Class<?> instanceType) {
             if(jsonObject.get("instance") == null) { return null; } //static methods
+//            System.out.println("look here: " + jsonObject.get getString("instance"));
             return calcObject(jsonObject.get("instance").getAsJsonObject(), instanceType);
         }
 

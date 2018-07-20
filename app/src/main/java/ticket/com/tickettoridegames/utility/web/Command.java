@@ -32,18 +32,21 @@ public class Command {
     }
 
     public Object execute() {
-        System.out.println(toString());
+
         try {
             Class<?> receiver = Class.forName(className);
             Method method = receiver.getMethod(methodName, paramTypes);
             return method.invoke(instance, paramValues);
         } catch (NoSuchMethodException e) {
+            System.out.println("invalid method: " + toString());
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
+            System.out.println("execution failed: " + toString());
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            System.out.println("invalid class: " + toString());
             e.printStackTrace();
         }
 

@@ -79,7 +79,7 @@ public class ClientModelTest {
 
         //draw a card
         TrainCard card1 = clientModel.getDeckTop();
-        TrainCard card2 = clientModel.drawACard();
+        TrainCard card2 = clientModel.drawATrainCard();
         TrainCard card3 = clientModel.getDeckTop();
         assertEquals(card1, card2);
         assertNotEquals(card1, card3);

@@ -9,7 +9,7 @@ import ticket.com.tickettoridegames.utility.web.Result;
 
 public class JoinService {
 
-    private static ClientModel clientModel;
+    private static ClientModel clientModel = ClientModel.get_instance();
 
     public JoinService(){
         clientModel = ClientModel.get_instance();
@@ -86,6 +86,22 @@ public class JoinService {
     }
 
     public static void addPlayer(String gameID, Player player) {
+        //todo should go to the server for this
         clientModel.addPlayerToGame(gameID,player);
+    }
+
+    public static void addPlayer2(String gameId, String userId) {
+        try {
+            //        ticket.com.tickettoridegames.server.service.JoinService.class.newInstance().join(userId, gameId);
+            Command command = new Command(ticket.com.tickettoridegames.server.service.JoinService.class,
+                    ticket.com.tickettoridegames.server.service.JoinService.class.newInstance(),
+                    "join", new Object[]{userId, gameId}
+            );
+            ServerProxy.sendCommand(command);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
