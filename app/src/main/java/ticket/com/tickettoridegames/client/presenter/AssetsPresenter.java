@@ -6,6 +6,7 @@ import java.util.Observer;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
+import ticket.com.tickettoridegames.utility.TYPE;
 
 public class AssetsPresenter implements IAssetsPresenter, Observer {
 
@@ -23,5 +24,10 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
     @Override
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
+        TYPE type = (TYPE) arg;
+        switch(type){
+            default:
+                //Why you updated me?
+        }
     }
 }
