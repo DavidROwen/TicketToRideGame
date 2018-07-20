@@ -107,8 +107,8 @@ public class LobbyActivity extends Activity implements ILobbyView{
     }
 
     @Override
-    public void displayChat(String message){
-        adapter2.add(message);
+    public void displayChat(Chat message){
+        adapter2.add(message.getMessage());
     }
 
     @Override

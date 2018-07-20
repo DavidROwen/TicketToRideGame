@@ -10,7 +10,7 @@ public interface ILobbyView {
 
     void resetPlayers(Set<String> players);
 
-    void displayChat(String message);
+    void displayChat(Chat message);
 
     String sendChat(String message);
 

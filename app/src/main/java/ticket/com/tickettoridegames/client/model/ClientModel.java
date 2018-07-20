@@ -10,6 +10,8 @@ import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.User;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
+import static ticket.com.tickettoridegames.utility.TYPE.START;
 
 public class ClientModel extends Observable {
 
@@ -81,11 +83,16 @@ public class ClientModel extends Observable {
         return game.getChatList();
     }
 
+    public Chat getNewestChat(String gameID){
+        Game game = gameList.get(gameID);
+        return game.getNewestChat();
+    }
+
     public void addGameChat(String gameID, Chat chat){
         Game game = gameList.get(gameID);
         game.addToChat(chat);
         setChanged();
-        notifyObservers();
+        notifyObservers(NEWCHAT);
     }
 
     public String getCurrentGameID(){
@@ -122,7 +129,7 @@ public class ClientModel extends Observable {
         }
         game.setStarted(true);
         setChanged();
-        notifyObservers();
+        notifyObservers(START);
     }
 
     public boolean isGameStarted(String gameId){

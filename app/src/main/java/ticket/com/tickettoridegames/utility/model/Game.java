@@ -19,6 +19,7 @@ public class Game {
     private int  maxPlayers;
     private int numberOfPlayers;
     private boolean isStarted;
+    private Chat newestChat;
 
     // Stores the playerIDs in turn order
      private List<String> turnOrder;
@@ -42,6 +43,7 @@ public class Game {
         this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
         this.isStarted = false;
+        this.newestChat = null;
         setupRoutes();
     }
 
@@ -145,7 +147,12 @@ public class Game {
     }
 
     public void addToChat(Chat c){
-        chatList.add(c);
+        chatList.add(newestChat);
+        newestChat = c;
+    }
+
+    public Chat getNewestChat(){
+        return newestChat;
     }
 
     public boolean isStarted() {

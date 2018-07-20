@@ -1,20 +1,20 @@
 package ticket.com.tickettoridegames.utility.model;
 
 public class Chat {
-    private String id;
+    private String username;
     private String message;
 
-    public Chat(String playerId, String message){
-        this.id = playerId;
+    public Chat(String username, String message){
+        this.username = username;
         this.message = message;
     }
 
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String username) {
+        this.username = username;
     }
 
     public String getMessage() {
