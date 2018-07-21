@@ -91,25 +91,26 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void drawDestinationCard(String playerId, String gameId) {
+    public List<DestinationCard> drawDestinationCard(String playerId, String gameId) {
         //draw card
-        DestinationCard drawnCard = ServerModel.getInstance().drawADestinationCard(gameId);
-//        ClientModel.get_instance().addDestinationCard(drawnCard, playerId);
-        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                "addDestinationCard", new Object[]{drawnCard, playerId}
-        );
-        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
+        List<DestinationCard> drawnCard = ServerModel.getInstance().drawADestinationCard(gameId);
+        return drawnCard;
 
-        //it's gone now
-        ClientModel.get_instance().removeDestinationCard();
-        Command removeDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                "removeDestinationCard", new Object[]{}
-        );
-        CommandsManager.addCommandAllPlayers(removeDestinationCard, gameId);
+//        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
+//                "addDestinationCard", new Object[]{drawnCard, playerId}
+//        );
+//        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
+//
+//        //it's gone now
+//        ClientModel.get_instance().removeDestinationCard();
+//        Command removeDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
+//                "removeDestinationCard", new Object[]{}
+//        );
+//        CommandsManager.addCommandAllPlayers(removeDestinationCard, gameId);
     }
 
     @Override
-    public void returnDestinationCard(String gameId, DestinationCard card) {
+    public void returnDestinationCard(String gameId, List<DestinationCard> card) {
         ServerModel.getInstance().addDestinationCard(gameId, card);
 
 //        ClientModel.get_instance().addDestinationCard(card);

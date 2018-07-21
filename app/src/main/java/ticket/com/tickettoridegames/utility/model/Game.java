@@ -1,11 +1,16 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
@@ -30,9 +35,8 @@ public class Game {
 
     // Map data
     private GameMap map;
-    private Stack<DestinationCard> destinationCards;
+    private List<DestinationCard> destinationCards;
     private Stack<TrainCard> trainCardsDeck = new Stack<>();
-    private Map<String, DestinationCard> claimedDestinationCards;
 //    private TrainCard topTrainCard;
 
     // Stores player actions viewed in the stats history tab
@@ -44,9 +48,9 @@ public class Game {
         this.chatList = new ArrayList<>();
         this.turnOrder = new LinkedList<>();
         this.map = map;
-        this.destinationCards = new Stack<>();
+        this.destinationCards = new LinkedList<>();
         this.trainBank = new LinkedList<>();
-        this.claimedDestinationCards = new HashMap<>();
+        fillDestinationCards();
         this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
@@ -69,8 +73,7 @@ public class Game {
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
         this.map = map;
-        this.destinationCards = new Stack<>();
-        this.claimedDestinationCards = new HashMap<>();
+        this.destinationCards = new LinkedList<>();
         this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
@@ -216,12 +219,8 @@ public class Game {
         return map;
     }
 
-    public Stack<DestinationCard> getDestinationCards() {
+    public List<DestinationCard> getDestinationCards() {
         return destinationCards;
-    }
-
-    public Map<String, DestinationCard> getClaimedDestinationCards() {
-        return claimedDestinationCards;
     }
 
     public List<PlayerAction> getGameHistory() {
@@ -335,10 +334,12 @@ public class Game {
     }
 
     //give player 3 destination cards to start the game
-    private void initPlayerDestinationCards(Player curPlayer) {
-        for(int i = 0; i < 3; i++) {
-            curPlayer.addDestinationCard(getTopDestinationCard());
+    public List initPlayerDestinationCards() {
+        ArrayList<List> playerCards = new ArrayList<>();
+        for(int i = 0; i < getNumberOfPlayers(); i++){
+            playerCards.add(drawDestinationCards());
         }
+        return playerCards;
     }
 
     //max of 7 players //for 7 colors
@@ -357,25 +358,73 @@ public class Game {
         }
     }
 
-    public DestinationCard takeTopDestinationCard() {
-        return destinationCards.pop();
+    private DestinationCard getTopDestinationCard(){
+        DestinationCard dc = destinationCards.get(0);
+        destinationCards.remove(0);
+        return dc;
     }
 
-    public DestinationCard getTopDestinationCard() {
-        return destinationCards.peek();
+    public List drawDestinationCards(){
+        //list type subject to change
+        ArrayList<DestinationCard> list = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            list.add(getTopDestinationCard());
+        }
+        return list;
+    }
+
+    public void claimDestinationCards(List<DestinationCard> cards, String playerId){
+        Player player = players.get(playerId);
+        for(DestinationCard card : cards){
+            player.addDestinationCard(card);
+        }
+    }
+
+    public void discardDestinationCards(List<DestinationCard> cards){
+        for(DestinationCard card : cards){
+            addDestinationCard(card);
+        }
     }
 
     private void fillDestinationCards() {
         assert destinationCards != null;
 
         //temporary fix
-        destinationCards.add(new DestinationCard(new City("Saltlake City"), new City("Portland"), 10));
-        destinationCards.add(new DestinationCard(new City("Portland"), new City("Saltlake City"), 10));
-        destinationCards.add(new DestinationCard(new City("Seattle"), new City("Saltlake City"), 10));
+        destinationCards.add(new DestinationCard(new City("Los Angeles"), new City("New York City"), 21));
+        destinationCards.add(new DestinationCard(new City("Duluth"), new City("Houston"), 8));
+        destinationCards.add(new DestinationCard(new City("Sault Ste. Marie"), new City("Nashville"), 8));
+        destinationCards.add(new DestinationCard(new City("New York City"), new City("Atlanta"), 6));
+        destinationCards.add(new DestinationCard(new City("Portland"), new City("Nashville"), 17));
+        destinationCards.add(new DestinationCard(new City("Vancouver"), new City("Montreal"), 20));
+        destinationCards.add(new DestinationCard(new City("Duluth"), new City("El Paso"), 10));
+        destinationCards.add(new DestinationCard(new City("Toronto"), new City("Miami"), 10));
+        destinationCards.add(new DestinationCard(new City("Portland"), new City("Phoenix"), 11));
+        destinationCards.add(new DestinationCard(new City("Dallas"), new City("New York City"), 11));
+        destinationCards.add(new DestinationCard(new City("Calgary"), new City("Salt Lake City"), 7));
+        destinationCards.add(new DestinationCard(new City("Calgary"), new City("Phoenix"), 13));
+        destinationCards.add(new DestinationCard(new City("Los Angeles"), new City("Miami"), 20));
+        destinationCards.add(new DestinationCard(new City("Winnipeg"), new City("Little Rock"), 11));
+        destinationCards.add(new DestinationCard(new City("San Francisco"), new City("Atlanta"), 17));
+        destinationCards.add(new DestinationCard(new City("Kansas City"), new City("Houston"), 5));
+        destinationCards.add(new DestinationCard(new City("Los Angeles"), new City("Chicago"), 16));
+        destinationCards.add(new DestinationCard(new City("Denver"), new City("Pittsburgh"), 11));
+        destinationCards.add(new DestinationCard(new City("Chicago"), new City("Santa Fe"), 9));
+        destinationCards.add(new DestinationCard(new City("Vancouver"), new City("Santa Fe"), 13));
+        destinationCards.add(new DestinationCard(new City("Boston"), new City("Miami"), 12));
+        destinationCards.add(new DestinationCard(new City("Chicago"), new City("New Orleans"), 7));
+        destinationCards.add(new DestinationCard(new City("Montreal"), new City("Atlanta"), 9));
+        destinationCards.add(new DestinationCard(new City("Seattle"), new City("New York"), 22));
+        destinationCards.add(new DestinationCard(new City("Denver"), new City("El Paso"), 4));
+        destinationCards.add(new DestinationCard(new City("Helena"), new City("Los Angeles"), 8));
+        destinationCards.add(new DestinationCard(new City("Winnipeg"), new City("Houston"), 12));
+        destinationCards.add(new DestinationCard(new City("Montreal"), new City("New Orleans"), 13));
+        destinationCards.add(new DestinationCard(new City("Sault Ste. Marie"), new City("Oklahoma City"), 9));
+        destinationCards.add(new DestinationCard(new City("Seattle"), new City("Los Angeles"), 9));
+        Collections.shuffle(destinationCards);
     }
 
-    public void addDestinationCard(DestinationCard card) {
-        destinationCards.add(card); //todo should add to bottom
+    private void addDestinationCard(DestinationCard card) {
+        destinationCards.add(card);
     }
 
     public void setTurnOrder(List<String> turnOrder) {
@@ -397,10 +446,6 @@ public class Game {
             Player.COLOR color = colors.get(id);
             players.get(id).setColor(color);
         }
-    }
-
-    public void removeDestinationCard() {
-        destinationCards.pop();
     }
 
     public void pickupTrainCard(String playerId, Integer index) {
