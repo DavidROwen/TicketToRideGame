@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -68,13 +69,13 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         View view = inflater.inflate(R.layout.assets_fragment,parent,false);
 
         //Get your parent layout of fragment
-        RelativeLayout layout = (RelativeLayout)view;
+        LinearLayout layout = (LinearLayout)view;
 
         //Now specific components here
-        RecyclerView ownedtrains = (RecyclerView)getView().findViewById(R.id.ownedTrains);
-        RecyclerView trainBank = (RecyclerView)getView().findViewById(R.id.trainBank);
+        RecyclerView ownedtrains = (RecyclerView)layout.findViewById(R.id.ownedTrains);
+        RecyclerView trainBank = (RecyclerView)layout.findViewById(R.id.trainBank);
 
-        ListView routes = (ListView)getView().findViewById(R.id.routes);
+        ListView routes = (ListView)layout.findViewById(R.id.routes);
         adapter=new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 listRoutes);
