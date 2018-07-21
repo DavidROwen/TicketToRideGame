@@ -400,4 +400,11 @@ public class Game {
         trainBank.set(index, takeTopTrainCard());
     }
 
+    public List<TrainCard> getTrainBank() {
+        return trainBank;
+    }
+
+    public void setTrainBank(List<TrainCard> trainBank) {
+        this.trainBank = trainBank;
+    }
 }

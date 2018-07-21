@@ -26,7 +26,8 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         TYPE type = (TYPE) arg;
         switch(type){
             case BANKUPDATE:
-                //assetsView.setBank(clientModel.getMyActiveGame().getBank());
+                // Someone else drew a card so update your view
+                assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
             default:
                 //Why you updated me?
         }
