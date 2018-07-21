@@ -76,6 +76,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             case START:
                 if (clientModel.isGameStarted(clientModel.getCurrentGameID())) {
                     lobbyView.displayMessage("Game starting.");
+                    lobbyView.changeView();
                 }
                 break;
             case NEWCHAT:
