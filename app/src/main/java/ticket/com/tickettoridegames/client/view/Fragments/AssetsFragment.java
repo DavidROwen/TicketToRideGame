@@ -94,6 +94,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         myHandRecyclerView.setAdapter(myAdapter);
     }
 
+    @Override
     public void setBank(Set<TrainCard> trainBank){
         this.trainBank = trainBank;
 
@@ -104,6 +105,12 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         myBankRecyclerView.setAdapter(myAdapter);
     }
 
+    @Override
+    public TrainCard getBankChoice(TrainCard trainCard){
+        return null;
+    }
+
+    @Override
     public void setRoutes(Set<DestinationCard> destinationCards){
         this.destinationCards = destinationCards;
 
@@ -114,6 +121,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         }
     }
 
+    @Override
     public void displayMessage(String message){
 
     }

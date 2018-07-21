@@ -11,7 +11,7 @@ public interface IAssetsView {
 
     public void setBank(Set<TrainCard> trainBank);
 
-    public void  getBankChoice(TrainCard trainCard);
+    public TrainCard getBankChoice(TrainCard trainCard);
 
     public void setRoutes(Set<DestinationCard> destinationCards);
 
