@@ -70,6 +70,8 @@ public class GamePlayService implements IGameService {
         }
     }
 
+    //Add a function to claim cards;
+
     @Override
     public void returnDestinationCard(String gameId, List<DestinationCard> card) {
         try {
