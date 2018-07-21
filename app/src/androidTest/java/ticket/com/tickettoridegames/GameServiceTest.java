@@ -23,6 +23,11 @@ public class GameServiceTest {
     private String userId2;
 
     @Test
+    public void testPickupCard() {
+        initGame();
+    }
+
+    @Test
     public void testPhase2Simple() {
         initGame();
         GamePlayService proxy = new GamePlayService();
