@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
         View view = inflater.inflate(R.layout.stats_fragment,parent,false);
 
         //Get your parent layout of fragment
-        RelativeLayout layout = (RelativeLayout)view;
+        LinearLayout layout = (LinearLayout)view;
 
         //Now specific components here
 
@@ -55,7 +56,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     public void displayChat(Chat message){
 
     }
-    
+
     @Override
     public void setChat(List<Chat> chats){
 

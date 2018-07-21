@@ -30,19 +30,14 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             lobbyView.displayMessage("Invalid game ID");
         }
         else {
-            //if (clientModel.getGames().get(gameID).getPlayersId().size() > 1) {
-                //lobbyView.displayMessage("Successfully create game.");
-                Result result = lobbyService.startGame(gameID);
-                if (result.isSuccess()) {
-                    lobbyView.displayMessage("Successfully started game.");
-                } else {
-                    // Error happened address as necessary.
-                    lobbyView.displayMessage("Failed to start game. " + result.getErrorMessage());
-                }
-            //}
-            //else {
-                //lobbyView.displayMessage("Too few players to start game.");
-            //
+            Result result = lobbyService.startGame(gameID);
+            if (result.isSuccess()) {
+                lobbyView.displayMessage("Successfully started game.");
+                lobbyView.changeView();
+            } else {
+                // Error happened address as necessary.
+                lobbyView.displayMessage("Failed to start game. " + result.getErrorMessage());
+            }
         }
     }
 
