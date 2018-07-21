@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.presenter.IStatsPresenter;
+import ticket.com.tickettoridegames.client.presenter.StatsPresenter;
 import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IStatsView;
 import ticket.com.tickettoridegames.client.view.LoginActivity;
@@ -21,10 +23,17 @@ import ticket.com.tickettoridegames.utility.model.PlayerStats;
 
 public class StatsFragment extends BasicFragment implements IStatsView{
 
+    private IStatsPresenter presenter;
+
     @Override
     public BasicFragment provideYourFragment() {
-
         return new StatsFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter = new StatsPresenter(this);
     }
 
     @Override
@@ -46,12 +55,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     public void displayChat(Chat message){
 
     }
-
-    @Override
-    public String sendChat(String message){
-        return null;
-    }
-
+    
     @Override
     public void setChat(List<Chat> chats){
 

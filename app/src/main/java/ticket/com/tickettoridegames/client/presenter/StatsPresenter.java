@@ -35,6 +35,7 @@ public class StatsPresenter implements IStatsPresenter , Observer {
                 break;
             case HISTORYUPDATE:
                 statsView.setHistory(clientModel.getHistory());
+                break;
             default:
                 // We got an update that we don't care about.
         }

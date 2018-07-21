@@ -10,8 +10,6 @@ public interface IStatsView {
 
     void displayChat(Chat message);
 
-    String sendChat(String message);
-
     void setChat(List<Chat> chats);
 
     void setHistory(List<PlayerAction> gameHistory);
