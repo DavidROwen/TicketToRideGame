@@ -28,6 +28,7 @@ public class Game {
     private List<String> turnOrder;
     private Integer turnNumber = 0;
     private List<TrainCard> trainBank;
+    private List<TrainCard> trainDeck;
 
     // Map data
     private GameMap map;
@@ -48,6 +49,9 @@ public class Game {
         fillDestinationCards();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
+
+        setupRoutes();
+        setupTrainBank();
     }
 
     public Game(String name, int numberOfPlayers){
@@ -60,7 +64,7 @@ public class Game {
         this.id = UUID.randomUUID().toString();
         this.isStarted = false;
         this.newestChat = null;
-        trainBank = new LinkedList<>();
+        this.trainBank = new LinkedList<>();
 
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
@@ -71,6 +75,15 @@ public class Game {
         this.gameHistory = new LinkedList<>();
 
         setupRoutes();
+        setupTrainBank();
+    }
+
+    private void setupTrainBank() {
+        for (int i = 0; i < 5; i++) {
+            trainBank.add(trainDeck.get(1));
+            trainBank.add(trainDeck.remove(1));
+        }
+        assert(trainBank.size() == 5);
     }
 
     public void setupRoutes(){
