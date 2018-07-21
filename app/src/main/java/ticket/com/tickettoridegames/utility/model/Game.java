@@ -325,13 +325,11 @@ public class Game {
     public void initGame() {
         initTurnOrder();
 //        initColors();
-//        //todo lay out face up cards
-//
-//        for(String curKey : players.keySet()) {
-//            Player curPlayer = players.get(curKey);
-//            initHand(curPlayer);
-////            initPlayerDestinationCards(curPlayer);
-//        }
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            initHand(curPlayer);
+//            initPlayerDestinationCards(curPlayer);
+        }
     }
 
     //give player 3 destination cards to start the game
