@@ -6,13 +6,15 @@ public class PlayerStats {
     private Integer points;
     private Integer numberOfCards;
     private Integer numberOfRoutes;
+    private Integer numberOfPieces;
 
 
-    public PlayerStats(String name, Integer points, Integer numberOfCards, Integer numberOfRoutes) {
+    public PlayerStats(String name, Integer points, Integer numberOfCards, Integer numberOfRoutes, Integer pieces) {
         this.name = name;
         this.points = points;
         this.numberOfCards = numberOfCards;
         this.numberOfRoutes = numberOfRoutes;
+        this.numberOfPieces = pieces;
     }
 
     public PlayerStats(){}
@@ -47,5 +49,13 @@ public class PlayerStats {
 
     public void setNumberOfRoutes(Integer numberOfRoutes) {
         this.numberOfRoutes = numberOfRoutes;
+    }
+
+    public Integer getNumberOfPieces() {
+        return numberOfPieces;
+    }
+
+    public void setNumberOfPieces(Integer numberOfPieces) {
+        this.numberOfPieces = numberOfPieces;
     }
 }

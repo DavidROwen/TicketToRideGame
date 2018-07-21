@@ -42,20 +42,17 @@ import static ticket.com.tickettoridegames.utility.model.TrainCard.TRAIN_TYPE.YE
 public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     //Variables
-    Set<TrainCard> hand;
-    Set<TrainCard> trainBank;
-    Set<DestinationCard> destinationCards;
+    private Set<TrainCard> hand;
+    private Set<TrainCard> trainBank;
+    private Set<DestinationCard> destinationCards;
+    private View view;
+    private ArrayList<String> listRoutes=new ArrayList<>(); //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
+    private ArrayAdapter<String> adapter; //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
 
     //Widgets
     private RecyclerView myHandRecyclerView;
     private RecyclerView myBankRecyclerView;
     private RecyclerView.Adapter myAdapter;
-
-    //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    private ArrayList<String> listRoutes=new ArrayList<>();
-
-    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    private ArrayAdapter<String> adapter;
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -66,12 +63,9 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.assets_fragment,parent,false);
-
-        //Get your parent layout of fragment
-        LinearLayout layout = (LinearLayout)view;
+        view = inflater.inflate(R.layout.assets_fragment,parent,false);
         
-        ListView routes = (ListView)layout.findViewById(R.id.routes);
+        ListView routes = (ListView)view.findViewById(R.id.routes);
         adapter=new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 listRoutes);
@@ -84,7 +78,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     @Override
     public void setHand(Set<TrainCard> hand){
         this.hand = hand;
-        myHandRecyclerView = (RecyclerView) getView().findViewById(R.id.ownedTrains);
+        myHandRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
 
         myHandRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(hand);
