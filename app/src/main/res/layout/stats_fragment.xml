@@ -61,7 +61,7 @@
                 android:id="@+id/playerText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="Player"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
@@ -79,7 +79,7 @@
                 android:id="@+id/trainPiecesNumText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="Pieces"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
@@ -88,7 +88,7 @@
                 android:id="@+id/trainCardNumText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="Cards"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
