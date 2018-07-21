@@ -243,7 +243,17 @@ public class ClientModel extends Observable {
     public List<PlayerStats> getPlayerStats(){
         List<PlayerStats> stats = new ArrayList<>();
         Game myGame = getMyActiveGame();
-        
+
+        for (Player player : myGame.getPlayers().values()){
+            PlayerStats newStat = new PlayerStats();
+
+            newStat.setName(player.getUsername());
+            newStat.setNumberOfCards(player.getCardCount());
+            newStat.setNumberOfRoutes(player.getRouteCount());
+            newStat.setPoints(player.getPoints());
+
+            stats.add(newStat);
+        }
 
         return stats;
     }
