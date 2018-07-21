@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.utility.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class Game {
     // Stores the playerIDs in turn order
     private List<String> turnOrder;
     private Integer turnNumber = 0;
+    private Set<TrainCard> trainBank;
 
     // Map data
     private GameMap map;
@@ -42,6 +44,7 @@ public class Game {
         this.turnOrder = new LinkedList<>();
         this.map = map;
         this.destinationCards = new Stack<>();
+        trainBank = new LinkedHashSet<>();
         fillDestinationCards();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
@@ -57,6 +60,7 @@ public class Game {
         this.id = UUID.randomUUID().toString();
         this.isStarted = false;
         this.newestChat = null;
+        trainBank = new LinkedHashSet<>();
 
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
@@ -349,9 +353,9 @@ public class Game {
         assert destinationCards != null;
 
         //temporary fix
-        destinationCards.add(new DestinationCard(new City("Saltlake City"), 10));
-        destinationCards.add(new DestinationCard(new City("Portland"), 10));
-        destinationCards.add(new DestinationCard(new City("Seattle"), 10));
+        destinationCards.add(new DestinationCard(new City("Saltlake City"), new City("Portland"), 10));
+        destinationCards.add(new DestinationCard(new City("Portland"), new City("Saltlake City"), 10));
+        destinationCards.add(new DestinationCard(new City("Seattle"), new City("Saltlake City"), 10));
     }
 
     public void addDestinationCard(DestinationCard card) {

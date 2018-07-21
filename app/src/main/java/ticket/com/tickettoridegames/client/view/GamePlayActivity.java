@@ -49,4 +49,9 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void displayMessage(String message) {
+        //todo
+    }
 }
