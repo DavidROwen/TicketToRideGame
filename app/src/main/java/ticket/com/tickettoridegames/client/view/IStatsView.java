@@ -1,7 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
 import java.util.List;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
@@ -17,9 +16,9 @@ public interface IStatsView {
 
     void setHistory(List<PlayerAction> gameHistory);
 
-    void getPlayerStats(Set<PlayerStats> playerStats);
+    void setPlayerStats(List<PlayerStats> playerStats);
 
-    void getLongestTrainAward(String player);
+    void setLongestTrainAward(String player);
 
     void displayMessage(String message);
 

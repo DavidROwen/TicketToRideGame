@@ -31,7 +31,7 @@ public class StatsPresenter implements IStatsPresenter , Observer {
                 break;
             case STATSUPDATE:
                 // These will use the data to update the view
-                clientModel.getPlayerStats();
+                statsView.setPlayerStats(clientModel.getPlayerStats());
                 break;
             case HISTORYUPDATE:
                 statsView.setHistory(clientModel.getHistory());

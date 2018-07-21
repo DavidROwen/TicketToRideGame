@@ -63,12 +63,12 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     }
 
     @Override
-    public void getPlayerStats(Set<PlayerStats> playerStats){
+    public void setPlayerStats(List<PlayerStats> playerStats){
 
     }
 
     @Override
-    public void getLongestTrainAward(String player){
+    public void setLongestTrainAward(String player){
 
     }
 
