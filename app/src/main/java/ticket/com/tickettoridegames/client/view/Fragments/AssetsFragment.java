@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.presenter.AssetsPresenter;
+import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
 import ticket.com.tickettoridegames.client.view.JoinActivity;
@@ -42,15 +44,19 @@ import static ticket.com.tickettoridegames.utility.model.TrainCard.TRAIN_TYPE.YE
 
 public class AssetsFragment extends BasicFragment implements IAssetsView{
 
+    //Linked Presenter
+    IAssetsPresenter presenter;
+
     //Variables
-    List<TrainCard> hand;
-    List<TrainCard> trainBank;
-    Set<DestinationCard> destinationCards;
+    private List<TrainCard> hand;
+    private List<TrainCard> trainBank;
+    private Set<DestinationCard> destinationCards;
 
     //Widgets
     private RecyclerView myHandRecyclerView;
     private RecyclerView myBankRecyclerView;
     private RecyclerView.Adapter myAdapter;
+    private View view;
 
     //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
     private ArrayList<String> listRoutes=new ArrayList<>();
@@ -60,32 +66,34 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     @Override
     public BasicFragment provideYourFragment() {
-
         return new AssetsFragment();
     }
 
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.assets_fragment,parent,false);
+        view = inflater.inflate(R.layout.assets_fragment,parent,false);
 
-        //Get your parent layout of fragment
-        LinearLayout layout = (LinearLayout)view;
-
-        ListView routes = (ListView)layout.findViewById(R.id.routes);
+        ListView routes = (ListView)view.findViewById(R.id.routes);
         adapter=new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 listRoutes);
         routes.setAdapter(adapter);
 
+        presenter = new AssetsPresenter(this);
         return view;
         //return null;
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void setHand(List<TrainCard> hand){
         this.hand = hand;
-        myHandRecyclerView = (RecyclerView) getView().findViewById(R.id.ownedTrains);
+        myHandRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
 
         myHandRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(hand);
@@ -96,7 +104,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     public void setBank(List<TrainCard> trainBank){
         this.trainBank = trainBank;
 
-        myBankRecyclerView = (RecyclerView) getView().findViewById(R.id.trainBank);
+        myBankRecyclerView = (RecyclerView) view.findViewById(R.id.trainBank);
 
         myBankRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(trainBank);
@@ -145,8 +153,7 @@ class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
     @Override
     public void onBindViewHolder(ImageCustomViewHolder holder, int i) {
-        TrainCard[] trainArray = (TrainCard[])trainCards.toArray();
-        holder.bindResult(trainArray[i]);
+        holder.bindResult(trainCards.get(i));
     }
 
     @Override
