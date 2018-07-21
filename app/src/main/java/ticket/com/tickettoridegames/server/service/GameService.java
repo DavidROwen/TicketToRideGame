@@ -21,6 +21,7 @@ public class GameService implements IGameService {
         ServerModel.getInstance().initGame(gameId);
 
         Game game = ServerModel.getInstance().getGames().get(gameId);
+        //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
             drawDestinationCard(playerId,gameId);
         }
@@ -94,10 +95,10 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public List<DestinationCard> drawDestinationCard(String playerId, String gameId) {
+    public void drawDestinationCard(String playerId, String gameId) {
         //draw card
-        List<DestinationCard> drawnCard = ServerModel.getInstance().drawADestinationCard(gameId);
-        return drawnCard;
+        List<DestinationCard> drawnCards = ServerModel.getInstance().drawADestinationCard(gameId);
+        
 
         //send commands to update
 
