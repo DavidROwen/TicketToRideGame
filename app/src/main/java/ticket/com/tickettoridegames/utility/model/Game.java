@@ -331,15 +331,6 @@ public class Game {
         }
     }
 
-    //give player 3 destination cards to start the game
-    public List initPlayerDestinationCards() {
-        ArrayList<List> playerCards = new ArrayList<>();
-        for(int i = 0; i < getNumberOfPlayers(); i++){
-            playerCards.add(drawDestinationCards());
-        }
-        return playerCards;
-    }
-
     //max of 7 players //for 7 colors
     private void initColors() {
         int i = 0;
@@ -384,6 +375,10 @@ public class Game {
         }
     }
 
+    private void addDestinationCard(DestinationCard card) {
+        destinationCards.add(card);
+    }
+
     private void fillDestinationCards() {
         assert destinationCards != null;
 
@@ -419,10 +414,6 @@ public class Game {
         destinationCards.add(new DestinationCard(new City("Sault Ste. Marie"), new City("Oklahoma City"), 9));
         destinationCards.add(new DestinationCard(new City("Seattle"), new City("Los Angeles"), 9));
         Collections.shuffle(destinationCards);
-    }
-
-    private void addDestinationCard(DestinationCard card) {
-        destinationCards.add(card);
     }
 
     public void setTurnOrder(List<String> turnOrder) {

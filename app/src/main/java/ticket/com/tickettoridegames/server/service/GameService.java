@@ -20,8 +20,11 @@ public class GameService implements IGameService {
     public void initGame(String gameId) {
         ServerModel.getInstance().initGame(gameId);
 
-        //turnOrder
         Game game = ServerModel.getInstance().getGames().get(gameId);
+        for(String playerId : game.getPlayers().keySet()){
+            drawDestinationCard(playerId,gameId);
+        }
+        //turnOrder
         List<String> turnOrder = game.getTurnOrder();
 
 //        ClientModel.get_instance().setTurnOrder(turnOrder);
@@ -96,6 +99,8 @@ public class GameService implements IGameService {
         List<DestinationCard> drawnCard = ServerModel.getInstance().drawADestinationCard(gameId);
         return drawnCard;
 
+        //send commands to update
+
 //        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
 //                "addDestinationCard", new Object[]{drawnCard, playerId}
 //        );
@@ -107,6 +112,12 @@ public class GameService implements IGameService {
 //                "removeDestinationCard", new Object[]{}
 //        );
 //        CommandsManager.addCommandAllPlayers(removeDestinationCard, gameId);
+    }
+
+    public void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards){
+        ServerModel.getInstance().claimDestinationCards(playerId, gameId, cards);
+        //add some kind of error checking with the above function?
+        //send commands to the other games updating card numbers or cards.
     }
 
     @Override
