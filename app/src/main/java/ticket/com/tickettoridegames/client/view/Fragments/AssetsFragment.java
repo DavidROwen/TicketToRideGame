@@ -51,18 +51,14 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     private List<TrainCard> hand;
     private List<TrainCard> trainBank;
     private Set<DestinationCard> destinationCards;
+    private ArrayList<String> listRoutes=new ArrayList<>(); //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
+    private ArrayAdapter<String> adapter; //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
 
     //Widgets
     private RecyclerView myHandRecyclerView;
     private RecyclerView myBankRecyclerView;
     private RecyclerView.Adapter myAdapter;
     private View view;
-
-    //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    private ArrayList<String> listRoutes=new ArrayList<>();
-
-    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    private ArrayAdapter<String> adapter;
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -86,11 +82,6 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void setHand(List<TrainCard> hand){
         this.hand = hand;
         myHandRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
@@ -105,7 +96,6 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         this.trainBank = trainBank;
 
         myBankRecyclerView = (RecyclerView) view.findViewById(R.id.trainBank);
-
         myBankRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(trainBank);
         myBankRecyclerView.setAdapter(myAdapter);

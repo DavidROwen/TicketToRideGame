@@ -1,12 +1,16 @@
 package ticket.com.tickettoridegames.client.view.Fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -24,6 +28,16 @@ import ticket.com.tickettoridegames.utility.model.PlayerStats;
 
 public class StatsFragment extends BasicFragment implements IStatsView{
 
+    //Variables
+    List<PlayerStats> playerStats;
+    View view;
+
+
+    // Widgets
+    private RecyclerView myRecyclerView;
+    private RecyclerView.Adapter myAdapter;
+    private EditText chat_input;
+
     private IStatsPresenter presenter;
 
     @Override
@@ -40,14 +54,16 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.stats_fragment,parent,false);
-
-        //Get your parent layout of fragment
-        LinearLayout layout = (LinearLayout)view;
+        view = inflater.inflate(R.layout.stats_fragment,parent,false);
 
         //Now specific components here
-
-        Button b2 = (Button)layout.findViewById(R.id.button2);
+        Button chatButton = (Button)view.findViewById(R.id.chat_send_button);
+        chatButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                presenter.sendMessage(chat_input.getText().toString());
+            }
+        });
 
         return view;
     }
@@ -69,7 +85,12 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
     @Override
     public void setPlayerStats(List<PlayerStats> playerStats){
+        this.playerStats = playerStats;
+        myRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
 
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        myAdapter = new StatsAdapter(playerStats);
+        myRecyclerView.setAdapter(myAdapter);
     }
 
     @Override
@@ -80,5 +101,62 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     @Override
     public void displayMessage(String message){
 
+    }
+}
+
+class StatsAdapter extends RecyclerView.Adapter<StatsCustomViewHolder> {
+
+    int selected_position = 0; // You have to set this globally in the StatsAdapter class
+    List<PlayerStats> playerStats;
+    PlayerStats[] playerArray;
+
+
+    public StatsAdapter(List<PlayerStats> playerStats) {
+        this.playerStats = playerStats;
+        this.playerArray = playerStats.toArray(new PlayerStats[0]);
+    }
+
+    @Override
+    public StatsCustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.
+                from(viewGroup.getContext()).
+                inflate(R.layout.custom_stats_layout, viewGroup, false);
+
+        return new StatsCustomViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(StatsCustomViewHolder holder, int i) {
+        holder.bindResult(playerArray[i]);
+    }
+
+    @Override
+    public int getItemCount() {
+        return playerArray.length;
+    }
+}
+
+class StatsCustomViewHolder extends RecyclerView.ViewHolder{
+    protected TextView line1;
+    protected TextView line2;
+    protected TextView line3;
+    protected TextView line4;
+    protected TextView line5;
+
+    public StatsCustomViewHolder(View v) {
+        super(v);
+        line1 = (TextView)  v.findViewById(R.id.textView1);
+        line2 = (TextView)  v.findViewById(R.id.textView2);
+        line3 = (TextView)  v.findViewById(R.id.textView3);
+        line4 = (TextView)  v.findViewById(R.id.textView4);
+        line5 = (TextView)  v.findViewById(R.id.textView5);
+    }
+
+    public void bindResult(PlayerStats playerStat){
+        line1.setText(playerStat.getName());
+        line2.setText(playerStat.getPoints());
+        line3.setText(playerStat.getNumberOfPieces());
+        line4.setText(playerStat.getNumberOfCards());
+        line4.setText(playerStat.getNumberOfRoutes());
     }
 }
