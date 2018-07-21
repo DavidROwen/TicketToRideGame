@@ -48,6 +48,9 @@ public class Command {
         } catch (ClassNotFoundException e) {
             System.out.println("invalid class: " + toString());
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("nullPointer: " + toString());
+            e.printStackTrace();
         }
 
         return null;

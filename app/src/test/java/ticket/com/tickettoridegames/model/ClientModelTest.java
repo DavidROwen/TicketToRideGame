@@ -18,6 +18,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class ClientModelTest {
+    @Test
+    public void testSetColors() {
+        Game game = new Game();
+        game.addPlayers(new Player("username", "id1"));
+        Map<String, Player.COLOR> colors = new HashMap<>();
+        colors.put("id1", Player.COLOR.RED);
+        game.setPlayersColors(colors);
+    }
+
 //    @Test
 //    public void testGetPoints() {
 //        String userId = "id";

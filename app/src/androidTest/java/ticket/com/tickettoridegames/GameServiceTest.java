@@ -44,7 +44,10 @@ public class GameServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //turn order
+        assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //turn order
+//        assertEquals(ClientModel.get_instance().getMyActiveGame().getPlayersColors().size(), 2); //colors
+//        assertTrue(ClientModel.get_instance().getMyPlayer().getColor() != null);
+        assertEquals(ClientModel.get_instance().getMyPlayer().getTrainCards().size(), 4);
     }
 
     @Test

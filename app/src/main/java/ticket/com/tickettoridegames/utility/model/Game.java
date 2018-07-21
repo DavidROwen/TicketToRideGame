@@ -328,6 +328,25 @@ public class Game {
             Player curPlayer = players.get(curKey);
             initHand(curPlayer);
 //            initPlayerDestinationCards(curPlayer);
+        initColors();
+        //todo lay out face up cards
+
+        initHandAll();
+    }
+
+    public void initHandAll() {
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            initHand(curPlayer);
+//            initPlayerDestinationCards(curPlayer);
+        }
+    }
+
+    //give player 3 destination cards to start the game
+    public List initPlayerDestinationCards() {
+        ArrayList<List> playerCards = new ArrayList<>();
+        for(int i = 0; i < getNumberOfPlayers(); i++){
+            playerCards.add(drawDestinationCards());
         }
     }
 
@@ -416,6 +435,11 @@ public class Game {
         Collections.shuffle(destinationCards);
     }
 
+    private void addDestinationCard(DestinationCard card) {
+        destinationCards.add(card);
+    }
+
+    public void setTurnOrder(LinkedList<String> turnOrder) {
     public void setTurnOrder(List<String> turnOrder) {
         this.turnOrder = turnOrder;
     }
@@ -432,8 +456,9 @@ public class Game {
 
     public void setPlayersColors(Map<String, Player.COLOR> colors) {
         for(String id : players.keySet()) {
-            Player.COLOR color = colors.get(id);
-            players.get(id).setColor(color);
+            System.out.println(colors.get(id));
+            Player.COLOR color = Player.COLOR.valueOf(colors.get(id).toString());
+//            players.get(id).setColor(color);
         }
     }
 

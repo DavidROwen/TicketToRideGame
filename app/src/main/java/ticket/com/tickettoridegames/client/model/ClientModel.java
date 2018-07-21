@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -179,6 +180,7 @@ public class ClientModel extends Observable {
         return getMyPlayer().getDestinationCards();
     }
 
+    public void setTurnOrder(LinkedList<String> order) {
     public void addDestinationCard(List<DestinationCard> cards) {
         getMyActiveGame().discardDestinationCards(cards);
     }
@@ -187,7 +189,7 @@ public class ClientModel extends Observable {
         getMyActiveGame().setTurnOrder(order);
     }
 
-    public void setPlayersColors(Map<String,Player.COLOR> colors) {
+    public void setPlayersColors(HashMap<String,Player.COLOR> colors) {
         getMyActiveGame().setPlayersColors(colors);
     }
 
@@ -251,6 +253,9 @@ public class ClientModel extends Observable {
         return myGame.getGameHistory();
     }
 
+    public void initHandAll() {
+        getMyActiveGame().initHandAll();
+    }
     public void setMyPlayerTempDeck(List<DestinationCard> deck){
         Player player = getMyPlayer();
         player.setTempDeck(deck);

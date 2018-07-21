@@ -20,6 +20,7 @@ public class GameService implements IGameService {
     public void initGame(String gameId) {
         ServerModel.getInstance().initGame(gameId);
 
+        //turnOrder //because it's generated randomly
         Game game = ServerModel.getInstance().getGames().get(gameId);
         //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
@@ -34,26 +35,19 @@ public class GameService implements IGameService {
         );
         CommandsManager.addCommandAllPlayers(initTurnOrder, gameId);
 
-
-//        //playerColors
-//        Map<String, Player.COLOR> colors = ServerModel.getInstance().getPlayerColors(gameId);
+        //playerColors //todo throws error
+//        Map<String, Player.COLOR> colors = game.getPlayersColors();
 ////        ClientModel.get_instance().setPlayersColors(colors);
 //        Command initColors = new Command(ClientModel.class, ClientModel.get_instance(),
 //                "setPlayersColors", new Object[]{colors}
 //        );
 //        CommandsManager.addCommandAllPlayers(initColors, gameId);
-//
-//
-//        //trainCards
-//        for(Player player : ServerModel.getInstance().getPlayers(gameId)) {
-//            for (TrainCard card : ServerModel.getInstance().getPlayerHand(player.getId(), gameId)) {
-////                ClientModel.get_instance().addTrainCard(card, player.getId());
-//                Command addTrainCard = new Command(ClientModel.class, ClientModel.get_instance(),
-//                        "addTrainCard", new Object[]{card, player.getId()}
-//                        );
-//                CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
-//            }
-//        }
+
+//        ClientModel.get_instance().initHandAll();
+        Command initHands = new Command(ClientModel.class, ClientModel.get_instance(),
+                "initHandAll", new Object[]{}
+        );
+        CommandsManager.addCommandAllPlayers(initHands, gameId);
 
 //        //destinationCards
 //        for(Player player : ServerModel.getInstance().getPlayers(gameId)) {
@@ -122,7 +116,6 @@ public class GameService implements IGameService {
         ServerModel.getInstance().claimDestinationCards(playerId, gameId, cards);
         //add some kind of error checking with the above function?
         //send commands to the other games updating card numbers or cards.
-
     }
 
     @Override
