@@ -98,10 +98,13 @@ public class GameService implements IGameService {
     public void drawDestinationCard(String playerId, String gameId) {
         //draw card
         List<DestinationCard> drawnCards = ServerModel.getInstance().drawADestinationCard(gameId);
-        
 
-        //send commands to update
+        //set up command to return data
+        Command tempDeck = new Command(ClientModel.class, ClientModel.get_instance(),
+                "setTempDeck", new Object[]{drawnCards});
+        CommandsManager.addCommand(tempDeck, playerId);
 
+        //everything below can be deleted?
 //        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
 //                "addDestinationCard", new Object[]{drawnCard, playerId}
 //        );
@@ -119,6 +122,7 @@ public class GameService implements IGameService {
         ServerModel.getInstance().claimDestinationCards(playerId, gameId, cards);
         //add some kind of error checking with the above function?
         //send commands to the other games updating card numbers or cards.
+
     }
 
     @Override
