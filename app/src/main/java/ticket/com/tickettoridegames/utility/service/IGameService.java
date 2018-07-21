@@ -17,4 +17,6 @@ public interface IGameService {
     void drawDestinationCard(String playerId, String gameId);
 
     void returnDestinationCard(String gameId, List<DestinationCard> card);
+
+
 }

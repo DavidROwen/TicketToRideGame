@@ -256,6 +256,14 @@ public class ClientModel extends Observable {
     public void initHandAll() {
         getMyActiveGame().initHandAll();
     }
+
+    public void drawTrainCard(String playerId) {
+        getMyActiveGame().drawTrainCard(playerId);
+    }
+
+    public void pickupTrainCard(String playerId, Integer index) {
+        getMyActiveGame().pickupTrainCard(playerId, index);
+    }
     public void setMyPlayerTempDeck(List<DestinationCard> deck){
         Player player = getMyPlayer();
         player.setTempDeck(deck);

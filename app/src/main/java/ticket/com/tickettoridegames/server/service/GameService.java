@@ -68,8 +68,8 @@ public class GameService implements IGameService {
         game.drawTrainCard(playerId);
 
         //client side
-//        ClientModel.get_instance().getMyActiveGame().drawTrainCard(playerId);
-        Command addTrainCard = new Command(Game.class, ClientModel.get_instance().getMyActiveGame(),
+//        ClientModel.get_instance().drawTrainCard(playerId);
+        Command addTrainCard = new Command(ClientModel.class, ClientModel.get_instance(),
                 "drawTrainCard", new Object[]{playerId}
         );
         CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
@@ -81,8 +81,8 @@ public class GameService implements IGameService {
         game.pickupTrainCard(playerId, index);
 
         //replaceCard
-//        ClientModel.get_instance().getMyActiveGame().pickupTrainCard(playerId, index);
-        Command resetTop = new Command(Game.class, ClientModel.get_instance().getMyActiveGame(),
+//        ClientModel.get_instance().pickupTrainCard(playerId, index);
+        Command resetTop = new Command(ClientModel.class, ClientModel.get_instance(),
                 "pickupTrainCard", new Object[]{playerId, index}
         );
         CommandsManager.addCommandAllPlayers(resetTop, gameId);

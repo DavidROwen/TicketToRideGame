@@ -1,16 +1,12 @@
 package ticket.com.tickettoridegames.utility.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
@@ -315,7 +311,7 @@ public class Game {
         }
     }
 
-    public void initTrainCardDeck() { //todo private
+    private void initTrainCardDeck() {
         for(int i = 0; i < NUM_CARDS_TRAINCARD_DECK; i++) {
             trainCardsDeck.push(getRandomTrainCard());
         }
@@ -329,9 +325,22 @@ public class Game {
             initHand(curPlayer);
 //            initPlayerDestinationCards(curPlayer);
         initColors();
-        //todo lay out face up cards
+        initTrainBank();
 
+        initGameNonRandom();
+    }
+
+    //convenience function so it can be called from the client side also
+    public void initGameNonRandom() {
         initHandAll();
+        initTrainBank();
+        //todo destination cards
+    }
+
+    private void initTrainBank() {
+        for(int i = 0; i < trainBank.size(); i++) {
+            trainBank.set(i, drawTrainCard());
+        }
     }
 
     public void initHandAll() {
@@ -477,6 +486,16 @@ public class Game {
 
     public void setTrainBank(List<TrainCard> trainBank) {
         this.trainBank = trainBank;
+    }
+
+    public void claimRoute(String playerId, Route route) {
+        //check not claimed
+        //check player has cards
+        //claim
+    }
+
+    private void checkClaimed(Route route) {
+
     }
 
 }
