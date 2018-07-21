@@ -9,36 +9,6 @@ import ticket.com.tickettoridegames.utility.web.Command;
 
 public class GamePlayService implements IGameService {
     @Override
-    public void addChat(Chat chat, String gameId) {
-        try {
-//            GameService.class.newInstance().addChat(chat, gameId);
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "addChat", new Object[]{gameId, gameId}
-            );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void returnDestinationCard(String gameId, DestinationCard card) {
-        try {
-//            GameService.class.newInstance().returnDestinationCards(gameId, cards);
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "returnDestinationCards", new Object[]{gameId, card}
-            );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void initGame(String gameId) {
         try {
 //            GameService.class.newInstance().initGame(gameId);
@@ -69,6 +39,21 @@ public class GamePlayService implements IGameService {
     }
 
     @Override
+    public void pickupTrainCard(String playerId, String gameId, Integer index) {
+        try {
+//            GameService.class.newInstance().pickupTrainCard(playerId, gameId, index);
+            Command command = new Command(GameService.class, GameService.class.newInstance(),
+                    "pickupTrainCard", new Object[]{playerId, gameId, index}
+            );
+            ServerProxy.sendCommand(command);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void drawDestinationCard(String playerId, String gameId) {
         try {
 //            GameService.class.newInstance().drawDestinationCard(playerId, gameId);
@@ -83,4 +68,18 @@ public class GamePlayService implements IGameService {
         }
     }
 
+    @Override
+    public void returnDestinationCard(String gameId, DestinationCard card) {
+        try {
+//            GameService.class.newInstance().returnDestinationCards(gameId, cards);
+            Command command = new Command(GameService.class, GameService.class.newInstance(),
+                    "returnDestinationCards", new Object[]{gameId, card}
+            );
+            ServerProxy.sendCommand(command);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -8,6 +8,7 @@ import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.server.model.ServerModel;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
@@ -15,22 +16,6 @@ import ticket.com.tickettoridegames.utility.web.Command;
 
 public class GameService implements IGameService {
     //todo could put commands in the setters
-
-    @Override
-    public void addChat(Chat chat, String gameId) {
-
-    }
-
-    @Override
-    public void returnDestinationCard(String gameId, DestinationCard card) {
-        ServerModel.getInstance().addDestinationCard(gameId, card);
-
-//        ClientModel.get_instance().addDestinationCard(card);
-        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                "addDestinationCard", new Object[]{card}
-        );
-        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
-    }
 
     @Override
     public void initGame(String gameId) {
@@ -97,6 +82,19 @@ public class GameService implements IGameService {
     }
 
     @Override
+    public void pickupTrainCard(String playerId, String gameId, Integer index) {
+        Game game = ServerModel.getInstance().getGames().get(gameId);
+        game.pickupTrainCard(playerId, index);
+
+        //replaceCard
+//        ClientModel.get_instance().getMyActiveGame().pickupTrainCard(playerId, index);
+        Command resetTop = new Command(Game.class, ClientModel.get_instance().getMyActiveGame(),
+                "pickupTrainCard", new Object[]{playerId, index}
+        );
+        CommandsManager.addCommandAllPlayers(resetTop, gameId);
+    }
+
+    @Override
     public void drawDestinationCard(String playerId, String gameId) {
         //draw card
         DestinationCard drawnCard = ServerModel.getInstance().drawADestinationCard(gameId);
@@ -112,5 +110,16 @@ public class GameService implements IGameService {
                 "removeDestinationCard", new Object[]{}
         );
         CommandsManager.addCommandAllPlayers(removeDestinationCard, gameId);
+    }
+
+    @Override
+    public void returnDestinationCard(String gameId, DestinationCard card) {
+        ServerModel.getInstance().addDestinationCard(gameId, card);
+
+//        ClientModel.get_instance().addDestinationCard(card);
+        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
+                "addDestinationCard", new Object[]{card}
+        );
+        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
     }
 }
