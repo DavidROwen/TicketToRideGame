@@ -70,11 +70,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
         //Get your parent layout of fragment
         LinearLayout layout = (LinearLayout)view;
-
-        //Now specific components here
-        RecyclerView ownedtrains = (RecyclerView)layout.findViewById(R.id.ownedTrains);
-        RecyclerView trainBank = (RecyclerView)layout.findViewById(R.id.trainBank);
-
+        
         ListView routes = (ListView)layout.findViewById(R.id.routes);
         adapter=new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
