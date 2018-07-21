@@ -22,6 +22,7 @@ public class Player {
     private Integer trains;
     private Integer points;
 
+    private List<DestinationCard> tempDeck = new LinkedList<>();
     private List<TrainCard> trainCards = new LinkedList<>();
     private Set<DestinationCard> destinationCards = new HashSet<>();
     private Set<Route> claimedRoutes = new HashSet<>();
@@ -114,5 +115,11 @@ public class Player {
 
     public Integer getRouteCount(){
         return claimedRoutes.size();
+    }
+
+    public List getTempDeck(){return tempDeck;}
+
+    public void setTempDeck(List<DestinationCard> deck){
+        tempDeck = deck;
     }
 }

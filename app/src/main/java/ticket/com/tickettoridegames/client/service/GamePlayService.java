@@ -56,7 +56,7 @@ public class GamePlayService implements IGameService {
     }
 
     @Override
-    public List<DestinationCard> drawDestinationCard(String playerId, String gameId) {
+    public void drawDestinationCard(String playerId, String gameId) {
         try {
 //            GameService.class.newInstance().drawDestinationCard(playerId, gameId);
             Command command = new Command(GameService.class, GameService.class.newInstance(),
@@ -68,8 +68,6 @@ public class GamePlayService implements IGameService {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        //TODO fix this. Placeholder for now....
-        return null;
     }
 
     @Override

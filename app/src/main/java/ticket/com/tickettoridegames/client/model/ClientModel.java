@@ -179,20 +179,16 @@ public class ClientModel extends Observable {
         return getMyPlayer().getDestinationCards();
     }
 
+    public void addDestinationCard(List<DestinationCard> cards) {
+        getMyActiveGame().discardDestinationCards(cards);
+    }
+
     public void setTurnOrder(List<String> order) {
         getMyActiveGame().setTurnOrder(order);
     }
 
     public void setPlayersColors(Map<String,Player.COLOR> colors) {
         getMyActiveGame().setPlayersColors(colors);
-    }
-
-    public void removeDestinationCard() {
-        //getMyActiveGame().removeDestinationCard();
-    }
-
-    public void addDestinationCard(DestinationCard card) {
-        //getMyActiveGame().addDestinationCard(card);
     }
 
     public Map<String, Integer> getCountsOfPoints() {
@@ -253,6 +249,11 @@ public class ClientModel extends Observable {
     public List<PlayerAction> getHistory(){
         Game myGame = getMyActiveGame();
         return myGame.getGameHistory();
+    }
+
+    public void setMyPlayerTempDeck(List<DestinationCard> deck){
+        Player player = getMyPlayer();
+        player.setTempDeck(deck);
     }
 
 }

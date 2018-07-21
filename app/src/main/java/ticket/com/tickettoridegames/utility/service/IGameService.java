@@ -14,7 +14,7 @@ public interface IGameService {
     //for face up cards
     void pickupTrainCard(String playerId, String gameId, Integer index);
 
-    List<DestinationCard> drawDestinationCard(String playerId, String gameId);
+    void drawDestinationCard(String playerId, String gameId);
 
     void returnDestinationCard(String gameId, List<DestinationCard> card);
 }

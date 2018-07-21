@@ -220,12 +220,15 @@ public class ServerModel {
     public void initGame(String gameId) {
         Game game = games.get(gameId);
         game.initGame();
-        List<List> destinationCards = game.initPlayerDestinationCards();
-        //send each card list to the players
     }
 
     public List<DestinationCard> drawADestinationCard(String gameId) {
         return games.get(gameId).drawDestinationCards();
+    }
+
+    public void claimDestinationCards(String playerId, String gameId, List<DestinationCard> cards){
+        Game game = games.get(gameId);
+        game.claimDestinationCards(cards, playerId);
     }
 
     public void addDestinationCard(String gameId, List<DestinationCard> card) {
