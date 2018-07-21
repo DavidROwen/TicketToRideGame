@@ -38,6 +38,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="194dp"
         android:background="@android:color/holo_green_light"
-        android:text="Turn" />
+        android:text="End Turn    Name" />
 
 </RelativeLayout>

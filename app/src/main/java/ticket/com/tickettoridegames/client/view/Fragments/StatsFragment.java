@@ -46,6 +46,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter myAdapter;
     private EditText chat_input;
+    private EditText longest_train_player_input;
 
     private IStatsPresenter presenter;
 
@@ -92,8 +93,9 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     }
 
     @Override
-    public void displayChat(Chat message){
-
+    public void displayChat(Chat chat){
+        String message = chat.getUsername() + ": " + chat.getMessage();
+        chatAdapter.add(message);
     }
 
     @Override
@@ -126,7 +128,8 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
     @Override
     public void setLongestTrainAward(String player){
-
+        longest_train_player_input = (EditText) view.findViewById(R.id.playerNameText);
+        longest_train_player_input.setText(player);
     }
 
     @Override
