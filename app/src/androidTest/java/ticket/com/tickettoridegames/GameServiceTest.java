@@ -19,17 +19,37 @@ import static org.junit.Assert.assertNotEquals;
 
 public class GameServiceTest {
     private String userId;
-    private String gameId;
     private String userId2;
+    private String gameId;
+
+    private Poller poller;
 
     @Test
-    public void testPickupCard() {
-        initGame();
+    public void testInitToGameplay() {
+        initToGameplay();
+        assertTrue(userId != null && userId2 != null && gameId != null);
+        assertTrue(ClientModel.get_instance().getMyActiveGame() != null);
+        assertTrue(ClientModel.get_instance().getMyPlayer() != null);
+        poller.stop();
+    }
+
+    @Test
+    public void testInitGame() {
+        GamePlayService service = new GamePlayService();
+        initToGameplay();
+
+        service.initGame(gameId);
+        try {
+            Thread.sleep(3000); //wait for poller
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //turn order
     }
 
     @Test
     public void testPhase2Simple() {
-        initGame();
+        initToGameplay();
         GamePlayService proxy = new GamePlayService();
 
         //init
@@ -56,20 +76,18 @@ public class GameServiceTest {
     @Test
     public void testDrawTrainCard() {
         //prepare
-        initGame();
+        initToGameplay();
         GamePlayService gamePlayService = new GamePlayService();
 
+
         //you draw
-        TrainCard topCard1 = ClientModel.get_instance().getDeckTop();
         gamePlayService.drawTrainCard(userId, gameId);
         try {
             Thread.sleep(3000); //wait for poller
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertTrue(ClientModel.get_instance().getMyHand() != null);
-        assertTrue(ClientModel.get_instance().getMyHand().size() == 1);
-        assertEquals(ClientModel.get_instance().getMyHand().get(0), topCard1);
+
 
 //        //other player draws
 //        //remove null top card
@@ -83,7 +101,7 @@ public class GameServiceTest {
 //        assertEquals(countsOfCards.get(userId2), (Integer) 1); //check for visual
     }
 
-    private void initGame() {
+    private void initToGameplay() {
         new UtilityService().clearServer();
 
         //new users
@@ -106,7 +124,7 @@ public class GameServiceTest {
             e.printStackTrace();
         }
 
-        new Poller(); //get it going
+        poller = new Poller(); //get it going
 
         //new game
         Result joinResult = JoinService.createGame(userId, "gameName", 2);

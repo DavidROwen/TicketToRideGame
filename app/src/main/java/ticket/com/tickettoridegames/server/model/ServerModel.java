@@ -221,12 +221,6 @@ public class ServerModel {
         games.get(gameId).initGame();
     }
 
-    public TrainCard drawATrainCard(String gameId) {
-        return games.get(gameId).takeTopTrainCard();
-    }
-
-    public TrainCard getTopTrainCard(String gameId) { return games.get(gameId).getTopTrainCard(); }
-
     public DestinationCard drawADestinationCard(String gameId) {
         return games.get(gameId).takeTopDestinationCard();
     }
