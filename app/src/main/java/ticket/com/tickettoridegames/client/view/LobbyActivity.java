@@ -21,20 +21,14 @@ import ticket.com.tickettoridegames.utility.model.Chat;
 
 public class LobbyActivity extends Activity implements ILobbyView{
 
+    // Variables
     private ILobbyPresenter presenter;
+    private ArrayList<String> listItems=new ArrayList<>();     //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
+    private ArrayAdapter<String> adapter;     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    private ArrayList<String> listChats=new ArrayList<>();     //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
+    private ArrayAdapter<String> adapter2;     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
 
-    //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    private ArrayList<String> listItems=new ArrayList<>();
-
-    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    private ArrayAdapter<String> adapter;
-
-    //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    private ArrayList<String> listChats=new ArrayList<>();
-
-    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    private ArrayAdapter<String> adapter2;
-
+    // Widgets
     private EditText chat_input;
 
     @Override
