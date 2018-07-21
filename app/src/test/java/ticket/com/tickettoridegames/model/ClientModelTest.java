@@ -49,7 +49,7 @@ public class ClientModelTest {
         initGame();
 
         //mock pick some destination cards
-        clientModel.addDestinationCards(
+        clientModel.addDestinationCard(
                 new DestinationCard(new City("Saltlake"), 5),
                 new DestinationCard(new City("Colorado"), 5)
         );

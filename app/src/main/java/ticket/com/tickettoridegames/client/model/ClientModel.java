@@ -21,6 +21,7 @@ public class ClientModel extends Observable {
     // Singleton Class
     static private ClientModel _instance;
     private TrainCard topTrainCard;
+    private Boolean myTurn;
 
     static public ClientModel get_instance() {
         if (_instance == null) {
@@ -157,9 +158,9 @@ public class ClientModel extends Observable {
         getMyPlayer().addTrainCard(drawnCard);
     }
 
-    public Map<String, Integer> getCountsOfCardsInHand() {
-        return getMyActiveGame().getCountsOfCardsInHand();
-    }
+//    public Map<String, Integer> getCountsOfCardsInHand() {
+//        return getMyActiveGame().getCountsOfCardsInHand();
+//    }
 
     public TrainCard getDeckTop() {
         return getMyActiveGame().getTopTrainCard();
@@ -174,26 +175,36 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getPoints();
     }
 
-    public Map<String, Integer> getTrainCounts() {
-        return getMyActiveGame().getTrainCounts();
-    }
+//    public Map<String, Integer> getTrainCounts() {
+//        return getMyActiveGame().getTrainCounts();
+//    }
 
     public Boolean isMyTurn() {
-        String activeId = getMyActiveGame().getIdPlayerUp();
-        String myId = getMyPlayer().getId();
-        return myId.equals(activeId);
+        return true; //no turns in phase 2
     }
 
-    public void switchTurn() {
-        getMyActiveGame().switchTurn();
+    public void setMyTurn(Boolean myTurn) {
+        this.myTurn = myTurn;
     }
 
-    public void addDestinationCards(DestinationCard... cards) {
-        getMyPlayer().addDestinationCards(cards);
+    public void addDestinationCard(DestinationCard card) {
+        getMyPlayer().addDestinationCard(card);
     }
 
     public Set<DestinationCard> getDestinationCards() {
         return getMyPlayer().getDestinationCards();
+    }
+
+    public void setTopTrainCard(TrainCard topTrainCard) {
+        this.topTrainCard = topTrainCard;
+    }
+
+    public void setTurnOrder(List<String> order) {
+        getMyActiveGame().setTurnOrder(order);
+    }
+
+    public void setPlayerColor(Player.COLOR color) {
+        getMyPlayer().setColor(color);
     }
 
     private Game getMyActiveGame() {
@@ -215,9 +226,5 @@ public class ClientModel extends Observable {
     private Player getMyPlayer() {
         if(myPlayer != null) { return myPlayer; } //convenience function
         return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
-    }
-
-    public void setTopTrainCard(TrainCard topTrainCard) {
-        this.topTrainCard = topTrainCard;
     }
 }

@@ -269,7 +269,8 @@ public class Game {
         return turnOrder.get(turnNumber);
     }
 
-    private void setTurnOrder() {
+    private void initTurnOrder() {
+        //todo randomize
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
             turnOrder.add(curPlayer.getId());
@@ -277,14 +278,32 @@ public class Game {
     }
 
     public void initGame() {
-        setTurnOrder();
-        //todo assign colors
+        initTurnOrder();
+        initColors();
         //todo lay out face up cards
-        //todo flip top card
+        takeTopTrainCard();
 
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
             initHand(curPlayer);
+            initPlayerDestinationCards(curPlayer);
+        }
+    }
+
+    //give player 3 destination cards to start the game
+    private void initPlayerDestinationCards(Player curPlayer) {
+        for(int i = 0; i < 3; i++) {
+            curPlayer.addDestinationCard(getTopDestinationCard());
+        }
+    }
+
+    //max of 7 players //for 7 colors
+    private void initColors() {
+        int i = 0;
+        for(String curKey : players.keySet()) {
+            Player.COLOR nextColor = Player.COLOR.values()[i];
+            players.get(curKey).setColor(nextColor);
+            i++;
         }
     }
 
@@ -309,5 +328,13 @@ public class Game {
         destinationCards.add(new DestinationCard(new City("Saltlake City"), 10));
         destinationCards.add(new DestinationCard(new City("Portland"), 10));
         destinationCards.add(new DestinationCard(new City("Seattle"), 10));
+    }
+
+    public void addDestinationCard(DestinationCard card) {
+        destinationCards.add(card); //todo should add to bottom
+    }
+
+    public void setTurnOrder(List<String> turnOrder) {
+        this.turnOrder = turnOrder;
     }
 }

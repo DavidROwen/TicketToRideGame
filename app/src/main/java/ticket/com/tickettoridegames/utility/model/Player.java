@@ -6,13 +6,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.server.CommandsManager;
+import ticket.com.tickettoridegames.server.model.ServerModel;
+import ticket.com.tickettoridegames.utility.web.Command;
+
 public class Player {
+    public enum COLOR {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE}
 
     private String username;
     private String id;
 
     // Game Data
-    private String color;
+    private COLOR color;
     private Integer trains;
     private Integer points;
 
@@ -40,11 +46,11 @@ public class Player {
         this.id = id;
     }
 
-    public String getColor() {
+    public COLOR getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(COLOR color) {
         this.color = color;
     }
 
@@ -68,8 +74,8 @@ public class Player {
         return destinationCards;
     }
 
-    public void addDestinationCards(DestinationCard...cards) {
-        destinationCards.addAll(Arrays.asList(cards));
+    public void addDestinationCard(DestinationCard card) {
+        destinationCards.addAll(Arrays.asList(card));
     }
 
     public void addTrainCard(TrainCard card) {

@@ -1,8 +1,13 @@
 package ticket.com.tickettoridegames.server.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.server.CommandsManager;
@@ -228,11 +233,40 @@ public class ServerModel {
         return games.get(gameId).takeTopDestinationCard();
     }
 
-    public void returnADestinationCard(String gameId, DestinationCard card) {
+    public void addDestinationCard(String gameId, DestinationCard card) {
+        games.get(gameId).addDestinationCard(card);
 
+//        ClientModel.get_instance().addDestinationCard(card);
+        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
+                "addDestinationCard", new Object[]{card}
+        );
+        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
     }
 
     public Map<String, Game> getGames() {
         return games;
+    }
+
+    public Player[] getPlayers(String gameId) {
+        List<Player> players = new ArrayList<>();
+
+        Map<String, Player> playersMap = games.get(gameId).getPlayers();
+        for(String playerId : playersMap.keySet()) {
+            players.add(playersMap.get(playerId));
+        }
+
+        return players.toArray(new Player[players.size()]);
+    }
+
+    public List<TrainCard> getPlayerHand(String playerId, String gameId) {
+        return games.get(gameId).getPlayers().get(playerId).getTrainCards();
+    }
+
+    public Set<DestinationCard> getPlayerDestinationCards(String playerId, String gameId) {
+        return games.get(gameId).getPlayers().get(playerId).getDestinationCards();
+    }
+
+    public List<String> getTurnOrder(String gameId) {
+        return games.get(gameId).getTurnOrder();
     }
 }

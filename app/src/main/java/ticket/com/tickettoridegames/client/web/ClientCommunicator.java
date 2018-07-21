@@ -24,14 +24,10 @@ public class ClientCommunicator {
 	public static Object send(Command command, Type returnType) {
 		SendTask sendTask = new SendTask();
 
-		sendTask.setReturnType(returnType);
 		sendTask.execute(command);
-
 		try {
-			String input = sendTask.get(); //wait for it to finish
-			Object result = Serializer.fromJson(input, returnType);
-
-			return result;
+			String input = sendTask.get();
+			return Serializer.fromJson(input, returnType);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -42,12 +38,6 @@ public class ClientCommunicator {
 	}
 
 	private static class SendTask extends AsyncTask<Command, Void, String> {
-		private Type returnType = null;
-
-		private void setReturnType(Type returnType) {
-			this.returnType = returnType;
-		}
-
 		@Override
 		protected String doInBackground(Command... commands) {
 			HttpURLConnection connection = openConnection(GENERIC_DESIGNATOR);
@@ -66,7 +56,6 @@ public class ClientCommunicator {
 	private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
 	private static final String HTTP_POST = "POST";
 
-	//Constructors
 	private static HttpURLConnection openConnection(String designator) {
 		HttpURLConnection connection = null;
 
