@@ -218,15 +218,18 @@ public class ServerModel {
     }
 
     public void initGame(String gameId) {
-        games.get(gameId).initGame();
+        Game game = games.get(gameId);
+        game.initGame();
+        List<List> destinationCards = game.initPlayerDestinationCards();
+        //send each card list to the players
     }
 
-    public DestinationCard drawADestinationCard(String gameId) {
-        return games.get(gameId).takeTopDestinationCard();
+    public List<DestinationCard> drawADestinationCard(String gameId) {
+        return games.get(gameId).drawDestinationCards();
     }
 
-    public void addDestinationCard(String gameId, DestinationCard card) {
-        games.get(gameId).addDestinationCard(card);
+    public void addDestinationCard(String gameId, List<DestinationCard> card) {
+        games.get(gameId).discardDestinationCards(card);
     }
 
     public Map<String, Game> getGames() {

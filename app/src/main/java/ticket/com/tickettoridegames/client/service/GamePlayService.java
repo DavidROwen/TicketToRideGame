@@ -1,5 +1,7 @@
 package ticket.com.tickettoridegames.client.service;
 
+import java.util.List;
+
 import ticket.com.tickettoridegames.client.web.ServerProxy;
 import ticket.com.tickettoridegames.server.service.GameService;
 import ticket.com.tickettoridegames.utility.model.Chat;
@@ -54,7 +56,7 @@ public class GamePlayService implements IGameService {
     }
 
     @Override
-    public void drawDestinationCard(String playerId, String gameId) {
+    public List<DestinationCard> drawDestinationCard(String playerId, String gameId) {
         try {
 //            GameService.class.newInstance().drawDestinationCard(playerId, gameId);
             Command command = new Command(GameService.class, GameService.class.newInstance(),
@@ -66,10 +68,12 @@ public class GamePlayService implements IGameService {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        //TODO fix this. Placeholder for now....
+        return null;
     }
 
     @Override
-    public void returnDestinationCard(String gameId, DestinationCard card) {
+    public void returnDestinationCard(String gameId, List<DestinationCard> card) {
         try {
 //            GameService.class.newInstance().returnDestinationCards(gameId, cards);
             Command command = new Command(GameService.class, GameService.class.newInstance(),

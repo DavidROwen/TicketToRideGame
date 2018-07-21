@@ -188,11 +188,11 @@ public class ClientModel extends Observable {
     }
 
     public void removeDestinationCard() {
-        getMyActiveGame().removeDestinationCard();
+        //getMyActiveGame().removeDestinationCard();
     }
 
     public void addDestinationCard(DestinationCard card) {
-        getMyActiveGame().addDestinationCard(card);
+        //getMyActiveGame().addDestinationCard(card);
     }
 
     public Map<String, Integer> getCountsOfPoints() {
