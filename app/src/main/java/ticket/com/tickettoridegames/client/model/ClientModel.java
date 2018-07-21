@@ -181,12 +181,11 @@ public class ClientModel extends Observable {
     }
 
     public void setTurnOrder(LinkedList<String> order) {
-    public void addDestinationCard(List<DestinationCard> cards) {
-        getMyActiveGame().discardDestinationCards(cards);
+        getMyActiveGame().setTurnOrder(order);
     }
 
-    public void setTurnOrder(List<String> order) {
-        getMyActiveGame().setTurnOrder(order);
+    public void addDestinationCard(List<DestinationCard> cards) {
+        getMyActiveGame().discardDestinationCards(cards);
     }
 
     public void setPlayersColors(HashMap<String,Player.COLOR> colors) {

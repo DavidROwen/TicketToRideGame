@@ -320,12 +320,6 @@ public class Game {
     public void initGame() {
         initTurnOrder();
 //        initColors();
-        for(String curKey : players.keySet()) {
-            Player curPlayer = players.get(curKey);
-            initHand(curPlayer);
-//            initPlayerDestinationCards(curPlayer);
-        initColors();
-        initTrainBank();
 
         initGameNonRandom();
     }
@@ -334,7 +328,7 @@ public class Game {
     public void initGameNonRandom() {
         initHandAll();
         initTrainBank();
-        //todo destination cards
+        initPlayerDestinationCards();
     }
 
     private void initTrainBank() {
@@ -357,6 +351,7 @@ public class Game {
         for(int i = 0; i < getNumberOfPlayers(); i++){
             playerCards.add(drawDestinationCards());
         }
+        return playerCards;
     }
 
     //max of 7 players //for 7 colors
@@ -444,12 +439,7 @@ public class Game {
         Collections.shuffle(destinationCards);
     }
 
-    private void addDestinationCard(DestinationCard card) {
-        destinationCards.add(card);
-    }
-
     public void setTurnOrder(LinkedList<String> turnOrder) {
-    public void setTurnOrder(List<String> turnOrder) {
         this.turnOrder = turnOrder;
     }
 
@@ -497,5 +487,4 @@ public class Game {
     private void checkClaimed(Route route) {
 
     }
-
 }
