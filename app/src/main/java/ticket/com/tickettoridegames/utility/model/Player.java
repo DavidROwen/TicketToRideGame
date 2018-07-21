@@ -24,6 +24,7 @@ public class Player {
 
     private List<TrainCard> trainCards = new LinkedList<>();
     private Set<DestinationCard> destinationCards = new HashSet<>();
+    private Set<Route> claimedRoutes = new HashSet<>();
 
     public Player(String username, String id) {
         this.username = username;
@@ -105,5 +106,13 @@ public class Player {
 
     public List<TrainCard> getTrainCards() {
         return trainCards;
+    }
+
+    public Integer getCardCount(){
+        return trainCards.size() + destinationCards.size();
+    }
+
+    public Integer getRouteCount(){
+        return claimedRoutes.size();
     }
 }

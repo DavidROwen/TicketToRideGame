@@ -30,7 +30,7 @@ public class StatsPresenter implements IStatsPresenter , Observer {
                 statsView.displayChat(clientModel.getNewestChat(clientModel.getCurrentGameID()));
                 break;
             case STATSUPDATE:
-                //clientModel.getStats(clientModel.getCurrentGameID());
+                // clientModel.getStats(clientModel.getCurrentGameID());
             case HISTORYUPDATE:
                 //
             default:

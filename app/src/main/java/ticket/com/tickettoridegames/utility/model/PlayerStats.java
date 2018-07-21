@@ -15,6 +15,8 @@ public class PlayerStats {
         this.numberOfRoutes = numberOfRoutes;
     }
 
+    public PlayerStats(){}
+
     public String getName() {
         return name;
     }
