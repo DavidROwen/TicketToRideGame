@@ -18,6 +18,9 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         gamePlayService = new GamePlayService();
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
+
+        assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
+        assetsView.displayMessage("Loaded presenter");
     }
 
     @Override

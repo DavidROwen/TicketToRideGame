@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.presenter.AssetsPresenter;
+import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
 import ticket.com.tickettoridegames.client.view.JoinActivity;
@@ -43,11 +45,13 @@ import static ticket.com.tickettoridegames.utility.model.TrainCard.TRAIN_TYPE.YE
 
 public class AssetsFragment extends BasicFragment implements IAssetsView{
 
+    //Linked Presenter
+    IAssetsPresenter presenter;
+
     //Variables
     private List<TrainCard> hand;
     private List<TrainCard> trainBank;
     private Set<DestinationCard> destinationCards;
-    private View view;
     private ArrayList<String> listRoutes=new ArrayList<>(); //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
     private ArrayAdapter<String> adapter; //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
 
@@ -55,10 +59,10 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     private RecyclerView myHandRecyclerView;
     private RecyclerView myBankRecyclerView;
     private RecyclerView.Adapter myAdapter;
+    private View view;
 
     @Override
     public BasicFragment provideYourFragment() {
-
         return new AssetsFragment();
     }
 
@@ -66,13 +70,14 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.assets_fragment,parent,false);
-        
+
         ListView routes = (ListView)view.findViewById(R.id.routes);
         adapter=new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 listRoutes);
         routes.setAdapter(adapter);
 
+        presenter = new AssetsPresenter(this);
         return view;
         //return null;
     }
@@ -91,8 +96,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     public void setBank(List<TrainCard> trainBank){
         this.trainBank = trainBank;
 
-        myBankRecyclerView = (RecyclerView) getView().findViewById(R.id.trainBank);
-
+        myBankRecyclerView = (RecyclerView) view.findViewById(R.id.trainBank);
         myBankRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(trainBank);
         myBankRecyclerView.setAdapter(myAdapter);
@@ -123,14 +127,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
 class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
-    int selected_position = 0; // You have to set this globally in the ImageAdapter class
-    List<TrainCard> trainCardsSet;
-    TrainCard[] trainCards; //ArrayList<String> maybe
-
+    private int selected_position = 0; // You have to set this globally in the ImageAdapter class
+    private List<TrainCard> trainCards;
 
     public ImageAdapter(List<TrainCard> trainCards) {
-        this.trainCardsSet = trainCardsSet;
-        this.trainCards = trainCardsSet.toArray(new TrainCard[0]);
+        this.trainCards = trainCards;
     }
 
     @Override
@@ -144,12 +145,12 @@ class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
     @Override
     public void onBindViewHolder(ImageCustomViewHolder holder, int i) {
-        holder.bindResult(trainCards[i]);
+        holder.bindResult(trainCards.get(i));
     }
 
     @Override
     public int getItemCount() {
-        return trainCards.length;
+        return trainCards.size();
     }
 }
 
