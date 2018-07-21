@@ -11,6 +11,7 @@ import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
@@ -256,6 +257,11 @@ public class ClientModel extends Observable {
         }
 
         return stats;
+    }
+
+    public List<PlayerAction> getHistory(){
+        Game myGame = getMyActiveGame();
+        return myGame.getGameHistory();
     }
 
 }
