@@ -27,7 +27,12 @@ public class ClientCommunicator {
 		sendTask.execute(command);
 		try {
 			String input = sendTask.get();
-			return Serializer.fromJson(input, returnType);
+			if(input == null) {
+				System.out.println("server input: null");
+				return null;
+			} else {
+				return Serializer.fromJson(input, returnType);
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {

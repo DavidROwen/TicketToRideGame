@@ -6,7 +6,6 @@ import java.util.Map;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.server.model.ServerModel;
-import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
@@ -22,7 +21,9 @@ public class GameService implements IGameService {
         ServerModel.getInstance().initGame(gameId);
 
         //turnOrder
-        List<String> turnOrder = ServerModel.getInstance().getTurnOrder(gameId);
+        Game game = ServerModel.getInstance().getGames().get(gameId);
+        List<String> turnOrder = game.getTurnOrder();
+
 //        ClientModel.get_instance().setTurnOrder(turnOrder);
         Command initTurnOrder = new Command(ClientModel.class, ClientModel.get_instance(),
                 "setTurnOrder", new Object[]{turnOrder}
@@ -30,55 +31,50 @@ public class GameService implements IGameService {
         CommandsManager.addCommandAllPlayers(initTurnOrder, gameId);
 
 
-        //playerColors
-        Map<String, Player.COLOR> colors = ServerModel.getInstance().getPlayerColors(gameId);
-//        ClientModel.get_instance().setPlayersColors(colors);
-        Command initColors = new Command(ClientModel.class, ClientModel.get_instance(),
-                "setPlayersColors", new Object[]{colors}
-        );
-        CommandsManager.addCommandAllPlayers(initColors, gameId);
+//        //playerColors
+//        Map<String, Player.COLOR> colors = ServerModel.getInstance().getPlayerColors(gameId);
+////        ClientModel.get_instance().setPlayersColors(colors);
+//        Command initColors = new Command(ClientModel.class, ClientModel.get_instance(),
+//                "setPlayersColors", new Object[]{colors}
+//        );
+//        CommandsManager.addCommandAllPlayers(initColors, gameId);
+//
+//
+//        //trainCards
+//        for(Player player : ServerModel.getInstance().getPlayers(gameId)) {
+//            for (TrainCard card : ServerModel.getInstance().getPlayerHand(player.getId(), gameId)) {
+////                ClientModel.get_instance().addTrainCard(card, player.getId());
+//                Command addTrainCard = new Command(ClientModel.class, ClientModel.get_instance(),
+//                        "addTrainCard", new Object[]{card, player.getId()}
+//                        );
+//                CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
+//            }
+//        }
 
-
-        //trainCards
-        for(Player player : ServerModel.getInstance().getPlayers(gameId)) {
-            for (TrainCard card : ServerModel.getInstance().getPlayerHand(player.getId(), gameId)) {
-//                ClientModel.get_instance().addTrainCard(card, player.getId());
-                Command addTrainCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                        "addTrainCard", new Object[]{card, player.getId()}
-                        );
-                CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
-            }
-        }
-
-        //destinationCards
-        for(Player player : ServerModel.getInstance().getPlayers(gameId)) {
-            for (DestinationCard card : ServerModel.getInstance().getPlayerDestinationCards(player.getId(), gameId)) {
-//                ClientModel.get_instance().addDestinationCard(card, player.getId());
-                Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                        "addDestinationCard", new Object[]{card, player.getId()}
-                        );
-                CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
-            }
-        }
+//        //destinationCards
+//        for(Player player : ServerModel.getInstance().getPlayers(gameId)) {
+//            for (DestinationCard card : ServerModel.getInstance().getPlayerDestinationCards(player.getId(), gameId)) {
+////                ClientModel.get_instance().addDestinationCard(card, player.getId());
+//                Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
+//                        "addDestinationCard", new Object[]{card, player.getId()}
+//                        );
+//                CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
+//            }
+//        }
     }
 
     @Override
     public void drawTrainCard(String playerId, String gameId) {
-        //draw card
-        TrainCard drawnCard = ServerModel.getInstance().drawATrainCard(gameId);
-//        ClientModel.get_instance().addTrainCard(drawnCard, playerId);
-        Command addTrainCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                "addTrainCard", new Object[]{drawnCard, playerId}
+        //server side
+        Game game = ServerModel.getInstance().getGames().get(gameId);
+        game.drawTrainCard(playerId);
+
+        //client side
+//        ClientModel.get_instance().getMyActiveGame().drawTrainCard(playerId);
+        Command addTrainCard = new Command(Game.class, ClientModel.get_instance().getMyActiveGame(),
+                "drawTrainCard", new Object[]{playerId}
         );
         CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
-
-        //flip over the next one
-        TrainCard nextCard = ServerModel.getInstance().getTopTrainCard(gameId);
-//        ClientModel.get_instance().setTopTrainCard(nextCard);
-        Command resetTop = new Command(ClientModel.class, ClientModel.get_instance(),
-                "setTopTrainCard", new Object[]{nextCard}
-        );
-        CommandsManager.addCommandAllPlayers(resetTop, gameId);
     }
 
     @Override

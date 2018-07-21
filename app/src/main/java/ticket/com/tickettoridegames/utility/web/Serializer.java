@@ -90,6 +90,9 @@ public class Serializer {
                 if(isJsonObject(cur)) {
                     JsonObject paramValue = calcJsonObject(cur);
                     paramValues.add(paramValue);
+                } else if(isJsonArray(cur)) {
+                    JsonArray paramValue = calcJsonArray(cur);
+                    paramValues.add(paramValue);
                 } else {
                     paramValues.add(cur.toString());
                 }
@@ -103,9 +106,19 @@ public class Serializer {
             return parser.parse(toJson(cur)).isJsonObject();
         }
 
+        private boolean isJsonArray(Object cur) {
+            JsonParser parser = new JsonParser();
+            return parser.parse(toJson(cur)).isJsonArray();
+        }
+
         private JsonObject calcJsonObject(Object cur) {
             JsonParser parser = new JsonParser();
             return parser.parse(toJson(cur)).getAsJsonObject();
+        }
+
+        private JsonArray calcJsonArray(Object cur) {
+            JsonParser parser = new JsonParser();
+            return parser.parse(toJson(cur)).getAsJsonArray();
         }
 
         private JsonElement calcParamTypes(Command src) {
@@ -174,7 +187,9 @@ public class Serializer {
             String paramValuesStr;
             if(value.isJsonObject()) {
                 paramValuesStr = value.getAsJsonObject().toString();
-            } else { //primitive types
+            } else if (value.isJsonArray()) {
+                paramValuesStr = value.getAsJsonArray().toString();
+            } else {//primitive types
                 paramValuesStr = value.toString();
             }
 

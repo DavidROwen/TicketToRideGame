@@ -159,11 +159,6 @@ public class ClientModel extends Observable {
         getMyActiveGame().getPlayer(playerId).addTrainCard(drawnCard);
     }
 
-    public TrainCard getDeckTop() {
-        return getMyActiveGame().getTopTrainCard();
-    }
-
-
     public List<Route> getClaimedRoutes() {
         return null; //getMyActiveGame().getMap().getClaimedRoutes(); //todo needs some work
     }
@@ -182,10 +177,6 @@ public class ClientModel extends Observable {
 
     public Set<DestinationCard> getDestinationCards() {
         return getMyPlayer().getDestinationCards();
-    }
-
-    public void setTopTrainCard(TrainCard topTrainCard) {
-        getMyActiveGame().setTopTrainCard(topTrainCard);
     }
 
     public void setTurnOrder(List<String> order) {
@@ -221,19 +212,19 @@ public class ClientModel extends Observable {
     }
 
     public Game getMyActiveGame() {
-        if(myActiveGame != null) { return myActiveGame; }//convenience function
+        if(myActiveGame == null) { locateMyActiveGame(); }
+        return myActiveGame;
+    }
 
+    private void locateMyActiveGame() {
         //check every player in every game
-        for(String curKey : gameList.keySet()) {
+        for (String curKey : gameList.keySet()) {
             Game curGame = gameList.get(curKey);
-            if(curGame.getPlayer(ClientModel.get_instance().getUserId()) != null) {
+            if (curGame.getPlayer(ClientModel.get_instance().getUserId()) != null) {
                 myActiveGame = curGame;
-                return curGame;
+                break; //done
             }
         }
-
-        //failed
-        return null;
     }
 
     public Player getMyPlayer() {
