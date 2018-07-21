@@ -1,13 +1,11 @@
 package ticket.com.tickettoridegames.server.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.server.CommandsManager;
@@ -235,12 +233,6 @@ public class ServerModel {
 
     public void addDestinationCard(String gameId, DestinationCard card) {
         games.get(gameId).addDestinationCard(card);
-
-//        ClientModel.get_instance().addDestinationCard(card);
-        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                "addDestinationCard", new Object[]{card}
-        );
-        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
     }
 
     public Map<String, Game> getGames() {
@@ -268,5 +260,9 @@ public class ServerModel {
 
     public List<String> getTurnOrder(String gameId) {
         return games.get(gameId).getTurnOrder();
+    }
+
+    public Map<String, Player.COLOR> getPlayerColors(String gameId) {
+        return games.get(gameId).getPlayersColors();
     }
 }

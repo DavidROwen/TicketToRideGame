@@ -20,8 +20,6 @@ public class ClientModel extends Observable {
 
     // Singleton Class
     static private ClientModel _instance;
-    private TrainCard topTrainCard;
-    private Boolean myTurn;
 
     static public ClientModel get_instance() {
         if (_instance == null) {
@@ -154,13 +152,9 @@ public class ClientModel extends Observable {
         return getMyPlayer().getTrainCards();
     }
 
-    public void addTrainCard(TrainCard drawnCard) {
-        getMyPlayer().addTrainCard(drawnCard);
+    public void addTrainCard(TrainCard drawnCard, String playerId) {
+        getMyActiveGame().getPlayer(playerId).addTrainCard(drawnCard);
     }
-
-//    public Map<String, Integer> getCountsOfCardsInHand() {
-//        return getMyActiveGame().getCountsOfCardsInHand();
-//    }
 
     public TrainCard getDeckTop() {
         return getMyActiveGame().getTopTrainCard();
@@ -172,23 +166,15 @@ public class ClientModel extends Observable {
     }
 
     public Map<String, Integer> getPoints() {
-        return getMyActiveGame().getPoints();
+        return getMyActiveGame().getCountsOfPoints();
     }
-
-//    public Map<String, Integer> getTrainCounts() {
-//        return getMyActiveGame().getTrainCounts();
-//    }
 
     public Boolean isMyTurn() {
         return true; //no turns in phase 2
     }
 
-    public void setMyTurn(Boolean myTurn) {
-        this.myTurn = myTurn;
-    }
-
-    public void addDestinationCard(DestinationCard card) {
-        getMyPlayer().addDestinationCard(card);
+    public void addDestinationCard(DestinationCard card, String playerId) {
+        getMyActiveGame().getPlayer(playerId).addDestinationCard(card);
     }
 
     public Set<DestinationCard> getDestinationCards() {
@@ -196,15 +182,39 @@ public class ClientModel extends Observable {
     }
 
     public void setTopTrainCard(TrainCard topTrainCard) {
-        this.topTrainCard = topTrainCard;
+        getMyActiveGame().setTopTrainCard(topTrainCard);
     }
 
     public void setTurnOrder(List<String> order) {
         getMyActiveGame().setTurnOrder(order);
     }
 
-    public void setPlayerColor(Player.COLOR color) {
-        getMyPlayer().setColor(color);
+    public void setPlayersColors(Map<String,Player.COLOR> colors) {
+        getMyActiveGame().setPlayersColors(colors);
+    }
+
+    public void removeDestinationCard() {
+        getMyActiveGame().removeDestinationCard();
+    }
+
+    public void addDestinationCard(DestinationCard card) {
+        getMyActiveGame().addDestinationCard(card);
+    }
+
+    public Map<String, Integer> getCountsOfPoints() {
+        return getMyActiveGame().getCountsOfPoints();
+    }
+
+    public Map<String, Integer> getCountsOfTrains() {
+        return getMyActiveGame().getCountsOfTrains();
+    }
+
+    public Map<String, Integer> getCountsOfCards() {
+        return getMyActiveGame().getCountsOfCardsInHand();
+    }
+
+    public Map<String, Integer> getCountsOfRoutes() {
+        return getMyActiveGame().getCountsOfRoutes();
     }
 
     private Game getMyActiveGame() {

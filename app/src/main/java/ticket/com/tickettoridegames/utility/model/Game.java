@@ -211,7 +211,7 @@ public class Game {
         return gameHistory;
     }
 
-    public Map<String,Integer> getPoints() {
+    public Map<String,Integer> getCountsOfPoints() {
         Map<String,Integer> points = new HashMap<>();
 
         for(String curKey : players.keySet()) {
@@ -231,6 +231,30 @@ public class Game {
         }
 
         return counts;
+    }
+
+    public Map<String,Integer> getCountsOfTrains() {
+        Map<String,Integer> counts = new HashMap<>();
+
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            counts.put(curPlayer.getId(), curPlayer.getTrains());
+        }
+
+        return counts;
+    }
+
+    public Map<String,Integer> getCountsOfRoutes() {
+//        Map<String,Integer> counts = new HashMap<>();
+//
+//        for(String curKey : players.keySet()) {
+//            Player curPlayer = players.get(curKey);
+//            counts.put(curPlayer.getId(), curPlayer.getTrainCards().size());
+//        }
+//
+//        return counts;
+        return null;
+        //todo
     }
 
     public TrainCard getTopTrainCard() {
@@ -260,14 +284,14 @@ public class Game {
         return counts;
     }
 
-    public void switchTurn() {
-        turnNumber = (turnNumber + 1) % players.size();
-    }
+//    public void switchTurn() {
+//        turnNumber = (turnNumber + 1) % players.size();
+//    }
 
-    //player up is the player who's turn it currently is
-    public String getIdPlayerUp() {
-        return turnOrder.get(turnNumber);
-    }
+//    //player up is the player who's turn it currently is
+//    public String getIdPlayerUp() {
+//        return turnOrder.get(turnNumber);
+//    }
 
     private void initTurnOrder() {
         //todo randomize
@@ -336,5 +360,30 @@ public class Game {
 
     public void setTurnOrder(List<String> turnOrder) {
         this.turnOrder = turnOrder;
+    }
+
+    public Map<String, Player.COLOR> getPlayersColors() {
+        Map<String, Player.COLOR> colors = new HashMap<>();
+
+        for(String id : players.keySet()) {
+            colors.put(id, players.get(id).getColor());
+        }
+
+        return colors;
+    }
+
+    public void setPlayersColors(Map<String, Player.COLOR> colors) {
+        for(String id : players.keySet()) {
+            Player.COLOR color = colors.get(id);
+            players.get(id).setColor(color);
+        }
+    }
+
+    public void removeDestinationCard() {
+        destinationCards.pop();
+    }
+
+    public void setTopTrainCard(TrainCard topTrainCard) {
+        this.topTrainCard = topTrainCard;
     }
 }
