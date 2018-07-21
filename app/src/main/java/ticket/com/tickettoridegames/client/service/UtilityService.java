@@ -16,21 +16,19 @@ public class UtilityService {
     public Result clearServer(){
         try {
             Result result = ServerProxy.sendCommand(
-                new Command(ticket.com.tickettoridegames.server.service.Tester.class,
-                    ticket.com.tickettoridegames.server.service.Tester.class.newInstance(),
-                    "clear",
-                    null)
+                    new Command(ticket.com.tickettoridegames.server.service.Tester.class,
+                            ticket.com.tickettoridegames.server.service.Tester.class.newInstance(),
+                            "clear",
+                            null)
             );
-            if (result.isSuccess()){
+            if (result.isSuccess()) {
                 // Parse/get the user from the response here.
                 // result.message should be set as the userID from the server.
                 clientModel.setUser(null);
-                return result;
             }
-            else {
-                return result;
-            }
-        } catch (Exception e){
+            return result;
+        }
+        catch (Exception e){
             e.printStackTrace();
             return new Result(false, "", e.toString());
         }

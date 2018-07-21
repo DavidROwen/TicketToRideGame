@@ -30,12 +30,7 @@ public class JoinService {
                             new Class<?>[]{String.class, String.class, int.class},
                             new Object[]{userId, gameName, numberOfPlayers})
             );
-            if (result.isSuccess()){
-                return result;
-            }
-            else {
-                return result;
-            }
+            return result;
         } catch (Exception e){
             e.printStackTrace();
             return new Result(false, "", e.toString());
@@ -58,13 +53,7 @@ public class JoinService {
                             new Class<?>[]{String.class, String.class,},
                             new Object[]{userID, gameID})
             );
-            if (result.isSuccess()){
-                return result;
-            }
-            else {
-                // Request failed handle that here
-                return result;
-            }
+            return result;
         } catch (Exception e){
             e.printStackTrace();
             return new Result(false, "", e.toString());

@@ -29,14 +29,7 @@ public class LobbyService {
                             new Class<?>[]{String.class},
                             new Object[]{gameID})
             );
-            if(result.isSuccess()){
-                return result;
-            }
-            else{
-                //print error message
-                return result;
-            }
-
+            return result;
         }
         catch(Exception e){
             e.printStackTrace();
@@ -54,13 +47,7 @@ public class LobbyService {
                             new Class<?>[]{String.class,String.class,String.class},
                             new Object[]{gameID,userID,message})
             );
-            if (result.isSuccess()){
-                return result;
-            }
-            else {
-                // Error hmm what to do?
-                return result;
-            }
+            return result;
         } catch (Exception e){
             e.printStackTrace();
             return new Result(false, "", e.toString());

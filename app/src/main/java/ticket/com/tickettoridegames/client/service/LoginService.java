@@ -29,11 +29,8 @@ public class LoginService {
                 // result.message should be set as the userID from the server.
                 user.setId(result.getMessage());
                 clientModel.setUser(user);
-                return result;
             }
-            else {
-                return result;
-            }
+            return result;
         } catch (Exception e){
             e.printStackTrace();
             return new Result(false, "", e.toString());
@@ -55,11 +52,8 @@ public class LoginService {
                 // result.message should be set as the userID from the server.
                 user.setId(result.getMessage());
                 clientModel.setUser(user);
-                return result;
             }
-            else {
-                return result;
-            }
+            return result;
         } catch (Exception e){
             e.printStackTrace();
             return new Result(false, "", e.toString());
