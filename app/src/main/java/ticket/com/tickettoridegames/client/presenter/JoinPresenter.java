@@ -54,7 +54,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             if (result.isSuccess()){
                 clientModel.getUser().setGameId(gameId);
                 joinView.displayMessage("Game Joined!");
-                joinView.changeView();
+                joinView.changeView(clientModel.getMyActiveGame().isStarted());
             }
             else {
                 // Request failed

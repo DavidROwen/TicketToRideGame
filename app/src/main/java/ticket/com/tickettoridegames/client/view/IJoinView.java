@@ -30,7 +30,7 @@ public interface IJoinView {
 
     Integer getNewPlayerCount();
 
-    void changeView();
+    void changeView(Boolean isStarted);
 
     void displayMessage(String message);
 

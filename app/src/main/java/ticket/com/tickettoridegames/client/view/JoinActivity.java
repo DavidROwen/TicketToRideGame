@@ -172,9 +172,15 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     // Join was successful go to the join view.
     @Override
-    public void changeView(){
-        Intent intent = new Intent(JoinActivity.this, LobbyActivity.class);
-        startActivity(intent);
+    public void changeView(Boolean isStarted){
+        if (isStarted){
+            Intent intent = new Intent(JoinActivity.this, GamePlayActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(JoinActivity.this, LobbyActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
