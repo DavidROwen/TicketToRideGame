@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,8 +43,8 @@ import static ticket.com.tickettoridegames.utility.model.TrainCard.TRAIN_TYPE.YE
 public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     //Variables
-    private Set<TrainCard> hand;
-    private Set<TrainCard> trainBank;
+    private List<TrainCard> hand;
+    private List<TrainCard> trainBank;
     private Set<DestinationCard> destinationCards;
     private View view;
     private ArrayList<String> listRoutes=new ArrayList<>(); //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
@@ -76,7 +77,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
-    public void setHand(Set<TrainCard> hand){
+    public void setHand(List<TrainCard> hand){
         this.hand = hand;
         myHandRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
 
@@ -86,7 +87,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
-    public void setBank(Set<TrainCard> trainBank){
+    public void setBank(List<TrainCard> trainBank){
         this.trainBank = trainBank;
 
         myBankRecyclerView = (RecyclerView) getView().findViewById(R.id.trainBank);
@@ -121,11 +122,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
     int selected_position = 0; // You have to set this globally in the ImageAdapter class
-    Set<TrainCard> trainCardsSet;
+    List<TrainCard> trainCardsSet;
     TrainCard[] trainCards; //ArrayList<String> maybe
 
 
-    public ImageAdapter(Set<TrainCard> trainCards) {
+    public ImageAdapter(List<TrainCard> trainCards) {
         this.trainCardsSet = trainCardsSet;
         this.trainCards = trainCardsSet.toArray(new TrainCard[0]);
     }
