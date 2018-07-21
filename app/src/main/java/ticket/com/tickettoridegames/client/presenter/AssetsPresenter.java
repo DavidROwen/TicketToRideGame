@@ -9,7 +9,6 @@ import ticket.com.tickettoridegames.client.view.IAssetsView;
 import ticket.com.tickettoridegames.utility.TYPE;
 
 public class AssetsPresenter implements IAssetsPresenter, Observer {
-
     private GamePlayService gamePlayService;
     private ClientModel clientModel;
     private IAssetsView assetsView;

@@ -217,7 +217,7 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getCountsOfRoutes();
     }
 
-    private Game getMyActiveGame() {
+    public Game getMyActiveGame() {
         if(myActiveGame != null) { return myActiveGame; }//convenience function
 
         //check every player in every game
@@ -233,7 +233,7 @@ public class ClientModel extends Observable {
         return null;
     }
 
-    private Player getMyPlayer() {
+    public Player getMyPlayer() {
         if(myPlayer != null) { return myPlayer; } //convenience function
         return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
     }

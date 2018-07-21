@@ -2,17 +2,12 @@ package ticket.com.tickettoridegames;
 
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ticket.com.tickettoridegames.client.model.ClientModel;
-import ticket.com.tickettoridegames.client.service.GameServiceProxy;
+import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
 import ticket.com.tickettoridegames.client.web.Poller;
-import ticket.com.tickettoridegames.server.service.GameService;
-import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
@@ -28,14 +23,40 @@ public class GameServiceTest {
     private String userId2;
 
     @Test
+    public void testPhase2Simple() {
+        initGame();
+        GamePlayService proxy = new GamePlayService();
+
+        //init
+        proxy.initGame(gameId);
+        try {
+            Thread.sleep(3000); //wait for poller
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //check turns
+        assertEquals(ClientModel.get_instance().getMyActiveGame().getPlayersColors().size(), 2);//check colors
+        assertEquals(ClientModel.get_instance().getMyPlayer().getTrainCards().size(), 4);//check hand
+        assertEquals(ClientModel.get_instance().getMyPlayer().getDestinationCards().size(), 3);//check destination cards
+
+        //return a destination
+//        DestinationCard returnedCard = ClientModel.get_instance().getMyPlayer().getDestinationCards().
+//        proxy.returnDestinationCard(gameId, );
+
+        //draw a card
+
+
+    }
+
+    @Test
     public void testDrawTrainCard() {
         //prepare
         initGame();
-        GameServiceProxy gameServiceProxy = new GameServiceProxy();
+        GamePlayService gamePlayService = new GamePlayService();
 
         //you draw
         TrainCard topCard1 = ClientModel.get_instance().getDeckTop();
-        gameServiceProxy.drawTrainCard(userId, gameId);
+        gamePlayService.drawTrainCard(userId, gameId);
         try {
             Thread.sleep(3000); //wait for poller
         } catch (InterruptedException e) {
@@ -47,7 +68,7 @@ public class GameServiceTest {
 
 //        //other player draws
 //        //remove null top card
-//        gameServiceProxy.drawTrainCard(userId2, gameId);
+//        gamePlayService.drawTrainCard(userId2, gameId);
 //        try {
 //            Thread.sleep(3000); //wait for poller
 //        } catch (InterruptedException e) {
