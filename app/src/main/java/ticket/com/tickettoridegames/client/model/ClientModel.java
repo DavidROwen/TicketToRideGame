@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.PlayerStats;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
@@ -237,4 +239,13 @@ public class ClientModel extends Observable {
         if(myPlayer != null) { return myPlayer; } //convenience function
         return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
     }
+
+    public List<PlayerStats> getPlayerStats(){
+        List<PlayerStats> stats = new ArrayList<>();
+        Game myGame = getMyActiveGame();
+        
+
+        return stats;
+    }
+
 }
