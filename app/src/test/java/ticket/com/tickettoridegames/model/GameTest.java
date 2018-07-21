@@ -10,7 +10,7 @@ public class GameTest {
     public void testRemoveTopTrainCard() {
         Game game = new Game();
         for(int i = 0; i < 5; i++) {
-            TrainCard card = game.takeTopTrainCard();
+            TrainCard card = game.drawTrainCard(playerId);
             System.out.println(card.getType().toString());
         }
     }

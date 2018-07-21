@@ -3,7 +3,6 @@ package ticket.com.tickettoridegames.utility.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +31,13 @@ public class Game {
     // Map data
     private GameMap map;
     private Stack<DestinationCard> destinationCards;
+    private Stack<TrainCard> trainCardsDeck = new Stack<>();
     private Map<String, DestinationCard> claimedDestinationCards;
-    private TrainCard topTrainCard;
+//    private TrainCard topTrainCard;
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory;
+    public static final Integer NUM_CARDS_TRAINCARD_DECK = 52;
 
     public Game(){
         this.players = new HashMap<>();
@@ -46,6 +47,7 @@ public class Game {
         this.destinationCards = new Stack<>();
         trainBank = new LinkedList<>();
         fillDestinationCards();
+        initTrainCardDeck();
         this.claimedDestinationCards = new HashMap<>();
         this.gameHistory = new LinkedList<>();
     }
@@ -61,6 +63,7 @@ public class Game {
         this.isStarted = false;
         this.newestChat = null;
         trainBank = new LinkedList<>();
+        initTrainCardDeck();
 
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
@@ -261,20 +264,18 @@ public class Game {
         //todo
     }
 
-    public TrainCard getTopTrainCard() {
-        if(topTrainCard == null) { takeTopTrainCard(); } //cycle through it
-        return topTrainCard;
+    private TrainCard getRandomTrainCard() {
+        Integer randInt = Math.abs(new Random().nextInt() % TrainCard.TRAIN_TYPE.values().length);
+        return new TrainCard(TrainCard.TRAIN_TYPE.values()[randInt]);
     }
 
-    public TrainCard takeTopTrainCard() {
-        TrainCard card = topTrainCard;
+    public void drawTrainCard(String playerId) {
+        TrainCard card = trainCardsDeck.pop();
+        players.get(playerId).addTrainCard(card);
+    }
 
-        //set a new rand card
-        Integer randInt = Math.abs(new Random().nextInt() % TrainCard.TRAIN_TYPE.values().length);
-        topTrainCard = new TrainCard(TrainCard.TRAIN_TYPE.values()[randInt]);
-
-        if(card == null) { return takeTopTrainCard(); } //cycle through it
-        return card;
+    private TrainCard drawTrainCard() {
+        return trainCardsDeck.pop();
     }
 
     public Map<String,Integer> getTrainCounts() {
@@ -305,17 +306,22 @@ public class Game {
         }
     }
 
+    public void initTrainCardDeck() { //todo private
+        for(int i = 0; i < NUM_CARDS_TRAINCARD_DECK; i++) {
+            trainCardsDeck.push(getRandomTrainCard());
+        }
+    }
+
     public void initGame() {
         initTurnOrder();
-        initColors();
-        //todo lay out face up cards
-        takeTopTrainCard();
-
-        for(String curKey : players.keySet()) {
-            Player curPlayer = players.get(curKey);
-            initHand(curPlayer);
-            initPlayerDestinationCards(curPlayer);
-        }
+//        initColors();
+//        //todo lay out face up cards
+//
+//        for(String curKey : players.keySet()) {
+//            Player curPlayer = players.get(curKey);
+//            initHand(curPlayer);
+////            initPlayerDestinationCards(curPlayer);
+//        }
     }
 
     //give player 3 destination cards to start the game
@@ -337,7 +343,7 @@ public class Game {
 
     private void initHand(Player player) {
         for(int i = 0; i < 4; i++) {
-            player.addTrainCard(takeTopTrainCard());
+            drawTrainCard(player.getId());
         }
     }
 
@@ -387,24 +393,14 @@ public class Game {
         destinationCards.pop();
     }
 
-    public void setTopTrainCard(TrainCard topTrainCard) {
-        this.topTrainCard = topTrainCard;
-    }
-
     public void pickupTrainCard(String playerId, Integer index) {
-        //get card
-        TrainCard pickedCard = trainBank.get(index);
         //add card
+        TrainCard pickedCard = trainBank.get(index);
         players.get(playerId).addTrainCard(pickedCard);
         //replace card
-        trainBank.set(index, takeTopTrainCard());
+        trainBank.set(index, drawTrainCard());
     }
 
-    public List<TrainCard> getTrainBank() {
-        return trainBank;
-    }
 
-    public void setTrainBank(List<TrainCard> trainBank) {
-        this.trainBank = trainBank;
-    }
+
 }
