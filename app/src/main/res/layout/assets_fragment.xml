@@ -12,6 +12,14 @@
         android:background="#88000000">
 
         <TextView
+            android:id="@+id/routesText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Routes"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+        <TextView
             android:id="@+id/ownedTrainsText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,13 +35,6 @@
             android:text="TrainBank"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
-        <TextView
-            android:id="@+id/routesText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Routes"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
     </LinearLayout>
 
     <LinearLayout
