@@ -25,8 +25,16 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
+            case BANKUPDATE:
+                //assetsView.setBank(clientModel.getMyActiveGame().getBank());
             default:
                 //Why you updated me?
         }
+    }
+
+    @Override
+    public void drawFromBank(Integer stackID){
+
+        // We use the stack index to indicate what card should change.
     }
 }

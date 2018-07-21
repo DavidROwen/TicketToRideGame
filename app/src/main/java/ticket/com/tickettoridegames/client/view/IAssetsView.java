@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
+import java.util.List;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
@@ -7,9 +8,9 @@ import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public interface IAssetsView {
 
-    public void setHand(Set<TrainCard> hand);
+    public void setHand(List<TrainCard> hand);
 
-    public void setBank(Set<TrainCard> trainBank);
+    public void setBank(List<TrainCard> trainBank);
 
     public TrainCard getBankChoice(TrainCard trainCard);
 

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,8 +43,8 @@ import static ticket.com.tickettoridegames.utility.model.TrainCard.TRAIN_TYPE.YE
 public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     //Variables
-    Set<TrainCard> hand;
-    Set<TrainCard> trainBank;
+    List<TrainCard> hand;
+    List<TrainCard> trainBank;
     Set<DestinationCard> destinationCards;
 
     //Widgets
@@ -70,7 +71,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
         //Get your parent layout of fragment
         LinearLayout layout = (LinearLayout)view;
-        
+
         ListView routes = (ListView)layout.findViewById(R.id.routes);
         adapter=new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
@@ -82,7 +83,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
-    public void setHand(Set<TrainCard> hand){
+    public void setHand(List<TrainCard> hand){
         this.hand = hand;
         myHandRecyclerView = (RecyclerView) getView().findViewById(R.id.ownedTrains);
 
@@ -92,7 +93,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
-    public void setBank(Set<TrainCard> trainBank){
+    public void setBank(List<TrainCard> trainBank){
         this.trainBank = trainBank;
 
         myBankRecyclerView = (RecyclerView) getView().findViewById(R.id.trainBank);
@@ -126,14 +127,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
 class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
-    int selected_position = 0; // You have to set this globally in the ImageAdapter class
-    Set<TrainCard> trainCardsSet;
-    TrainCard[] trainCards; //ArrayList<String> maybe
+    private int selected_position = 0; // You have to set this globally in the ImageAdapter class
+    private List<TrainCard> trainCards;
 
-
-    public ImageAdapter(Set<TrainCard> trainCards) {
-        this.trainCardsSet = trainCardsSet;
-        this.trainCards = trainCardsSet.toArray(new TrainCard[0]);
+    public ImageAdapter(List<TrainCard> trainCards) {
+        this.trainCards = trainCards;
     }
 
     @Override
@@ -147,12 +145,13 @@ class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
     @Override
     public void onBindViewHolder(ImageCustomViewHolder holder, int i) {
-        holder.bindResult(trainCards[i]);
+        TrainCard[] trainArray = (TrainCard[])trainCards.toArray();
+        holder.bindResult(trainArray[i]);
     }
 
     @Override
     public int getItemCount() {
-        return trainCards.length;
+        return trainCards.size();
     }
 }
 
