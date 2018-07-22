@@ -259,17 +259,14 @@ public class Game {
         return counts;
     }
 
-    public Map<String,Integer> getCountsOfRoutes() {
-//        Map<String,Integer> counts = new HashMap<>();
-//
-//        for(String curKey : players.keySet()) {
-//            Player curPlayer = players.get(curKey);
-//            counts.put(curPlayer.getId(), curPlayer.getTrainCards().size());
-//        }
-//
-//        return counts;
-        return null;
-        //todo
+    public Map<String, Integer> getCountsOfRoutes() {
+        Map<String,Integer> counts = new HashMap<>();
+
+        for(String curId : players.keySet()) {
+            counts.put(curId, routes.get(curId).size());
+        }
+
+        return counts;
     }
 
     private TrainCard getRandomTrainCard() {
@@ -307,11 +304,13 @@ public class Game {
 //    }
 
     private void initTurnOrder() {
-        //todo randomize
+        //all players
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
             turnOrder.add(curPlayer.getId());
         }
+        //shuffle
+        Collections.shuffle(turnOrder);
     }
 
     private void initTrainCardDeck() {
@@ -331,7 +330,7 @@ public class Game {
     public void initGameNonRandom() {
         initHandAll();
         initTrainBank();
-//        initPlayerDestinationCards(); //todo
+//        initPlayerDestinationCards();
     }
 
     private void initTrainBank() {

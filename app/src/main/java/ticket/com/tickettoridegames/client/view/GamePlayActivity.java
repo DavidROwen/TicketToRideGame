@@ -51,7 +51,5 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
     }
 
     @Override
-    public void displayMessage(String message) {
-        //todo
-    }
+    public void displayMessage(String message) {}
 }

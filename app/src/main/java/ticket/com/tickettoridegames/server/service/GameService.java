@@ -15,8 +15,6 @@ import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
 
 public class GameService implements IGameService {
-    //todo could put commands in the setters
-
     @Override
     public void initGame(String gameId) {
         ServerModel.getInstance().initGame(gameId);
@@ -25,7 +23,7 @@ public class GameService implements IGameService {
 
         //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
-//            drawDestinationCard(playerId,gameId); //todo
+             drawDestinationCard(playerId,gameId);
         }
 
 
@@ -38,7 +36,7 @@ public class GameService implements IGameService {
         CommandsManager.addCommandAllPlayers(initTurnOrder, gameId);
 
 
-        //playerColors
+        //playerColors //because it's generated randomly
         Map<String, Player.COLOR> colors = game.getPlayersColors();
 //        ClientModel.get_instance().setPlayersColors(colors);
         Command initColors = new Command(ClientModel.class, ClientModel.get_instance(),
@@ -47,10 +45,10 @@ public class GameService implements IGameService {
         CommandsManager.addCommandAllPlayers(initColors, gameId);
 
 
-        //trainCards in hand
-//        ClientModel.get_instance().initHandAll();
+        //everything else
+//        ClientModel.get_instance().initGameNonRandom();
         Command initHands = new Command(ClientModel.class, ClientModel.get_instance(),
-                "initHandAll", new Object[]{}
+                "initGameNonRandom", new Object[]{}
         );
         CommandsManager.addCommandAllPlayers(initHands, gameId);
     }
@@ -88,9 +86,10 @@ public class GameService implements IGameService {
         List<DestinationCard> drawnCards = ServerModel.getInstance().drawADestinationCard(gameId);
 
         //set up command to return data
-        Command tempDeck = new Command(ClientModel.class, ClientModel.get_instance(),
-                "setTempDeck", new Object[]{drawnCards});
-        CommandsManager.addCommand(tempDeck, playerId);
+        //todo method doesn't exist
+//        Command tempDeck = new Command(ClientModel.class, ClientModel.get_instance(),
+//                "setTempDeck", new Object[]{drawnCards});
+//        CommandsManager.addCommand(tempDeck, playerId);
     }
 
     public void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards){

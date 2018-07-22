@@ -160,10 +160,6 @@ public class ClientModel extends Observable {
         getMyActiveGame().getPlayer(playerId).addTrainCard(drawnCard);
     }
 
-    public List<Route> getClaimedRoutes() {
-        return null; //getMyActiveGame().getMap().getClaimedRoutes(); //todo needs some work
-    }
-
     public Map<String, Integer> getPoints() {
         return getMyActiveGame().getCountsOfPoints();
     }
@@ -252,10 +248,6 @@ public class ClientModel extends Observable {
         return myGame.getGameHistory();
     }
 
-    public void initHandAll() {
-        getMyActiveGame().initHandAll();
-    }
-
     public void drawTrainCard(String playerId) {
         getMyActiveGame().drawTrainCard(playerId);
     }
@@ -270,5 +262,9 @@ public class ClientModel extends Observable {
 
     public Boolean claimRoute(String playerId, Route route) {
         return getMyActiveGame().claimRoute(playerId, route);
+    }
+
+    public void initGameNonRandom() {
+        getMyActiveGame().initGameNonRandom();
     }
 }

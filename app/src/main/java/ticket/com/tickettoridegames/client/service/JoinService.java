@@ -75,10 +75,10 @@ public class JoinService {
     }
 
     public static void addPlayer(String gameID, Player player) {
-        //todo should go to the server for this
         clientModel.addPlayerToGame(gameID,player);
     }
 
+    //goes through the server
     public static void addPlayer2(String gameId, String userId) {
         try {
             //        ticket.com.tickettoridegames.server.service.JoinService.class.newInstance().join(userId, gameId);

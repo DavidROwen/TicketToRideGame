@@ -49,7 +49,6 @@ public class GameServiceTest {
         assertEquals(ClientModel.get_instance().getMyActiveGame().getPlayersColors().size(), 2); //colors
         assertTrue(ClientModel.get_instance().getMyPlayer().getColor() != null);
         assertEquals(ClientModel.get_instance().getMyPlayer().getTrainCards().size(), 4);
-        //todo test destination cards
     }
 
     @Test
@@ -125,7 +124,7 @@ public class GameServiceTest {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        User user = new User("username2", "password2"); //todo why the second one
+        User user = new User("username2", "password2"); //register auto logs in //so it resets user
         try {
             Result registerResult = LoginService.class.newInstance().register(user);
             userId = registerResult.getMessage();
