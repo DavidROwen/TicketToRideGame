@@ -17,7 +17,7 @@ import ticket.com.tickettoridegames.utility.web.Command;
 public class GameService implements IGameService {
     @Override
     public void initGame(String gameId) {
-        ServerModel.getInstance().initGame(gameId);
+        ServerModel.getInstance().getGames().get(gameId).initGame();
         Game game = ServerModel.getInstance().getGames().get(gameId);
 
 
@@ -55,11 +55,9 @@ public class GameService implements IGameService {
 
     @Override
     public void drawTrainCard(String playerId, String gameId) {
-        //server side
         Game game = ServerModel.getInstance().getGames().get(gameId);
         game.drawTrainCard(playerId);
 
-        //client side
 //        ClientModel.get_instance().drawTrainCard(playerId);
         Command addTrainCard = new Command(ClientModel.class, ClientModel.get_instance(),
                 "drawTrainCard", new Object[]{playerId}
@@ -72,7 +70,6 @@ public class GameService implements IGameService {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         game.pickupTrainCard(playerId, index);
 
-        //replaceCard
 //        ClientModel.get_instance().pickupTrainCard(playerId, index);
         Command resetTop = new Command(ClientModel.class, ClientModel.get_instance(),
                 "pickupTrainCard", new Object[]{playerId, index}

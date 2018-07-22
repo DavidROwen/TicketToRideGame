@@ -217,11 +217,6 @@ public class ServerModel {
             return false;
     }
 
-    public void initGame(String gameId) {
-        Game game = games.get(gameId);
-        game.initGame();
-    }
-
     public List<DestinationCard> drawADestinationCard(String gameId) {
         return games.get(gameId).drawDestinationCards();
     }
@@ -237,32 +232,5 @@ public class ServerModel {
 
     public Map<String, Game> getGames() {
         return games;
-    }
-
-    public Player[] getPlayers(String gameId) {
-        List<Player> players = new ArrayList<>();
-
-        Map<String, Player> playersMap = games.get(gameId).getPlayers();
-        for(String playerId : playersMap.keySet()) {
-            players.add(playersMap.get(playerId));
-        }
-
-        return players.toArray(new Player[players.size()]);
-    }
-
-    public List<TrainCard> getPlayerHand(String playerId, String gameId) {
-        return games.get(gameId).getPlayers().get(playerId).getTrainCards();
-    }
-
-    public Set<DestinationCard> getPlayerDestinationCards(String playerId, String gameId) {
-        return games.get(gameId).getPlayers().get(playerId).getDestinationCards();
-    }
-
-    public List<String> getTurnOrder(String gameId) {
-        return games.get(gameId).getTurnOrder();
-    }
-
-    public Map<String, Player.COLOR> getPlayerColors(String gameId) {
-        return games.get(gameId).getPlayersColors();
     }
 }

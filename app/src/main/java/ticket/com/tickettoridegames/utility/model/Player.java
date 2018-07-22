@@ -116,6 +116,7 @@ public class Player {
 
         for(TrainCard card : trainCards) {
             if(card.getType() == TrainCard.TRAIN_TYPE.WILD) { adjCards.removeLast(); }
+            if(adjCards.isEmpty()) { break; } //limit
         }
 
         return adjCards.toArray(new TrainCard[adjCards.size()]);

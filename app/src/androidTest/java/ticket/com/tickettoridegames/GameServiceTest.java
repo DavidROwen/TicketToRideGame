@@ -148,10 +148,11 @@ public class GameServiceTest {
 
         //new players
         Player player1 = new Player(otherPlayer.getUsername(), otherPlayer.getId());
-        JoinService.addPlayer2(gameId, otherId);
+//        JoinService.addPlayer2(gameId, otherId);
+        JoinService.joinGame(otherId, gameId);
         Player player2 = new Player(user.getUsername(), user.getId());
-        JoinService.addPlayer2(gameId, userId);
-
+//        JoinService.addPlayer2(gameId, userId);
+        JoinService.joinGame(userId, gameId);
         try {
             Thread.sleep(3000); //wait for poller
         } catch (InterruptedException e) {

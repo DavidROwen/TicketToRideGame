@@ -19,7 +19,6 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
 
-
         assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
         
         String userID = clientModel.getUserId();
@@ -35,8 +34,13 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
             case BANKUPDATE:
                 // Someone else drew a card so update your view
                 assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
-            default:
-                //Why you updated me?
+                break;
+            case NEWROUTE:
+                assetsView.setRoutes(clientModel.getDestinationCards());
+                break;
+            case NEWTRAINCARD:
+                assetsView.setHand(clientModel.getMyHand());
+                break;
         }
     }
 

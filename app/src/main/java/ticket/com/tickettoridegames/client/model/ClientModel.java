@@ -18,6 +18,8 @@ import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWROUTE;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWTRAINCARD;
 import static ticket.com.tickettoridegames.utility.TYPE.START;
 
 public class ClientModel extends Observable {
@@ -142,14 +144,9 @@ public class ClientModel extends Observable {
         notifyObservers(START);
     }
 
-    public boolean isGameStarted(String gameId){
+    public boolean isGameStarted(String gameId) {
         Game game = gameList.get(gameId);
-        if (game == null){
-            return false;
-        }
-        else {
-            return game.isStarted();
-        }
+        return game != null && game.isStarted();
     }
 
     public List<TrainCard> getMyHand() {
@@ -158,6 +155,7 @@ public class ClientModel extends Observable {
 
     public void addTrainCard(TrainCard drawnCard, String playerId) {
         getMyActiveGame().getPlayer(playerId).addTrainCard(drawnCard);
+        myNotify(NEWTRAINCARD);
     }
 
     public Map<String, Integer> getPoints() {
@@ -266,5 +264,12 @@ public class ClientModel extends Observable {
 
     public void initGameNonRandom() {
         getMyActiveGame().initGameNonRandom();
+    }
+
+    private void myNotify(Object arg) {
+        setChanged();
+        if(arg != null) { notifyObservers(arg); }
+        else { notifyObservers(); }
+//        clearChanged();
     }
 }
