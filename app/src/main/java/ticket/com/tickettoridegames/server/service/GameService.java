@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.server.model.ServerModel;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
@@ -29,8 +30,8 @@ public class GameService implements IGameService {
 
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
-//        ClientModel.get_instance().setTurnOrder(turnOrder);
-        Command initTurnOrder = new Command(ClientModel.class, ClientModel.get_instance(),
+//        new GamePlayService().setTurnOrder(turnOrder);
+        Command initTurnOrder = new Command(GamePlayService.class, new GamePlayService(),
                 "setTurnOrder", new Object[]{turnOrder}
         );
         CommandsManager.addCommandAllPlayers(initTurnOrder, gameId);
@@ -38,17 +39,17 @@ public class GameService implements IGameService {
 
         //playerColors //because it's generated randomly
         Map<String, Player.COLOR> colors = game.getPlayersColors();
-//        ClientModel.get_instance().setPlayersColors(colors);
-        Command initColors = new Command(ClientModel.class, ClientModel.get_instance(),
+//        new GamePlayService().setPlayersColors(colors);
+        Command initColors = new Command(GamePlayService.class, new GamePlayService(),
                 "setPlayersColors", new Object[]{colors}
         );
         CommandsManager.addCommandAllPlayers(initColors, gameId);
 
 
         //everything else
-//        ClientModel.get_instance().initGameNonRandom();
-        Command initHands = new Command(ClientModel.class, ClientModel.get_instance(),
-                "initGameNonRandom", new Object[]{}
+//        new GamePlayService().initiatingGameNonRandom();
+        Command initHands = new Command(GamePlayService.class, new GamePlayService(),
+                "initiatingGameNonRandom", new Object[]{}
         );
         CommandsManager.addCommandAllPlayers(initHands, gameId);
     }
@@ -58,11 +59,12 @@ public class GameService implements IGameService {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         game.drawTrainCard(playerId);
 
-//        ClientModel.get_instance().drawTrainCard(playerId);
-        Command addTrainCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                "drawTrainCard", new Object[]{playerId}
+//        new GamePlayService().drawingTrainCard(playerId);
+        Command addTrainCard = new Command(GamePlayService.class, new GamePlayService(),
+                "drawingTrainCard", new Object[]{playerId}
         );
         CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
+
     }
 
     @Override
@@ -70,9 +72,9 @@ public class GameService implements IGameService {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         game.pickupTrainCard(playerId, index);
 
-//        ClientModel.get_instance().pickupTrainCard(playerId, index);
-        Command resetTop = new Command(ClientModel.class, ClientModel.get_instance(),
-                "pickupTrainCard", new Object[]{playerId, index}
+//        new GamePlayService().pickingUpTrainCard(playerId, index);
+        Command resetTop = new Command(GamePlayService.class, new GamePlayService(),
+                "pickingUpTrainCard", new Object[]{playerId, index}
         );
         CommandsManager.addCommandAllPlayers(resetTop, gameId);
     }

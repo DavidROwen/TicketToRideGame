@@ -149,23 +149,6 @@ public class ClientModel extends Observable {
         return game != null && game.isStarted();
     }
 
-    public List<TrainCard> getMyHand() {
-        return getMyPlayer().getTrainCards();
-    }
-
-    public void addTrainCard(TrainCard drawnCard, String playerId) {
-        getMyActiveGame().getPlayer(playerId).addTrainCard(drawnCard);
-        myNotify(NEWTRAINCARD);
-    }
-
-    public Map<String, Integer> getPoints() {
-        return getMyActiveGame().getCountsOfPoints();
-    }
-
-    public Boolean isMyTurn() {
-        return true; //no turns in phase 2
-    }
-
     public void addDestinationCard(DestinationCard card, String playerId) {
         getMyActiveGame().getPlayer(playerId).addDestinationCard(card);
     }
@@ -174,32 +157,8 @@ public class ClientModel extends Observable {
         return getMyPlayer().getDestinationCards();
     }
 
-    public void setTurnOrder(LinkedList<String> order) {
-        getMyActiveGame().setTurnOrder(order);
-    }
-
     public void addDestinationCard(List<DestinationCard> cards) {
         getMyActiveGame().discardDestinationCards(cards);
-    }
-
-    public void setPlayersColors(HashMap<String,Player.COLOR> colors) {
-        getMyActiveGame().setPlayersColors(colors);
-    }
-
-    public Map<String, Integer> getCountsOfPoints() {
-        return getMyActiveGame().getCountsOfPoints();
-    }
-
-    public Map<String, Integer> getCountsOfTrains() {
-        return getMyActiveGame().getCountsOfTrains();
-    }
-
-    public Map<String, Integer> getCountsOfCards() {
-        return getMyActiveGame().getCountsOfCardsInHand();
-    }
-
-    public Map<String, Integer> getCountsOfRoutes() {
-        return getMyActiveGame().getCountsOfRoutes();
     }
 
     public Game getMyActiveGame() {
@@ -223,47 +182,14 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
     }
 
-    public List<PlayerStats> getPlayerStats(){
-        List<PlayerStats> stats = new ArrayList<>();
-        Game myGame = getMyActiveGame();
-
-        for (Player player : myGame.getPlayers().values()){
-            PlayerStats newStat = new PlayerStats();
-
-            newStat.setName(player.getUsername());
-            newStat.setNumberOfCards(player.getCardCount());
-            newStat.setNumberOfRoutes(player.getRouteCount());
-            newStat.setPoints(player.getPoints());
-
-            stats.add(newStat);
-        }
-
-        return stats;
-    }
-
     public List<PlayerAction> getHistory(){
         Game myGame = getMyActiveGame();
         return myGame.getGameHistory();
     }
 
-    public void drawTrainCard(String playerId) {
-        getMyActiveGame().drawTrainCard(playerId);
-    }
-
-    public void pickupTrainCard(String playerId, Integer index) {
-        getMyActiveGame().pickupTrainCard(playerId, index);
-    }
     public void setMyPlayerTempDeck(List<DestinationCard> deck){
         Player player = getMyPlayer();
         player.setTempDeck(deck);
-    }
-
-    public Boolean claimRoute(String playerId, Route route) {
-        return getMyActiveGame().claimRoute(playerId, route);
-    }
-
-    public void initGameNonRandom() {
-        getMyActiveGame().initGameNonRandom();
     }
 
     private void myNotify(Object arg) {

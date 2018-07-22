@@ -441,7 +441,7 @@ public class Game {
         Collections.shuffle(destinationCards);
     }
 
-    public void setTurnOrder(LinkedList<String> turnOrder) {
+    public void setTurnOrder(List<String> turnOrder) {
         this.turnOrder = turnOrder;
     }
 
@@ -514,5 +514,24 @@ public class Game {
 
     public Map<String, List<Route>> getRoutes() {
         return routes;
+    }
+
+
+    public List<PlayerStats> getPlayerStats(){
+        List<PlayerStats> stats = new ArrayList<>();
+
+        //todo call something in player
+        for (Player player : getPlayers().values()){
+            PlayerStats newStat = new PlayerStats();
+
+            newStat.setName(player.getUsername());
+            newStat.setNumberOfCards(player.getCardCount());
+            newStat.setNumberOfRoutes(player.getRouteCount());
+            newStat.setPoints(player.getPoints());
+
+            stats.add(newStat);
+        }
+
+        return stats;
     }
 }

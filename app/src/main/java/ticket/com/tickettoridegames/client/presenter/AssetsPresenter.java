@@ -36,10 +36,10 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
                 assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
                 break;
             case NEWROUTE:
-                assetsView.setRoutes(clientModel.getDestinationCards());
+//                assetsView.setRoutes(clientModel.getDestinationCards());
                 break;
             case NEWTRAINCARD:
-                assetsView.setHand(clientModel.getMyHand());
+                assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
                 break;
         }
     }
