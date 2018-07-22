@@ -5,6 +5,7 @@ public class Route {
     private boolean owned;
     private String ownerId;
     private Integer length;
+    private TrainCard.TRAIN_TYPE type;
     private City start;
     private City end;
 
@@ -16,6 +17,13 @@ public class Route {
         this.length = length;
         this.start = start;
         this.end = end;
+    }
+
+    public Route(City start, City end, Integer length, TrainCard.TRAIN_TYPE type) {
+        this.start = start;
+        this.end = end;
+        this.length = length;
+        this.type = type;
     }
 
     public boolean isOwned() {
@@ -56,5 +64,18 @@ public class Route {
 
     public void setEnd(City end) {
         this.end = end;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        //start and end are ambiguous
+        Route other = (Route)obj;
+        return (this.start == other.end || this.start == other.start)
+                && (this.end == other.start || this.end == other.end
+        );
+    }
+
+    public TrainCard.TRAIN_TYPE getType() {
+        return type;
     }
 }

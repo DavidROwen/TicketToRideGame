@@ -6,6 +6,7 @@ import ticket.com.tickettoridegames.client.web.ServerProxy;
 import ticket.com.tickettoridegames.server.service.GameService;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
+import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
 
@@ -78,6 +79,21 @@ public class GamePlayService implements IGameService {
 //            GameService.class.newInstance().returnDestinationCards(gameId, cards);
             Command command = new Command(GameService.class, GameService.class.newInstance(),
                     "returnDestinationCards", new Object[]{gameId, card}
+            );
+            ServerProxy.sendCommand(command);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void claimRoute(String gameId, String playerId, Route route) {
+        try {
+//            GameService.class.newInstance().claimRoute(gameId, playerId, route);
+            Command command = new Command(GameService.class, GameService.class.newInstance(),
+                    "claimRoute", new Object[]{gameId, playerId, route}
             );
             ServerProxy.sendCommand(command);
         } catch (InstantiationException e) {

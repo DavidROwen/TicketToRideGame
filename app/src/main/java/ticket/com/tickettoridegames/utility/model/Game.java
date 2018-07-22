@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.utility.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,6 +29,7 @@ public class Game {
     private List<String> turnOrder;
     private Integer turnNumber = 0;
     private List<TrainCard> trainBank;
+    private Map<String, List<Route>> routes = new HashMap<>();
 
     // Map data
     private GameMap map;
@@ -126,6 +128,7 @@ public class Game {
             }
             else{
                 players.put(p.getId(), p);
+                routes.put(p.getId(), new ArrayList<>());
                 numberOfPlayers++;
                 return true;
             }
@@ -328,7 +331,7 @@ public class Game {
     public void initGameNonRandom() {
         initHandAll();
         initTrainBank();
-        initPlayerDestinationCards();
+//        initPlayerDestinationCards(); //todo
     }
 
     private void initTrainBank() {
@@ -478,13 +481,39 @@ public class Game {
         this.trainBank = trainBank;
     }
 
-    public void claimRoute(String playerId, Route route) {
+    public Boolean claimRoute(String playerId, Route route) {
+        Player player = players.get(playerId);
+
         //check not claimed
+        if(isClaimed(route)) { return false; }
+
         //check player has cards
+        TrainCard[] neededCards = getNeededCards(route);
+        if(!player.hasTrainCards(neededCards)) { return false; }
+
         //claim
+        routes.get(playerId).add(route);
+        player.removeTrainCards(neededCards); //cash out cards
+        return true;
     }
 
-    private void checkClaimed(Route route) {
+    private TrainCard[] getNeededCards(Route route) {
+        TrainCard[] neededCards = new TrainCard[route.getLength()];
+        Arrays.fill(neededCards, new TrainCard(route.getType()));
+        return neededCards;
+    }
 
+    private Boolean isClaimed(Route route) {
+        for(String id : players.keySet()) {
+            for(Route cur : routes.get(id)) {
+                if(cur == route) { return true; }
+            }
+        }
+
+        return false;
+    }
+
+    public Map<String, List<Route>> getRoutes() {
+        return routes;
     }
 }

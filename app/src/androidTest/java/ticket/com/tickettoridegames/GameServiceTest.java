@@ -2,6 +2,8 @@ package ticket.com.tickettoridegames;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.JoinService;
@@ -9,6 +11,7 @@ import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
 import ticket.com.tickettoridegames.client.web.Poller;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 import ticket.com.tickettoridegames.utility.web.Result;
 
@@ -29,7 +32,6 @@ public class GameServiceTest {
         assertTrue(otherId != null && userId != null && gameId != null);
         assertTrue(ClientModel.get_instance().getMyActiveGame() != null);
         assertTrue(ClientModel.get_instance().getMyPlayer() != null);
-        poller.stop();
     }
 
     @Test
@@ -76,6 +78,38 @@ public class GameServiceTest {
 //        }
 //        Map<String, Integer> countsOfCards = ClientModel.get_instance().getCountsOfCards();
 //        assertEquals(countsOfCards.get(userId), (Integer) 1); //check for visual
+    }
+
+    @Test
+    public void testTrainBank() {
+        initToGameplay();
+        GamePlayService service = new GamePlayService();
+        service.initGame(gameId);
+        try {
+            Thread.sleep(3000); //wait for poller
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(ClientModel.get_instance().getMyActiveGame().getTrainBank().size(), 5); //initialized
+
+        List<TrainCard> prevBank = ClientModel.get_instance().getMyActiveGame().getTrainBank();
+        System.out.println("prev0: " + prevBank.get(0).getType());
+        service.pickupTrainCard(userId, gameId, 0);
+        try {
+            Thread.sleep(3000); //wait for poller
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(ClientModel.get_instance().getMyPlayer().getTrainCards().get(4), prevBank.get(0)); //in hand
+
+        List<TrainCard> curBank = ClientModel.get_instance().getMyActiveGame().getTrainBank(); //rest untouched
+        assertTrue(prevBank.get(1).getType() == curBank.get(1).getType()
+                && prevBank.get(2).getType() == curBank.get(2).getType()
+                && prevBank.get(3).getType() == curBank.get(3).getType()
+                && prevBank.get(4).getType() == curBank.get(4).getType()
+        );
+
+        System.out.println("prev: " + prevBank.get(0).getType() + " cur: " + curBank.get(0).getType()); //replaced
     }
 
     private void initToGameplay() {
@@ -125,5 +159,4 @@ public class GameServiceTest {
             e.printStackTrace();
         }
     }
-
 }

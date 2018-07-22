@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -88,21 +89,36 @@ public class Player {
         if(!hasTrainCards(cards)) { return false; }
 
         for(TrainCard card : cards) {
-            trainCards.remove(card);
+            if(!trainCards.remove(card)) {
+                trainCards.remove(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+            }
         }
 
         return true;
     }
 
+    //assuming all the same kind in parameter
     public Boolean hasTrainCards(TrainCard...cards) {
+        TrainCard[] adjustedCards = adjustForWilds(cards);
+
         //convert it to strings for comparison
         List<String> myTypes = new LinkedList<>();
         List<String> cardsTypes = new LinkedList<>();
         for(TrainCard card : trainCards) { myTypes.add(card.getType().toString()); }
-        for(TrainCard card : cards) { cardsTypes.add(card.getType().toString()); }
+        for(TrainCard card : adjustedCards) { cardsTypes.add(card.getType().toString()); }
 
-//        List<TrainCard> setCards = new LinkedList<>(Arrays.asList(cards)); //couldn't figure out
+//        List<TrainCard> setCards = new LinkedList<>(Arrays.asList(adjustedCards)); //couldn't figure out
         return myTypes.containsAll(cardsTypes);
+    }
+
+    private TrainCard[] adjustForWilds(TrainCard[] cards) {
+        LinkedList<TrainCard> adjCards = new LinkedList<>(Arrays.asList(cards));
+
+        for(TrainCard card : trainCards) {
+            if(card.getType() == TrainCard.TRAIN_TYPE.WILD) { adjCards.removeLast(); }
+        }
+
+        return adjCards.toArray(new TrainCard[adjCards.size()]);
     }
 
     public List<TrainCard> getTrainCards() {

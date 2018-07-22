@@ -4,6 +4,7 @@ import java.util.List;
 
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
+import ticket.com.tickettoridegames.utility.model.Route;
 
 public interface IGameService {
     void initGame(String gameId);
@@ -18,5 +19,5 @@ public interface IGameService {
 
     void returnDestinationCard(String gameId, List<DestinationCard> card);
 
-
+    void claimRoute(String gameId, String playerId, Route route);
 }

@@ -268,4 +268,7 @@ public class ClientModel extends Observable {
         player.setTempDeck(deck);
     }
 
+    public Boolean claimRoute(String playerId, Route route) {
+        return getMyActiveGame().claimRoute(playerId, route);
+    }
 }

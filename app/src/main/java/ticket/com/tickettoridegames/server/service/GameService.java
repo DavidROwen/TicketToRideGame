@@ -9,6 +9,7 @@ import ticket.com.tickettoridegames.server.model.ServerModel;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
@@ -19,14 +20,14 @@ public class GameService implements IGameService {
     @Override
     public void initGame(String gameId) {
         ServerModel.getInstance().initGame(gameId);
-
-        //turnOrder //because it's generated randomly
         Game game = ServerModel.getInstance().getGames().get(gameId);
+
         //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
-            drawDestinationCard(playerId,gameId);
+//            drawDestinationCard(playerId,gameId); //todo
         }
-        //turnOrder
+
+        //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
 
 //        ClientModel.get_instance().setTurnOrder(turnOrder);
@@ -97,19 +98,6 @@ public class GameService implements IGameService {
         Command tempDeck = new Command(ClientModel.class, ClientModel.get_instance(),
                 "setTempDeck", new Object[]{drawnCards});
         CommandsManager.addCommand(tempDeck, playerId);
-
-        //everything below can be deleted?
-//        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-//                "addDestinationCard", new Object[]{drawnCard, playerId}
-//        );
-//        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
-//
-//        //it's gone now
-//        ClientModel.get_instance().removeDestinationCard();
-//        Command removeDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-//                "removeDestinationCard", new Object[]{}
-//        );
-//        CommandsManager.addCommandAllPlayers(removeDestinationCard, gameId);
     }
 
     public void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards){
@@ -125,6 +113,19 @@ public class GameService implements IGameService {
 //        ClientModel.get_instance().addDestinationCard(card);
         Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
                 "addDestinationCard", new Object[]{card}
+        );
+        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
+    }
+
+    @Override
+    public void claimRoute(String gameId, String playerId, Route route) {
+        Game game = ServerModel.getInstance().getGames().get(gameId);
+        Boolean success = game.claimRoute(playerId, route);
+        if(!success) { return; } //nothing changed
+
+//        ClientModel.get_instance().claimRoute(playerId, route);
+        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
+                "claimRoute", new Object[]{playerId, route}
         );
         CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
     }
