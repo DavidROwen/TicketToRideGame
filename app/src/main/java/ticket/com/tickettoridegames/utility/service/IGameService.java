@@ -17,7 +17,9 @@ public interface IGameService {
 
     void drawDestinationCard(String playerId, String gameId);
 
-    void returnDestinationCard(String gameId, List<DestinationCard> card);
+    void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards);
+
+    void returnDestinationCard(String gameId, List<DestinationCard> cards);
 
     void claimRoute(String gameId, String playerId, Route route);
 }

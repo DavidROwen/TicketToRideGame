@@ -233,4 +233,8 @@ public class ServerModel {
     public Map<String, Game> getGames() {
         return games;
     }
+
+    public Game getGameById(String gameId){
+        return games.get(gameId);
+    }
 }

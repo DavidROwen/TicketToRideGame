@@ -77,7 +77,7 @@ public class CommandsManager {
 
     //adds a command to a users queue. If the user does not have a queue yet it creates one
     public static void addCommandAllPlayers(Command command, String gameId) {
-        Game game = ServerModel.getInstance().getGames().get(gameId);
+        Game game = ServerModel.getInstance().getGameById(gameId);
         for(String curPlayerId : game.getPlayersId()) {
             addCommand(command, curPlayerId);
         }

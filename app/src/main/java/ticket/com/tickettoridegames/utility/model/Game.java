@@ -347,15 +347,6 @@ public class Game {
         }
     }
 
-    //give player 3 destination cards to start the game
-    public List initPlayerDestinationCards() {
-        ArrayList<List> playerCards = new ArrayList<>();
-        for(int i = 0; i < getNumberOfPlayers(); i++){
-            playerCards.add(drawDestinationCards());
-        }
-        return playerCards;
-    }
-
     //max of 7 players //for 7 colors
     private void initColors() {
         int i = 0;

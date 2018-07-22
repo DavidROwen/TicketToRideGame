@@ -17,8 +17,12 @@ import ticket.com.tickettoridegames.utility.model.PlayerStats;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
+
+import static ticket.com.tickettoridegames.utility.TYPE.DESTINATIONUPDATE;
+import static ticket.com.tickettoridegames.utility.TYPE.DISCARDDESTINATION;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWROUTE;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWTRAINCARD;
 import static ticket.com.tickettoridegames.utility.TYPE.START;
 
@@ -149,18 +153,6 @@ public class ClientModel extends Observable {
         return game != null && game.isStarted();
     }
 
-    public void addDestinationCard(DestinationCard card, String playerId) {
-        getMyActiveGame().getPlayer(playerId).addDestinationCard(card);
-    }
-
-    public Set<DestinationCard> getDestinationCards() {
-        return getMyPlayer().getDestinationCards();
-    }
-
-    public void addDestinationCard(List<DestinationCard> cards) {
-        getMyActiveGame().discardDestinationCards(cards);
-    }
-
     public Game getMyActiveGame() {
         if(myActiveGame == null) { locateMyActiveGame(); }
         return myActiveGame;
@@ -187,9 +179,23 @@ public class ClientModel extends Observable {
         return myGame.getGameHistory();
     }
 
+    //DestinationCards functions
     public void setMyPlayerTempDeck(List<DestinationCard> deck){
         Player player = getMyPlayer();
         player.setTempDeck(deck);
+        myNotify(NEWTEMPDECK);
+    }
+
+    public void updateDestinationCards(String playerId, List<DestinationCard> cards){
+        Game game = getMyActiveGame();
+        game.claimDestinationCards(cards, playerId);
+        myNotify(DESTINATIONUPDATE);
+    }
+
+    public void discardDestinationCards(List<DestinationCard> cards){
+        Game game = getMyActiveGame();
+        game.discardDestinationCards(cards);
+        myNotify(DISCARDDESTINATION);
     }
 
     private void myNotify(Object arg) {

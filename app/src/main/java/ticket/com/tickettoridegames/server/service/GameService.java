@@ -85,27 +85,47 @@ public class GameService implements IGameService {
         List<DestinationCard> drawnCards = ServerModel.getInstance().drawADestinationCard(gameId);
 
         //set up command to return data
-        //todo method doesn't exist
-//        Command tempDeck = new Command(ClientModel.class, ClientModel.get_instance(),
-//                "setTempDeck", new Object[]{drawnCards});
-//        CommandsManager.addCommand(tempDeck, playerId);
-    }
-
-    public void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards){
-        ServerModel.getInstance().claimDestinationCards(playerId, gameId, cards);
-        //add some kind of error checking with the above function?
-        //send commands to the other games updating card numbers or cards.
+        Command tempDeck = null;
+        try {
+            tempDeck = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+                    "setTempDeck", new Object[]{drawnCards});
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        CommandsManager.addCommand(tempDeck, playerId);
     }
 
     @Override
-    public void returnDestinationCard(String gameId, List<DestinationCard> card) {
-        ServerModel.getInstance().addDestinationCard(gameId, card);
+    public void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards){
+        ServerModel sm = ServerModel.getInstance();
+        sm.claimDestinationCards(playerId, gameId, cards);
+        //add some kind of error checking with the above function?
+        //send commands to the other games updating card numbers or cards.
+        Command claimCommand = null;
+        try {
+            claimCommand = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+                    "updateDestinationCards", new Object[]{playerId, cards});
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        CommandsManager.addCommandAllPlayers(claimCommand, gameId);
+    }
 
-//        ClientModel.get_instance().addDestinationCard(card);
-        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-                "addDestinationCard", new Object[]{card}
-        );
-        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
+    @Override
+    public void returnDestinationCard(String gameId, List<DestinationCard> cards) {
+        ServerModel.getInstance().addDestinationCard(gameId, cards);
+        Command discardCards = null;
+        try {
+            discardCards = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+                    "discardDestinationCards", new Object[]{cards}
+            );
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        CommandsManager.addCommandAllPlayers(discardCards, gameId);
     }
 
     @Override
@@ -115,9 +135,9 @@ public class GameService implements IGameService {
         if(!success) { return; } //nothing changed
 
 //        ClientModel.get_instance().claimRoute(playerId, route);
-        Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
+        Command claimRoute = new Command(ClientModel.class, ClientModel.get_instance(),
                 "claimRoute", new Object[]{playerId, route}
         );
-        CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
+        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
     }
 }

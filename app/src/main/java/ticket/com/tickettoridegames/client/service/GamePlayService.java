@@ -61,6 +61,7 @@ public class GamePlayService implements IGameService {
         }
     }
 
+    //Destination Cards commands
     @Override
     public void drawDestinationCard(String playerId, String gameId) {
         try {
@@ -76,14 +77,27 @@ public class GamePlayService implements IGameService {
         }
     }
 
-    //Add a function to claim cards;
+    @Override
+    public void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards){
+        try{
+            Command command = new Command(GameService.class, GameService.class.newInstance(),
+                    "claimDestinationCard", new Object[]{playerId, gameId, cards});
+            ServerProxy.sendCommand(command);
+        }
+        catch (InstantiationException e){
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
-    public void returnDestinationCard(String gameId, List<DestinationCard> card) {
+    public void returnDestinationCard(String gameId, List<DestinationCard> cards) {
         try {
 //            GameService.class.newInstance().returnDestinationCards(gameId, cards);
             Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "returnDestinationCards", new Object[]{gameId, card}
+                    "returnDestinationCards", new Object[]{gameId, cards}
             );
             ServerProxy.sendCommand(command);
         } catch (InstantiationException e) {
@@ -130,5 +144,18 @@ public class GamePlayService implements IGameService {
 
     public void claimingRoute(String playerId, Route route) {
         ClientModel.get_instance().getMyActiveGame().claimRoute(playerId, route);
+    }
+
+    //Destination Cards functions
+    public void setTempDeck(List<DestinationCard> tempDeck){
+        ClientModel.get_instance().setMyPlayerTempDeck(tempDeck);
+    }
+
+    public void updateDestinationCards(String playerId, List<DestinationCard> cards){
+        ClientModel.get_instance().updateDestinationCards(playerId, cards);
+    }
+
+    public void discardDestinationCards(List<DestinationCard> cards){
+        ClientModel.get_instance().discardDestinationCards(cards);
     }
 }
