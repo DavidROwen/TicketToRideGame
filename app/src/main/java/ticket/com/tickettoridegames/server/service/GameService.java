@@ -22,44 +22,37 @@ public class GameService implements IGameService {
         ServerModel.getInstance().initGame(gameId);
         Game game = ServerModel.getInstance().getGames().get(gameId);
 
+
         //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
 //            drawDestinationCard(playerId,gameId); //todo
         }
 
+
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
-
 //        ClientModel.get_instance().setTurnOrder(turnOrder);
         Command initTurnOrder = new Command(ClientModel.class, ClientModel.get_instance(),
                 "setTurnOrder", new Object[]{turnOrder}
         );
         CommandsManager.addCommandAllPlayers(initTurnOrder, gameId);
 
-        //playerColors //todo throws error
-//        Map<String, Player.COLOR> colors = game.getPlayersColors();
-////        ClientModel.get_instance().setPlayersColors(colors);
-//        Command initColors = new Command(ClientModel.class, ClientModel.get_instance(),
-//                "setPlayersColors", new Object[]{colors}
-//        );
-//        CommandsManager.addCommandAllPlayers(initColors, gameId);
 
+        //playerColors
+        Map<String, Player.COLOR> colors = game.getPlayersColors();
+//        ClientModel.get_instance().setPlayersColors(colors);
+        Command initColors = new Command(ClientModel.class, ClientModel.get_instance(),
+                "setPlayersColors", new Object[]{colors}
+        );
+        CommandsManager.addCommandAllPlayers(initColors, gameId);
+
+
+        //trainCards in hand
 //        ClientModel.get_instance().initHandAll();
         Command initHands = new Command(ClientModel.class, ClientModel.get_instance(),
                 "initHandAll", new Object[]{}
         );
         CommandsManager.addCommandAllPlayers(initHands, gameId);
-
-//        //destinationCards
-//        for(Player player : ServerModel.getInstance().getPlayers(gameId)) {
-//            for (DestinationCard card : ServerModel.getInstance().getPlayerDestinationCards(player.getId(), gameId)) {
-////                ClientModel.get_instance().addDestinationCard(card, player.getId());
-//                Command addDestinationCard = new Command(ClientModel.class, ClientModel.get_instance(),
-//                        "addDestinationCard", new Object[]{card, player.getId()}
-//                        );
-//                CommandsManager.addCommandAllPlayers(addDestinationCard, gameId);
-//            }
-//        }
     }
 
     @Override

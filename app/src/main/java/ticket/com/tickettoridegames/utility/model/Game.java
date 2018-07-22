@@ -322,7 +322,7 @@ public class Game {
 
     public void initGame() {
         initTurnOrder();
-//        initColors();
+        initColors();
 
         initGameNonRandom();
     }
@@ -458,9 +458,9 @@ public class Game {
 
     public void setPlayersColors(Map<String, Player.COLOR> colors) {
         for(String id : players.keySet()) {
-            System.out.println(colors.get(id));
-            Player.COLOR color = Player.COLOR.valueOf(colors.get(id).toString());
-//            players.get(id).setColor(color);
+            String colorStr = String.valueOf(colors.get(id)); //doesn't know that it was deserialized as a string
+            Player.COLOR color = Player.COLOR.valueOf(colorStr);
+            players.get(id).setColor(color);
         }
     }
 
