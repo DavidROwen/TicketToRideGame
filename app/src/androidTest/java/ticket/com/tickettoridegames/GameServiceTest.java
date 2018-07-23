@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames;
 
 import org.junit.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
 import ticket.com.tickettoridegames.client.web.Poller;
+import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
@@ -27,6 +29,7 @@ public class GameServiceTest {
     private String gameId;
 
     private Poller poller;
+    private GamePlayService service;
 
     @Test
     public void testInitToGameplay() {
@@ -38,10 +41,6 @@ public class GameServiceTest {
 
     @Test
     public void testInitGame() {
-        GamePlayService service = new GamePlayService();
-        initToGameplay();
-
-        service.initGame(gameId);
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4){}
 
         assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //turn order
@@ -53,9 +52,6 @@ public class GameServiceTest {
     @Test
     public void testDrawTrainCard() {
         //prepare
-        initToGameplay();
-        GamePlayService service = new GamePlayService();
-        service.initGame(gameId);
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4){} //initialized
 
         //test when you draw
@@ -72,9 +68,6 @@ public class GameServiceTest {
 
     @Test
     public void testTrainBank() {
-        initToGameplay();
-        GamePlayService service = new GamePlayService();
-        service.initGame(gameId);
         while(ClientModel.get_instance().getMyActiveGame().getTrainBank().size() != 5){} //initialized
 
         //prepare
@@ -94,6 +87,27 @@ public class GameServiceTest {
 
         TrainCard cur0 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(0);
         System.out.println("prev: " + prev0.getType() + " cur: " + cur0.getType()); //replaced
+    }
+
+    @Test
+    public void testDestinationCards() {
+        initToGameplay();
+
+        service.drawDestinationCard(userId, gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTempDeck().size() != 3);
+        List<DestinationCard> tempDeck = ClientModel.get_instance().getMyPlayer().getTempDeck();
+
+        LinkedList<DestinationCard> claimed = new LinkedList<>();
+        claimed.add(tempDeck.get(0));
+        claimed.add(tempDeck.get(1));
+        service.claimDestinationCard(userId, gameId, claimed);
+        while(ClientModel.get_instance().getMyPlayer().getDestinationCards().size() != 2);
+
+        LinkedList<DestinationCard> returning = new LinkedList<>();
+        returning.add(tempDeck.get(2));
+        Integer prevSize = ClientModel.get_instance().getMyActiveGame().getDestinationCards().size();
+        service.returnDestinationCard(gameId, returning);
+        while(ClientModel.get_instance().getMyActiveGame().getDestinationCards().size() == prevSize);
     }
 
     private void initToGameplay() {
@@ -127,5 +141,9 @@ public class GameServiceTest {
         //start game
         LobbyService.startGame(gameId);
         while(!ClientModel.get_instance().isGameStarted(gameId)){}
+
+        service = new GamePlayService();
+        service.initGame(gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4);
     }
 }

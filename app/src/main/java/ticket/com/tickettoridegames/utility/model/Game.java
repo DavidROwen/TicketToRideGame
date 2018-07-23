@@ -392,8 +392,12 @@ public class Game extends Observable {
 
     public void claimDestinationCards(List<DestinationCard> cards, String playerId){
         Player player = players.get(playerId);
-        for(DestinationCard card : cards){
-            player.addDestinationCard(card);
+        try {
+            for (DestinationCard card : cards) {
+                player.addDestinationCard(card);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -78,7 +78,7 @@ public class Player {
     }
 
     public void addDestinationCard(DestinationCard card) {
-        destinationCards.addAll(Arrays.asList(card));
+        destinationCards.add(card);
     }
 
     public void addTrainCard(TrainCard card) {

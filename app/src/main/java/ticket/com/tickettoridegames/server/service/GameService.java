@@ -1,5 +1,10 @@
 package ticket.com.tickettoridegames.server.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -105,9 +110,23 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void claimDestinationCard(String playerId, String gameId, List<DestinationCard> cards){
+    public void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards){
         ServerModel sm = ServerModel.getInstance();
-        sm.claimDestinationCards(playerId, gameId, cards);
+
+        //deserialized destination cards as linkedtreemap
+        LinkedList<DestinationCard> temp = new LinkedList<>();
+        for(int i = 0; i < cards.size(); i++) {
+            //convert from LinkedTreeMap
+            Gson gson = new Gson();
+            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
+            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
+
+            temp.add(card);
+        }
+
+        sm.claimDestinationCards(playerId, gameId, temp);
+
+//        sm.claimDestinationCards(playerId, gameId, cards);
         //add some kind of error checking with the above function?
         //send commands to the other games updating card numbers or cards.
         Command claimCommand = null;
@@ -122,8 +141,21 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void returnDestinationCard(String gameId, List<DestinationCard> cards) {
-        ServerModel.getInstance().addDestinationCard(gameId, cards);
+    public void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
+        //deserialized destination cards as linkedtreemap
+        LinkedList<DestinationCard> temp = new LinkedList<>();
+        for(int i = 0; i < cards.size(); i++) {
+            //convert from LinkedTreeMap
+            Gson gson = new Gson();
+            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
+            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
+
+            temp.add(card);
+        }
+        ServerModel.getInstance().addDestinationCard(gameId, temp);
+
+
+//        ServerModel.getInstance().addDestinationCard(gameId, cards);
         Command discardCards = null;
         try {
             discardCards = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
