@@ -61,6 +61,14 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
+        Button passOffButton = (Button)view.findViewById(R.id.pass_off_button);
+        drawTrainsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                presenter.passOff();
+            }
+        });
+
         return view;
     }
 }
