@@ -20,6 +20,7 @@ import ticket.com.tickettoridegames.utility.model.User;
 
 import static ticket.com.tickettoridegames.utility.TYPE.DESTINATIONUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.DISCARDDESTINATION;
+import static ticket.com.tickettoridegames.utility.TYPE.HISTORYUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWROUTE;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
@@ -198,6 +199,19 @@ public class ClientModel extends Observable {
         myNotify(DISCARDDESTINATION);
     }
     //END Destination Card Functions
+
+    //Game History Functions
+    public void addGameHistory(PlayerAction history){
+        Game game = getMyActiveGame();
+        game.addToHistory(history);
+        myNotify(HISTORYUPDATE);
+    }
+
+    public PlayerAction getNewestGameHistory(){
+        Game game = getMyActiveGame();
+        return game.getNewestHistory();
+    }
+    //END Game History functions
 
     private void myNotify(Object arg) {
         setChanged();

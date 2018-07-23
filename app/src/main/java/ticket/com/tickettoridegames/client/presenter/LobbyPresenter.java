@@ -86,7 +86,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
                 lobbyView.setChat(clientModel.getGameChat(clientModel.getCurrentGameID()));
                 break;
             default:
-                lobbyView.displayMessage("Update Error");
+                // update we don't care about
                 break;
         }
         // update view here

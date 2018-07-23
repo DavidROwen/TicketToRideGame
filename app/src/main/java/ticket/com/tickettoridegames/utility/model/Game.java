@@ -39,6 +39,7 @@ public class Game {
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory;
+    private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_DECK = 52;
 
     public Game(){
@@ -190,8 +191,17 @@ public class Game {
         newestChat = c;
     }
 
+    public void addToHistory(PlayerAction pa){
+        gameHistory.add(newestHistory);
+        newestHistory = pa;
+    }
+
     public Chat getNewestChat(){
         return newestChat;
+    }
+
+    public PlayerAction getNewestHistory(){
+        return newestHistory;
     }
 
     public boolean isStarted() {

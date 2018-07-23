@@ -33,11 +33,14 @@ public class StatsPresenter implements IStatsPresenter , Observer {
                 // These will use the data to update the view
                 statsView.setPlayerStats(clientModel.getMyActiveGame().getPlayerStats());
                 break;
-            case HISTORYUPDATE:
+            case ALLHISTORY:
                 statsView.setHistory(clientModel.getHistory());
+            case HISTORYUPDATE:
+                statsView.displayHistory(clientModel.getNewestGameHistory());
                 break;
             default:
                 // We got an update that we don't care about.
+                break;
         }
     }
 

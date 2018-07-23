@@ -117,6 +117,12 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     }
 
     @Override
+    public void displayHistory(PlayerAction pa){
+        String history = pa.getUserName() + ": " + pa.getAction();
+        historyAdapter.add(history);
+    }
+
+    @Override
     public void setPlayerStats(List<PlayerStats> playerStats){
         this.playerStats = playerStats;
         myRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);

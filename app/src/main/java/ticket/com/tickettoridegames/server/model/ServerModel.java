@@ -13,6 +13,7 @@ import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 import ticket.com.tickettoridegames.utility.web.Command;
@@ -230,6 +231,12 @@ public class ServerModel {
         games.get(gameId).discardDestinationCards(card);
     }
     //End Destination Card Functions
+
+    //Game History Function
+    public void addToGameHistory(String gameId, PlayerAction pa){
+        Game game = games.get(gameId);
+        game.addToHistory(pa);
+    }
 
     public Map<String, Game> getGames() {
         return games;

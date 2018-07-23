@@ -11,6 +11,7 @@ import ticket.com.tickettoridegames.server.service.GameService;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
@@ -158,4 +159,8 @@ public class GamePlayService implements IGameService {
         ClientModel.get_instance().discardDestinationCards(cards);
     }
     //END Destination Cards (Model) functions
+    //Game History functions
+    public void addToHistory(PlayerAction history){
+        ClientModel.get_instance().addGameHistory(history);
+    }
 }
