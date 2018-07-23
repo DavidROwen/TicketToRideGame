@@ -52,7 +52,7 @@ public class Game extends Observable {
         this.players = new HashMap<>();
         this.chatList = new ArrayList<>();
         this.turnOrder = new LinkedList<>();
-        this.map = map;
+        this.map = new GameMap();
         this.destinationCards = new LinkedList<>();
         this.trainBank = new LinkedList<>();
         fillDestinationCards();
@@ -75,7 +75,7 @@ public class Game extends Observable {
         this.trainBank = new LinkedList<>();
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
-        this.map = map;
+        this.map = new GameMap();
         this.destinationCards = new LinkedList<>();
         this.gameHistory = new LinkedList<>();
 
