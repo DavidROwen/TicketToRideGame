@@ -70,6 +70,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
 
     @Override
     public void update(Observable observable, Object arg){
+        if(arg == null) { return; } //no functionality for it
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
@@ -84,6 +85,9 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
                 break;
             case ALLCHAT:
                 lobbyView.setChat(clientModel.getGameChat(clientModel.getCurrentGameID()));
+                break;
+            case ADD_PLAYER:
+                lobbyView.addPlayerName(clientModel.getUser().getUsername());
                 break;
             default:
                 // update we don't care about

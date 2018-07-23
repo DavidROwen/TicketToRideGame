@@ -77,20 +77,4 @@ public class JoinService {
     public static void addPlayer(String gameID, Player player) {
         clientModel.addPlayerToGame(gameID,player);
     }
-
-    //goes through the server
-    public static void addPlayer2(String gameId, String userId) {
-        try {
-            //        ticket.com.tickettoridegames.server.service.JoinService.class.newInstance().join(userId, gameId);
-            Command command = new Command(ticket.com.tickettoridegames.server.service.JoinService.class,
-                    ticket.com.tickettoridegames.server.service.JoinService.class.newInstance(),
-                    "join", new Object[]{userId, gameId}
-            );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
 }
