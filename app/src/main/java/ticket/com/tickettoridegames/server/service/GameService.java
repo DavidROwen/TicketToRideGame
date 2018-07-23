@@ -79,6 +79,7 @@ public class GameService implements IGameService {
         CommandsManager.addCommandAllPlayers(resetTop, gameId);
     }
 
+    //Destination Card Functions
     @Override
     public void drawDestinationCard(String playerId, String gameId) {
         //draw card
@@ -127,6 +128,7 @@ public class GameService implements IGameService {
         }
         CommandsManager.addCommandAllPlayers(discardCards, gameId);
     }
+    //End Destination Card Functions
 
     @Override
     public void claimRoute(String gameId, String playerId, Route route) {

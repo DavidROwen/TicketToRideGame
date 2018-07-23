@@ -216,7 +216,7 @@ public class ServerModel {
         }
             return false;
     }
-
+    //Destination Card Functions
     public List<DestinationCard> drawADestinationCard(String gameId) {
         return games.get(gameId).drawDestinationCards();
     }
@@ -229,6 +229,7 @@ public class ServerModel {
     public void addDestinationCard(String gameId, List<DestinationCard> card) {
         games.get(gameId).discardDestinationCards(card);
     }
+    //End Destination Card Functions
 
     public Map<String, Game> getGames() {
         return games;

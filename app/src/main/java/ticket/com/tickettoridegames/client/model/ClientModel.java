@@ -197,6 +197,7 @@ public class ClientModel extends Observable {
         game.discardDestinationCards(cards);
         myNotify(DISCARDDESTINATION);
     }
+    //END Destination Card Functions
 
     private void myNotify(Object arg) {
         setChanged();

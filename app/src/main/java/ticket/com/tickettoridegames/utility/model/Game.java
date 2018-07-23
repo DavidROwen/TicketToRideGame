@@ -363,6 +363,7 @@ public class Game {
         }
     }
 
+    //Destination Card Functions
     private DestinationCard getTopDestinationCard(){
         DestinationCard dc = destinationCards.get(0);
         destinationCards.remove(0);
@@ -431,6 +432,7 @@ public class Game {
         destinationCards.add(new DestinationCard(new City("Seattle"), new City("Los Angeles"), 9));
         Collections.shuffle(destinationCards);
     }
+    //END Destination Card Functions
 
     public void setTurnOrder(List<String> turnOrder) {
         this.turnOrder = turnOrder;

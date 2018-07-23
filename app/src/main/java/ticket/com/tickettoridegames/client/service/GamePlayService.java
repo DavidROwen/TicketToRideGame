@@ -61,11 +61,10 @@ public class GamePlayService implements IGameService {
         }
     }
 
-    //Destination Cards commands
+    //Destination Card (Command) commands
     @Override
     public void drawDestinationCard(String playerId, String gameId) {
         try {
-//            GameService.class.newInstance().drawDestinationCard(playerId, gameId);
             Command command = new Command(GameService.class, GameService.class.newInstance(),
                     "drawDestinationCard", new Object[]{playerId, gameId}
             );
@@ -95,7 +94,6 @@ public class GamePlayService implements IGameService {
     @Override
     public void returnDestinationCard(String gameId, List<DestinationCard> cards) {
         try {
-//            GameService.class.newInstance().returnDestinationCards(gameId, cards);
             Command command = new Command(GameService.class, GameService.class.newInstance(),
                     "returnDestinationCards", new Object[]{gameId, cards}
             );
@@ -106,6 +104,7 @@ public class GamePlayService implements IGameService {
             e.printStackTrace();
         }
     }
+    //END Destination Card (Command) functions
 
     @Override
     public void claimRoute(String gameId, String playerId, Route route) {
@@ -146,7 +145,7 @@ public class GamePlayService implements IGameService {
         ClientModel.get_instance().getMyActiveGame().claimRoute(playerId, route);
     }
 
-    //Destination Cards functions
+    //Destination Cards (Model) functions
     public void setTempDeck(List<DestinationCard> tempDeck){
         ClientModel.get_instance().setMyPlayerTempDeck(tempDeck);
     }
@@ -158,4 +157,5 @@ public class GamePlayService implements IGameService {
     public void discardDestinationCards(List<DestinationCard> cards){
         ClientModel.get_instance().discardDestinationCards(cards);
     }
+    //END Destination Cards (Model) functions
 }
