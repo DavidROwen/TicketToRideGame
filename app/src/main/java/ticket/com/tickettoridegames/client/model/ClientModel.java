@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
+import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
@@ -126,7 +128,7 @@ public class ClientModel extends Observable {
         game.addPlayers(player);
         //gameList.put(gameID, game);
         setChanged();
-        notifyObservers();
+        notifyObservers(TYPE.ADD_PLAYER);
     }
 
     public void removePlayerFromGame(String gameID, Player player){
