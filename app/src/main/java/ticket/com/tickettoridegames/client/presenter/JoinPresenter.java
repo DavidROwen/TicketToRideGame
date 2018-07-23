@@ -48,13 +48,16 @@ public class JoinPresenter implements IJoinPresenter, Observer {
     public void joinGame(String gameId) {
         if (gameId == null || gameId.equals("")) {
             joinView.displayMessage("Invalid game id.");
+        } if(clientModel.getMyActiveGame() != null) {
+            System.out.println("ERROR: tried to join more than one game");
+            return;
         } else {
             String userId = clientModel.getUserId();
             Result result = joinService.joinGame(userId, gameId);
             if (result.isSuccess()){
                 clientModel.getUser().setGameId(gameId);
                 joinView.displayMessage("Game Joined!");
-                joinView.changeView(clientModel.getMyActiveGame().isStarted());
+                joinView.changeView(false); //can't look at active game yet because poller hasn't recognized new user
             }
             else {
                 // Request failed
