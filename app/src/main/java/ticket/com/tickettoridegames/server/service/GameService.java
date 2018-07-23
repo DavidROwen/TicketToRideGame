@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.server.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
@@ -21,7 +22,6 @@ public class GameService implements IGameService {
         ServerModel.getInstance().getGames().get(gameId).initGame();
         Game game = ServerModel.getInstance().getGames().get(gameId);
 
-
         //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
              drawDestinationCard(playerId,gameId);
@@ -36,7 +36,6 @@ public class GameService implements IGameService {
         );
         CommandsManager.addCommandAllPlayers(initTurnOrder, gameId);
 
-
         //playerColors //because it's generated randomly
         Map<String, Player.COLOR> colors = game.getPlayersColors();
 //        new GamePlayService().setPlayersColors(colors);
@@ -45,8 +44,16 @@ public class GameService implements IGameService {
         );
         CommandsManager.addCommandAllPlayers(initColors, gameId);
 
+        //trainDeck //because it's generated randomly
+        Stack<TrainCard> trainCardsDeck = game.getTrainCardsDeck();
+//        new GamePlayService().setTrainCardsDeck(trainCardsDeck);
+        Command setTrainCardsDeck = new Command(GamePlayService.class, new GamePlayService(),
+                "setTrainCardsDeck", new Object[]{trainCardsDeck}
+        );
+        CommandsManager.addCommandAllPlayers(setTrainCardsDeck, gameId);
 
         //everything else
+        ServerModel.getInstance().getGames().get(gameId).initGameNonRandom();
 //        new GamePlayService().initiatingGameNonRandom();
         Command initHands = new Command(GamePlayService.class, new GamePlayService(),
                 "initiatingGameNonRandom", new Object[]{}
@@ -73,10 +80,10 @@ public class GameService implements IGameService {
         game.pickupTrainCard(playerId, index);
 
 //        new GamePlayService().pickingUpTrainCard(playerId, index);
-        Command resetTop = new Command(GamePlayService.class, new GamePlayService(),
+        Command pickCard = new Command(GamePlayService.class, new GamePlayService(),
                 "pickingUpTrainCard", new Object[]{playerId, index}
         );
-        CommandsManager.addCommandAllPlayers(resetTop, gameId);
+        CommandsManager.addCommandAllPlayers(pickCard, gameId);
     }
 
     //Destination Card Functions

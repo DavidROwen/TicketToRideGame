@@ -68,7 +68,7 @@ public class LobbyService {
     }
 
     public static void startingGame(String gameId){
-        clientModel.startGame(gameId);
+        ClientModel.get_instance().startGame(gameId);
     }
 
 }

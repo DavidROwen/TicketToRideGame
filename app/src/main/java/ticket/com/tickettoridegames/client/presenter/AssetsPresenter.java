@@ -7,6 +7,7 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
 import ticket.com.tickettoridegames.utility.TYPE;
+import ticket.com.tickettoridegames.utility.model.Game;
 
 public class AssetsPresenter implements IAssetsPresenter, Observer {
     private GamePlayService gamePlayService;
@@ -17,7 +18,8 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         assetsView = view;
         gamePlayService = new GamePlayService();
         clientModel = ClientModel.get_instance();
-        clientModel.addObserver(this);
+//        clientModel.addObserver(this);
+        clientModel.getMyActiveGame().addObserver(this);
 
         assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
         
@@ -28,15 +30,16 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
 
     @Override
     public void update(Observable observable, Object arg){
-        clientModel = (ClientModel) observable;
+//        clientModel = (ClientModel) observable;
+        Game game = (Game) observable;
         TYPE type = (TYPE) arg;
         switch(type){
             case BANKUPDATE:
                 // Someone else drew a card so update your view
-                assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
+                assetsView.setBank(game.getTrainBank());
                 break;
             case NEWROUTE:
-//                assetsView.setRoutes(clientModel.getDestinationCards());
+//                assetsView.setRoutes(ClientModel.getDestinationCards());
                 break;
             case NEWTRAINCARD:
                 assetsView.setHand(clientModel.getMyPlayer().getTrainCards());

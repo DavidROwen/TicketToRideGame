@@ -7,6 +7,7 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.IStatsView;
 import ticket.com.tickettoridegames.utility.TYPE;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class StatsPresenter implements IStatsPresenter , Observer {
@@ -17,12 +18,14 @@ public class StatsPresenter implements IStatsPresenter , Observer {
     public StatsPresenter(IStatsView view){
         statsView = view;
         clientModel = ClientModel.get_instance();
-        clientModel.addObserver(this);
+//        clientModel.addObserver(this);
+        clientModel.getMyActiveGame().addObserver(this);
     }
 
     @Override
     public void update(Observable observable, Object arg){
-        clientModel = (ClientModel) observable;
+//        clientModel = (ClientModel) observable;
+        Game game = (Game) observable;
         TYPE type = (TYPE) arg;
         //Update the stats, chats and history here.
         switch(type){
@@ -37,6 +40,9 @@ public class StatsPresenter implements IStatsPresenter , Observer {
                 statsView.setHistory(clientModel.getHistory());
             case HISTORYUPDATE:
                 statsView.displayHistory(clientModel.getNewestGameHistory());
+                break;
+            case NEWTRAINCARD:
+                statsView.setPlayerStats(game.getPlayerStats());
                 break;
             default:
                 // We got an update that we don't care about.

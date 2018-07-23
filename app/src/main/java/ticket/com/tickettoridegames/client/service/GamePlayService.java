@@ -1,9 +1,19 @@
 package ticket.com.tickettoridegames.client.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
@@ -13,6 +23,7 @@ import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.Route;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
 
@@ -162,5 +173,25 @@ public class GamePlayService implements IGameService {
     //Game History functions
     public void addToHistory(PlayerAction history){
         ClientModel.get_instance().addGameHistory(history);
+    }
+
+    public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
+        //build array //in order
+        //todo loses the top 8 cards in serialization
+        TrainCard[] temp = new TrainCard[trainCardsDeck.size()];
+        for(int i = temp.length-1; i >= 0; i--) {
+            //convert from LinkedTreeMap
+            Gson gson = new Gson();
+            JsonObject obj = gson.toJsonTree(trainCardsDeck.pop()).getAsJsonObject();
+            TrainCard card = gson.fromJson(obj, TrainCard.class);
+
+            temp[i] = card;
+        }
+
+        //build stack
+        Stack<TrainCard> deck = new Stack<>();
+        deck.addAll(Arrays.asList(temp));
+
+        ClientModel.get_instance().getMyActiveGame().setTrainCardsDeck(deck);
     }
 }

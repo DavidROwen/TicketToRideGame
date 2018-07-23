@@ -139,4 +139,16 @@ public class Player {
     public void setTempDeck(List<DestinationCard> deck){
         tempDeck = deck;
     }
+
+    public PlayerStats getStats() {
+        PlayerStats stats = new PlayerStats();
+
+        stats.setName(getUsername());
+//        stats.setNumberOfCards(getCardCount());
+        stats.setNumberOfCards(trainCards.size());
+        stats.setNumberOfRoutes(getRouteCount());
+        stats.setPoints(getPoints());
+
+        return stats;
+    }
 }

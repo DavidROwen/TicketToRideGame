@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,12 +9,15 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.UUID;
 
-public class Game {
+import ticket.com.tickettoridegames.utility.TYPE;
+
+public class Game extends Observable {
 
     //General game data
     private Map<String, Player> players;
@@ -41,6 +45,8 @@ public class Game {
     private List<PlayerAction> gameHistory;
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_DECK = 52;
+    public static final Integer NUM_CARDS_TRAINCARD_DECK = 58;
+    public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
 
     public Game(){
         this.players = new HashMap<>();
@@ -53,9 +59,7 @@ public class Game {
         this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
-        initTrainCardDeck();
         setupRoutes();
-        setupTrainBank();
     }
 
     public Game(String name, int numberOfPlayers){
@@ -76,16 +80,7 @@ public class Game {
         this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
-        initTrainCardDeck();
         setupRoutes();
-        setupTrainBank();
-    }
-
-    private void setupTrainBank() {
-        for (int i = 0; i < 5; i++) {
-            trainBank.add(trainCardsDeck.pop());
-        }
-        assert(trainBank.size() == 5);
     }
 
     public void setupRoutes(){
@@ -287,6 +282,7 @@ public class Game {
     public void drawTrainCard(String playerId) {
         TrainCard card = trainCardsDeck.pop();
         players.get(playerId).addTrainCard(card);
+        myNotify(TYPE.NEWTRAINCARD);
     }
 
     private TrainCard drawTrainCard() {
@@ -332,11 +328,11 @@ public class Game {
     public void initGame() {
         initTurnOrder();
         initColors();
-
-        initGameNonRandom();
+        initTrainCardDeck();
     }
 
     //convenience function so it can be called from the client side also
+    //must be seperate so train deck can be passed before altered
     public void initGameNonRandom() {
         initHandAll();
         initTrainBank();
@@ -344,8 +340,12 @@ public class Game {
     }
 
     private void initTrainBank() {
-        for(int i = 0; i < trainBank.size(); i++) {
-            trainBank.set(i, drawTrainCard());
+        for(int i = 0; i < NUM_CARDS_TRAINCARD_BANK; i++) {
+            try {
+                trainBank.add(drawTrainCard());
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -353,7 +353,6 @@ public class Game {
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
             initHand(curPlayer);
-//            initPlayerDestinationCards(curPlayer);
         }
     }
 
@@ -469,18 +468,16 @@ public class Game {
     public void pickupTrainCard(String playerId, Integer index) {
         //add card
         TrainCard pickedCard = trainBank.get(index);
+
         players.get(playerId).addTrainCard(pickedCard);
+        myNotify(TYPE.NEWTRAINCARD);
         //replace card
         trainBank.set(index, drawTrainCard());
+        myNotify(TYPE.BANKUPDATE);
     }
-
 
     public List<TrainCard> getTrainBank() {
         return trainBank;
-    }
-
-    public void setTrainBank(List<TrainCard> trainBank) {
-        this.trainBank = trainBank;
     }
 
     public Boolean claimRoute(String playerId, Route route) {
@@ -496,6 +493,7 @@ public class Game {
         //claim
         routes.get(playerId).add(route);
         player.removeTrainCards(neededCards); //cash out cards
+        myNotify(TYPE.NEWTRAINCARD);
         return true;
     }
 
@@ -523,18 +521,25 @@ public class Game {
     public List<PlayerStats> getPlayerStats(){
         List<PlayerStats> stats = new ArrayList<>();
 
-        //todo call something in player
         for (Player player : getPlayers().values()){
-            PlayerStats newStat = new PlayerStats();
-
-            newStat.setName(player.getUsername());
-            newStat.setNumberOfCards(player.getCardCount());
-            newStat.setNumberOfRoutes(player.getRouteCount());
-            newStat.setPoints(player.getPoints());
-
-            stats.add(newStat);
+            stats.add(player.getStats());
         }
 
         return stats;
+    }
+
+    public Stack<TrainCard> getTrainCardsDeck() {
+        return trainCardsDeck;
+    }
+
+    public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
+        this.trainCardsDeck = trainCardsDeck;
+    }
+
+    private void myNotify(Object arg) {
+        setChanged();
+        if(arg != null) { notifyObservers(arg); }
+        else { notifyObservers(); }
+//        clearChanged();
     }
 }
