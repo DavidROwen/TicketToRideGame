@@ -204,7 +204,7 @@ public class ClientModel extends Observable {
     public void addGameHistory(PlayerAction history){
         Game game = getMyActiveGame();
         game.addToHistory(history);
-        myNotify(HISTORYUPDATE);
+//        myNotify(HISTORYUPDATE);
     }
 
     public PlayerAction getNewestGameHistory(){

@@ -30,47 +30,30 @@ import ticket.com.tickettoridegames.utility.web.Command;
 public class GamePlayService implements IGameService {
     @Override
     public void initGame(String gameId) {
-        try {
-//            GameService.class.newInstance().initGame(gameId);
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "initGame", new Object[]{gameId}
-            );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//            new GameService.initGame(gameId);
+        Command command = new Command(GameService.class, new GameService(),
+                "initGame", new Object[]{gameId}
+        );
+        ServerProxy.sendCommand(command);
+
     }
 
     @Override
     public void drawTrainCard(String playerId, String gameId) {
-        try {
-//            GameService.class.newInstance().drawTrainCard(playerId, gameId);
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "drawTrainCard", new Object[]{playerId, gameId}
-                    );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//            new GameService().drawTrainCard(playerId, gameId);
+        Command command = new Command(GameService.class, new GameService(),
+                "drawTrainCard", new Object[]{playerId, gameId}
+                );
+        ServerProxy.sendCommand(command);
     }
 
     @Override
     public void pickupTrainCard(String playerId, String gameId, Integer index) {
-        try {
-//            GameService.class.newInstance().pickupTrainCard(playerId, gameId, index);
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "pickupTrainCard", new Object[]{playerId, gameId, index}
-            );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//            new GameService().pickupTrainCard(playerId, gameId, index);
+        Command command = new Command(GameService.class, new GameService(),
+                "pickupTrainCard", new Object[]{playerId, gameId, index}
+        );
+        ServerProxy.sendCommand(command);
     }
 
     //Destination Card (Command) commands
@@ -105,32 +88,29 @@ public class GamePlayService implements IGameService {
 
     @Override
     public void returnDestinationCard(String gameId, List<DestinationCard> cards) {
-        try {
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "returnDestinationCards", new Object[]{gameId, cards}
-            );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        Command command = new Command(GameService.class, new GameService(),
+                "returnDestinationCards", new Object[]{gameId, cards}
+        );
+        ServerProxy.sendCommand(command);
     }
     //END Destination Card (Command) functions
 
     @Override
     public void claimRoute(String gameId, String playerId, Route route) {
-        try {
-//            GameService.class.newInstance().claimRoute(gameId, playerId, route);
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
-                    "claimRoute", new Object[]{gameId, playerId, route}
-            );
-            ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//            new GameService().claimRoute(gameId, playerId, route);
+        Command command = new Command(GameService.class, new GameService(),
+                "claimRoute", new Object[]{gameId, playerId, route}
+        );
+        ServerProxy.sendCommand(command);
+    }
+
+    @Override
+    public void switchTurn(String gameId) {
+        new GameService().switchTurn(gameId);
+        Command command = new Command(GameService.class, new GameService(),
+                "switchTurn", new Object[]{gameId}
+                );
+        ServerProxy.sendCommand(command);
     }
 
     public void setTurnOrder(LinkedList<String> order) {
@@ -193,5 +173,9 @@ public class GamePlayService implements IGameService {
         deck.addAll(Arrays.asList(temp));
 
         ClientModel.get_instance().getMyActiveGame().setTrainCardsDeck(deck);
+    }
+
+    public void switchingTurn() {
+        ClientModel.get_instance().getMyActiveGame().switchTurn();
     }
 }

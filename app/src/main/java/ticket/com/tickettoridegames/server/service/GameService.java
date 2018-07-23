@@ -143,9 +143,21 @@ public class GameService implements IGameService {
         Boolean success = game.claimRoute(playerId, route);
         if(!success) { return; } //nothing changed
 
-//        ClientModel.get_instance().claimRoute(playerId, route);
-        Command claimRoute = new Command(ClientModel.class, ClientModel.get_instance(),
-                "claimRoute", new Object[]{playerId, route}
+//        new GamePlayService().claimingRoute(playerId, route);
+        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
+                "claimingRoute", new Object[]{playerId, route}
+        );
+        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
+    }
+
+    @Override
+    public void switchTurn(String gameId) {
+        Game game = ServerModel.getInstance().getGames().get(gameId);
+        game.switchTurn();
+
+//        new GamePlayService().switchingTurn();
+        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
+                "switchingTurn", null
         );
         CommandsManager.addCommandAllPlayers(claimRoute, gameId);
     }

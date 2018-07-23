@@ -18,6 +18,7 @@ import java.util.UUID;
 import ticket.com.tickettoridegames.utility.TYPE;
 
 public class Game extends Observable {
+    public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
 
     //General game data
     private Map<String, Player> players;
@@ -183,11 +184,13 @@ public class Game extends Observable {
     public void addToChat(Chat c){
         chatList.add(newestChat);
         newestChat = c;
+        myNotify(TYPE.NEWCHAT);
     }
 
     public void addToHistory(PlayerAction pa){
         gameHistory.add(newestHistory);
         newestHistory = pa;
+        myNotify(TYPE.HISTORYUPDATE);
     }
 
     public Chat getNewestChat(){
@@ -282,6 +285,7 @@ public class Game extends Observable {
         TrainCard card = trainCardsDeck.pop();
         players.get(playerId).addTrainCard(card);
         myNotify(TYPE.NEWTRAINCARD);
+        addToHistory(new PlayerAction(playerId, "drew " + card.getType()));
     }
 
     private TrainCard drawTrainCard() {
@@ -299,14 +303,13 @@ public class Game extends Observable {
         return counts;
     }
 
-//    public void switchTurn() {
-//        turnNumber = (turnNumber + 1) % players.size();
-//    }
+    public void switchTurn() {
+        turnNumber = (turnNumber + 1) % players.size();
+    }
 
-//    //player up is the player who's turn it currently is
-//    public String getIdPlayerUp() {
-//        return turnOrder.get(turnNumber);
-//    }
+    public Boolean isMyTurn(String playerId) {
+        return playerId.equals(turnOrder.get(turnNumber));
+    }
 
     private void initTurnOrder() {
         //all players
@@ -402,6 +405,7 @@ public class Game extends Observable {
 
     private void addDestinationCard(DestinationCard card) {
         destinationCards.add(card);
+//        addToHistory(new PlayerAction(playerId, "drew a destination card")); //todo
     }
 
     private void fillDestinationCards() {
@@ -473,6 +477,7 @@ public class Game extends Observable {
         //replace card
         trainBank.set(index, drawTrainCard());
         myNotify(TYPE.BANKUPDATE);
+        addToHistory(new PlayerAction(playerId, "picked up " + pickedCard.getType()));
     }
 
     public List<TrainCard> getTrainBank() {
@@ -489,10 +494,17 @@ public class Game extends Observable {
         TrainCard[] neededCards = getNeededCards(route);
         if(!player.hasTrainCards(neededCards)) { return false; }
 
+        //check player has trains
+        if(!player.hasTrains(route.getLength())) { return false; }
+
         //claim
         routes.get(playerId).add(route);
         player.removeTrainCards(neededCards); //cash out cards
         myNotify(TYPE.NEWTRAINCARD);
+        player.addPoints(LENGTH_TO_POINTS[route.getLength()]); //collect points
+        player.removeTrains(route.getLength());
+        myNotify(TYPE.STATSUPDATE);
+        addToHistory(new PlayerAction(playerId, "claimed " + route.getStart() + " to " + route.getEnd()));
         return true;
     }
 

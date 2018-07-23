@@ -60,7 +60,7 @@ public class LobbyService {
 
     // Functions called by server
     public static void updateChat(String gameID, Chat chat){
-        clientModel.addGameChat(gameID, chat);
+        ClientModel.get_instance().addGameChat(gameID, chat);
     }
 
     public static void removePlayer(String gameID, Player player){

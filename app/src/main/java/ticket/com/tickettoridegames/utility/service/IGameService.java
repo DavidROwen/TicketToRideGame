@@ -22,4 +22,6 @@ public interface IGameService {
     void returnDestinationCard(String gameId, List<DestinationCard> cards);
 
     void claimRoute(String gameId, String playerId, Route route);
+
+    void switchTurn(String gameId);
 }

@@ -20,8 +20,8 @@ public class Player {
 
     // Game Data
     private COLOR color;
-    private Integer trains;
-    private Integer points;
+    private Integer trains = 45;
+    private Integer points = 0;
 
     private List<DestinationCard> tempDeck = new LinkedList<>();
     private List<TrainCard> trainCards = new LinkedList<>();
@@ -148,7 +148,14 @@ public class Player {
         stats.setNumberOfCards(trainCards.size());
         stats.setNumberOfRoutes(getRouteCount());
         stats.setPoints(getPoints());
+        stats.setNumberOfPieces(trains);
 
         return stats;
     }
+
+    public void addPoints(Integer points) { this.points += points; }
+
+    public void removeTrains(Integer length) { trains -= length; }
+
+    public Boolean hasTrains(Integer length) { return length <= trains; }
 }

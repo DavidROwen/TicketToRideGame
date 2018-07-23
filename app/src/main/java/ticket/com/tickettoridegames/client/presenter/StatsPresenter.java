@@ -30,11 +30,10 @@ public class StatsPresenter implements IStatsPresenter , Observer {
         //Update the stats, chats and history here.
         switch(type){
             case NEWCHAT:
-                statsView.displayChat(clientModel.getNewestChat(clientModel.getCurrentGameID()));
+                statsView.displayChat(game.getNewestChat());
                 break;
             case STATSUPDATE:
-                // These will use the data to update the view
-                statsView.setPlayerStats(clientModel.getMyActiveGame().getPlayerStats());
+                statsView.setPlayerStats(game.getPlayerStats());
                 break;
             case ALLHISTORY:
                 statsView.setHistory(clientModel.getHistory());
