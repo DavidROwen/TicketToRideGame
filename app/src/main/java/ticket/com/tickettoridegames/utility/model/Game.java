@@ -45,7 +45,6 @@ public class Game extends Observable {
     private List<PlayerAction> gameHistory;
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_DECK = 52;
-    public static final Integer NUM_CARDS_TRAINCARD_DECK = 58;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
 
     public Game(){

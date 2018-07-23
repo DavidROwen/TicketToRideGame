@@ -27,7 +27,8 @@ public class GameTest {
         initToGamePlay();
 
         Map<String, Player.COLOR> colors = new HashMap<>();
-        colors.put("id", Player.COLOR.RED);
+        colors.put("id1", Player.COLOR.RED);
+        colors.put("id2", Player.COLOR.ORANGE);
         game.setPlayersColors(colors);
     }
 
