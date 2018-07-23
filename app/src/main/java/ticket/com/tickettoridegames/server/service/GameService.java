@@ -128,11 +128,6 @@ public class GameService implements IGameService {
         sm.claimDestinationCards(playerId, gameId, temp);
         //add some kind of error checking with the above function?
 
-        //create game history object
-        String username = sm.getUserById(playerId).getUsername();
-        String action = "Claimed " + cards.size() + " Destination Cards";
-        PlayerAction playerAction = new PlayerAction(username, action);
-
         //send commands to the other games updating destination cards.
         Command claimCommand = null;
         try {
@@ -143,17 +138,6 @@ public class GameService implements IGameService {
             e.printStackTrace();
         }
         CommandsManager.addCommandAllPlayers(claimCommand, gameId);
-
-        //send update game history command
-        Command historyCommand = null;
-        try{
-            historyCommand = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
-                    "addToHistory", new Object[]{playerAction});
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        CommandsManager.addCommandAllPlayers(historyCommand, gameId);
     }
 
     @Override
