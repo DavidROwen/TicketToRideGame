@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
+import ticket.com.tickettoridegames.client.presenter.MapPresenter;
 import ticket.com.tickettoridegames.client.view.IMapView;
 
 public class MapFragment extends BasicFragment implements IMapView{
@@ -16,6 +18,7 @@ public class MapFragment extends BasicFragment implements IMapView{
 
     // Variables
     View view;
+    private IMapPresenter presenter;
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -27,6 +30,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.map_fragment,parent,false);
+        presenter = new MapPresenter(this);
 
         //Now specific components here
         Button drawTrainsButton = (Button)view.findViewById(R.id.button1);

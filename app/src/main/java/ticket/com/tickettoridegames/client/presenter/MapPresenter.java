@@ -34,5 +34,6 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void passOff(){
         // Use this function for phase 2 pass off
+
     }
 }
