@@ -4,8 +4,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.ILobbyView;
+import ticket.com.tickettoridegames.server.service.GameService;
 import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.web.Result;
 
@@ -32,6 +34,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
         else {
             Result result = lobbyService.startGame(gameID);
             if (result.isSuccess()) {
+                new GamePlayService().initGame(gameID);
                 lobbyView.displayMessage("Successfully started game.");
                 lobbyView.changeView();
             } else {
