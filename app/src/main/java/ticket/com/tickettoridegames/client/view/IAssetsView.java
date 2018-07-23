@@ -17,4 +17,6 @@ public interface IAssetsView {
     public void setRoutes(Set<DestinationCard> destinationCards);
 
     public void displayMessage(String message);
+
+    void pickupCard(Integer index);
 }

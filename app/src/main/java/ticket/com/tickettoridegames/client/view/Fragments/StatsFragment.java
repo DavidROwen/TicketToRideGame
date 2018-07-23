@@ -127,9 +127,9 @@ public class StatsFragment extends BasicFragment implements IStatsView{
         this.playerStats = playerStats;
         myRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
 
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        myAdapter = new StatsAdapter(playerStats);
-        myRecyclerView.setAdapter(myAdapter);
+//        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext())); //todo null
+//        myAdapter = new StatsAdapter(playerStats);
+//        myRecyclerView.setAdapter(myAdapter);
     }
 
     @Override

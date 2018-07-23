@@ -145,5 +145,10 @@ public class AssetsPresenterTest {
         public void displayMessage(String message) {
             System.out.println("message: " + message);
         }
+
+        @Override
+        public void pickupCard(Integer index) {
+
+        }
     }
 }

@@ -34,6 +34,10 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void passOff(){
         // Use this function for phase 2 pass off
+    }
 
+    @Override
+    public void drawTrainCard() {
+        new GamePlayService().drawTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
     }
 }

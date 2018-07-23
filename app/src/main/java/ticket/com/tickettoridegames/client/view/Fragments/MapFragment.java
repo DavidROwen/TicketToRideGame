@@ -37,6 +37,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         drawTrainsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                presenter.drawTrainCard();
                 //presenter.sendMessage(chat_input.getText().toString());
             }
         });
@@ -66,7 +67,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         });
 
         Button passOffButton = (Button)view.findViewById(R.id.pass_off_button);
-        drawTrainsButton.setOnClickListener(new View.OnClickListener(){
+        passOffButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 presenter.passOff();

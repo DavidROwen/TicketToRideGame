@@ -22,7 +22,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         clientModel.getMyActiveGame().addObserver(this);
 
         assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
-        
+
         String userID = clientModel.getUserId();
         assetsView.setHand(clientModel.getMyActiveGame().getPlayer(userID).getTrainCards());
         assetsView.setRoutes(clientModel.getMyActiveGame().getPlayer(userID).getDestinationCards());
@@ -51,5 +51,10 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
     public void drawFromBank(Integer stackID){
 
         // We use the stack index to indicate what card should change.
+    }
+
+    @Override
+    public void pickupCard(Integer index) {
+        gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
     }
 }

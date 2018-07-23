@@ -20,7 +20,7 @@ public class GamePlayPresenter implements IGamePlayPresenter, Observer {
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
 
-        gamePlayService.initGame(clientModel.getCurrentGameID());
+//        gamePlayService.initGame(clientModel.getCurrentGameID()); //called from lobbyPresenter
     }
 
     @Override

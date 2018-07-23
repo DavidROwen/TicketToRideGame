@@ -4,4 +4,5 @@ public interface IMapPresenter {
 
     void passOff();
 
+    void drawTrainCard();
 }

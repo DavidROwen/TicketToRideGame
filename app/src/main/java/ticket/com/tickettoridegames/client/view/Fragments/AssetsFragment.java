@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.view.Fragments;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -108,6 +109,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
+    public void pickupCard(Integer index) {
+        presenter.pickupCard(index);
+    }
+
+    @Override
     public void setRoutes(Set<DestinationCard> destinationCards){
         this.destinationCards = destinationCards;
 
@@ -189,6 +195,9 @@ class ImageCustomViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public void onClick(View v) {
         if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
         v.setBackgroundColor(Color.GREEN);
+
+//        IAssetsView assetsView = (IAssetsView) ((ViewGroup)v.getParent()).getParent(); //breaks
+//        assetsView.pickupCard(getAdapterPosition());
 
         //makes a hidden text that is read when button is clicked
         train = (ImageView)  v.findViewById(R.id.train);
