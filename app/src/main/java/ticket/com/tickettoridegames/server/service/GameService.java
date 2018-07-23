@@ -16,6 +16,7 @@ import ticket.com.tickettoridegames.server.model.ServerModel;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
+import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
@@ -125,10 +126,14 @@ public class GameService implements IGameService {
         }
 
         sm.claimDestinationCards(playerId, gameId, temp);
-
-//        sm.claimDestinationCards(playerId, gameId, cards);
         //add some kind of error checking with the above function?
-        //send commands to the other games updating card numbers or cards.
+
+        //create game history object
+        String username = sm.getUserById(playerId).getUsername();
+        String action = "Claimed " + cards.size() + " Destination Cards";
+        PlayerAction playerAction = new PlayerAction(username, action);
+
+        //send commands to the other games updating destination cards.
         Command claimCommand = null;
         try {
             claimCommand = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
@@ -138,6 +143,17 @@ public class GameService implements IGameService {
             e.printStackTrace();
         }
         CommandsManager.addCommandAllPlayers(claimCommand, gameId);
+
+        //send update game history command
+        Command historyCommand = null;
+        try{
+            historyCommand = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+                    "addToHistory", new Object[]{playerAction});
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        CommandsManager.addCommandAllPlayers(historyCommand, gameId);
     }
 
     @Override

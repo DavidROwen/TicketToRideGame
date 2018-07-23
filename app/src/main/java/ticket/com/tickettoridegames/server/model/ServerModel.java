@@ -133,7 +133,7 @@ public class ServerModel {
         return registeredUsers.get(username);
     }
 
-    private User getUserById(String id){
+    public User getUserById(String id){
         return activeUsers.get(id);
     }
 
@@ -245,4 +245,5 @@ public class ServerModel {
     public Game getGameById(String gameId){
         return games.get(gameId);
     }
+
 }

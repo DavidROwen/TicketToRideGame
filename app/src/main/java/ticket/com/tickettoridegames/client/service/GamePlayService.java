@@ -147,8 +147,6 @@ public class GamePlayService implements IGameService {
         }
 
         ClientModel.get_instance().getMyPlayer().setTempDeck(temp);
-
-//        ClientModel.get_instance().setMyPlayerTempDeck(tempDeck);
     }
 
     public void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
@@ -164,7 +162,6 @@ public class GamePlayService implements IGameService {
         }
 
         ClientModel.get_instance().updateDestinationCards(playerId, temp);
-//        ClientModel.get_instance().updateDestinationCards(playerId, cards);
     }
 
     public void discardDestinationCards(LinkedList<DestinationCard> cards){
@@ -180,14 +177,14 @@ public class GamePlayService implements IGameService {
         }
 
         ClientModel.get_instance().discardDestinationCards(temp);
-
-//        ClientModel.get_instance().discardDestinationCards(cards);
     }
     //END Destination Cards (Model) functions
+
     //Game History functions
     public void addToHistory(PlayerAction history){
         ClientModel.get_instance().addGameHistory(history);
     }
+    //END Game History functions
 
     public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
         //build array //in order
