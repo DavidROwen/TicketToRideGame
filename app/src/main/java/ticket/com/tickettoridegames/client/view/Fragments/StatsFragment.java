@@ -118,7 +118,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
     @Override
     public void displayHistory(PlayerAction pa){
-        String history = pa.getUserName() + ": " + pa.getAction();
+        String history = pa.toString();
         historyAdapter.add(history);
     }
 

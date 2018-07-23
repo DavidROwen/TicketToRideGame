@@ -66,6 +66,11 @@ public class StatsPresenterTest {
 
         service.pickupTrainCard(userId, gameId, 0);
         while(view.history.size() == initSize);
+
+        //check for null elements
+        for(PlayerAction cur : view.history) {
+            cur.toString();
+        }
     }
 
     @Test

@@ -20,6 +20,10 @@ public class StatsPresenter implements IStatsPresenter , Observer {
         clientModel = ClientModel.get_instance();
 //        clientModel.addObserver(this);
         clientModel.getMyActiveGame().addObserver(this);
+
+        statsView.setChat(ClientModel.get_instance().getMyActiveGame().getChatList());
+//        statsView.setPlayerStats(ClientModel.get_instance().getMyActiveGame().getPlayerStats()); //recyclerview is null
+//        statsView.setHistory(ClientModel.get_instance().getMyActiveGame().getGameHistory()); //history adapter is null
     }
 
     @Override

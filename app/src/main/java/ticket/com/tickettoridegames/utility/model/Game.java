@@ -43,7 +43,7 @@ public class Game extends Observable {
 //    private TrainCard topTrainCard;
 
     // Stores player actions viewed in the stats history tab
-    private List<PlayerAction> gameHistory;
+    private List<PlayerAction> gameHistory = new LinkedList<>();
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_DECK = 52;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
@@ -56,7 +56,6 @@ public class Game extends Observable {
         this.destinationCards = new LinkedList<>();
         this.trainBank = new LinkedList<>();
         fillDestinationCards();
-        this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
         setupRoutes();
@@ -77,7 +76,6 @@ public class Game extends Observable {
         this.turnOrder = new LinkedList<>();
         this.map = new GameMap();
         this.destinationCards = new LinkedList<>();
-        this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
         setupRoutes();
@@ -188,7 +186,9 @@ public class Game extends Observable {
     }
 
     public void addToHistory(PlayerAction pa){
-        gameHistory.add(newestHistory);
+        if(newestHistory != null) {  //first time
+            gameHistory.add(newestHistory);
+        }
         newestHistory = pa;
         myNotify(TYPE.HISTORYUPDATE);
     }
