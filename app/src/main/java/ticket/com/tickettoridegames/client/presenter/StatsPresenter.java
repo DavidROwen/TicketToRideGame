@@ -41,6 +41,7 @@ public class StatsPresenter implements IStatsPresenter , Observer {
                 break;
             case ALLHISTORY:
                 statsView.setHistory(clientModel.getHistory());
+                break;
             case HISTORYUPDATE:
                 statsView.displayHistory(clientModel.getNewestGameHistory());
                 break;
