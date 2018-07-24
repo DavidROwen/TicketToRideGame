@@ -58,10 +58,13 @@ public class StatsPresenter implements IStatsPresenter , Observer {
         String userID = clientModel.getUserId();
         String gameID = clientModel.getUser().getGameId();
         if (gameID == null || gameID.equals("")){
-            statsView.displayMessage("Invalid game ID");
+            statsView.displayMessage("Invalid game ID, failed to send.");
         }
         else if (userID == null || userID.equals("")){
-            statsView.displayMessage("Invalid player ID");
+            statsView.displayMessage("Invalid player ID, failed to send.");
+        }
+        else if (message == null || message.isEmpty()){
+            statsView.displayMessage("Invalid message, failed to send.");
         }
         else {
             Result result = LobbyService.sendChat(gameID,userID,message);
