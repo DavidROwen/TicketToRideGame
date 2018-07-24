@@ -169,7 +169,7 @@ public class ServerModel {
         }
     }
 
-    public void addToGameChat(String gameId, String playerId, String message){
+    public void addChatToGame(String gameId, String playerId, String message){
         Game game = games.get(gameId);
         User player = activeUsers.get(playerId);
         Chat chat = new Chat(player.getUsername(), message);

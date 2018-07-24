@@ -12,7 +12,7 @@ public class ChatService {
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
         try{
-            sm.addToGameChat(gameId, playerId, message);
+            sm.addChatToGame(gameId, playerId, message);
             result.setSuccess(true);
             result.setMessage("Chat added");
         }

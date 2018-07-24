@@ -1,7 +1,6 @@
 package ticket.com.tickettoridegames.client.view.Fragments;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,24 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IStatsPresenter;
 import ticket.com.tickettoridegames.client.presenter.StatsPresenter;
-import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IStatsView;
-import ticket.com.tickettoridegames.client.view.LoginActivity;
 import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
 
@@ -44,9 +37,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
     // Widgets
     private RecyclerView myRecyclerView;
-    private RecyclerView.Adapter myAdapter;
     private EditText chat_input;
-    private EditText longest_train_player_input;
 
     private IStatsPresenter presenter;
 
@@ -55,11 +46,6 @@ public class StatsFragment extends BasicFragment implements IStatsView{
         return new StatsFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new StatsPresenter(this);
-    }
 
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -89,6 +75,8 @@ public class StatsFragment extends BasicFragment implements IStatsView{
             }
         });
 
+        presenter = new StatsPresenter(this);
+
         return view;
     }
 
@@ -101,8 +89,10 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     @Override
     public void setChat(List<Chat> chats){
         for (Chat chat:chats) {
-            String message = chat.getUsername() + ": " + chat.getMessage();
-            chatAdapter.add(message);
+            if (chat != null) {
+                String message = chat.getUsername() + ": " + chat.getMessage();
+                chatAdapter.add(message);
+            }
         }
     }
 
@@ -134,8 +124,8 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
     @Override
     public void setLongestTrainAward(String player){
-        longest_train_player_input = (EditText) view.findViewById(R.id.playerNameText);
-        longest_train_player_input.setText(player);
+//        longest_train_player_input = (EditText) view.findViewById(R.id.playerNameText);
+//        longest_train_player_input.setText(player);
     }
 
     @Override
