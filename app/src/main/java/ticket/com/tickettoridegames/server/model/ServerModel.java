@@ -1,10 +1,8 @@
 package ticket.com.tickettoridegames.server.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
@@ -14,10 +12,8 @@ import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 import ticket.com.tickettoridegames.utility.web.Command;
-
 
 public class ServerModel {
 

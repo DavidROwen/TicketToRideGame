@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
@@ -13,8 +12,6 @@ import ticket.com.tickettoridegames.client.presenter.MapPresenter;
 import ticket.com.tickettoridegames.client.view.IMapView;
 
 public class MapFragment extends BasicFragment implements IMapView{
-    // Widgets
-
 
     // Variables
     View view;

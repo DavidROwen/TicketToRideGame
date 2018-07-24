@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
@@ -58,9 +57,7 @@ public class GamePlayService implements IGameService {
                     "drawDestinationCard", new Object[]{playerId, gameId}
             );
             ServerProxy.sendCommand(command);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -72,10 +69,7 @@ public class GamePlayService implements IGameService {
                     "claimDestinationCard", new Object[]{playerId, gameId, cards});
             ServerProxy.sendCommand(command);
         }
-        catch (InstantiationException e){
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e){
+        catch (Exception e){
             e.printStackTrace();
         }
     }

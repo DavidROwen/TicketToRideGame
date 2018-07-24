@@ -8,15 +8,15 @@ import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public interface IAssetsView {
 
-    public void setHand(List<TrainCard> hand);
+    void setHand(List<TrainCard> hand);
 
-    public void setBank(List<TrainCard> trainBank);
+    void setBank(List<TrainCard> trainBank);
 
-    public TrainCard getBankChoice(TrainCard trainCard);
+    TrainCard getBankChoice(TrainCard trainCard);
 
-    public void setRoutes(Set<DestinationCard> destinationCards);
+    void setRoutes(Set<DestinationCard> destinationCards);
 
-    public void displayMessage(String message);
+    void displayMessage(String message);
 
     void pickupCard(Integer index);
 }

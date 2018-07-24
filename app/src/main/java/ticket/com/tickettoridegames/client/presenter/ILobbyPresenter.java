@@ -5,6 +5,4 @@ public interface ILobbyPresenter {
     void startGame();
 
     void sendMessage(String message);
-
-//    void addPlayer(String gameID, String playerID);
 }

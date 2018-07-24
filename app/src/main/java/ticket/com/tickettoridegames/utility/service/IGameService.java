@@ -1,7 +1,6 @@
 package ticket.com.tickettoridegames.utility.service;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Route;

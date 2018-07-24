@@ -17,15 +17,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IJoinPresenter;
 import ticket.com.tickettoridegames.client.presenter.JoinPresenter;
 import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Player;
 
 public class JoinActivity extends AppCompatActivity implements IJoinView{
 
@@ -108,32 +105,6 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         //######################################testing purposes##########################################
     }
 
-
-//    @Override
-//    public Map<String, Game> getGames(){                    //unnecessary
-//        return games;
-//    }
-//
-//    @Override
-//    public void addGame(Game newGame){                      //unnecessary
-//
-//    }
-//
-//    @Override
-//    public Set<String> getPlayers(String gameID){           //unnecessary
-//        //return games.get(gameID).getPlayersId();
-//        return null;
-//    }
-//
-//    @Override
-//    public void setPlayers(List<Player> players){            //unnecessary
-//
-//    }
-//
-//    @Override
-//    public void setPlayerCount(String gameID){               //unnecessary
-//
-//    }
 
     @Override
     public void setGames(Map<String, Game> games){
@@ -226,10 +197,10 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public CustomViewHolder(View v) {
         super(v);
         v.setOnClickListener(this);
-        line1 = (TextView)  v.findViewById(R.id.textView1);
-        line2 = (TextView)  v.findViewById(R.id.textView2);
-        line3 = (TextView)  v.findViewById(R.id.textView3);
-        line4 = (TextView)  v.findViewById(R.id.textView4);
+        line1 = v.findViewById(R.id.textView1);
+        line2 = v.findViewById(R.id.textView2);
+        line3 = v.findViewById(R.id.textView3);
+        line4 = v.findViewById(R.id.textView4);
     }
 
     public void bindResult(Map<String, Game> games, String key){

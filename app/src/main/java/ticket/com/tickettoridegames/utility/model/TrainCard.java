@@ -5,7 +5,6 @@ public class TrainCard {
     public static final Integer NUM_TYPES = 9;
 
     private TRAIN_TYPE type;
-    private Integer variable = 1;
 
     public TrainCard(TRAIN_TYPE type) {
         this.type = type;

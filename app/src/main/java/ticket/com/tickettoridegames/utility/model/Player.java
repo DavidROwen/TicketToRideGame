@@ -1,16 +1,10 @@
 package ticket.com.tickettoridegames.utility.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import ticket.com.tickettoridegames.client.model.ClientModel;
-import ticket.com.tickettoridegames.server.CommandsManager;
-import ticket.com.tickettoridegames.server.model.ServerModel;
-import ticket.com.tickettoridegames.utility.web.Command;
 
 public class Player {
     public enum COLOR {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE}
