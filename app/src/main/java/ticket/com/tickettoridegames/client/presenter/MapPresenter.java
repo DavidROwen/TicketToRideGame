@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -8,6 +9,7 @@ import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.City;
+import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 
@@ -63,5 +65,33 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void drawTrainCard() {
         new GamePlayService().drawTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
+    }
+
+    @Override
+    public void drawDestinationCards(){
+        new GamePlayService().drawDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
+    }
+
+    @Override
+    public void changeTurn(){
+        clientModel.changeTurn(clientModel.getMyActiveGame().getId());
+    }
+
+    @Override
+    public void claimRoute(Route route){
+        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
+        // Player Points change
+
+        // Trains remaining change
+    }
+
+    @Override
+    public void claimDestinationCard(LinkedList<DestinationCard> destinationCards){
+        new GamePlayService().claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), destinationCards);
+    }
+
+    @Override
+    public void returnDestinationCard(LinkedList<DestinationCard> destinationCards){
+        new GamePlayService().returnDestinationCard(clientModel.getMyActiveGame().getId(), destinationCards);
     }
 }

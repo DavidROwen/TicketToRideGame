@@ -119,7 +119,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
         this.playerStats = playerStats;
         myRecyclerView = (RecyclerView) view.findViewById(R.id.statsrecyclerview);
 
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); //todo null
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myAdapter = new StatsAdapter(playerStats);
         myRecyclerView.setAdapter(myAdapter);
     }
@@ -178,11 +178,11 @@ class StatsCustomViewHolder extends RecyclerView.ViewHolder{
 
     public StatsCustomViewHolder(View v) {
         super(v);
-        line1 = (TextView)  v.findViewById(R.id.ctextView1);
-        line2 = (TextView)  v.findViewById(R.id.ctextView2);
-        line3 = (TextView)  v.findViewById(R.id.ctextView3);
-        line4 = (TextView)  v.findViewById(R.id.ctextView4);
-        line5 = (TextView)  v.findViewById(R.id.ctextView5);
+        line1 = (TextView)  v.findViewById(R.id.textView1);
+        line2 = (TextView)  v.findViewById(R.id.textView2);
+        line3 = (TextView)  v.findViewById(R.id.textView3);
+        line4 = (TextView)  v.findViewById(R.id.textView4);
+        line5 = (TextView)  v.findViewById(R.id.textView5);
     }
 
     public void bindResult(PlayerStats playerStat){

@@ -93,7 +93,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     @Override
     public TrainCard getBankChoice(TrainCard trainCard){
-        return null;
+        return trainCard;
     }
 
     @Override
