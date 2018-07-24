@@ -28,6 +28,7 @@ import static ticket.com.tickettoridegames.utility.TYPE.NEWROUTE;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWTRAINCARD;
 import static ticket.com.tickettoridegames.utility.TYPE.START;
+import static ticket.com.tickettoridegames.utility.TYPE.TURNCHANGED;
 
 public class ClientModel extends Observable {
 
@@ -220,5 +221,21 @@ public class ClientModel extends Observable {
         if(arg != null) { notifyObservers(arg); }
         else { notifyObservers(); }
 //        clearChanged();
+    }
+
+    public void changeTurn(String gameId){
+        Game game = getGame(gameId);
+        game.switchTurn();
+
+        setChanged();
+        notifyObservers(TURNCHANGED);
+    }
+
+    public boolean isMyTurn(){
+        return getMyActiveGame().isMyTurn(getMyPlayer().getId());
+    }
+
+    private Game getGame(String gameId){
+        return gameList.get(gameId);
     }
 }

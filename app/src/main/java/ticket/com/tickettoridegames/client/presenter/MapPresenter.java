@@ -26,6 +26,14 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
+            case TURNCHANGED:
+                if (clientModel.isMyTurn()){
+                    // set the button here
+                    mapView.enableTurn();
+                }
+                else {
+                    mapView.disableTurn();
+                }
             default:
                 //Why you updated me?
         }
@@ -34,6 +42,17 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void passOff(){
         // Use this function for phase 2 pass off
+
+        // Change turn
+        clientModel.changeTurn(clientModel.getMyActiveGame().getId());
+
+        // Change face up deck cards
+
+
+        // Route claiming.
+        // Player Points change
+
+        // Trains remaining change
     }
 
     @Override

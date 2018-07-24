@@ -19,6 +19,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     // Variables
     View view;
     private IMapPresenter presenter;
+    private Button turnButton;
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -58,7 +59,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        Button turnButton = (Button)view.findViewById(R.id.button4);
+        turnButton = (Button)view.findViewById(R.id.turn_button);
         turnButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -75,5 +76,13 @@ public class MapFragment extends BasicFragment implements IMapView{
         });
 
         return view;
+    }
+
+    public void enableTurn(){
+        turnButton.setEnabled(true);
+    }
+
+    public void disableTurn(){
+        turnButton.setEnabled(false);
     }
 }

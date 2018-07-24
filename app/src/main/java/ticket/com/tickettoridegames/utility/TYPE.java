@@ -13,5 +13,6 @@ public enum TYPE {
     NEWTEMPDECK,
     DESTINATIONUPDATE,  //Update a player owned destination card
     DISCARDDESTINATION, //discard a destination card
-    ADD_PLAYER
+    ADD_PLAYER,
+    TURNCHANGED
 }

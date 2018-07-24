@@ -41,7 +41,7 @@
         android:text="Draw Routes" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/turn_button"
         android:layout_width="120dp"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
