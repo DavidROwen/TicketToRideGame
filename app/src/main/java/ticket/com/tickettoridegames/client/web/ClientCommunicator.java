@@ -6,16 +6,12 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.util.concurrent.ExecutionException;
 
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Serializer;
@@ -33,9 +29,7 @@ public class ClientCommunicator {
 			} else {
 				return Serializer.fromJson(input, returnType);
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

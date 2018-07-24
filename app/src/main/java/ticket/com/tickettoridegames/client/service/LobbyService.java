@@ -1,11 +1,8 @@
 package ticket.com.tickettoridegames.client.service;
 
-import android.app.Notification;
-
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
 import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.web.Command;
 import ticket.com.tickettoridegames.utility.web.Result;
@@ -60,7 +57,7 @@ public class LobbyService {
 
     // Functions called by server
     public static void updateChat(String gameID, Chat chat){
-        clientModel.addGameChat(gameID, chat);
+        ClientModel.get_instance().addGameChat(gameID, chat);
     }
 
     public static void removePlayer(String gameID, Player player){
@@ -68,7 +65,7 @@ public class LobbyService {
     }
 
     public static void startingGame(String gameId){
-        clientModel.startGame(gameId);
+        ClientModel.get_instance().startGame(gameId);
     }
 
 }

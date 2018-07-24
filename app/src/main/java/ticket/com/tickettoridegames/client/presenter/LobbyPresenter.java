@@ -4,11 +4,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.ILobbyView;
 import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.web.Result;
-
 
 public class LobbyPresenter implements ILobbyPresenter, Observer {
 
@@ -32,6 +32,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
         else {
             Result result = lobbyService.startGame(gameID);
             if (result.isSuccess()) {
+                new GamePlayService().initGame(gameID);
                 lobbyView.displayMessage("Successfully started game.");
                 lobbyView.changeView();
             } else {
@@ -70,12 +71,14 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
 
     @Override
     public void update(Observable observable, Object arg){
+        if(arg == null) { return; } //no functionality for it
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
             case START:
                 if (clientModel.isGameStarted(clientModel.getCurrentGameID())) {
                     lobbyView.displayMessage("Game starting.");
+                    lobbyView.changeView();
                 }
                 break;
             case NEWCHAT:
@@ -84,8 +87,11 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             case ALLCHAT:
                 lobbyView.setChat(clientModel.getGameChat(clientModel.getCurrentGameID()));
                 break;
+            case ADD_PLAYER:
+                lobbyView.addPlayerName(clientModel.getUser().getUsername());
+                break;
             default:
-                lobbyView.displayMessage("Update Error");
+                // update we don't care about
                 break;
         }
         // update view here

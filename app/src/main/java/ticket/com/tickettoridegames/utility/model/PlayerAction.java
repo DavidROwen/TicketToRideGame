@@ -25,4 +25,9 @@ public class PlayerAction {
     public void setAction(String action) {
         this.action = action;
     }
+
+    @Override
+    public String toString() {
+        return userName + ": " + action;
+    }
 }

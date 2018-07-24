@@ -1,9 +1,9 @@
 package ticket.com.tickettoridegames.utility.service;
 
-import java.util.List;
+import java.util.LinkedList;
 
-import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
+import ticket.com.tickettoridegames.utility.model.Route;
 
 public interface IGameService {
     void initGame(String gameId);
@@ -14,7 +14,13 @@ public interface IGameService {
     //for face up cards
     void pickupTrainCard(String playerId, String gameId, Integer index);
 
-    List<DestinationCard> drawDestinationCard(String playerId, String gameId);
+    void drawDestinationCard(String playerId, String gameId);
 
-    void returnDestinationCard(String gameId, List<DestinationCard> card);
+    void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards);
+
+    void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards);
+
+    void claimRoute(String gameId, String playerId, Route route);
+
+    void switchTurn(String gameId);
 }

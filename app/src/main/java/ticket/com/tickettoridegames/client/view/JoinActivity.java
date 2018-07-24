@@ -17,15 +17,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IJoinPresenter;
 import ticket.com.tickettoridegames.client.presenter.JoinPresenter;
 import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Player;
 
 public class JoinActivity extends AppCompatActivity implements IJoinView{
 
@@ -38,7 +37,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     private Switch privateGameButton;
     private Spinner playerNumber;
     private Spinner playerColor;
-    private RecyclerView myRecyclerView;
+    private static RecyclerView gameListRecyclerView;
     private RecyclerView.Adapter myAdapter;
 
     // EditTexts
@@ -64,8 +63,8 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         joinGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                String string = GameID.getText().toString();
-                presenter.joinGame(string);
+                presenter.joinGame(GameID.getText().toString());
+                clearListSelection();
             }
         });
 
@@ -87,8 +86,6 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
 
-
-
 //        //######################################testing purposes##########################################
 //        Game one = new Game("one", 5);
 //        Player One = new Player("test1", "111");
@@ -109,49 +106,20 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     }
 
 
-//    @Override
-//    public Map<String, Game> getGames(){                    //unnecessary
-//        return games;
-//    }
-//
-//    @Override
-//    public void addGame(Game newGame){                      //unnecessary
-//
-//    }
-//
-//    @Override
-//    public Set<String> getPlayers(String gameID){           //unnecessary
-//        //return games.get(gameID).getPlayersId();
-//        return null;
-//    }
-//
-//    @Override
-//    public void setPlayers(List<Player> players){            //unnecessary
-//
-//    }
-//
-//    @Override
-//    public void setPlayerCount(String gameID){               //unnecessary
-//
-//    }
-
     @Override
     public void setGames(Map<String, Game> games){
         this.games = games;
-        myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-                myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                myAdapter = new adapter(games);
-                myRecyclerView.setAdapter(myAdapter);
-//            }
-//        });
+        gameListRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        gameListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        myAdapter = new GameAdapter(games);
+        gameListRecyclerView.setAdapter(myAdapter);
     }
 
-    @Override
-    public String getChosenGame(String gameID){   //not quite sure how to call right now
-        return gameID;
+    // This function is used to prevent problems when joining a game fails.
+    public void clearListSelection(){
+        GameAdapter adapter = (GameAdapter) gameListRecyclerView.getAdapter();
+        adapter.clearSelection();
+        GameID.setText("");
     }
 
     @Override
@@ -172,9 +140,15 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
     // Join was successful go to the join view.
     @Override
-    public void changeView(){
-        Intent intent = new Intent(JoinActivity.this, LobbyActivity.class);
-        startActivity(intent);
+    public void changeView(Boolean isStarted){
+        if (isStarted){
+            Intent intent = new Intent(JoinActivity.this, GamePlayActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(JoinActivity.this, LobbyActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -184,14 +158,15 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     }
 }
 
-class adapter extends RecyclerView.Adapter<CustomViewHolder> {
+class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     int selected_position = 0; // You have to set this globally in the Adapter class
     Map<String, Game> games;
     String[] keySet; //ArrayList<String> maybe
+    List<CustomViewHolder> views = new ArrayList<>();
 
 
-    public adapter(Map<String, Game> games) {
+    public GameAdapter(Map<String, Game> games) {
         this.games = games;
         this.keySet = games.keySet().toArray(new String[0]);
     }
@@ -208,36 +183,48 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
         holder.bindResult(games, keySet[i]);
+        views.add(holder);
     }
 
     @Override
     public int getItemCount() {
         return keySet.length;
     }
+
+    public void clearSelection(){
+        for (CustomViewHolder holder: views){
+            holder.clearBackground();
+        }
+    }
 }
 
 class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    protected TextView line1;
-    protected TextView line2;
-    protected TextView line3;
-    protected TextView line4;
+    private TextView gameName;
+    private TextView playerNames;
+    private TextView playerCount;
+    private String gameId;
+    private View view;
 
     public CustomViewHolder(View v) {
         super(v);
+        view = v;
         v.setOnClickListener(this);
-        line1 = (TextView)  v.findViewById(R.id.textView1);
-        line2 = (TextView)  v.findViewById(R.id.textView2);
-        line3 = (TextView)  v.findViewById(R.id.textView3);
-        line4 = (TextView)  v.findViewById(R.id.textView4);
+        gameName = v.findViewById(R.id.textView1);
+        playerNames = v.findViewById(R.id.textView2);
+        playerCount = v.findViewById(R.id.textView3);
     }
 
     public void bindResult(Map<String, Game> games, String key){
         Game newGame = games.get(key);
 
-        line4.setText(newGame.getId());
-        line1.setText(newGame.getName());
-        line2.setText(newGame.getPlayerNamesString());
-        line3.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
+        gameId = newGame.getId();
+        gameName.setText(newGame.getName());
+        playerNames.setText(newGame.getPlayerNamesString());
+        playerCount.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
+    }
+
+    public void clearBackground(){
+        view.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -246,7 +233,6 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         v.setBackgroundColor(Color.GREEN);
 
         //makes a hidden text that is read when button is clicked
-        line1 = (TextView)  v.findViewById(R.id.textView4);
-        JoinActivity.GameID.setText(line1.getText().toString());
+        JoinActivity.GameID.setText(gameId);
     }
 }

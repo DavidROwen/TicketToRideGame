@@ -2,12 +2,18 @@ package ticket.com.tickettoridegames;
 
 import org.junit.Test;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.JoinService;
+import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
 import ticket.com.tickettoridegames.client.web.Poller;
+import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
@@ -18,135 +24,126 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class GameServiceTest {
+    private String otherId;
     private String userId;
-    private String userId2;
     private String gameId;
 
     private Poller poller;
+    private GamePlayService service;
 
     @Test
     public void testInitToGameplay() {
         initToGameplay();
-        assertTrue(userId != null && userId2 != null && gameId != null);
+        assertTrue(otherId != null && userId != null && gameId != null);
         assertTrue(ClientModel.get_instance().getMyActiveGame() != null);
         assertTrue(ClientModel.get_instance().getMyPlayer() != null);
-        poller.stop();
     }
 
     @Test
     public void testInitGame() {
-        GamePlayService service = new GamePlayService();
-        initToGameplay();
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4){}
 
-        service.initGame(gameId);
-        try {
-            Thread.sleep(3000); //wait for poller
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-//        assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //turn order
-    }
-
-    @Test
-    public void testPhase2Simple() {
-        initToGameplay();
-        GamePlayService proxy = new GamePlayService();
-
-        //init
-        proxy.initGame(gameId);
-        try {
-            Thread.sleep(3000); //wait for poller
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //check turns
-        assertEquals(ClientModel.get_instance().getMyActiveGame().getPlayersColors().size(), 2);//check colors
-        assertEquals(ClientModel.get_instance().getMyPlayer().getTrainCards().size(), 4);//check hand
-        assertEquals(ClientModel.get_instance().getMyPlayer().getDestinationCards().size(), 3);//check destination cards
-
-        //return a destination
-//        DestinationCard returnedCard = ClientModel.get_instance().getMyPlayer().getDestinationCards().
-//        proxy.returnDestinationCard(gameId, );
-
-        //draw a card
-
-
+        assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //turn order
+        assertEquals(ClientModel.get_instance().getMyActiveGame().getPlayersColors().size(), 2); //colors
+        assertTrue(ClientModel.get_instance().getMyPlayer().getColor() != null);
+        assertTrue(ClientModel.get_instance().getMyActiveGame().getTrainCardsDeck().size() <= 53);
     }
 
     @Test
     public void testDrawTrainCard() {
         //prepare
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4){} //initialized
+
+        //test when you draw
+        service.drawTrainCard(userId, gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() == 4){} //added here
+
+        //test when others draw
+        service.drawTrainCard(otherId, gameId);
+        Map<String, Integer> countsOfCards;
+        do {
+            countsOfCards = ClientModel.get_instance().getMyActiveGame().getCountsOfCardsInHand();
+        } while(countsOfCards.get(otherId) != 5); //added there
+    }
+
+    @Test
+    public void testTrainBank() {
+        while(ClientModel.get_instance().getMyActiveGame().getTrainBank().size() != 5){} //initialized
+
+        //prepare
+        TrainCard prev0 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(0);
+        TrainCard prev1 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(1);
+        System.out.println(prev0.getType());
+
+        //run
+        service.pickupTrainCard(userId, gameId, 0);
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 5){}
+        while(ClientModel.get_instance().getMyActiveGame().getTrainBank().get(0) == prev0){}
+
+        //check
+        TrainCard cur1 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(1);
+        assertEquals(prev1.getType(), cur1.getType()); //rest untouched
+        assertEquals(ClientModel.get_instance().getMyPlayer().getTrainCards().get(4), prev0); //in hand
+
+        TrainCard cur0 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(0);
+        System.out.println("prev: " + prev0.getType() + " cur: " + cur0.getType()); //replaced
+    }
+
+    @Test
+    public void testDestinationCards() {
         initToGameplay();
-        GamePlayService gamePlayService = new GamePlayService();
 
+        service.drawDestinationCard(userId, gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTempDeck().size() != 3);
+        List<DestinationCard> tempDeck = ClientModel.get_instance().getMyPlayer().getTempDeck();
 
-        //you draw
-        gamePlayService.drawTrainCard(userId, gameId);
-        try {
-            Thread.sleep(3000); //wait for poller
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        LinkedList<DestinationCard> claimed = new LinkedList<>();
+        claimed.add(tempDeck.get(0));
+        claimed.add(tempDeck.get(1));
+        service.claimDestinationCard(userId, gameId, claimed);
+        while(ClientModel.get_instance().getMyPlayer().getDestinationCards().size() != 2);
 
-
-//        //other player draws
-//        //remove null top card
-//        gamePlayService.drawTrainCard(userId2, gameId);
-//        try {
-//            Thread.sleep(3000); //wait for poller
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        Map<String, Integer> countsOfCards = ClientModel.get_instance().getCountsOfCards();
-//        assertEquals(countsOfCards.get(userId2), (Integer) 1); //check for visual
+        LinkedList<DestinationCard> returning = new LinkedList<>();
+        returning.add(tempDeck.get(2));
+        Integer prevSize = ClientModel.get_instance().getMyActiveGame().getDestinationCards().size();
+        service.returnDestinationCard(gameId, returning);
+        while(ClientModel.get_instance().getMyActiveGame().getDestinationCards().size() == prevSize);
     }
 
     private void initToGameplay() {
         new UtilityService().clearServer();
 
-        //new users
-        User user = new User("username", "password");
-        try {
-            Result registerResult = LoginService.class.newInstance().register(user);
-            userId = registerResult.getMessage();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        User user2 = new User("username2", "password2");
-        try {
-            Result registerResult = LoginService.class.newInstance().register(user2);
-            userId2 = registerResult.getMessage();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        //login
+        User otherPlayer = new User("username", "password");
+        Result registerResult = new LoginService().register(otherPlayer);
+        otherId = registerResult.getMessage();
 
+        User user = new User("username2", "password2"); //register auto logs in //so it resets user
+        Result registerResult1 = new LoginService().register(user);
+        userId = registerResult1.getMessage();
+
+        //poller
         poller = new Poller(); //get it going
 
-        //new game
-        Result joinResult = JoinService.createGame(userId, "gameName", 2);
+        //create game
+        Result joinResult = JoinService.createGame(otherId, "gameName", 2);
         gameId = joinResult.getMessage();
+        while(ClientModel.get_instance().getGames().isEmpty()){}
 
-        try {
-            Thread.sleep(3000); //wait for poller
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //join game
+        Player player1 = new Player(otherPlayer.getUsername(), otherPlayer.getId());
+        JoinService.joinGame(otherId, gameId);
 
-        //new players
-        Player player1 = new Player(user.getUsername(), user.getId());
-        JoinService.addPlayer2(gameId, userId);
-        Player player2 = new Player(user2.getUsername(), user2.getId());
-        JoinService.addPlayer2(gameId, userId2);
+        Player player2 = new Player(user.getUsername(), user.getId());
+        JoinService.joinGame(userId, gameId);
+        while(ClientModel.get_instance().getMyActiveGame() == null){}
 
-        try {
-            Thread.sleep(3000); //wait for poller
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //start game
+        LobbyService.startGame(gameId);
+        while(!ClientModel.get_instance().isGameStarted(gameId)){}
+
+        service = new GamePlayService();
+        service.initGame(gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4);
     }
-
 }

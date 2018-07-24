@@ -20,8 +20,7 @@ public abstract class BasicFragment extends Fragment {
         return fragment;
     }
 
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 

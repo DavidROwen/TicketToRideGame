@@ -102,11 +102,6 @@ public class LobbyActivity extends Activity implements ILobbyView{
     }
 
     @Override
-    public String sendChat(String message){
-        return message;
-    }
-
-    @Override
     public void setChat(List<Chat> chats){
         for (Chat chat:chats) {
             String message = chat.getUsername() + ": " + chat.getMessage();

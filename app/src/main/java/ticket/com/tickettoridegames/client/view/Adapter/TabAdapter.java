@@ -23,7 +23,7 @@ public class TabAdapter extends FragmentPagerAdapter {
     public TabAdapter(FragmentManager fm, Context context, String[] PageTitle, int PageCount) {
 
         super(fm);
-        tabFragments = new ArrayList<Fragment>();
+        tabFragments = new ArrayList<>();
         tabFragments.add(new MapFragment().newInstance());
         tabFragments.add(new StatsFragment().newInstance());
         tabFragments.add(new AssetsFragment().newInstance());

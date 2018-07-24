@@ -2,47 +2,39 @@ package ticket.com.tickettoridegames.model;
 
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
-import ticket.com.tickettoridegames.utility.model.City;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ClientModelTest {
-//    @Test
-//    public void testGetPoints() {
-//        String userId = "id";
-//        Integer points = 5;
-//
-//        User user = new User();
-//        user.setId(userId);
-//        Player player = new Player(user.getUsername(), user.getId());
-//        player.setId(userId);
-//        player.setPoints(points);
-//        Game game = new Game();
-//        game.setMaxPlayers(3);
-//        game.addPlayers(player);
-//
-//        Map<String, Game> games = new HashMap<>();
-//        games.put("id", game);
-//
-//        ClientModel.get_instance().setUser(user);
-//        ClientModel.get_instance().setGames(games);
-//
-//        Map<String, Integer> allPoints = ClientModel.get_instance().getCountsOfPoints();
-//
-//        assertEquals(allPoints.get(userId), points);
-//    }
-//
+    String userId = "userId";
+    String userId2 = "userId2";
+    String gameId = "gameId";
+
+    @Test
+    public void testInitToGamePlay() {
+        initToGamePlay();
+        assertTrue(true);
+    }
+
+    @Test
+    public void testGetPoints() {
+        initToGamePlay();
+
+        Integer points = 4;
+        ClientModel.get_instance().getMyPlayer().setPoints(points);
+        Map<String, Integer> allPoints = ClientModel.get_instance().getMyActiveGame().getCountsOfPoints();
+
+        assertEquals(allPoints.get(userId), points);
+    }
+
 //    @Test
 //    public void testPhase2Simple() {
 //        ClientModel clientModel = ClientModel.get_instance();
@@ -84,27 +76,26 @@ public class ClientModelTest {
 //        assertEquals(card1, card2);
 //        assertNotEquals(card1, card3);
 //    }
-//
-//    private void initGame() {
-//        String userId = "id";
-//        Integer points = 5;
-//
-//        User user = new User();
-//        user.setId(userId);
-//        Player player = new Player(user.getUsername(), user.getId());
-//        Player player2 = new Player("player2", "2");
-//        player.setPoints(points);
-//        Game game = new Game();
-//        game.setMaxPlayers(3);
-//        game.addPlayers(player);
-//        game.addPlayers(player2);
-//
-//        Map<String, Game> games = new HashMap<>();
-//        games.put("id", game);
-//
-//        ClientModel.get_instance().setUser(user);
-//        ClientModel.get_instance().setGames(games);
-//
-//        ClientModel.get_instance().initGame();
-//    }
+
+    private void initToGamePlay() {
+        //user
+        User user = new User();
+        user.setId(userId);
+        ClientModel.get_instance().setUser(user);
+
+        //game
+        Game game = new Game();
+        game.setId(gameId);
+        game.setMaxPlayers(2);
+        ClientModel.get_instance().addGameToList(game);
+
+        //players
+        Player player = new Player("", userId);
+        ClientModel.get_instance().addPlayerToGame(gameId, player);
+        Player player2 = new Player("", userId2);
+        ClientModel.get_instance().addPlayerToGame(gameId, player2);
+
+        //init
+        ClientModel.get_instance().getMyActiveGame().initGame();
+    }
 }

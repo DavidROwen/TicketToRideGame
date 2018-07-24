@@ -7,6 +7,9 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.tickettoridegames.utility.TYPE;
+import ticket.com.tickettoridegames.utility.model.City;
+import ticket.com.tickettoridegames.utility.model.Route;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public class MapPresenter implements IMapPresenter, Observer {
 
@@ -26,8 +29,39 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
+            case TURNCHANGED:
+                if (clientModel.isMyTurn()){
+                    // set the button here
+                    mapView.enableTurn();
+                }
+                else {
+                    mapView.disableTurn();
+                }
             default:
                 //Why you updated me?
         }
+    }
+
+    @Override
+    public void passOff(){
+        // Use this function for phase 2 pass off
+
+        // Change turn
+        clientModel.changeTurn(clientModel.getMyActiveGame().getId());
+
+        // Change face up deck cards
+        clientModel.getMyActiveGame().pickupTrainCard(clientModel.getMyPlayer().getId(), 1);
+
+        // Route claiming.
+        Route route = new Route(new City("a"), new City("b"), 2, TrainCard.TRAIN_TYPE.BLACK);
+        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
+        // Player Points change
+
+        // Trains remaining change
+    }
+
+    @Override
+    public void drawTrainCard() {
+        new GamePlayService().drawTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
     }
 }

@@ -6,8 +6,6 @@ import java.util.Observer;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.view.IJoinView;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class JoinPresenter implements IJoinPresenter, Observer {
@@ -33,7 +31,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         }
         else {
             String userId = clientModel.getUserId();
-            Result result = joinService.createGame(userId, gameName, numberOfPlayers);
+            Result result = JoinService.createGame(userId, gameName, numberOfPlayers);
             if (!result.isSuccess()){
                 // Request failed
                 joinView.displayMessage("Error creating game. " + result.getErrorMessage());
@@ -50,11 +48,20 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             joinView.displayMessage("Invalid game id.");
         } else {
             String userId = clientModel.getUserId();
-            Result result = joinService.joinGame(userId, gameId);
+            Result result;
+            if(clientModel.getMyActiveGame() == null) { //only join one game
+                result = JoinService.joinGame(userId, gameId);
+            } else if (clientModel.getMyActiveGame().getId() != gameId){
+                result = new Result(false, "", "Already in a game.");
+            } else {
+                result = new Result(true, "game is already joined", null);
+            }
             if (result.isSuccess()){
                 clientModel.getUser().setGameId(gameId);
                 joinView.displayMessage("Game Joined!");
-                joinView.changeView();
+                joinView.changeView(clientModel.getMyActiveGame() != null
+                        && clientModel.getMyActiveGame().isStarted()
+                ); //true: game activity, false: lobby activity
             }
             else {
                 // Request failed

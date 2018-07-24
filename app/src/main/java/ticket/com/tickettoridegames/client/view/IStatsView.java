@@ -14,6 +14,8 @@ public interface IStatsView {
 
     void setHistory(List<PlayerAction> gameHistory);
 
+    void displayHistory(PlayerAction pa);
+
     void setPlayerStats(List<PlayerStats> playerStats);
 
     void setLongestTrainAward(String player);

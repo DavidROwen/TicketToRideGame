@@ -5,28 +5,28 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/ctextView1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/ctextView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/ctextView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/ctextView4"
         android:lines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/ctextView5"
         android:lines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

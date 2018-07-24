@@ -13,6 +13,7 @@ import ticket.com.tickettoridegames.client.view.Adapter.TabAdapter;
 
 public class GamePlayActivity extends AppCompatActivity implements IGamePlayActivity{
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,5 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
     }
 
     @Override
-    public void displayMessage(String message) {
-        //todo
-    }
+    public void displayMessage(String message) {}
 }

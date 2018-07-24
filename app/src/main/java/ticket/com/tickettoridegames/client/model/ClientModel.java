@@ -1,23 +1,25 @@
 package ticket.com.tickettoridegames.client.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
 
+import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
-import ticket.com.tickettoridegames.utility.model.Route;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
+
+import static ticket.com.tickettoridegames.utility.TYPE.DESTINATIONUPDATE;
+import static ticket.com.tickettoridegames.utility.TYPE.DISCARDDESTINATION;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
 import static ticket.com.tickettoridegames.utility.TYPE.START;
+import static ticket.com.tickettoridegames.utility.TYPE.TURNCHANGED;
 
 public class ClientModel extends Observable {
 
@@ -118,7 +120,7 @@ public class ClientModel extends Observable {
         game.addPlayers(player);
         //gameList.put(gameID, game);
         setChanged();
-        notifyObservers();
+        notifyObservers(TYPE.ADD_PLAYER);
     }
 
     public void removePlayerFromGame(String gameID, Player player){
@@ -141,74 +143,9 @@ public class ClientModel extends Observable {
         notifyObservers(START);
     }
 
-    public boolean isGameStarted(String gameId){
+    public boolean isGameStarted(String gameId) {
         Game game = gameList.get(gameId);
-        if (game == null){
-            return false;
-        }
-        else {
-            return game.isStarted();
-        }
-    }
-
-    public List<TrainCard> getMyHand() {
-        return getMyPlayer().getTrainCards();
-    }
-
-    public void addTrainCard(TrainCard drawnCard, String playerId) {
-        getMyActiveGame().getPlayer(playerId).addTrainCard(drawnCard);
-    }
-
-    public List<Route> getClaimedRoutes() {
-        return null; //getMyActiveGame().getMap().getClaimedRoutes(); //todo needs some work
-    }
-
-    public Map<String, Integer> getPoints() {
-        return getMyActiveGame().getCountsOfPoints();
-    }
-
-    public Boolean isMyTurn() {
-        return true; //no turns in phase 2
-    }
-
-    public void addDestinationCard(DestinationCard card, String playerId) {
-        getMyActiveGame().getPlayer(playerId).addDestinationCard(card);
-    }
-
-    public Set<DestinationCard> getDestinationCards() {
-        return getMyPlayer().getDestinationCards();
-    }
-
-    public void setTurnOrder(List<String> order) {
-        getMyActiveGame().setTurnOrder(order);
-    }
-
-    public void setPlayersColors(Map<String,Player.COLOR> colors) {
-        getMyActiveGame().setPlayersColors(colors);
-    }
-
-    public void removeDestinationCard() {
-        //getMyActiveGame().removeDestinationCard();
-    }
-
-    public void addDestinationCard(DestinationCard card) {
-        //getMyActiveGame().addDestinationCard(card);
-    }
-
-    public Map<String, Integer> getCountsOfPoints() {
-        return getMyActiveGame().getCountsOfPoints();
-    }
-
-    public Map<String, Integer> getCountsOfTrains() {
-        return getMyActiveGame().getCountsOfTrains();
-    }
-
-    public Map<String, Integer> getCountsOfCards() {
-        return getMyActiveGame().getCountsOfCardsInHand();
-    }
-
-    public Map<String, Integer> getCountsOfRoutes() {
-        return getMyActiveGame().getCountsOfRoutes();
+        return game != null && game.isStarted();
     }
 
     public Game getMyActiveGame() {
@@ -232,27 +169,64 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
     }
 
-    public List<PlayerStats> getPlayerStats(){
-        List<PlayerStats> stats = new ArrayList<>();
-        Game myGame = getMyActiveGame();
-
-        for (Player player : myGame.getPlayers().values()){
-            PlayerStats newStat = new PlayerStats();
-
-            newStat.setName(player.getUsername());
-            newStat.setNumberOfCards(player.getCardCount());
-            newStat.setNumberOfRoutes(player.getRouteCount());
-            newStat.setPoints(player.getPoints());
-
-            stats.add(newStat);
-        }
-
-        return stats;
-    }
-
     public List<PlayerAction> getHistory(){
         Game myGame = getMyActiveGame();
         return myGame.getGameHistory();
     }
 
+    //DestinationCards functions
+    public void setMyPlayerTempDeck(List<DestinationCard> deck){
+        Player player = getMyPlayer();
+        player.setTempDeck(deck);
+        myNotify(NEWTEMPDECK);
+    }
+
+    public void updateDestinationCards(String playerId, List<DestinationCard> cards){
+        Game game = getMyActiveGame();
+        game.claimDestinationCards(cards, playerId);
+        myNotify(DESTINATIONUPDATE);
+    }
+
+    public void discardDestinationCards(List<DestinationCard> cards){
+        Game game = getMyActiveGame();
+        game.discardDestinationCards(cards);
+        myNotify(DISCARDDESTINATION);
+    }
+    //END Destination Card Functions
+
+    //Game History Functions
+    public void addGameHistory(PlayerAction history){
+        Game game = getMyActiveGame();
+        game.addToHistory(history);
+//        myNotify(HISTORYUPDATE);
+    }
+
+    public PlayerAction getNewestGameHistory(){
+        Game game = getMyActiveGame();
+        return game.getNewestHistory();
+    }
+    //END Game History functions
+
+    private void myNotify(Object arg) {
+        setChanged();
+        if(arg != null) { notifyObservers(arg); }
+        else { notifyObservers(); }
+//        clearChanged();
+    }
+
+    public void changeTurn(String gameId){
+        Game game = getGame(gameId);
+        game.switchTurn();
+
+        setChanged();
+        notifyObservers(TURNCHANGED);
+    }
+
+    public boolean isMyTurn(){
+        return getMyActiveGame().isMyTurn(getMyPlayer().getId());
+    }
+
+    private Game getGame(String gameId){
+        return gameList.get(gameId);
+    }
 }

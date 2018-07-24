@@ -1,22 +1,23 @@
 package ticket.com.tickettoridegames.utility.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.Observable;
 import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.UUID;
 
-public class Game {
+import ticket.com.tickettoridegames.utility.TYPE;
+
+public class Game extends Observable {
+    public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
 
     //General game data
     private Map<String, Player> players;
@@ -32,6 +33,7 @@ public class Game {
     private List<String> turnOrder;
     private Integer turnNumber = 0;
     private List<TrainCard> trainBank;
+    private Map<String, List<Route>> routes = new HashMap<>();
 
     // Map data
     private GameMap map;
@@ -40,23 +42,22 @@ public class Game {
 //    private TrainCard topTrainCard;
 
     // Stores player actions viewed in the stats history tab
-    private List<PlayerAction> gameHistory;
+    private List<PlayerAction> gameHistory = new LinkedList<>();
+    private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_DECK = 52;
+    public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
 
     public Game(){
         this.players = new HashMap<>();
         this.chatList = new ArrayList<>();
         this.turnOrder = new LinkedList<>();
-        this.map = map;
+        this.map = new GameMap();
         this.destinationCards = new LinkedList<>();
         this.trainBank = new LinkedList<>();
         fillDestinationCards();
-        this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
-        initTrainCardDeck();
         setupRoutes();
-        setupTrainBank();
     }
 
     public Game(String name, int numberOfPlayers){
@@ -72,21 +73,11 @@ public class Game {
         this.trainBank = new LinkedList<>();
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
-        this.map = map;
+        this.map = new GameMap();
         this.destinationCards = new LinkedList<>();
-        this.gameHistory = new LinkedList<>();
 
         fillDestinationCards();
-        initTrainCardDeck();
         setupRoutes();
-        setupTrainBank();
-    }
-
-    private void setupTrainBank() {
-        for (int i = 0; i < 5; i++) {
-            trainBank.add(trainCardsDeck.pop());
-        }
-        assert(trainBank.size() == 5);
     }
 
     public void setupRoutes(){
@@ -130,6 +121,7 @@ public class Game {
             }
             else{
                 players.put(p.getId(), p);
+                routes.put(p.getId(), new ArrayList<>());
                 numberOfPlayers++;
                 return true;
             }
@@ -189,10 +181,23 @@ public class Game {
     public void addToChat(Chat c){
         chatList.add(newestChat);
         newestChat = c;
+        myNotify(TYPE.NEWCHAT);
+    }
+
+    public void addToHistory(PlayerAction pa){
+        if(newestHistory != null) {  //first time
+            gameHistory.add(newestHistory);
+        }
+        newestHistory = pa;
+        myNotify(TYPE.HISTORYUPDATE);
     }
 
     public Chat getNewestChat(){
         return newestChat;
+    }
+
+    public PlayerAction getNewestHistory(){
+        return newestHistory;
     }
 
     public boolean isStarted() {
@@ -260,17 +265,14 @@ public class Game {
         return counts;
     }
 
-    public Map<String,Integer> getCountsOfRoutes() {
-//        Map<String,Integer> counts = new HashMap<>();
-//
-//        for(String curKey : players.keySet()) {
-//            Player curPlayer = players.get(curKey);
-//            counts.put(curPlayer.getId(), curPlayer.getTrainCards().size());
-//        }
-//
-//        return counts;
-        return null;
-        //todo
+    public Map<String, Integer> getCountsOfRoutes() {
+        Map<String,Integer> counts = new HashMap<>();
+
+        for(String curId : players.keySet()) {
+            counts.put(curId, routes.get(curId).size());
+        }
+
+        return counts;
     }
 
     private TrainCard getRandomTrainCard() {
@@ -281,6 +283,8 @@ public class Game {
     public void drawTrainCard(String playerId) {
         TrainCard card = trainCardsDeck.pop();
         players.get(playerId).addTrainCard(card);
+        myNotify(TYPE.NEWTRAINCARD);
+        addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + card.getType()));
     }
 
     private TrainCard drawTrainCard() {
@@ -298,48 +302,68 @@ public class Game {
         return counts;
     }
 
-//    public void switchTurn() {
-//        turnNumber = (turnNumber + 1) % players.size();
-//    }
+    public void switchTurn() {
+        turnNumber = (turnNumber + 1) % players.size();
+    }
 
-//    //player up is the player who's turn it currently is
-//    public String getIdPlayerUp() {
-//        return turnOrder.get(turnNumber);
-//    }
+    public Boolean isMyTurn(String playerId) {
+        return playerId.equals(turnOrder.get(turnNumber));
+    }
 
     private void initTurnOrder() {
-        //todo randomize
+        //all players
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
             turnOrder.add(curPlayer.getId());
         }
+        //shuffle
+        Collections.shuffle(turnOrder);
     }
 
-    public void initTrainCardDeck() { //todo private
+    private void initTrainCardDeck() {
         for(int i = 0; i < NUM_CARDS_TRAINCARD_DECK; i++) {
             trainCardsDeck.push(getRandomTrainCard());
         }
     }
 
     public void initGame() {
-        initTurnOrder();
-//        initColors();
-//        //todo lay out face up cards
-//
-//        for(String curKey : players.keySet()) {
-//            Player curPlayer = players.get(curKey);
-//            initHand(curPlayer);
-////            initPlayerDestinationCards(curPlayer);
-//        }
+        if (!IsInitialized()) {
+            initTurnOrder();
+            initColors();
+            initTrainCardDeck();
+        }
     }
 
-    //give player 3 destination cards to start the game
-    public List initPlayerDestinationCards() {
-        ArrayList<List> playerCards = new ArrayList<>();
-        for(int i = 0; i < getNumberOfPlayers(); i++){
-            playerCards.add(drawDestinationCards());
+    private boolean IsInitialized(){
+        return trainBank.size() != 0;
+    }
+
+    //convenience function so it can be called from the client side also
+    //must be separate so train deck can be passed before altered
+    public void initGameNonRandom() {
+        if (!IsInitialized()) {
+            initHandAll();
+            initTrainBank();
         }
-        return playerCards;
+//        initPlayerDestinationCards();
+        //myNotify(TYPE.STATSUPDATE);
+    }
+
+    private void initTrainBank() {
+        for(int i = 0; i < NUM_CARDS_TRAINCARD_BANK; i++) {
+            try {
+                trainBank.add(drawTrainCard());
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void initHandAll() {
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            initHand(curPlayer);
+        }
     }
 
     //max of 7 players //for 7 colors
@@ -358,6 +382,7 @@ public class Game {
         }
     }
 
+    //Destination Card Functions
     private DestinationCard getTopDestinationCard(){
         DestinationCard dc = destinationCards.get(0);
         destinationCards.remove(0);
@@ -375,8 +400,12 @@ public class Game {
 
     public void claimDestinationCards(List<DestinationCard> cards, String playerId){
         Player player = players.get(playerId);
-        for(DestinationCard card : cards){
-            player.addDestinationCard(card);
+        try {
+            for (DestinationCard card : cards) {
+                player.addDestinationCard(card);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -384,6 +413,11 @@ public class Game {
         for(DestinationCard card : cards){
             addDestinationCard(card);
         }
+    }
+
+    private void addDestinationCard(DestinationCard card) {
+        destinationCards.add(card);
+//        addToHistory(new PlayerAction(playerId, "drew a destination card")); //todo
     }
 
     private void fillDestinationCards() {
@@ -422,10 +456,7 @@ public class Game {
         destinationCards.add(new DestinationCard(new City("Seattle"), new City("Los Angeles"), 9));
         Collections.shuffle(destinationCards);
     }
-
-    private void addDestinationCard(DestinationCard card) {
-        destinationCards.add(card);
-    }
+    //END Destination Card Functions
 
     public void setTurnOrder(List<String> turnOrder) {
         this.turnOrder = turnOrder;
@@ -443,7 +474,8 @@ public class Game {
 
     public void setPlayersColors(Map<String, Player.COLOR> colors) {
         for(String id : players.keySet()) {
-            Player.COLOR color = colors.get(id);
+            String colorStr = String.valueOf(colors.get(id)); //doesn't know that it was deserialized as a string
+            Player.COLOR color = Player.COLOR.valueOf(colorStr);
             players.get(id).setColor(color);
         }
     }
@@ -451,18 +483,86 @@ public class Game {
     public void pickupTrainCard(String playerId, Integer index) {
         //add card
         TrainCard pickedCard = trainBank.get(index);
+
         players.get(playerId).addTrainCard(pickedCard);
+        myNotify(TYPE.NEWTRAINCARD);
         //replace card
         trainBank.set(index, drawTrainCard());
+        myNotify(TYPE.BANKUPDATE);
+        addToHistory(new PlayerAction(players.get(playerId).getUsername(), "picked up " + pickedCard.getType()));
     }
-
 
     public List<TrainCard> getTrainBank() {
         return trainBank;
     }
 
-    public void setTrainBank(List<TrainCard> trainBank) {
-        this.trainBank = trainBank;
+    public Boolean claimRoute(String playerId, Route route) {
+        Player player = players.get(playerId);
+
+        //check not claimed
+        if(isClaimed(route)) { return false; }
+
+        //check player has cards
+        TrainCard[] neededCards = getNeededCards(route);
+        if(!player.hasTrainCards(neededCards)) { return false; }
+
+        //check player has trains
+        if(!player.hasTrains(route.getLength())) { return false; }
+
+        //claim
+        routes.get(playerId).add(route);
+        player.removeTrainCards(neededCards); //cash out cards
+        myNotify(TYPE.NEWTRAINCARD);
+        player.addPoints(LENGTH_TO_POINTS[route.getLength()]); //collect points
+        player.removeTrains(route.getLength());
+        myNotify(TYPE.STATSUPDATE);
+        addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.getStart() + " to " + route.getEnd()));
+        return true;
     }
 
+    private TrainCard[] getNeededCards(Route route) {
+        TrainCard[] neededCards = new TrainCard[route.getLength()];
+        Arrays.fill(neededCards, new TrainCard(route.getType()));
+        return neededCards;
+    }
+
+    private Boolean isClaimed(Route route) {
+        for(String id : players.keySet()) {
+            for(Route cur : routes.get(id)) {
+                if(cur == route) { return true; }
+            }
+        }
+
+        return false;
+    }
+
+    public Map<String, List<Route>> getRoutes() {
+        return routes;
+    }
+
+
+    public List<PlayerStats> getPlayerStats(){
+        List<PlayerStats> stats = new ArrayList<>();
+
+        for (Player player : getPlayers().values()){
+            stats.add(player.getStats());
+        }
+
+        return stats;
+    }
+
+    public Stack<TrainCard> getTrainCardsDeck() {
+        return trainCardsDeck;
+    }
+
+    public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
+        this.trainCardsDeck = trainCardsDeck;
+    }
+
+    private void myNotify(Object arg) {
+        setChanged();
+        if(arg != null) { notifyObservers(arg); }
+        else { notifyObservers(); }
+//        clearChanged();
+    }
 }

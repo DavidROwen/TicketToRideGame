@@ -15,4 +15,9 @@ public class City {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((City)obj).name.equals(this.name);
+    }
 }

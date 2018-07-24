@@ -15,16 +15,8 @@ public class DestinationCard {
         return location;
     }
 
-    public void setLocation(City location) {
-        this.location = location;
-    }
-
     public City getLocation2() {
         return location2;
-    }
-
-    public void setLocation2(City location2) {
-        this.location2 = location2;
     }
 
     public Integer getValue() {

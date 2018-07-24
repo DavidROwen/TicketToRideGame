@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class ServerCommunicator {
-	private static final int SERVER_PORT_NUMBER = 8082; //todo make generic
+	private static final int SERVER_PORT_NUMBER = 8082;
 	private static final int MAX_WAITING_CONNECTIONS = 10;
-
-	public static final String GENERIC_DESIGNATOR = "/generic";
+	private static final String GENERIC_DESIGNATOR = "/generic";
 
 	private static final CommandHandler COMMAND_HANDLER = new CommandHandler();
 
@@ -37,6 +36,6 @@ public class ServerCommunicator {
 
 	public static void main(String[] args) {
 		new ServerCommunicator().run();
-	} //todo add auto unbind
+	}
 
 }

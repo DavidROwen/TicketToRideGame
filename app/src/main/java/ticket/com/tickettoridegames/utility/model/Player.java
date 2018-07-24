@@ -6,11 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import ticket.com.tickettoridegames.client.model.ClientModel;
-import ticket.com.tickettoridegames.server.CommandsManager;
-import ticket.com.tickettoridegames.server.model.ServerModel;
-import ticket.com.tickettoridegames.utility.web.Command;
-
 public class Player {
     public enum COLOR {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE}
 
@@ -19,9 +14,10 @@ public class Player {
 
     // Game Data
     private COLOR color;
-    private Integer trains;
-    private Integer points;
+    private Integer trains = 45;
+    private Integer points = 0;
 
+    private List<DestinationCard> tempDeck = new LinkedList<>();
     private List<TrainCard> trainCards = new LinkedList<>();
     private Set<DestinationCard> destinationCards = new HashSet<>();
     private Set<Route> claimedRoutes = new HashSet<>();
@@ -76,7 +72,7 @@ public class Player {
     }
 
     public void addDestinationCard(DestinationCard card) {
-        destinationCards.addAll(Arrays.asList(card));
+        destinationCards.add(card);
     }
 
     public void addTrainCard(TrainCard card) {
@@ -87,21 +83,37 @@ public class Player {
         if(!hasTrainCards(cards)) { return false; }
 
         for(TrainCard card : cards) {
-            trainCards.remove(card);
+            if(!trainCards.remove(card)) {
+                trainCards.remove(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+            }
         }
 
         return true;
     }
 
+    //assuming all the same kind in parameter
     public Boolean hasTrainCards(TrainCard...cards) {
+        TrainCard[] adjustedCards = adjustForWilds(cards);
+
         //convert it to strings for comparison
         List<String> myTypes = new LinkedList<>();
         List<String> cardsTypes = new LinkedList<>();
         for(TrainCard card : trainCards) { myTypes.add(card.getType().toString()); }
-        for(TrainCard card : cards) { cardsTypes.add(card.getType().toString()); }
+        for(TrainCard card : adjustedCards) { cardsTypes.add(card.getType().toString()); }
 
-//        List<TrainCard> setCards = new LinkedList<>(Arrays.asList(cards)); //couldn't figure out
+//        List<TrainCard> setCards = new LinkedList<>(Arrays.asList(adjustedCards)); //couldn't figure out
         return myTypes.containsAll(cardsTypes);
+    }
+
+    private TrainCard[] adjustForWilds(TrainCard[] cards) {
+        LinkedList<TrainCard> adjCards = new LinkedList<>(Arrays.asList(cards));
+
+        for(TrainCard card : trainCards) {
+            if(card.getType() == TrainCard.TRAIN_TYPE.WILD) { adjCards.removeLast(); }
+            if(adjCards.isEmpty()) { break; } //limit
+        }
+
+        return adjCards.toArray(new TrainCard[adjCards.size()]);
     }
 
     public List<TrainCard> getTrainCards() {
@@ -115,4 +127,29 @@ public class Player {
     public Integer getRouteCount(){
         return claimedRoutes.size();
     }
+
+    public List getTempDeck(){return tempDeck;}
+
+    public void setTempDeck(List<DestinationCard> deck){
+        tempDeck = deck;
+    }
+
+    public PlayerStats getStats() {
+        PlayerStats stats = new PlayerStats();
+
+        stats.setName(getUsername());
+//        stats.setNumberOfCards(getCardCount());
+        stats.setNumberOfCards(trainCards.size());
+        stats.setNumberOfRoutes(getRouteCount());
+        stats.setPoints(getPoints());
+        stats.setNumberOfPieces(trains);
+
+        return stats;
+    }
+
+    public void addPoints(Integer points) { this.points += points; }
+
+    public void removeTrains(Integer length) { trains -= length; }
+
+    public Boolean hasTrains(Integer length) { return length <= trains; }
 }

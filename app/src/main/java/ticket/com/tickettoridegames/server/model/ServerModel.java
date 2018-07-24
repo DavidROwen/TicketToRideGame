@@ -1,10 +1,8 @@
 package ticket.com.tickettoridegames.server.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
@@ -13,10 +11,9 @@ import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
+import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.User;
 import ticket.com.tickettoridegames.utility.web.Command;
-
 
 public class ServerModel {
 
@@ -132,7 +129,7 @@ public class ServerModel {
         return registeredUsers.get(username);
     }
 
-    private User getUserById(String id){
+    public User getUserById(String id){
         return activeUsers.get(id);
     }
 
@@ -168,7 +165,7 @@ public class ServerModel {
         }
     }
 
-    public void addToGameChat(String gameId, String playerId, String message){
+    public void addChatToGame(String gameId, String playerId, String message){
         Game game = games.get(gameId);
         User player = activeUsers.get(playerId);
         Chat chat = new Chat(player.getUsername(), message);
@@ -216,50 +213,33 @@ public class ServerModel {
         }
             return false;
     }
-
-    public void initGame(String gameId) {
-        Game game = games.get(gameId);
-        game.initGame();
-        List<List> destinationCards = game.initPlayerDestinationCards();
-        //send each card list to the players
-    }
-
+    //Destination Card Functions
     public List<DestinationCard> drawADestinationCard(String gameId) {
         return games.get(gameId).drawDestinationCards();
     }
 
+    public void claimDestinationCards(String playerId, String gameId, List<DestinationCard> cards){
+        Game game = games.get(gameId);
+        game.claimDestinationCards(cards, playerId);
+    }
+
     public void addDestinationCard(String gameId, List<DestinationCard> card) {
         games.get(gameId).discardDestinationCards(card);
+    }
+    //End Destination Card Functions
+
+    //Game History Function
+    public void addToGameHistory(String gameId, PlayerAction pa){
+        Game game = games.get(gameId);
+        game.addToHistory(pa);
     }
 
     public Map<String, Game> getGames() {
         return games;
     }
 
-    public Player[] getPlayers(String gameId) {
-        List<Player> players = new ArrayList<>();
-
-        Map<String, Player> playersMap = games.get(gameId).getPlayers();
-        for(String playerId : playersMap.keySet()) {
-            players.add(playersMap.get(playerId));
-        }
-
-        return players.toArray(new Player[players.size()]);
+    public Game getGameById(String gameId){
+        return games.get(gameId);
     }
 
-    public List<TrainCard> getPlayerHand(String playerId, String gameId) {
-        return games.get(gameId).getPlayers().get(playerId).getTrainCards();
-    }
-
-    public Set<DestinationCard> getPlayerDestinationCards(String playerId, String gameId) {
-        return games.get(gameId).getPlayers().get(playerId).getDestinationCards();
-    }
-
-    public List<String> getTurnOrder(String gameId) {
-        return games.get(gameId).getTurnOrder();
-    }
-
-    public Map<String, Player.COLOR> getPlayerColors(String gameId) {
-        return games.get(gameId).getPlayersColors();
-    }
 }

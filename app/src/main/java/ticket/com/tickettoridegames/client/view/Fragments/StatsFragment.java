@@ -9,24 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IStatsPresenter;
 import ticket.com.tickettoridegames.client.presenter.StatsPresenter;
-import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IStatsView;
-import ticket.com.tickettoridegames.client.view.LoginActivity;
 import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
 
@@ -46,7 +40,6 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter myAdapter;
     private EditText chat_input;
-    private EditText longest_train_player_input;
 
     private IStatsPresenter presenter;
 
@@ -55,11 +48,6 @@ public class StatsFragment extends BasicFragment implements IStatsView{
         return new StatsFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new StatsPresenter(this);
-    }
 
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -89,6 +77,8 @@ public class StatsFragment extends BasicFragment implements IStatsView{
             }
         });
 
+        presenter = new StatsPresenter(this);
+
         return view;
     }
 
@@ -101,8 +91,10 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     @Override
     public void setChat(List<Chat> chats){
         for (Chat chat:chats) {
-            String message = chat.getUsername() + ": " + chat.getMessage();
-            chatAdapter.add(message);
+            if (chat != null) {
+                String message = chat.getUsername() + ": " + chat.getMessage();
+                chatAdapter.add(message);
+            }
         }
     }
 
@@ -117,19 +109,25 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     }
 
     @Override
+    public void displayHistory(PlayerAction pa){
+        String history = pa.toString();
+        historyAdapter.add(history);
+    }
+
+    @Override
     public void setPlayerStats(List<PlayerStats> playerStats){
         this.playerStats = playerStats;
-        myRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
+        myRecyclerView = (RecyclerView) view.findViewById(R.id.statsrecyclerview);
 
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); //todo null
         myAdapter = new StatsAdapter(playerStats);
         myRecyclerView.setAdapter(myAdapter);
     }
 
     @Override
     public void setLongestTrainAward(String player){
-        longest_train_player_input = (EditText) view.findViewById(R.id.playerNameText);
-        longest_train_player_input.setText(player);
+//        longest_train_player_input = (EditText) view.findViewById(R.id.playerNameText);
+//        longest_train_player_input.setText(player);
     }
 
     @Override
@@ -180,18 +178,18 @@ class StatsCustomViewHolder extends RecyclerView.ViewHolder{
 
     public StatsCustomViewHolder(View v) {
         super(v);
-        line1 = (TextView)  v.findViewById(R.id.textView1);
-        line2 = (TextView)  v.findViewById(R.id.textView2);
-        line3 = (TextView)  v.findViewById(R.id.textView3);
-        line4 = (TextView)  v.findViewById(R.id.textView4);
-        line5 = (TextView)  v.findViewById(R.id.textView5);
+        line1 = (TextView)  v.findViewById(R.id.ctextView1);
+        line2 = (TextView)  v.findViewById(R.id.ctextView2);
+        line3 = (TextView)  v.findViewById(R.id.ctextView3);
+        line4 = (TextView)  v.findViewById(R.id.ctextView4);
+        line5 = (TextView)  v.findViewById(R.id.ctextView5);
     }
 
     public void bindResult(PlayerStats playerStat){
-        line1.setText(playerStat.getName());
-        line2.setText(playerStat.getPoints());
-        line3.setText(playerStat.getNumberOfPieces());
-        line4.setText(playerStat.getNumberOfCards());
-        line4.setText(playerStat.getNumberOfRoutes());
+        line1.setText(String.valueOf(playerStat.getName()));
+        line2.setText(String.valueOf(playerStat.getPoints()));
+        line3.setText(String.valueOf(playerStat.getNumberOfPieces()));
+        line4.setText(String.valueOf(playerStat.getNumberOfCards()));
+        line5.setText(String.valueOf(playerStat.getNumberOfRoutes()));
     }
 }

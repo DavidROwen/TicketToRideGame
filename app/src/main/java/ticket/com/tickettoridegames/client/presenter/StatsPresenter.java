@@ -7,6 +7,7 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.IStatsView;
 import ticket.com.tickettoridegames.utility.TYPE;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class StatsPresenter implements IStatsPresenter , Observer {
@@ -17,27 +18,38 @@ public class StatsPresenter implements IStatsPresenter , Observer {
     public StatsPresenter(IStatsView view){
         statsView = view;
         clientModel = ClientModel.get_instance();
-        clientModel.addObserver(this);
+//        clientModel.addObserver(this);
+        clientModel.getMyActiveGame().addObserver(this);
+
+        statsView.setChat(ClientModel.get_instance().getMyActiveGame().getChatList());
+        statsView.setPlayerStats(ClientModel.get_instance().getMyActiveGame().getPlayerStats());
+        statsView.setHistory(ClientModel.get_instance().getMyActiveGame().getGameHistory());
     }
 
     @Override
     public void update(Observable observable, Object arg){
-        clientModel = (ClientModel) observable;
+//        clientModel = (ClientModel) observable;
+        Game game = (Game) observable;
         TYPE type = (TYPE) arg;
         //Update the stats, chats and history here.
         switch(type){
             case NEWCHAT:
-                statsView.displayChat(clientModel.getNewestChat(clientModel.getCurrentGameID()));
+                statsView.displayChat(game.getNewestChat());
                 break;
             case STATSUPDATE:
-                // These will use the data to update the view
-                statsView.setPlayerStats(clientModel.getPlayerStats());
+                statsView.setPlayerStats(game.getPlayerStats());
                 break;
-            case HISTORYUPDATE:
+            case ALLHISTORY:
                 statsView.setHistory(clientModel.getHistory());
+            case HISTORYUPDATE:
+                statsView.displayHistory(clientModel.getNewestGameHistory());
+                break;
+            case NEWTRAINCARD:
+                statsView.setPlayerStats(game.getPlayerStats());
                 break;
             default:
                 // We got an update that we don't care about.
+                break;
         }
     }
 
@@ -46,10 +58,13 @@ public class StatsPresenter implements IStatsPresenter , Observer {
         String userID = clientModel.getUserId();
         String gameID = clientModel.getUser().getGameId();
         if (gameID == null || gameID.equals("")){
-            statsView.displayMessage("Invalid game ID");
+            statsView.displayMessage("Invalid game ID, failed to send.");
         }
         else if (userID == null || userID.equals("")){
-            statsView.displayMessage("Invalid player ID");
+            statsView.displayMessage("Invalid player ID, failed to send.");
+        }
+        else if (message == null || message.isEmpty()){
+            statsView.displayMessage("Invalid message, failed to send.");
         }
         else {
             Result result = LobbyService.sendChat(gameID,userID,message);
