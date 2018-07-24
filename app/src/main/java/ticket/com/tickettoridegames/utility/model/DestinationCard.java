@@ -26,4 +26,10 @@ public class DestinationCard {
     public void setValue(Integer value) {
         this.value = value;
     }
+
+    public String to_String(){
+        String message = location + "->" +
+                location2 + ": " + value.toString();
+        return message;
+    }
 }

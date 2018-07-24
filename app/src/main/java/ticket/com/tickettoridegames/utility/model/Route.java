@@ -78,4 +78,10 @@ public class Route {
     public TrainCard.TRAIN_TYPE getType() {
         return type;
     }
+
+    public String to_String(){
+        String message = start + "->" +
+                end + ": " + length.toString();
+        return message;
+    }
 }

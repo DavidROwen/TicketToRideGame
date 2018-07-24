@@ -3,6 +3,8 @@ package ticket.com.tickettoridegames.client.view;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
+import ticket.com.tickettoridegames.utility.model.Route;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public interface IMapView {
 
@@ -14,5 +16,15 @@ public interface IMapView {
 
     void displayDestinationCards(Set<DestinationCard> destinationCards);
 
-    void getDestinationCardChoices();
+    void notifyDestinationButtonPress();
+
+    void notifyPassOffButtonPress();
+
+    void notifyDrawTrainButtonPress();
+
+    Set<DestinationCard> sendDestinationCardChoices();
+
+    void drawTrainCard(TrainCard trainCard);
+
+    Route placeTrains();
 }
