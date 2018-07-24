@@ -339,6 +339,7 @@ public class Game extends Observable {
         initHandAll();
         initTrainBank();
 //        initPlayerDestinationCards();
+        //myNotify(TYPE.STATSUPDATE);
     }
 
     private void initTrainBank() {
