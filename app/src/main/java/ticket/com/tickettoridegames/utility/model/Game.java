@@ -327,16 +327,24 @@ public class Game extends Observable {
     }
 
     public void initGame() {
-        initTurnOrder();
-        initColors();
-        initTrainCardDeck();
+        if (!IsInitialized()) {
+            initTurnOrder();
+            initColors();
+            initTrainCardDeck();
+        }
+    }
+
+    private boolean IsInitialized(){
+        return trainBank.size() != 0;
     }
 
     //convenience function so it can be called from the client side also
-    //must be seperate so train deck can be passed before altered
+    //must be separate so train deck can be passed before altered
     public void initGameNonRandom() {
-        initHandAll();
-        initTrainBank();
+        if (!IsInitialized()) {
+            initHandAll();
+            initTrainBank();
+        }
 //        initPlayerDestinationCards();
         //myNotify(TYPE.STATSUPDATE);
     }
