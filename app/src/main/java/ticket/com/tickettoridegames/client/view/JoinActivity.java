@@ -116,11 +116,6 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     }
 
     @Override
-    public String getChosenGame(String gameID){   //not quite sure how to call right now
-        return gameID;
-    }
-
-    @Override
     public String getNewGameName(){
         return gameNameText.getText().toString();
     }
