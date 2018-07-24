@@ -61,8 +61,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         joinGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                String string = GameID.getText().toString();
-                presenter.joinGame(string);
+                presenter.joinGame(GameID.getText().toString());
             }
         });
 
@@ -184,27 +183,26 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
 }
 
 class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    protected TextView line1;
-    protected TextView line2;
-    protected TextView line3;
-    protected TextView line4;
+    private TextView gameName;
+    private TextView playerNames;
+    private TextView playerCount;
+    private String gameId;
 
     public CustomViewHolder(View v) {
         super(v);
         v.setOnClickListener(this);
-        line1 = v.findViewById(R.id.textView1);
-        line2 = v.findViewById(R.id.textView2);
-        line3 = v.findViewById(R.id.textView3);
-        line4 = v.findViewById(R.id.textView4);
+        gameName = v.findViewById(R.id.textView1);
+        playerNames = v.findViewById(R.id.textView2);
+        playerCount = v.findViewById(R.id.textView3);
     }
 
     public void bindResult(Map<String, Game> games, String key){
         Game newGame = games.get(key);
 
-        line4.setText(newGame.getId());
-        line1.setText(newGame.getName());
-        line2.setText(newGame.getPlayerNamesString());
-        line3.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
+        gameId = newGame.getId();
+        gameName.setText(newGame.getName());
+        playerNames.setText(newGame.getPlayerNamesString());
+        playerCount.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
     }
 
     @Override
@@ -213,7 +211,6 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         v.setBackgroundColor(Color.GREEN);
 
         //makes a hidden text that is read when button is clicked
-        line1 = (TextView)  v.findViewById(R.id.textView4);
-        JoinActivity.GameID.setText(line1.getText().toString());
+        JoinActivity.GameID.setText(gameId);
     }
 }

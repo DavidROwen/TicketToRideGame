@@ -189,6 +189,6 @@ class ImageCustomViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         //makes a hidden text that is read when button is clicked
         train = (ImageView)  v.findViewById(R.id.train);
-        //GamePlayActivity.GameID.setText(line1.getText().toString());    //Game ID is textview where the info of touch is stored
+        //GamePlayActivity.GameID.setText(gameName.getText().toString());    //Game ID is textview where the info of touch is stored
     }
 }

@@ -25,11 +25,11 @@
         android:layout_weight="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:lines="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+    <!--<TextView-->
+        <!--android:id="@+id/textView4"-->
+        <!--android:lines="1"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat.Display1" />-->
 </LinearLayout>
