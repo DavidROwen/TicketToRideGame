@@ -1,9 +1,7 @@
 package ticket.com.tickettoridegames.client.view.Fragments;
 
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,27 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.AssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
-import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
-import ticket.com.tickettoridegames.client.view.JoinActivity;
-import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 import static ticket.com.tickettoridegames.utility.model.TrainCard.TRAIN_TYPE.BLACK;
@@ -96,7 +85,6 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     @Override
     public void setBank(List<TrainCard> trainBank){
         this.trainBank = trainBank;
-
         myBankRecyclerView = (RecyclerView) view.findViewById(R.id.trainBank);
         myBankRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(trainBank);
