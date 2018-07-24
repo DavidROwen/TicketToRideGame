@@ -285,7 +285,7 @@ public class Game extends Observable {
         TrainCard card = trainCardsDeck.pop();
         players.get(playerId).addTrainCard(card);
         myNotify(TYPE.NEWTRAINCARD);
-        addToHistory(new PlayerAction(playerId, "drew " + card.getType()));
+        addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + card.getType()));
     }
 
     private TrainCard drawTrainCard() {
@@ -481,7 +481,7 @@ public class Game extends Observable {
         //replace card
         trainBank.set(index, drawTrainCard());
         myNotify(TYPE.BANKUPDATE);
-        addToHistory(new PlayerAction(playerId, "picked up " + pickedCard.getType()));
+        addToHistory(new PlayerAction(players.get(playerId).getUsername(), "picked up " + pickedCard.getType()));
     }
 
     public List<TrainCard> getTrainBank() {
@@ -508,7 +508,7 @@ public class Game extends Observable {
         player.addPoints(LENGTH_TO_POINTS[route.getLength()]); //collect points
         player.removeTrains(route.getLength());
         myNotify(TYPE.STATSUPDATE);
-        addToHistory(new PlayerAction(playerId, "claimed " + route.getStart() + " to " + route.getEnd()));
+        addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.getStart() + " to " + route.getEnd()));
         return true;
     }
 
