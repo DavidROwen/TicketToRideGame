@@ -31,7 +31,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         }
         else {
             String userId = clientModel.getUserId();
-            Result result = joinService.createGame(userId, gameName, numberOfPlayers);
+            Result result = JoinService.createGame(userId, gameName, numberOfPlayers);
             if (!result.isSuccess()){
                 // Request failed
                 joinView.displayMessage("Error creating game. " + result.getErrorMessage());
@@ -50,7 +50,9 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             String userId = clientModel.getUserId();
             Result result;
             if(clientModel.getMyActiveGame() == null) { //only join one game
-                result = joinService.joinGame(userId, gameId);
+                result = JoinService.joinGame(userId, gameId);
+            } else if (clientModel.getMyActiveGame().getId() != gameId){
+                result = new Result(false, "", "Already in a game.");
             } else {
                 result = new Result(true, "game is already joined", null);
             }

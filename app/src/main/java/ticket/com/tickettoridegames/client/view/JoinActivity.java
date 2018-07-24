@@ -17,6 +17,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import ticket.com.tickettoridegames.R;
@@ -35,7 +37,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     private Switch privateGameButton;
     private Spinner playerNumber;
     private Spinner playerColor;
-    private RecyclerView myRecyclerView;
+    private static RecyclerView gameListRecyclerView;
     private RecyclerView.Adapter myAdapter;
 
     // EditTexts
@@ -62,6 +64,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
             @Override
             public void onClick(View view){
                 presenter.joinGame(GameID.getText().toString());
+                clearListSelection();
             }
         });
 
@@ -82,8 +85,6 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
                 R.array.colors, android.R.layout.simple_spinner_item);
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
-
-
 
 //        //######################################testing purposes##########################################
 //        Game one = new Game("one", 5);
@@ -108,10 +109,17 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     @Override
     public void setGames(Map<String, Game> games){
         this.games = games;
-        myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        myAdapter = new adapter(games);
-        myRecyclerView.setAdapter(myAdapter);
+        gameListRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        gameListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        myAdapter = new GameAdapter(games);
+        gameListRecyclerView.setAdapter(myAdapter);
+    }
+
+    // This function is used to prevent problems when joining a game fails.
+    public void clearListSelection(){
+        GameAdapter adapter = (GameAdapter) gameListRecyclerView.getAdapter();
+        adapter.clearSelection();
+        GameID.setText("");
     }
 
     @Override
@@ -150,14 +158,15 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     }
 }
 
-class adapter extends RecyclerView.Adapter<CustomViewHolder> {
+class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     int selected_position = 0; // You have to set this globally in the Adapter class
     Map<String, Game> games;
     String[] keySet; //ArrayList<String> maybe
+    List<CustomViewHolder> views = new ArrayList<>();
 
 
-    public adapter(Map<String, Game> games) {
+    public GameAdapter(Map<String, Game> games) {
         this.games = games;
         this.keySet = games.keySet().toArray(new String[0]);
     }
@@ -174,11 +183,18 @@ class adapter extends RecyclerView.Adapter<CustomViewHolder> {
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
         holder.bindResult(games, keySet[i]);
+        views.add(holder);
     }
 
     @Override
     public int getItemCount() {
         return keySet.length;
+    }
+
+    public void clearSelection(){
+        for (CustomViewHolder holder: views){
+            holder.clearBackground();
+        }
     }
 }
 
@@ -187,9 +203,11 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     private TextView playerNames;
     private TextView playerCount;
     private String gameId;
+    private View view;
 
     public CustomViewHolder(View v) {
         super(v);
+        view = v;
         v.setOnClickListener(this);
         gameName = v.findViewById(R.id.textView1);
         playerNames = v.findViewById(R.id.textView2);
@@ -203,6 +221,10 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         gameName.setText(newGame.getName());
         playerNames.setText(newGame.getPlayerNamesString());
         playerCount.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
+    }
+
+    public void clearBackground(){
+        view.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
