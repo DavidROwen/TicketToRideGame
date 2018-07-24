@@ -7,6 +7,9 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.tickettoridegames.utility.TYPE;
+import ticket.com.tickettoridegames.utility.model.City;
+import ticket.com.tickettoridegames.utility.model.Route;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public class MapPresenter implements IMapPresenter, Observer {
 
@@ -47,9 +50,11 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel.changeTurn(clientModel.getMyActiveGame().getId());
 
         // Change face up deck cards
-
+        clientModel.getMyActiveGame().pickupTrainCard(clientModel.getMyPlayer().getId(), 1);
 
         // Route claiming.
+        Route route = new Route(new City("a"), new City("b"), 2, TrainCard.TRAIN_TYPE.BLACK);
+        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
         // Player Points change
 
         // Trains remaining change

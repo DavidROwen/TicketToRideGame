@@ -1,13 +1,10 @@
 package ticket.com.tickettoridegames.client.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
@@ -15,18 +12,12 @@ import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
-import ticket.com.tickettoridegames.utility.model.Route;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 
 import static ticket.com.tickettoridegames.utility.TYPE.DESTINATIONUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.DISCARDDESTINATION;
-import static ticket.com.tickettoridegames.utility.TYPE.HISTORYUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
-import static ticket.com.tickettoridegames.utility.TYPE.NEWROUTE;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
-import static ticket.com.tickettoridegames.utility.TYPE.NEWTRAINCARD;
 import static ticket.com.tickettoridegames.utility.TYPE.START;
 import static ticket.com.tickettoridegames.utility.TYPE.TURNCHANGED;
 
