@@ -18,7 +18,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,6 +45,9 @@ public class MapFragment extends BasicFragment implements IMapView{
     private Integer black =  -16777216;
     private IMapPresenter presenter;
     private Button turnButton;
+    private Button drawTrainsButton;
+    private Button drawRoutesButton;
+    private Button placeTrainsButton;
     private String userInput;
     private Route chosenRoute;
     private Map<String, String> routeButtons = new HashMap<>(); //the key is the button, the value is the route name
@@ -72,7 +77,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         });
 
         //Now specific components here
-        Button drawTrainsButton = (Button)view.findViewById(R.id.button1);
+        drawTrainsButton = (Button)view.findViewById(R.id.button1);
         drawTrainsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -80,7 +85,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        Button drawRoutesButton = (Button)view.findViewById(R.id.button5);
+        drawRoutesButton = (Button)view.findViewById(R.id.button5);
         drawRoutesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -104,7 +109,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        Button placeTrainsButton = (Button)view.findViewById(R.id.button2);
+        placeTrainsButton = (Button)view.findViewById(R.id.button2);
         placeTrainsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -117,19 +122,23 @@ public class MapFragment extends BasicFragment implements IMapView{
 
     public void enableTurn(){
         turnButton.setEnabled(true);
+        placeTrainsButton.setEnabled(true);
+        drawTrainsButton.setEnabled(true);
     }
 
     public void disableTurn(){
         turnButton.setEnabled(false);
+        placeTrainsButton.setEnabled(false);
+        drawTrainsButton.setEnabled(false);
     }
 
     public void displayDestinationCards(Set<DestinationCard> destinationCards){
         Object[] myArr = destinationCards.toArray();
         DestinationCard one = (DestinationCard) myArr[0];
-        DestinationCard two = (DestinationCard) myArr[0];
-        DestinationCard three = (DestinationCard) myArr[0];
-        LinkedList<DestinationCard> returnCards = new LinkedList<>();
+        DestinationCard two = (DestinationCard) myArr[1];
+        DestinationCard three = (DestinationCard) myArr[2];
         LinkedList<DestinationCard> claimedCards = new LinkedList<>();
+        LinkedList<DestinationCard> discardedCards = new LinkedList<>();
 
         final CharSequence[] items = {one.to_String(), two.to_String(), three.to_String()};
         final boolean [] selected = {false, false, false};
@@ -144,31 +153,30 @@ public class MapFragment extends BasicFragment implements IMapView{
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (selected[0]){
-                            returnCards.add(one);
+                            claimedCards.add(one);
                         }
                         else
                         {
-                            claimedCards.add(one);
+                            discardedCards.add(one);
                         }
 
                         if (selected[1]){
-                            returnCards.add(two);
+                            claimedCards.add(two);
                         }
                         else
                         {
-                            claimedCards.add(two);
+                            discardedCards.add(two);
                         }
 
                         if (selected[2]){
-                            returnCards.add(three);
+                            claimedCards.add(three);
                         }
                         else
                         {
-                            claimedCards.add(three);
+                            discardedCards.add(three);
                         }
 
-                        presenter.claimDestinationCard(claimedCards);
-                        presenter.returnDestinationCard(returnCards);
+                        presenter.setDestinationCards(claimedCards, discardedCards);
                     }
                 });
 
@@ -178,6 +186,12 @@ public class MapFragment extends BasicFragment implements IMapView{
     public void placeTrains(Route route){
 
     }
+
+    @Override
+    public void disablePickRoutes(){
+        drawRoutesButton.setEnabled(false);
+    }
+
 
     private void initTrianTracks(){
         Map<String, Route> trainTracks = new HashMap<>();
