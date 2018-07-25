@@ -52,6 +52,8 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     private RecyclerView.Adapter myAdapter;
     private View view;
     private TextView trainDeckCount;
+    private TextView routesDeckCount;
+
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -70,6 +72,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         routes.setAdapter(adapter);
 
         trainDeckCount = view.findViewById(R.id.trainBankCount);
+        routesDeckCount = view.findViewById(R.id.routesDeckCount);
 
         presenter = new AssetsPresenter(this);
         return view;
@@ -80,7 +83,6 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     public void setHand(List<TrainCard> hand){
         this.hand = hand;
         myHandRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
-
         myHandRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(hand);
         myHandRecyclerView.setAdapter(myAdapter);
@@ -96,8 +98,13 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
-    public void setCardsInDeck(Integer size){
+    public void setTrainDeckCount(Integer size){
         trainDeckCount.setText("Cards in deck: "+size.toString());
+    }
+
+    @Override
+    public void setRouteDeckCount(Integer size){
+        routesDeckCount.setText("Cards in deck: "+size.toString());
     }
 
     @Override

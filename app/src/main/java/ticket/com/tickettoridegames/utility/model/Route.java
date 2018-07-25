@@ -10,6 +10,7 @@ public class Route {
     private TrainCard.TRAIN_TYPE type;
     private City start;
     private City end;
+    private Integer routeNum; //if there is only one then it will be null
 
     public Route() {}
 
@@ -27,6 +28,14 @@ public class Route {
         this.length = length;
         this.type = type;
 
+    }
+
+    public Route(City start, City end, Integer length, TrainCard.TRAIN_TYPE type, Integer routeNum) {
+        this.start = start;
+        this.end = end;
+        this.length = length;
+        this.type = type;
+        this.routeNum = routeNum;
     }
 
     public boolean isOwned() {
@@ -84,7 +93,7 @@ public class Route {
 
     public String to_String(){
         String message = start + "->" +
-                end + ": " + length.toString();
+                end + ": " + length.toString() + " points";
         return message;
     }
 }

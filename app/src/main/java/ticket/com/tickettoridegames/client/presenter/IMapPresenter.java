@@ -17,7 +17,6 @@ public interface IMapPresenter {
 
     void claimRoute(Route route);
 
-    void claimDestinationCard(LinkedList<DestinationCard> destinationCards);
+    void setDestinationCards(LinkedList<DestinationCard> claimedCards, LinkedList<DestinationCard> discardedCards);
 
-    void returnDestinationCard(LinkedList<DestinationCard> destinationCards);
 }

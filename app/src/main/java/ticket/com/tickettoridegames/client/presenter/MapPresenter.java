@@ -1,9 +1,11 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
@@ -33,8 +35,8 @@ public class MapPresenter implements IMapPresenter, Observer {
         TYPE type = (TYPE) arg;
         switch(type){
             case TURNCHANGED:
+                // This will use state in the future
                 if (clientModel.isMyTurn()){
-                    // set the button here
                     mapView.enableTurn();
                 }
                 else {
@@ -44,28 +46,31 @@ public class MapPresenter implements IMapPresenter, Observer {
             case NEWTEMPDECK:
                 String gameId = clientModel.getMyActiveGame().getId();
                 String output = "options: ";
-                for(DestinationCard card : clientModel.getMyPlayer().getTempDeck()) {
-                    output += card.toString() + " ";
-                }
-                output += "\n";
 
-                //return card 0
-                LinkedList<DestinationCard> returnedCards = new LinkedList<>();
-                DestinationCard card0 = clientModel.getMyPlayer().getTempDeck().get(0);
-                returnedCards.add(card0);
-                gamePlayService.returnDestinationCard(gameId, returnedCards);
-                output += "returning: " + card0.to_String()  + "\n";
+                List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
+                Set<DestinationCard> destinationCards = new HashSet<>(cards);
+                mapView.displayDestinationCards(destinationCards);
 
-                //claim cards
-                LinkedList<DestinationCard> claimedCards = new LinkedList<>();
-                DestinationCard card1 = clientModel.getMyPlayer().getTempDeck().get(1);
-                claimedCards.add(card1);
-                DestinationCard card2 = clientModel.getMyPlayer().getTempDeck().get(2);
-                claimedCards.add(card2);
-                gamePlayService.returnDestinationCard(gameId, claimedCards);
-                output += "claiming: " + card1.to_String() + " " + card2.to_String() + "\n";
-
-                mapView.displayMessage(output);
+//                for(DestinationCard card : clientModel.getMyPlayer().getTempDeck()) {
+//                    output += card.toString() + " ";
+//                }
+//                output += "\n";
+//
+//                //return card 0
+//                LinkedList<DestinationCard> returnedCards = new LinkedList<>();
+//                DestinationCard card0 = clientModel.getMyPlayer().getTempDeck().get(0);
+//                returnedCards.add(card0);
+//                gamePlayService.returnDestinationCard(gameId, returnedCards);
+//                output += "returning: " + card0.to_String()  + "\n";
+//
+//                //claim cards
+//                LinkedList<DestinationCard> claimedCards = new LinkedList<>();
+//                DestinationCard card1 = clientModel.getMyPlayer().getTempDeck().get(1);
+//                claimedCards.add(card1);
+//                DestinationCard card2 = clientModel.getMyPlayer().getTempDeck().get(2);
+//                claimedCards.add(card2);
+//                gamePlayService.returnDestinationCard(gameId, claimedCards);
+//                output += "claiming: " + card1.to_String() + " " + card2.to_String() + "\n";
                 break;
             default:
                 //Why you updated me?
@@ -121,12 +126,17 @@ public class MapPresenter implements IMapPresenter, Observer {
     }
 
     @Override
-    public void claimDestinationCard(LinkedList<DestinationCard> destinationCards){
-        gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), destinationCards);
+    public void setDestinationCards(LinkedList<DestinationCard> claimedCards, LinkedList<DestinationCard> discardedCards){
+        if (claimedCards.size() < 2){
+            mapView.displayMessage("Too few routes picked");
+            List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
+            Set<DestinationCard> newCards = new HashSet<>(cards);
+            mapView.displayDestinationCards(newCards);
+        }
+        else {
+            gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), claimedCards);
+            gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), discardedCards);
+        }
     }
 
-    @Override
-    public void returnDestinationCard(LinkedList<DestinationCard> destinationCards){
-        gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), destinationCards);
-    }
 }
