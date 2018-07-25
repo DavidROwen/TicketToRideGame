@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.view.Fragments;
 
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -12,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
@@ -20,6 +23,7 @@ import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.presenter.MapPresenter;
 import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IMapView;
+import ticket.com.tickettoridegames.utility.model.City;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
@@ -44,6 +48,9 @@ public class MapFragment extends BasicFragment implements IMapView{
 
         view = inflater.inflate(R.layout.map_fragment,parent,false);
         presenter = new MapPresenter(this);
+
+        //Init
+        initTrianTracks();
 
         //Now specific components here
         Button drawTrainsButton = (Button)view.findViewById(R.id.button1);
@@ -151,5 +158,12 @@ public class MapFragment extends BasicFragment implements IMapView{
 
     public void placeTrains(Route route){
 
+    }
+
+    private void initTrianTracks(){
+        Map<String, Route> trainTracks = new HashMap<>();
+
+        Route trainTrack = new Route(new City("vancouver"), new City("calgary"), 3, TrainCard.TRAIN_TYPE.WILD);
+        trainTracks.put("vancouver_calgary", trainTrack);
     }
 }

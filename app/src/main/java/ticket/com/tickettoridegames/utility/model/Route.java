@@ -1,5 +1,7 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import android.graphics.Rect;
+
 public class Route {
 
     private boolean owned;
@@ -24,6 +26,7 @@ public class Route {
         this.end = end;
         this.length = length;
         this.type = type;
+
     }
 
     public boolean isOwned() {
