@@ -65,18 +65,18 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void drawTrainCard() {
-        new GamePlayService().drawTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
+        gamePlayService.drawTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
     }
 
     @Override
     public void drawDestinationCards(){
-        GamePlayService gamePlayService = new GamePlayService();
         String gameId = clientModel.getMyActiveGame().getId();
 
         String output = "";
 
         //get cards
         gamePlayService.drawDestinationCard(clientModel.getUserId(), gameId);
+        //do we need to wait here? We might not get results until the cards get into the deck todo: QUESTION: is waiting needed?
         output += "options: ";
         for(DestinationCard card : clientModel.getMyPlayer().getTempDeck()) {
              output += card.toString() + " ";
@@ -122,11 +122,11 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void claimDestinationCard(LinkedList<DestinationCard> destinationCards){
-        new GamePlayService().claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), destinationCards);
+        gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), destinationCards);
     }
 
     @Override
     public void returnDestinationCard(LinkedList<DestinationCard> destinationCards){
-        new GamePlayService().returnDestinationCard(clientModel.getMyActiveGame().getId(), destinationCards);
+        gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), destinationCards);
     }
 }
