@@ -145,7 +145,7 @@ public class GamePlayService implements IGameService {
             temp.add(card);
         }
 
-        ClientModel.get_instance().getMyPlayer().setTempDeck(temp);
+        ClientModel.get_instance().setMyPlayerTempDeck(temp);
     }
 
     public void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
