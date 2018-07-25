@@ -9,6 +9,7 @@ public enum TYPE {
     ALLHISTORY,         //get the whole history log
     BANKUPDATE,         //face up cards
     NEWROUTE,           //claim route on map
+    NEW_DESTINATION_CARD, //assets view
     NEWTRAINCARD,
     NEWTEMPDECK,        //destination cards that the player can choose from
     DESTINATIONUPDATE,  //Update a player owned destination card

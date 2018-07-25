@@ -128,7 +128,7 @@ public class Player {
         return claimedRoutes.size();
     }
 
-    public List getTempDeck(){return tempDeck;}
+    public List<DestinationCard> getTempDeck(){return tempDeck;}
 
     public void setTempDeck(List<DestinationCard> deck){
         tempDeck = deck;

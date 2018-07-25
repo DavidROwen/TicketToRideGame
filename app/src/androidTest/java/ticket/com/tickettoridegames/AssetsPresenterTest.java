@@ -7,7 +7,6 @@ import java.util.Set;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.AssetsPresenter;
-import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
@@ -148,6 +147,11 @@ public class AssetsPresenterTest {
 
         @Override
         public void pickupCard(Integer index) {
+
+        }
+
+        @Override
+        public void addRoute(Set<DestinationCard> destinationCards) {
 
         }
     }

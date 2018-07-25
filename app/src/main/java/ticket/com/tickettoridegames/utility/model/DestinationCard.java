@@ -28,8 +28,8 @@ public class DestinationCard {
     }
 
     public String to_String(){
-        String message = location + "->" +
-                location2 + ": " + value.toString();
+        String message = location.toString() + "->" +
+                location2.toString() + ": " + value.toString();
         return message;
     }
 }

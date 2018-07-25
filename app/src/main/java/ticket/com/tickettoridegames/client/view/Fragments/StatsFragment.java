@@ -100,6 +100,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
     @Override
     public void setHistory(List<PlayerAction> gameHistory){
+//        gameHistory.clear();
         this.gameHistory = gameHistory;
 
         for (PlayerAction playerAction : gameHistory) {

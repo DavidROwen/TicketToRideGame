@@ -54,7 +54,6 @@ public class MapPresenter implements IMapPresenter, Observer {
 
         // Change face up deck cards
         mapView.displayMessage("Prev trainCard at index 1: " + clientModel.getMyActiveGame().getTrainBank().get(1).getType());
-        mapView.displayMessage("hello");
         clientModel.getMyActiveGame().pickupTrainCard(clientModel.getMyPlayer().getId(), 1);
 
         // Route claiming.
@@ -71,15 +70,36 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void drawDestinationCards(){
-//        GamePlayService gamePlayService = new GamePlayService();
-//
-//        gamePlayService.drawDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
-//        mapView.displayMessage("options: " + clientModel.getMyPlayer().getTempDeck().toString());
-//        List<DestinationCard> returnedCards =
-//        gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), );
-//        new GamePlayService().drawDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
-//        mapView.displayMessage(clientModel.getMyPlayer().getDestinationCards().toString());
-//        new GamePlayService().returnDestinationCard();
+        GamePlayService gamePlayService = new GamePlayService();
+        String gameId = clientModel.getMyActiveGame().getId();
+
+        String output = "";
+
+        //get cards
+        gamePlayService.drawDestinationCard(clientModel.getUserId(), gameId);
+        output += "options: ";
+        for(DestinationCard card : clientModel.getMyPlayer().getTempDeck()) {
+             output += card.toString() + " ";
+        }
+        output += "\n";
+
+        //return card 0
+        LinkedList<DestinationCard> returnedCards = new LinkedList<>();
+        DestinationCard card0 = clientModel.getMyPlayer().getTempDeck().get(0);
+        returnedCards.add(card0);
+        gamePlayService.returnDestinationCard(gameId, returnedCards);
+        output += "returning: " + card0.to_String()  + "\n";
+
+        //claim cards
+        LinkedList<DestinationCard> claimedCards = new LinkedList<>();
+        DestinationCard card1 = clientModel.getMyPlayer().getTempDeck().get(1);
+        claimedCards.add(card1);
+        DestinationCard card2 = clientModel.getMyPlayer().getTempDeck().get(2);
+        claimedCards.add(card2);
+        gamePlayService.returnDestinationCard(gameId, claimedCards);
+        output += "claiming: " + card1.to_String() + " " + card2.to_String() + "\n";
+
+        mapView.displayMessage(output);
     }
 
     @Override

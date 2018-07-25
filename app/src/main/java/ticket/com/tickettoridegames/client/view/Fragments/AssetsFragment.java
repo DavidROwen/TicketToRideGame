@@ -103,12 +103,14 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     @Override
     public void setRoutes(Set<DestinationCard> destinationCards){
-        this.destinationCards = destinationCards;
+        adapter.clear();
+        addRoute(destinationCards);
+    }
 
-        for (DestinationCard destinationCard:destinationCards) {
-            String message = destinationCard.getLocation().getName() + "->" +
-                    destinationCard.getLocation2().getName() + ": " + destinationCard.getValue().toString();
-            adapter.add(message);
+    @Override
+    public void addRoute(Set<DestinationCard> destinationCards) {
+        for (DestinationCard destinationCard : destinationCards) {
+            adapter.add(destinationCard.to_String());
         }
     }
 
