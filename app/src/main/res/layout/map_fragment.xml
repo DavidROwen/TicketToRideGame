@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@drawable/gameboard">
+    android:background="@drawable/map_two">
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="13dp"
@@ -15,38 +15,39 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_width="159dp"
+        android:layout_height="123dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="153dp"
+        android:layout_marginStart="354dp"
         android:text="Place Trains" />
 
     <Button
         android:id="@+id/pass_off_button"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_width="161dp"
+        android:layout_height="119dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="436dp"
+        android:layout_marginStart="186dp"
         android:text="Pass Off Button" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_width="156dp"
+        android:layout_height="116dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="292dp"
+        android:layout_marginStart="533dp"
         android:text="Draw Routes" />
 
     <Button
         android:id="@+id/turn_button"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_width="171dp"
+        android:layout_height="232dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="194dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/holo_green_light"
         android:text="End Turn    Name" />
 

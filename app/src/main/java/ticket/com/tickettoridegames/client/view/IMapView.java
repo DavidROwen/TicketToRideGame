@@ -16,15 +16,5 @@ public interface IMapView {
 
     void displayDestinationCards(Set<DestinationCard> destinationCards);
 
-    void notifyDestinationButtonPress();
-
-    void notifyPassOffButtonPress();
-
-    void notifyDrawTrainButtonPress();
-
-    Set<DestinationCard> sendDestinationCardChoices();
-
-    void drawTrainCard(TrainCard trainCard);
-
-    Route placeTrains();
+    void placeTrains(Route route);
 }

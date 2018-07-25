@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.LinkedList;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.R;
@@ -101,9 +102,11 @@ public class MapFragment extends BasicFragment implements IMapView{
         DestinationCard one = (DestinationCard) myArr[0];
         DestinationCard two = (DestinationCard) myArr[0];
         DestinationCard three = (DestinationCard) myArr[0];
+        LinkedList<DestinationCard> returnCards = new LinkedList<>();
+        LinkedList<DestinationCard> claimedCards = new LinkedList<>();
 
         final CharSequence[] items = {one.to_String(), two.to_String(), three.to_String()};
-        final boolean [] selected = {true, false, true};
+        final boolean [] selected = {false, false, false};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Pick Routes")
@@ -112,39 +115,41 @@ public class MapFragment extends BasicFragment implements IMapView{
                         Log.d("Myactivity", String.format("%s: %s", items[item], b));
                     }
                 })
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //
+                        if (selected[0]){
+                            returnCards.add(one);
+                        }
+                        else
+                        {
+                            claimedCards.add(one);
+                        }
+
+                        if (selected[1]){
+                            returnCards.add(two);
+                        }
+                        else
+                        {
+                            claimedCards.add(two);
+                        }
+
+                        if (selected[2]){
+                            returnCards.add(three);
+                        }
+                        else
+                        {
+                            claimedCards.add(three);
+                        }
+
+                        presenter.claimDestinationCard(claimedCards);
+                        presenter.returnDestinationCard(returnCards);
                     }
                 });
 
         builder.create().show();
     }
 
-    public void notifyDestinationButtonPress(){
-    }
+    public void placeTrains(Route route){
 
-    public void notifyPassOffButtonPress(){
-
-    }
-
-    public void notifyDrawTrainButtonPress(){
-
-    }
-
-    public Set<DestinationCard> sendDestinationCardChoices(){
-        return null;
-    }
-
-    public void drawTrainCard(TrainCard trainCard){
-
-    }
-
-    public void passOffButton(){
-
-    }
-
-    public Route placeTrains(){
-        return null;
     }
 }
