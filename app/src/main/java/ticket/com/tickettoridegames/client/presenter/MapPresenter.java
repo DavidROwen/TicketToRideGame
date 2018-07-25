@@ -148,6 +148,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         else {
             gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), claimedCards);
             gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), discardedCards);
+            clientModel.clearTempDeck();
             mapView.disablePickRoutes();
         }
     }

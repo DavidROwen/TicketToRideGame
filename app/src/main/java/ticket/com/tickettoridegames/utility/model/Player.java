@@ -134,6 +134,10 @@ public class Player {
         tempDeck = deck;
     }
 
+    public void clearTempDeck(){
+        tempDeck.clear();
+    }
+
     public PlayerStats getStats() {
         PlayerStats stats = new PlayerStats();
 

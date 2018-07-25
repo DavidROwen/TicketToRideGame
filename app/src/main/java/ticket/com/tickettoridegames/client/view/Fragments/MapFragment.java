@@ -62,7 +62,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.map_fragment,parent,false);
-        presenter = new MapPresenter(this);
+        //presenter = new MapPresenter(this);
 
         //Init
         initTrianTracks();
@@ -116,7 +116,7 @@ public class MapFragment extends BasicFragment implements IMapView{
                 presenter.claimRoute(chosenRoute);
             }
         });
-
+        presenter = new MapPresenter(this);
         return view;
     }
 
