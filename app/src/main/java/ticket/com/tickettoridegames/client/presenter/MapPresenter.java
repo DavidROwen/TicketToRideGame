@@ -40,6 +40,33 @@ public class MapPresenter implements IMapPresenter, Observer {
                 else {
                     mapView.disableTurn();
                 }
+                break;
+            case NEWTEMPDECK:
+                String gameId = clientModel.getMyActiveGame().getId();
+                String output = "options: ";
+                for(DestinationCard card : clientModel.getMyPlayer().getTempDeck()) {
+                    output += card.toString() + " ";
+                }
+                output += "\n";
+
+                //return card 0
+                LinkedList<DestinationCard> returnedCards = new LinkedList<>();
+                DestinationCard card0 = clientModel.getMyPlayer().getTempDeck().get(0);
+                returnedCards.add(card0);
+                gamePlayService.returnDestinationCard(gameId, returnedCards);
+                output += "returning: " + card0.to_String()  + "\n";
+
+                //claim cards
+                LinkedList<DestinationCard> claimedCards = new LinkedList<>();
+                DestinationCard card1 = clientModel.getMyPlayer().getTempDeck().get(1);
+                claimedCards.add(card1);
+                DestinationCard card2 = clientModel.getMyPlayer().getTempDeck().get(2);
+                claimedCards.add(card2);
+                gamePlayService.returnDestinationCard(gameId, claimedCards);
+                output += "claiming: " + card1.to_String() + " " + card2.to_String() + "\n";
+
+                mapView.displayMessage(output);
+                break;
             default:
                 //Why you updated me?
         }
@@ -71,35 +98,8 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void drawDestinationCards(){
         String gameId = clientModel.getMyActiveGame().getId();
-
-        String output = "";
-
         //get cards
         gamePlayService.drawDestinationCard(clientModel.getUserId(), gameId);
-        //do we need to wait here? We might not get results until the cards get into the deck todo: QUESTION: is waiting needed?
-        output += "options: ";
-        for(DestinationCard card : clientModel.getMyPlayer().getTempDeck()) {
-             output += card.toString() + " ";
-        }
-        output += "\n";
-
-        //return card 0
-        LinkedList<DestinationCard> returnedCards = new LinkedList<>();
-        DestinationCard card0 = clientModel.getMyPlayer().getTempDeck().get(0);
-        returnedCards.add(card0);
-        gamePlayService.returnDestinationCard(gameId, returnedCards);
-        output += "returning: " + card0.to_String()  + "\n";
-
-        //claim cards
-        LinkedList<DestinationCard> claimedCards = new LinkedList<>();
-        DestinationCard card1 = clientModel.getMyPlayer().getTempDeck().get(1);
-        claimedCards.add(card1);
-        DestinationCard card2 = clientModel.getMyPlayer().getTempDeck().get(2);
-        claimedCards.add(card2);
-        gamePlayService.returnDestinationCard(gameId, claimedCards);
-        output += "claiming: " + card1.to_String() + " " + card2.to_String() + "\n";
-
-        mapView.displayMessage(output);
     }
 
     @Override
