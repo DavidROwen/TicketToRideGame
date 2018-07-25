@@ -563,6 +563,12 @@ public class Game extends Observable {
         setChanged();
         if(arg != null) { notifyObservers(arg); }
         else { notifyObservers(); }
-//        clearChanged();
+        clearChanged();
     }
+
+    public Integer getTurnNumber() {
+        return turnNumber;
+    }
+
+
 }

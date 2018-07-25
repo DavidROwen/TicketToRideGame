@@ -52,11 +52,11 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel.changeTurn(clientModel.getMyActiveGame().getId());
 
         // Change face up deck cards
+        mapView.displayMessage("Prev trainCard at index 1: " + clientModel.getMyActiveGame().getTrainBank().get(1));
         clientModel.getMyActiveGame().pickupTrainCard(clientModel.getMyPlayer().getId(), 1);
 
         // Route claiming.
-        Route route = new Route(new City("a"), new City("b"), 2, TrainCard.TRAIN_TYPE.BLACK);
-        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
+
         // Player Points change
 
         // Trains remaining change
@@ -70,19 +70,26 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void drawDestinationCards(){
         new GamePlayService().drawDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
+//        mapView.displayMessage(clientModel.getMyPlayer().getDestinationCards().toString());
+//        new GamePlayService().returnDestinationCard();
     }
 
     @Override
     public void changeTurn(){
+        mapView.displayMessage("It's now " + clientModel.getMyActiveGame().getTurnNumber());
         clientModel.changeTurn(clientModel.getMyActiveGame().getId());
     }
 
     @Override
     public void claimRoute(Route route){
-        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
-        // Player Points change
+        Integer length = 5;
+        TrainCard.TRAIN_TYPE type = TrainCard.TRAIN_TYPE.BLACK;
+        mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
+                + " prevTrains: " + clientModel.getMyPlayer().getTrains());
 
-        // Trains remaining change
+        Route routeStub = new Route(new City("a"), new City("b"), length, type);
+        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), routeStub);
+//        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
     }
 
     @Override
