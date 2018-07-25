@@ -26,6 +26,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         String userID = clientModel.getUserId();
         assetsView.setHand(clientModel.getMyActiveGame().getPlayer(userID).getTrainCards());
         assetsView.setRoutes(clientModel.getMyActiveGame().getPlayer(userID).getDestinationCards());
+        assetsView.setCardsInDeck(clientModel.getMyActiveGame().getTrainCardsDeck().size());
     }
 
     @Override
@@ -37,6 +38,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
             case BANKUPDATE:
                 // Someone else drew a card so update your view
                 assetsView.setBank(game.getTrainBank());
+                assetsView.setCardsInDeck(game.getTrainCardsDeck().size());
                 break;
             case NEWROUTE:
                 break;
@@ -45,6 +47,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
                 break;
             case NEWTRAINCARD:
                 assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
+                assetsView.setCardsInDeck(game.getTrainCardsDeck().size());
                 break;
         }
     }

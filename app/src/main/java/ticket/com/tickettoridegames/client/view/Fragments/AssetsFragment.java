@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     private RecyclerView myBankRecyclerView;
     private RecyclerView.Adapter myAdapter;
     private View view;
+    private TextView trainDeckCount;
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -66,6 +68,8 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
                 android.R.layout.simple_list_item_1,
                 listRoutes);
         routes.setAdapter(adapter);
+
+        trainDeckCount = view.findViewById(R.id.trainBankCount);
 
         presenter = new AssetsPresenter(this);
         return view;
@@ -89,6 +93,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         myBankRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(trainBank);
         myBankRecyclerView.setAdapter(myAdapter);
+    }
+
+    @Override
+    public void setCardsInDeck(Integer size){
+        trainDeckCount.setText("Cards in deck: "+size.toString());
     }
 
     @Override
