@@ -304,6 +304,7 @@ public class Game extends Observable {
 
     public void switchTurn() {
         turnNumber = (turnNumber + 1) % players.size();
+        //notifies in clientModel
     }
 
     public Boolean isMyTurn(String playerId) {
@@ -509,14 +510,22 @@ public class Game extends Observable {
         //check player has trains
         if(!player.hasTrains(route.getLength())) { return false; }
 
-        //claim
+        //add to routes
         routes.get(playerId).add(route);
-        player.removeTrainCards(neededCards); //cash out cards
+        myNotify(TYPE.NEWROUTE);
+        //cash out cards
+        player.removeTrainCards(neededCards);
         myNotify(TYPE.NEWTRAINCARD);
-        player.addPoints(LENGTH_TO_POINTS[route.getLength()]); //collect points
+        //collect points
+        player.addPoints(LENGTH_TO_POINTS[route.getLength()]);
+        myNotify(TYPE.STATSUPDATE);
+        //place trains
         player.removeTrains(route.getLength());
         myNotify(TYPE.STATSUPDATE);
+        //record it
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.getStart() + " to " + route.getEnd()));
+        myNotify(TYPE.HISTORYUPDATE);
+
         return true;
     }
 
@@ -529,7 +538,7 @@ public class Game extends Observable {
     private Boolean isClaimed(Route route) {
         for(String id : players.keySet()) {
             for(Route cur : routes.get(id)) {
-                if(cur == route) { return true; }
+//                if(cur == route) { return true; } //todo disabled for testing
             }
         }
 
@@ -570,5 +579,8 @@ public class Game extends Observable {
         return turnNumber;
     }
 
-
+    public String playerUpString() {
+        String id = turnOrder.get(turnNumber);
+        return players.get(id).getUsername();
+    }
 }

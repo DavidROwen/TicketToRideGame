@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.presenter;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -52,7 +53,8 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel.changeTurn(clientModel.getMyActiveGame().getId());
 
         // Change face up deck cards
-        mapView.displayMessage("Prev trainCard at index 1: " + clientModel.getMyActiveGame().getTrainBank().get(1));
+        mapView.displayMessage("Prev trainCard at index 1: " + clientModel.getMyActiveGame().getTrainBank().get(1).getType());
+        mapView.displayMessage("hello");
         clientModel.getMyActiveGame().pickupTrainCard(clientModel.getMyPlayer().getId(), 1);
 
         // Route claiming.
@@ -69,15 +71,21 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void drawDestinationCards(){
-        new GamePlayService().drawDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
+//        GamePlayService gamePlayService = new GamePlayService();
+//
+//        gamePlayService.drawDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
+//        mapView.displayMessage("options: " + clientModel.getMyPlayer().getTempDeck().toString());
+//        List<DestinationCard> returnedCards =
+//        gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), );
+//        new GamePlayService().drawDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
 //        mapView.displayMessage(clientModel.getMyPlayer().getDestinationCards().toString());
 //        new GamePlayService().returnDestinationCard();
     }
 
     @Override
     public void changeTurn(){
-        mapView.displayMessage("It's now " + clientModel.getMyActiveGame().getTurnNumber());
         clientModel.changeTurn(clientModel.getMyActiveGame().getId());
+        mapView.displayMessage("It's now " + clientModel.getMyActiveGame().playerUpString() + "'s turn");
     }
 
     @Override

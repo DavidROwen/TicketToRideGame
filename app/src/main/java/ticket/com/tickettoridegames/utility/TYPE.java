@@ -7,10 +7,10 @@ public enum TYPE {
     STATSUPDATE,
     HISTORYUPDATE,      //get newest history
     ALLHISTORY,         //get the whole history log
-    BANKUPDATE,
-    NEWROUTE,
+    BANKUPDATE,         //face up cards
+    NEWROUTE,           //claim route on map
     NEWTRAINCARD,
-    NEWTEMPDECK,
+    NEWTEMPDECK,        //destination cards that the player can choose from
     DESTINATIONUPDATE,  //Update a player owned destination card
     DISCARDDESTINATION, //discard a destination card
     ADD_PLAYER,

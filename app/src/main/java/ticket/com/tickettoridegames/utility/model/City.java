@@ -20,4 +20,9 @@ public class City {
     public boolean equals(Object obj) {
         return ((City)obj).name.equals(this.name);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
