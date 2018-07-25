@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import ticket.com.tickettoridegames.R;
@@ -100,8 +101,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
     @Override
     public void setHistory(List<PlayerAction> gameHistory){
-//        gameHistory.clear();
-        this.gameHistory = gameHistory;
+        historyAdapter.clear();
 
         for (PlayerAction playerAction : gameHistory) {
             String message = playerAction.toString();
