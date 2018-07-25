@@ -214,7 +214,7 @@ public class ServerModel {
             return false;
     }
     //Destination Card Functions
-    public List<DestinationCard> drawADestinationCard(String gameId) {
+    public List<DestinationCard> drawTemporaryDestinationCards(String gameId) {
         return games.get(gameId).drawDestinationCards();
     }
 

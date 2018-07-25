@@ -36,6 +36,9 @@ public class MapFragment extends BasicFragment implements IMapView{
     View view;
     private IMapPresenter presenter;
     private Button turnButton;
+    private Button drawTrainsButton;
+    private Button drawRoutesButton;
+    private Button placeTrainsButton;
     private String userInput;
     private Route chosenRoute;
 
@@ -55,7 +58,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         initTrianTracks();
 
         //Now specific components here
-        Button drawTrainsButton = (Button)view.findViewById(R.id.button1);
+        drawTrainsButton = (Button)view.findViewById(R.id.button1);
         drawTrainsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -63,7 +66,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        Button drawRoutesButton = (Button)view.findViewById(R.id.button5);
+        drawRoutesButton = (Button)view.findViewById(R.id.button5);
         drawRoutesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -87,7 +90,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        Button placeTrainsButton = (Button)view.findViewById(R.id.button2);
+        placeTrainsButton = (Button)view.findViewById(R.id.button2);
         placeTrainsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -100,10 +103,14 @@ public class MapFragment extends BasicFragment implements IMapView{
 
     public void enableTurn(){
         turnButton.setEnabled(true);
+        placeTrainsButton.setEnabled(true);
+        drawTrainsButton.setEnabled(true);
     }
 
     public void disableTurn(){
         turnButton.setEnabled(false);
+        placeTrainsButton.setEnabled(false);
+        drawTrainsButton.setEnabled(false);
     }
 
     public void displayDestinationCards(Set<DestinationCard> destinationCards){
@@ -160,6 +167,12 @@ public class MapFragment extends BasicFragment implements IMapView{
     public void placeTrains(Route route){
 
     }
+
+    @Override
+    public void disablePickRoutes(){
+        drawRoutesButton.setEnabled(false);
+    }
+
 
     private void initTrianTracks(){
         Map<String, Route> trainTracks = new HashMap<>();

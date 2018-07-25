@@ -17,4 +17,6 @@ public interface IMapView {
     void displayDestinationCards(Set<DestinationCard> destinationCards);
 
     void placeTrains(Route route);
+
+    void disablePickRoutes();
 }

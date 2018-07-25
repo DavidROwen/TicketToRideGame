@@ -28,12 +28,6 @@ public class GameService implements IGameService {
         ServerModel.getInstance().getGames().get(gameId).initGame();
         Game game = ServerModel.getInstance().getGames().get(gameId);
 
-        //send staring deck to players
-        for(String playerId : game.getPlayers().keySet()){
-             drawDestinationCard(playerId,gameId);
-        }
-
-
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
 //        new GamePlayService().setTurnOrder(turnOrder);
@@ -65,6 +59,11 @@ public class GameService implements IGameService {
                 "initiatingGameNonRandom", new Object[]{}
         );
         CommandsManager.addCommandAllPlayers(initHands, gameId);
+
+        //send staring deck to players
+        for(String playerId : game.getPlayers().keySet()){
+            drawDestinationCard(playerId,gameId);
+        }
     }
 
     @Override
@@ -96,18 +95,16 @@ public class GameService implements IGameService {
     @Override
     public void drawDestinationCard(String playerId, String gameId) {
         //draw card
-        List<DestinationCard> drawnCards = ServerModel.getInstance().drawADestinationCard(gameId);
+        List<DestinationCard> drawnCards = ServerModel.getInstance().drawTemporaryDestinationCards(gameId);
 
-        //set up command to return data
-        Command tempDeck = null;
         try {
-            tempDeck = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+            Command tempDeck = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
                     "setTempDeck", new Object[]{drawnCards});
+            CommandsManager.addCommand(tempDeck, playerId);
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        CommandsManager.addCommand(tempDeck, playerId);
     }
 
     @Override

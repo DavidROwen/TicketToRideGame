@@ -22,11 +22,18 @@ public class MapPresenter implements IMapPresenter, Observer {
     private ClientModel clientModel;
     private IMapView mapView;
 
-    public MapPresenter(IMapView view){
+    public MapPresenter(IMapView view) {
         mapView = view;
         gamePlayService = new GamePlayService();
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
+
+        if(clientModel.getMyPlayer().getTempDeck().size() != 0){
+            List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
+            Set<DestinationCard> destinationCards = new HashSet<>(cards);
+            mapView.displayDestinationCards(destinationCards);
+            mapView.disableTurn();
+        }
     }
 
     @Override
@@ -102,9 +109,14 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void drawDestinationCards(){
-        String gameId = clientModel.getMyActiveGame().getId();
-        //get cards
-        gamePlayService.drawDestinationCard(clientModel.getUserId(), gameId);
+        if (clientModel.getMyPlayer().getTempDeck().size() == 0) {
+            String gameId = clientModel.getMyActiveGame().getId();
+            //get cards
+            gamePlayService.drawDestinationCard(clientModel.getUserId(), gameId);
+        }
+        else {
+            mapView.displayMessage("You have already picked cards.");
+        }
     }
 
     @Override
@@ -136,7 +148,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         else {
             gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), claimedCards);
             gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), discardedCards);
-            //mapView.disablePickRoutes();
+            mapView.disablePickRoutes();
         }
     }
 

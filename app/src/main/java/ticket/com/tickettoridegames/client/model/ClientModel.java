@@ -157,7 +157,7 @@ public class ClientModel extends Observable {
         //check every player in every game
         for (String curKey : gameList.keySet()) {
             Game curGame = gameList.get(curKey);
-            if (curGame.getPlayer(ClientModel.get_instance().getUserId()) != null) {
+            if (curGame.getPlayer(getUserId()) != null) {
                 myActiveGame = curGame;
                 break; //done
             }
@@ -166,7 +166,7 @@ public class ClientModel extends Observable {
 
     public Player getMyPlayer() {
         if(myPlayer != null) { return myPlayer; } //convenience function
-        return getMyActiveGame().getPlayer(ClientModel.get_instance().getUserId());
+        return getMyActiveGame().getPlayer(getUserId());
     }
 
     public List<PlayerAction> getHistory(){
@@ -176,6 +176,8 @@ public class ClientModel extends Observable {
 
     //DestinationCards functions
     public void setMyPlayerTempDeck(List<DestinationCard> deck){
+        getMyActiveGame().getPlayer(getUserId()).setTempDeck(deck);
+
         Player player = getMyPlayer();
         player.setTempDeck(deck);
         myNotify(NEWTEMPDECK);
