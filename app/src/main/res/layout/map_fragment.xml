@@ -4,6 +4,1072 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@drawable/map_two">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton110"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton20"
+        android:layout_alignStart="@+id/floatingActionButton56"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton103"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton17"
+        android:layout_toEndOf="@+id/floatingActionButton89"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton104"
+        android:layout_width="25dp"
+        android:layout_height="150dp"
+        android:layout_above="@+id/floatingActionButton17"
+        android:layout_marginStart="-199dp"
+        android:layout_toEndOf="@+id/floatingActionButton100"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton105"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton40"
+        android:layout_alignStart="@+id/turn_button"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton106"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton39"
+        android:layout_marginBottom="-236dp"
+        android:layout_toEndOf="@+id/floatingActionButton105"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton107"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton41"
+        android:layout_alignStart="@+id/turn_button"
+        android:layout_marginBottom="-169dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton108"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton80"
+        android:layout_below="@+id/floatingActionButton15"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton109"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/floatingActionButton34"
+        android:layout_marginEnd="129dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton79"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton17"
+        android:layout_toEndOf="@+id/floatingActionButton55"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton80"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/floatingActionButton17"
+        android:layout_marginEnd="463dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton81"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton15"
+        android:layout_alignStart="@+id/floatingActionButton59"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton82"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton17"
+        android:layout_alignStart="@+id/floatingActionButton56"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton83"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton18"
+        android:layout_marginBottom="-277dp"
+        android:layout_toStartOf="@+id/floatingActionButton61"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton84"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_below="@+id/floatingActionButton9"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton85"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton39"
+        android:layout_toStartOf="@+id/floatingActionButton43"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton86"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="158dp"
+        android:layout_toEndOf="@+id/floatingActionButton55"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton87"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/floatingActionButton9"
+        android:layout_marginEnd="509dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton88"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton32"
+        android:layout_marginBottom="-289dp"
+        android:layout_toEndOf="@+id/floatingActionButton45"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton89"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton66"
+        android:layout_marginStart="-258dp"
+        android:layout_toEndOf="@+id/floatingActionButton58"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton90"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="250dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton91"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton9"
+        android:layout_toStartOf="@+id/floatingActionButton56"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton92"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-399dp"
+        android:layout_marginTop="219dp"
+        android:layout_toEndOf="@+id/floatingActionButton56"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton93"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/floatingActionButton34"
+        android:layout_marginEnd="240dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton94"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton86"
+        android:layout_toStartOf="@+id/floatingActionButton66"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton95"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton34"
+        android:layout_marginStart="-319dp"
+        android:layout_toEndOf="@+id/floatingActionButton57"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton96"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/floatingActionButton66"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton97"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton15"
+        android:layout_toStartOf="@+id/floatingActionButton58"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton98"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton93"
+        android:layout_alignTop="@+id/floatingActionButton17"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton99"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton83"
+        android:layout_toStartOf="@+id/floatingActionButton58"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton100"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/floatingActionButton41"
+        android:layout_marginEnd="199dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton101"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton18"
+        android:layout_marginBottom="-277dp"
+        android:layout_marginStart="-250dp"
+        android:layout_toEndOf="@+id/floatingActionButton90"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton102"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton90"
+        android:layout_alignTop="@+id/floatingActionButton39"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton76"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/button5"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton78"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton15"
+        android:layout_marginStart="-552dp"
+        android:layout_toEndOf="@+id/floatingActionButton43"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton60"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/turn_button"
+        android:layout_marginEnd="449dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton61"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/floatingActionButton20"
+        android:layout_marginEnd="310dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton62"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton58"
+        android:layout_alignTop="@+id/floatingActionButton25"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton63"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton25"
+        android:layout_toStartOf="@+id/floatingActionButton57"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton65"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton57"
+        android:layout_alignTop="@+id/floatingActionButton19"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton66"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="315dp"
+        android:layout_toStartOf="@+id/floatingActionButton61"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton67"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton19"
+        android:layout_toStartOf="@+id/floatingActionButton60"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton68"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton19"
+        android:layout_marginStart="-552dp"
+        android:layout_toEndOf="@+id/floatingActionButton43"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton69"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton42"
+        android:layout_alignTop="@+id/floatingActionButton19"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton70"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="339dp"
+        android:layout_toEndOf="@+id/floatingActionButton37"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton73"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_below="@+id/floatingActionButton32"
+        android:layout_marginEnd="-615dp"
+        android:layout_toStartOf="@+id/floatingActionButton46"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton74"
+        android:layout_width="19dp"
+        android:layout_height="17dp"
+        android:layout_alignStart="@+id/floatingActionButton46"
+        android:layout_alignTop="@+id/floatingActionButton17"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton75"
+        android:layout_width="18dp"
+        android:layout_height="17dp"
+        android:layout_alignEnd="@+id/floatingActionButton50"
+        android:layout_alignTop="@+id/floatingActionButton17"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton53"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton50"
+        android:layout_alignTop="@+id/floatingActionButton19"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton54"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignEnd="@+id/button5"
+        android:layout_alignTop="@+id/turn_button"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton55"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton26"
+        android:layout_marginStart="-552dp"
+        android:layout_toEndOf="@+id/floatingActionButton43"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton56"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/button5"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="399dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton57"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/floatingActionButton26"
+        android:layout_marginEnd="319dp"
+        android:layout_marginTop="-175dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton58"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/floatingActionButton43"
+        android:layout_marginEnd="258dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton59"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton43"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="406dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton32"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="289dp"
+        android:layout_toEndOf="@+id/floatingActionButton23"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton33"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton17"
+        android:layout_marginEnd="-354dp"
+        android:layout_toStartOf="@+id/button2"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton34"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="263dp"
+        android:layout_marginTop="123dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton35"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/floatingActionButton11"
+        android:layout_marginStart="413dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton36"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton7"
+        android:layout_toEndOf="@+id/pass_off_button"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton37"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton26"
+        android:layout_toEndOf="@+id/button2"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton38"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton22"
+        android:layout_toEndOf="@+id/button2"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton39"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/floatingActionButton35"
+        android:layout_marginTop="236dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton40"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton39"
+        android:layout_marginBottom="-236dp"
+        android:layout_toEndOf="@+id/button2"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton41"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="545dp"
+        android:layout_marginTop="169dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton42"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton34"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="-123dp"
+        android:layout_marginStart="472dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton43"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="159dp"
+        android:layout_marginEnd="552dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton44"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton41"
+        android:layout_alignTop="@+id/floatingActionButton32"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton45"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton42"
+        android:layout_toEndOf="@+id/button5"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton46"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/floatingActionButton7"
+        android:layout_marginStart="615dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton47"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/turn_button"
+        android:layout_marginEnd="-615dp"
+        android:layout_toStartOf="@+id/floatingActionButton46"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton48"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton46"
+        android:layout_alignTop="@+id/floatingActionButton20"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton49"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton46"
+        android:layout_alignTop="@+id/floatingActionButton26"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton50"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/floatingActionButton26"
+        android:layout_marginEnd="602dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton51"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton22"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton52"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton22"
+        android:layout_marginEnd="-615dp"
+        android:layout_toStartOf="@+id/floatingActionButton46"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton25"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="272dp"
+        android:layout_toEndOf="@+id/pass_off_button"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton15"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton9"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton16"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton7"
+        android:layout_below="@+id/floatingActionButton15"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton17"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton14"
+        android:layout_below="@+id/floatingActionButton18"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton18"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="277dp"
+        android:layout_toEndOf="@+id/floatingActionButton9"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton19"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/floatingActionButton13"
+        android:layout_marginBottom="281dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton21"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton15"
+        android:layout_alignStart="@+id/floatingActionButton20"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton22"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton19"
+        android:layout_alignStart="@+id/pass_off_button"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton24"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton20"
+        android:layout_marginEnd="-354dp"
+        android:layout_toStartOf="@+id/button2"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton26"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/button5"
+        android:layout_marginBottom="175dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton27"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignEnd="@+id/button2"
+        android:layout_alignTop="@+id/floatingActionButton20"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton28"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/floatingActionButton20"
+        android:layout_marginStart="401dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton29"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_below="@+id/floatingActionButton15"
+        android:layout_toEndOf="@+id/floatingActionButton28"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton30"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/floatingActionButton9"
+        android:layout_marginStart="338dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton31"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/pass_off_button"
+        android:layout_alignTop="@+id/floatingActionButton10"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton23"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/button2"
+        android:layout_below="@+id/floatingActionButton15"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton20"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="239dp"
+        android:layout_marginStart="255dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton14"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="199dp"
+        android:layout_marginTop="44dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton13"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_above="@+id/floatingActionButton11"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="-32dp"
+        android:layout_marginStart="216dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton11"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:layout_toEndOf="@+id/floatingActionButton7"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton12"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton11"
+        android:layout_toEndOf="@+id/floatingActionButton8"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton10"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="204dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton9"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignTop="@+id/floatingActionButton10"
+        android:layout_toEndOf="@+id/floatingActionButton7"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton8"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignStart="@+id/floatingActionButton10"
+        android:layout_alignTop="@+id/floatingActionButton7"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton7"
+        android:layout_width="25dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="89dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@android:drawable/list_selector_background" />
+
     <Button
         android:id="@+id/button1"
         android:layout_width="160dp"
