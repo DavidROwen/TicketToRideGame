@@ -11,13 +11,29 @@
         android:orientation="horizontal"
         android:background="#88000000">
 
-        <TextView
-            android:id="@+id/routesText"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1.25"
-            android:text="Routes"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            android:layout_weight=".5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/routesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:text="Destination Cards"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+            <TextView
+                android:id="@+id/routesDeckCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:text="Cards in deck: 20"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="24sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/ownedTrainsText"
@@ -31,7 +47,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#88000000"
             android:orientation="vertical">
 
             <TextView

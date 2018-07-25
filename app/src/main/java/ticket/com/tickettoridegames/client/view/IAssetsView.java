@@ -22,5 +22,7 @@ public interface IAssetsView {
 
     void pickupCard(Integer index);
 
-    void setCardsInDeck(Integer size);
+    void setTrainDeckCount(Integer size);
+
+    void setRouteDeckCount(Integer size);
 }

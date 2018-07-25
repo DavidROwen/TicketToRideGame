@@ -154,5 +154,12 @@ public class AssetsPresenterTest {
         public void addRoute(Set<DestinationCard> destinationCards) {
 
         }
+
+        @Override
+        public void setTrainDeckCount(Integer size){}
+
+        @Override
+        public void setRouteDeckCount(Integer size){}
+
     }
 }
