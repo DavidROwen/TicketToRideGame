@@ -109,10 +109,10 @@ public class MapFragment extends BasicFragment implements IMapView{
     public void displayDestinationCards(Set<DestinationCard> destinationCards){
         Object[] myArr = destinationCards.toArray();
         DestinationCard one = (DestinationCard) myArr[0];
-        DestinationCard two = (DestinationCard) myArr[0];
-        DestinationCard three = (DestinationCard) myArr[0];
-        LinkedList<DestinationCard> returnCards = new LinkedList<>();
+        DestinationCard two = (DestinationCard) myArr[1];
+        DestinationCard three = (DestinationCard) myArr[2];
         LinkedList<DestinationCard> claimedCards = new LinkedList<>();
+        LinkedList<DestinationCard> discardedCards = new LinkedList<>();
 
         final CharSequence[] items = {one.to_String(), two.to_String(), three.to_String()};
         final boolean [] selected = {false, false, false};
@@ -127,31 +127,30 @@ public class MapFragment extends BasicFragment implements IMapView{
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (selected[0]){
-                            returnCards.add(one);
+                            claimedCards.add(one);
                         }
                         else
                         {
-                            claimedCards.add(one);
+                            discardedCards.add(one);
                         }
 
                         if (selected[1]){
-                            returnCards.add(two);
+                            claimedCards.add(two);
                         }
                         else
                         {
-                            claimedCards.add(two);
+                            discardedCards.add(two);
                         }
 
                         if (selected[2]){
-                            returnCards.add(three);
+                            claimedCards.add(three);
                         }
                         else
                         {
-                            claimedCards.add(three);
+                            discardedCards.add(three);
                         }
 
-                        presenter.claimDestinationCard(claimedCards);
-                        presenter.returnDestinationCard(returnCards);
+                        presenter.setDestinationCards(claimedCards, discardedCards);
                     }
                 });
 

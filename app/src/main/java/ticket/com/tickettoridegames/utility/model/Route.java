@@ -93,7 +93,7 @@ public class Route {
 
     public String to_String(){
         String message = start + "->" +
-                end + ": " + length.toString();
+                end + ": " + length.toString() + " points";
         return message;
     }
 }

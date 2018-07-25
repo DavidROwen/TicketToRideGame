@@ -126,12 +126,17 @@ public class MapPresenter implements IMapPresenter, Observer {
     }
 
     @Override
-    public void claimDestinationCard(LinkedList<DestinationCard> destinationCards){
-        gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), destinationCards);
+    public void setDestinationCards(LinkedList<DestinationCard> claimedCards, LinkedList<DestinationCard> discardedCards){
+        if (claimedCards.size() < 2){
+            mapView.displayMessage("Too few routes picked");
+            List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
+            Set<DestinationCard> newCards = new HashSet<>(cards);
+            mapView.displayDestinationCards(newCards);
+        }
+        else {
+            gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), claimedCards);
+            gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), discardedCards);
+        }
     }
 
-    @Override
-    public void returnDestinationCard(LinkedList<DestinationCard> destinationCards){
-        gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), destinationCards);
-    }
 }
