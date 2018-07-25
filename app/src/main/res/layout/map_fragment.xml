@@ -6,39 +6,38 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="160dp"
+        android:layout_width="168dp"
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="13dp"
-        android:text="Draw Trains" />
+        android:layout_marginBottom="11dp"
+        android:layout_marginStart="14dp"
+        android:text="Draw Train" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="159dp"
+        android:layout_width="169dp"
         android:layout_height="123dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="354dp"
+        android:layout_alignTop="@+id/button1"
+        android:layout_toEndOf="@+id/button5"
         android:text="Place Trains" />
 
     <Button
         android:id="@+id/pass_off_button"
         android:layout_width="161dp"
         android:layout_height="119dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="186dp"
+        android:layout_alignTop="@+id/button1"
+        android:layout_toEndOf="@+id/button2"
         android:text="Pass Off Button" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="156dp"
+        android:layout_width="171dp"
         android:layout_height="116dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="533dp"
-        android:text="Draw Routes" />
+        android:layout_alignTop="@+id/button1"
+        android:layout_marginStart="178dp"
+        android:text="Draw Route" />
 
     <Button
         android:id="@+id/turn_button"
