@@ -51,9 +51,6 @@ public class LobbyService {
         }
     }
 
-//    public Result leaveGame(Player player) {
-//        return new Result(false,"","Placeholder ERROR");
-//    }
 
     // Functions called by server
     public static void updateChat(String gameID, Chat chat){
