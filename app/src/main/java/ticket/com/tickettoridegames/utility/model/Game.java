@@ -185,9 +185,7 @@ public class Game extends Observable {
     }
 
     public void addToHistory(PlayerAction pa){
-        if(newestHistory != null) {  //first time
-            gameHistory.add(newestHistory);
-        }
+        gameHistory.add(pa);
         newestHistory = pa;
         myNotify(TYPE.HISTORYUPDATE);
     }
@@ -346,8 +344,7 @@ public class Game extends Observable {
             initHandAll();
             initTrainBank();
         }
-//        initPlayerDestinationCards();
-        //myNotify(TYPE.STATSUPDATE);
+        myNotify(TYPE.ALLHISTORY);
     }
 
     private void initTrainBank() {

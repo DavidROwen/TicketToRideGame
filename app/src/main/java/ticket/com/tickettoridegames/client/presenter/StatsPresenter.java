@@ -18,7 +18,7 @@ public class StatsPresenter implements IStatsPresenter , Observer {
     public StatsPresenter(IStatsView view){
         statsView = view;
         clientModel = ClientModel.get_instance();
-//        clientModel.addObserver(this);
+        //clientModel.addObserver(this);
         clientModel.getMyActiveGame().addObserver(this);
 
         statsView.setChat(ClientModel.get_instance().getMyActiveGame().getChatList());
@@ -28,7 +28,6 @@ public class StatsPresenter implements IStatsPresenter , Observer {
 
     @Override
     public void update(Observable observable, Object arg){
-//        clientModel = (ClientModel) observable;
         Game game = (Game) observable;
         TYPE type = (TYPE) arg;
         //Update the stats, chats and history here.
