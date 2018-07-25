@@ -96,8 +96,8 @@ public class GamePlayService implements IGameService {
 
     @Override
     public void switchTurn(String gameId) {
-        //why are we calling client code? todo: QUESTION: why we are doing this?
-        new GameService().switchTurn(gameId);
+        // why are we calling client code? todo: QUESTION: why we are doing this?
+        // new GameService().switchTurn(gameId);
         Command command = new Command(GameService.class, new GameService(),
                 "switchTurn", new Object[]{gameId}
                 );

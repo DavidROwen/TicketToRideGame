@@ -21,4 +21,6 @@ public interface IAssetsView {
     void displayMessage(String message);
 
     void pickupCard(Integer index);
+
+    void setCardsInDeck(Integer size);
 }
