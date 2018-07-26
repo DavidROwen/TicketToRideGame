@@ -18,8 +18,8 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_play);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         ViewPager pager = (ViewPager)findViewById(R.id.mediaViewPager);
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(),getApplicationContext(), new String[]{"Map","Stats","Assets"},3);
@@ -32,7 +32,7 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_game, menu);
+        //getMenuInflater().inflate(R.menu.menu_game, menu);
         return true;
     }
 
