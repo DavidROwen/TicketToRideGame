@@ -188,6 +188,7 @@ class StatsCustomViewHolder extends RecyclerView.ViewHolder{
 
     public void bindResult(PlayerStats playerStat){
         line1.setText(String.valueOf(playerStat.getName()));
+        line1.setBackgroundColor(playerStat.getColor());
         line2.setText(String.valueOf(playerStat.getPoints()));
         line3.setText(String.valueOf(playerStat.getNumberOfPieces()));
         line4.setText(String.valueOf(playerStat.getNumberOfCards()));

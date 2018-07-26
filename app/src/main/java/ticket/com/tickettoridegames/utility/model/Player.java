@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Player {
-    public enum COLOR {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE}
+    public enum COLOR {RED, YELLOW, GREEN, BLUE, BLACK}
 
     private String username;
     private String id;
@@ -147,8 +147,26 @@ public class Player {
         stats.setNumberOfRoutes(getRouteCount());
         stats.setPoints(getPoints());
         stats.setNumberOfPieces(trains);
+        stats.setColor(getColorValue());
 
         return stats;
+    }
+
+    public Integer getColorValue(){
+        switch(color){
+            case RED:
+                return -65535;
+            case BLUE:
+                return -16776961;
+            case YELLOW:
+                return -256;
+            case GREEN:
+                return -16711936;
+            case BLACK:
+                return -16777216;
+            default:
+                return 0;
+        }
     }
 
     public void addPoints(Integer points) { this.points += points; }

@@ -7,20 +7,29 @@ public class PlayerStats {
     private Integer numberOfCards;
     private Integer numberOfRoutes;
     private Integer numberOfPieces;
+    private Integer color;
 
-
-    public PlayerStats(String name, Integer points, Integer numberOfCards, Integer numberOfRoutes, Integer pieces) {
+    public PlayerStats(String name, Integer points, Integer numberOfCards, Integer numberOfRoutes, Integer pieces, Integer color) {
         this.name = name;
         this.points = points;
         this.numberOfCards = numberOfCards;
         this.numberOfRoutes = numberOfRoutes;
         this.numberOfPieces = pieces;
+        this.color = color;
     }
 
     public PlayerStats(){}
 
     public String getName() {
         return name;
+    }
+
+    public Integer getColor() {
+        return color;
+    }
+
+    public void setColor(Integer color) {
+        this.color = color;
     }
 
     public void setName(String name) {
