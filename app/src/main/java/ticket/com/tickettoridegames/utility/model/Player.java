@@ -188,4 +188,6 @@ public class Player {
     public void setClaimedRoutes(Set<Route> claimedRoutes) {
         this.claimedRoutes = claimedRoutes;
     }
+
+    public void addClaimedRoute(Route route){ this.claimedRoutes.add(route);}
 }

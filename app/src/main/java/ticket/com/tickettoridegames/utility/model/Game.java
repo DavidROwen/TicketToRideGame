@@ -516,12 +516,13 @@ public class Game extends Observable {
 
         //add to routes
         routes.get(playerId).add(route);
+        player.addClaimedRoute(route);
         myNotify(TYPE.NEWROUTE);
         //cash out cards
         player.removeTrainCards(neededCards);
         myNotify(TYPE.NEWTRAINCARD);
         //collect points
-        player.addPoints(LENGTH_TO_POINTS[route.getLength()]);
+        player.addPoints(LENGTH_TO_POINTS[route.getLength()-1]);
         myNotify(TYPE.STATSUPDATE);
         //place trains
         player.removeTrains(route.getLength());

@@ -38,6 +38,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         else {
             mapView.disablePickRoutes();
         }
+        mapView.setClaimedRoutes(clientModel.getClaimedRoutes());
     }
 
     @Override

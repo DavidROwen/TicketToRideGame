@@ -887,8 +887,8 @@ public class MapFragment extends BasicFragment implements IMapView{
         String routeName = (String) getKeyFromValue(trainTracks,route);
         String buttonName = (String) getKeyFromValue(routeButtons,routeName);
 
-        Button button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
-        button.setBackgroundColor(color);
+        FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
+        button.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
     public void setClaimedRoutes(Map<Integer, Set<Route>> claimedRoutes){
