@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="@drawable/train"
+    android:background="@drawable/train3"
     tools:context=".client.view.LoginActivity">
 
     <ProgressBar
