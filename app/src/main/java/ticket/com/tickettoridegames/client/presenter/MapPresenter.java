@@ -21,7 +21,7 @@ public class MapPresenter implements IMapPresenter, Observer {
     private GamePlayService gamePlayService;
     private ClientModel clientModel;
     private IMapView mapView;
-
+    
     public MapPresenter(IMapView view) {
         mapView = view;
         gamePlayService = new GamePlayService();
