@@ -15,5 +15,6 @@ public enum TYPE {
     DESTINATIONUPDATE,  //Update a player owned destination card
     DISCARDDESTINATION, //discard a destination card
     ADD_PLAYER,
-    TURNCHANGED
+    TURNCHANGED,
+    ROUTECLAIMED
 }

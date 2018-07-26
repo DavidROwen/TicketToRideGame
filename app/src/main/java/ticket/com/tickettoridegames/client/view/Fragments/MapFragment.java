@@ -22,7 +22,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
@@ -878,6 +880,23 @@ public class MapFragment extends BasicFragment implements IMapView{
             //buttonName.setBackgroundTintList(ColorStateList.valueOf(green));
         }else if(color == TrainCard.TRAIN_TYPE.RED){
             //buttonName.setBackgroundTintList(ColorStateList.valueOf(red));
+        }
+    }
+
+    public void placeTrains(Route route, Integer color){
+        String routeName = (String) getKeyFromValue(trainTracks,route);
+        String buttonName = (String) getKeyFromValue(routeButtons,routeName);
+
+        FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
+        button.setBackgroundTintList(ColorStateList.valueOf(color));
+    }
+
+    public void setClaimedRoutes(Map<Integer, Set<Route>> claimedRoutes){
+        for (Integer color :claimedRoutes.keySet()){
+            Set<Route> routes = claimedRoutes.get(color);
+            for (Route route : routes){
+                placeTrains(route, color);
+            }
         }
     }
 

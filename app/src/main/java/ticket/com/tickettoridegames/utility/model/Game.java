@@ -516,12 +516,13 @@ public class Game extends Observable {
 
         //add to routes
         routes.get(playerId).add(route);
+        player.addClaimedRoute(route);
         myNotify(TYPE.NEWROUTE);
         //cash out cards
         player.removeTrainCards(neededCards);
         myNotify(TYPE.NEWTRAINCARD);
         //collect points
-        player.addPoints(LENGTH_TO_POINTS[route.getLength()]);
+        player.addPoints(LENGTH_TO_POINTS[route.getLength()-1]);
         myNotify(TYPE.STATSUPDATE);
         //place trains
         player.removeTrains(route.getLength());
@@ -577,6 +578,17 @@ public class Game extends Observable {
         if(arg != null) { notifyObservers(arg); }
         else { notifyObservers(); }
         clearChanged();
+    }
+
+    // This function returns all claimed routs associated with the color that they should be on the map
+    public Map<Integer, Set<Route>> getClaimedRouteColors(){
+        Map<Integer, Set<Route>> routes = new HashMap<>();
+
+        for (Player player : players.values()){
+            routes.put(player.getColorValue(),player.getClaimedRoutes());
+        }
+
+        return routes;
     }
 
     public Integer getTurnNumber() {

@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.presenter;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -37,6 +38,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         else {
             mapView.disablePickRoutes();
         }
+        mapView.setClaimedRoutes(clientModel.getClaimedRoutes());
     }
 
     @Override
@@ -61,6 +63,8 @@ public class MapPresenter implements IMapPresenter, Observer {
                 Set<DestinationCard> destinationCards = new HashSet<>(cards);
                 mapView.displayDestinationCards(destinationCards);
                 break;
+            case ROUTECLAIMED:
+                mapView.setClaimedRoutes(clientModel.getClaimedRoutes());
             default:
                 //updated data we don't care about
                 break;
@@ -127,7 +131,8 @@ public class MapPresenter implements IMapPresenter, Observer {
         else {
             type = route.getType();
             length = route.getLength();
-            clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
+            clientModel.claimRoute(clientModel.getMyPlayer().getId(), route);
+//            clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
         }
         mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
                 + " prevTrains: " + clientModel.getMyPlayer().getTrains());
