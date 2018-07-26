@@ -93,6 +93,13 @@ public class MapPresenter implements IMapPresenter, Observer {
         gamePlayService.drawTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
     }
 
+    /**
+     * Draws 3 destination cards for you to pick from
+     *
+     * @pre It is the given clients turn. (Can't be called when it is not your turn
+     * @pre You don't have any cards in you're tempDeck
+     * @post 3 destination cards should be added to your temp deck
+     */
     @Override
     public void drawDestinationCards(){
         if (clientModel.getMyPlayer().getTempDeck().size() == 0) {
