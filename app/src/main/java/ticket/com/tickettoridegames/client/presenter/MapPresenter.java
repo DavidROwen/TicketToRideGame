@@ -62,7 +62,8 @@ public class MapPresenter implements IMapPresenter, Observer {
                 mapView.displayDestinationCards(destinationCards);
                 break;
             default:
-                //We don't need to do anything?
+                //updated data we don't care about
+                break;
         }
     }
 
