@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:background="@drawable/train4"
+    tools:context=".client.view.LoginActivity">
+
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="800dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#88000000">
+
+            <TextView
+                android:id="@+id/UserName2"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:text="User Name:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+
+            <TextView
+                android:id="@+id/Password2"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Password: "
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+
+            <TextView
+                android:id="@+id/Confirm"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Confirm: "
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
