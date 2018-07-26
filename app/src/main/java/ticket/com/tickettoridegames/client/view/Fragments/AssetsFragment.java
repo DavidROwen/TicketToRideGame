@@ -81,7 +81,9 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     @Override
     public void setHand(List<TrainCard> hand){
+        hand.sort(TrainCard::compareTo);
         this.hand = hand;
+
         myHandRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
         myHandRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(hand);

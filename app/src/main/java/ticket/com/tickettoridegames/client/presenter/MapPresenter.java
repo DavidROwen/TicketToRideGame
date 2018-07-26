@@ -111,6 +111,8 @@ public class MapPresenter implements IMapPresenter, Observer {
     public void claimRoute(Route route){
         Integer length = 5;
         TrainCard.TRAIN_TYPE type = TrainCard.TRAIN_TYPE.BLACK;
+        type = route.getType();
+        length = route.getLength();
         mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
                 + " prevTrains: " + clientModel.getMyPlayer().getTrains());
 
