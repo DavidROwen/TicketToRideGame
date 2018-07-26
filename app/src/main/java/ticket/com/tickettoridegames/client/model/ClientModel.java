@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +13,14 @@ import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
+import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.User;
 
 import static ticket.com.tickettoridegames.utility.TYPE.DESTINATIONUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.DISCARDDESTINATION;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
+import static ticket.com.tickettoridegames.utility.TYPE.ROUTECLAIMED;
 import static ticket.com.tickettoridegames.utility.TYPE.START;
 import static ticket.com.tickettoridegames.utility.TYPE.TURNCHANGED;
 
@@ -225,6 +228,17 @@ public class ClientModel extends Observable {
 
         setChanged();
         notifyObservers(TURNCHANGED);
+    }
+
+    public void claimRoute(String playerID, Route route){
+        Boolean status = getMyActiveGame().claimRoute(playerID, route);
+
+        setChanged();
+        notifyObservers(ROUTECLAIMED);
+    }
+
+    public Map<Integer, Set<Route>> getClaimedRoutes(){
+        return getMyActiveGame().getClaimedRouteColors();
     }
 
     public boolean isMyTurn(){

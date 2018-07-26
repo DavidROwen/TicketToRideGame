@@ -571,6 +571,17 @@ public class Game extends Observable {
         clearChanged();
     }
 
+    // This function returns all claimed routs associated with the color that they should be on the map
+    public Map<Integer, Set<Route>> getClaimedRouteColors(){
+        Map<Integer, Set<Route>> routes = new HashMap<>();
+
+        for (Player player : players.values()){
+            routes.put(player.getColorValue(),player.getClaimedRoutes());
+        }
+
+        return routes;
+    }
+
     public Integer getTurnNumber() {
         return turnNumber;
     }

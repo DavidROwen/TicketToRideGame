@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
+import java.util.Map;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
@@ -19,4 +20,6 @@ public interface IMapView {
     void placeTrains(Route route, TrainCard.TRAIN_TYPE color);
 
     void disablePickRoutes();
+
+    void setClaimedRoutes(Map<Integer, Set<Route>> routes);
 }
