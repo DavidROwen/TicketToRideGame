@@ -407,6 +407,14 @@ public class Game extends Observable {
         }
     }
 
+    /**
+     * Places Destination cards in the bottom of the destination card deck
+     *
+     * @pre cards cannot be empty or null
+     * @post destinatonCards.size() == old(destinationCards.size()) + cards.size()
+     * @post destinatonCards.size() >= 1
+     * @param cards a list of destination cards
+     */
     public void discardDestinationCards(List<DestinationCard> cards){
         for(DestinationCard card : cards){
             addDestinationCard(card);

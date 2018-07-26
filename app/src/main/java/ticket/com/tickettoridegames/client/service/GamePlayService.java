@@ -20,7 +20,22 @@ import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
 
+/**
+ * Creates game play related commands to be send to the server.
+ * Also receives game play related commands from the server
+ *
+ * @invariant All commands have a void return type because they are used to execute commands
+ */
 public class GamePlayService implements IGameService {
+    /**
+     * Starts the game for everyone in a game lobby.
+     *
+     * @pre the game(tied the the gameId) has enough players to start
+     * @pre gameId is of type String
+     * @pre one player hit the start game button in the lobby
+     * @post the game has been started on the server and on each client in the game
+     * @param gameId a string id that corresponds to a game on the server
+     */
     @Override
     public void initGame(String gameId) {
 //            new GameService.initGame(gameId);
