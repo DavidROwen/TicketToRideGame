@@ -25,6 +25,8 @@ import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
 
+import static android.graphics.Color.GRAY;
+
 public class StatsFragment extends BasicFragment implements IStatsView{
 
     //Variables
@@ -188,6 +190,7 @@ class StatsCustomViewHolder extends RecyclerView.ViewHolder{
 
     public void bindResult(PlayerStats playerStat){
         line1.setText(String.valueOf(playerStat.getName()));
+        line1.setTextColor(GRAY);
         line1.setBackgroundColor(playerStat.getColor());
         line2.setText(String.valueOf(playerStat.getPoints()));
         line3.setText(String.valueOf(playerStat.getNumberOfPieces()));
