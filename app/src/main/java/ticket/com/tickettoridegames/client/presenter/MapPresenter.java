@@ -111,14 +111,18 @@ public class MapPresenter implements IMapPresenter, Observer {
     public void claimRoute(Route route){
         Integer length = 5;
         TrainCard.TRAIN_TYPE type = TrainCard.TRAIN_TYPE.BLACK;
-        type = route.getType();
-        length = route.getLength();
+        if (route == null){
+            mapView.displayMessage("No route selected.");
+            Route routeStub = new Route(new City("a"), new City("b"), length, type);
+            clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), routeStub);
+        }
+        else {
+            type = route.getType();
+            length = route.getLength();
+            clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
+        }
         mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
                 + " prevTrains: " + clientModel.getMyPlayer().getTrains());
-
-        Route routeStub = new Route(new City("a"), new City("b"), length, type);
-        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), routeStub);
-//        clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
     }
 
     @Override
