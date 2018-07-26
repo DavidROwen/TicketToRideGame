@@ -183,6 +183,10 @@ public class ClientModel extends Observable {
         myNotify(NEWTEMPDECK);
     }
 
+    public void clearTempDeck(){
+        getMyPlayer().clearTempDeck();
+    }
+
     public void updateDestinationCards(String playerId, List<DestinationCard> cards){
         Game game = getMyActiveGame();
         game.claimDestinationCards(cards, playerId);

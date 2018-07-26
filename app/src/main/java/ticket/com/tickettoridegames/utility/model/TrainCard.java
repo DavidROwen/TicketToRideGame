@@ -1,6 +1,6 @@
 package ticket.com.tickettoridegames.utility.model;
 
-public class TrainCard {
+public class TrainCard implements Comparable<TrainCard>{
     public enum TRAIN_TYPE {RED, BLUE, GREEN, PINK, ORANGE, WHITE, BLACK, YELLOW, WILD}
     public static final Integer NUM_TYPES = 9;
 
@@ -26,5 +26,10 @@ public class TrainCard {
     @Override
     public int hashCode() {
         return type.ordinal(); //returns position in enum
+    }
+
+    @Override
+    public int compareTo(TrainCard card){
+        return type.compareTo(card.getType());
     }
 }

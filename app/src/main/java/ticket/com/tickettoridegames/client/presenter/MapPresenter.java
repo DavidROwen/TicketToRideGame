@@ -34,6 +34,9 @@ public class MapPresenter implements IMapPresenter, Observer {
             mapView.displayDestinationCards(destinationCards);
             mapView.disableTurn();
         }
+        else {
+            mapView.disablePickRoutes();
+        }
     }
 
     @Override
@@ -57,30 +60,9 @@ public class MapPresenter implements IMapPresenter, Observer {
                 List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
                 Set<DestinationCard> destinationCards = new HashSet<>(cards);
                 mapView.displayDestinationCards(destinationCards);
-
-//                for(DestinationCard card : clientModel.getMyPlayer().getTempDeck()) {
-//                    output += card.toString() + " ";
-//                }
-//                output += "\n";
-//
-//                //return card 0
-//                LinkedList<DestinationCard> returnedCards = new LinkedList<>();
-//                DestinationCard card0 = clientModel.getMyPlayer().getTempDeck().get(0);
-//                returnedCards.add(card0);
-//                gamePlayService.returnDestinationCard(gameId, returnedCards);
-//                output += "returning: " + card0.to_String()  + "\n";
-//
-//                //claim cards
-//                LinkedList<DestinationCard> claimedCards = new LinkedList<>();
-//                DestinationCard card1 = clientModel.getMyPlayer().getTempDeck().get(1);
-//                claimedCards.add(card1);
-//                DestinationCard card2 = clientModel.getMyPlayer().getTempDeck().get(2);
-//                claimedCards.add(card2);
-//                gamePlayService.returnDestinationCard(gameId, claimedCards);
-//                output += "claiming: " + card1.to_String() + " " + card2.to_String() + "\n";
                 break;
             default:
-                //Why you updated me?
+                //We don't need to do anything?
         }
     }
 
@@ -129,6 +111,8 @@ public class MapPresenter implements IMapPresenter, Observer {
     public void claimRoute(Route route){
         Integer length = 5;
         TrainCard.TRAIN_TYPE type = TrainCard.TRAIN_TYPE.BLACK;
+        type = route.getType();
+        length = route.getLength();
         mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
                 + " prevTrains: " + clientModel.getMyPlayer().getTrains());
 
@@ -148,6 +132,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         else {
             gamePlayService.claimDestinationCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), claimedCards);
             gamePlayService.returnDestinationCard(clientModel.getMyActiveGame().getId(), discardedCards);
+            clientModel.clearTempDeck();
             mapView.disablePickRoutes();
         }
     }
