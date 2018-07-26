@@ -68,7 +68,6 @@ public class Game extends Observable {
         this.maxPlayers = numberOfPlayers;
         this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
-        this.isStarted = false;
         this.newestChat = null;
         this.trainBank = new LinkedList<>();
         this.isStarted = false;
