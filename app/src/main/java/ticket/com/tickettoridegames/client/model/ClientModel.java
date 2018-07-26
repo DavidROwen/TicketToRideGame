@@ -217,7 +217,6 @@ public class ClientModel extends Observable {
         setChanged();
         if(arg != null) { notifyObservers(arg); }
         else { notifyObservers(); }
-//        clearChanged();
     }
 
     public void changeTurn(String gameId){

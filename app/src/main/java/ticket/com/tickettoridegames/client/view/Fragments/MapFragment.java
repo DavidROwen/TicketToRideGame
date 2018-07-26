@@ -748,6 +748,13 @@ public class MapFragment extends BasicFragment implements IMapView{
                 presenter.claimRoute(trainTracks.get(routeButtons.get("floatingActionButton109")));
             }
         });
+        FloatingActionButton floatingActionButton110 = (FloatingActionButton) view.findViewById(R.id.floatingActionButton110);
+        floatingActionButton110.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.claimRoute(trainTracks.get(routeButtons.get("floatingActionButton110")));
+            }
+        });
 
 
         //Now specific components here
@@ -857,8 +864,30 @@ public class MapFragment extends BasicFragment implements IMapView{
         builder.create().show();
     }
 
-    public void placeTrains(Route route){
+    public void placeTrains(Route route, TrainCard.TRAIN_TYPE color){
+        String routeName = (String) getKeyFromValue(trainTracks,route);
+        String buttonName = (String) getKeyFromValue(routeButtons,routeName);
 
+        if (color == TrainCard.TRAIN_TYPE.BLACK){
+            //buttonName.setBackgroundTintList(ColorStateList.valueOf(black));
+        }else if(color == TrainCard.TRAIN_TYPE.BLUE){
+            //buttonName.setBackgroundTintList(ColorStateList.valueOf(blue));
+        }else if(color == TrainCard.TRAIN_TYPE.YELLOW){
+            //buttonName.setBackgroundTintList(ColorStateList.valueOf(yellow));
+        }else if(color == TrainCard.TRAIN_TYPE.GREEN){
+            //buttonName.setBackgroundTintList(ColorStateList.valueOf(green));
+        }else if(color == TrainCard.TRAIN_TYPE.RED){
+            //buttonName.setBackgroundTintList(ColorStateList.valueOf(red));
+        }
+    }
+
+    public static Object getKeyFromValue(Map hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
     }
 
     @Override
