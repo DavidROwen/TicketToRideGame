@@ -16,7 +16,7 @@ public interface IMapView {
 
     void displayDestinationCards(Set<DestinationCard> destinationCards);
 
-    void placeTrains(Route route);
+    void placeTrains(Route route, TrainCard.TRAIN_TYPE color);
 
     void disablePickRoutes();
 }
