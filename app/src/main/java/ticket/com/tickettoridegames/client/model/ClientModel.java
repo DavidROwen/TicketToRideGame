@@ -1,12 +1,12 @@
 package ticket.com.tickettoridegames.client.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
 
+import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
@@ -42,9 +42,26 @@ public class ClientModel extends Observable {
     private Game myActiveGame = null;
     private Player myPlayer = null;
 
+    private PlayerState currentState;
+
     private ClientModel() {
         if(gameList == null) {
             gameList = new HashMap<>();
+        }
+    }
+
+    public PlayerState getCurrentState(){
+        return currentState;
+    }
+
+    public void setState(PlayerState newState){
+        if(currentState != null){
+            currentState.exit(this);
+        }
+        currentState = newState;
+        if(currentState != null){
+            System.out.println("changing to state: " + newState.getClass().toString());
+            currentState.enter(this);
         }
     }
 

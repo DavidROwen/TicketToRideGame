@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.presenter;
 import java.util.Observable;
 import java.util.Observer;
 
+import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
@@ -64,5 +65,9 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
     @Override
     public void pickupCard(Integer index) {
         gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
+    }
+
+    public PlayerState getCurrentState(){
+        return clientModel.getCurrentState();
     }
 }

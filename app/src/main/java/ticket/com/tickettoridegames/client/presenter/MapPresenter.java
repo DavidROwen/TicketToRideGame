@@ -3,11 +3,11 @@ package ticket.com.tickettoridegames.client.presenter;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
+import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IMapView;
@@ -152,6 +152,10 @@ public class MapPresenter implements IMapPresenter, Observer {
             clientModel.clearTempDeck();
             mapView.disablePickRoutes();
         }
+    }
+
+    public PlayerState getCurrentState(){
+        return clientModel.getCurrentState();
     }
 
 }
