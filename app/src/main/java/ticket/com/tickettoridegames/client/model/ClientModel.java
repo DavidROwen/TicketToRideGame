@@ -1,10 +1,12 @@
 package ticket.com.tickettoridegames.client.model;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
+import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.utility.TYPE;
@@ -13,13 +15,20 @@ import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
+import ticket.com.tickettoridegames.utility.model.PlayerStats;
 import ticket.com.tickettoridegames.utility.model.Route;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
 
+import static ticket.com.tickettoridegames.utility.TYPE.ALLHISTORY;
+import static ticket.com.tickettoridegames.utility.TYPE.BANKUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.DESTINATIONUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.DISCARDDESTINATION;
+import static ticket.com.tickettoridegames.utility.TYPE.HISTORYUPDATE;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWROUTE;
 import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
+import static ticket.com.tickettoridegames.utility.TYPE.NEWTRAINCARD;
 import static ticket.com.tickettoridegames.utility.TYPE.ROUTECLAIMED;
 import static ticket.com.tickettoridegames.utility.TYPE.START;
 import static ticket.com.tickettoridegames.utility.TYPE.TURNCHANGED;
@@ -233,6 +242,54 @@ public class ClientModel extends Observable {
     }
     //END Game History functions
 
+    //GamePlay functions
+    public void setTurnOrder(LinkedList<String> order){
+        getMyActiveGame().setTurnOrder(order);
+    }
+
+    public void setPlayersColors(HashMap<String, Player.COLOR> colors){
+        getMyActiveGame().setPlayersColors(colors);
+    }
+
+    public void setTrainCardsDeck(Stack<TrainCard> deck){
+        getMyActiveGame().setTrainCardsDeck(deck);
+    }
+
+    public void initGame(){
+        getMyActiveGame().initGameNonRandom();
+        myNotify(ALLHISTORY);
+    }
+
+    public List<PlayerStats> getPlayerStats(){
+        return getMyActiveGame().getPlayerStats();
+    }
+
+    public void drawTrainCard(String playerId){
+        getMyActiveGame().drawTrainCard(playerId);
+        myNotify(NEWTRAINCARD);
+        myNotify(HISTORYUPDATE);
+    }
+
+    public void pickupTrainCard(String playerId, Integer index){
+        getMyActiveGame().pickupTrainCard(playerId, index);
+        myNotify(NEWTRAINCARD);
+        myNotify(BANKUPDATE);
+        myNotify(HISTORYUPDATE);
+    }
+
+    public List<TrainCard> getTrainBank(){
+        return getMyActiveGame().getTrainBank();
+    }
+
+    public Stack<TrainCard> getTrainCardsDeck(){
+        return getMyActiveGame().getTrainCardsDeck();
+    }
+
+    public List<DestinationCard> getDestinationCards(){
+        return getMyActiveGame().getDestinationCards();
+    }
+    //END Gameplay functions
+
     private void myNotify(Object arg) {
         setChanged();
         if(arg != null) { notifyObservers(arg); }
@@ -250,8 +307,12 @@ public class ClientModel extends Observable {
     public void claimRoute(String playerID, Route route){
         Boolean status = getMyActiveGame().claimRoute(playerID, route);
 
-        setChanged();
-        notifyObservers(ROUTECLAIMED);
+        if(status){
+            myNotify(NEWROUTE);
+            myNotify(NEWTRAINCARD);
+            myNotify(ROUTECLAIMED);
+            myNotify(HISTORYUPDATE);
+        }
     }
 
     public Map<Integer, Set<Route>> getClaimedRoutes(){

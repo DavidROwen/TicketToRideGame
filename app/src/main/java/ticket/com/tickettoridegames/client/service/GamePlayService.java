@@ -120,31 +120,27 @@ public class GamePlayService implements IGameService {
     }
 
     public void setTurnOrder(LinkedList<String> order) {
-        ClientModel.get_instance().getMyActiveGame().setTurnOrder(order);
+        ClientModel.get_instance().setTurnOrder(order);
     }
 
     public void setPlayersColors(HashMap<String, Player.COLOR> colors) {
-        ClientModel.get_instance().getMyActiveGame().setPlayersColors(colors);
+        ClientModel.get_instance().setPlayersColors(colors);
     }
 
     public void initiatingGameNonRandom() {
-        try {
-            ClientModel.get_instance().getMyActiveGame().initGameNonRandom();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        ClientModel.get_instance().initGame();
     }
 
     public void drawingTrainCard(String playerId) {
-        ClientModel.get_instance().getMyActiveGame().drawTrainCard(playerId);
+        ClientModel.get_instance().drawTrainCard(playerId);
     }
 
     public void pickingUpTrainCard(String playerId, Integer index) {
-        ClientModel.get_instance().getMyActiveGame().pickupTrainCard(playerId, index);
+        ClientModel.get_instance().pickupTrainCard(playerId, index);
     }
 
     public void claimingRoute(String playerId, Route route) {
-        ClientModel.get_instance().getMyActiveGame().claimRoute(playerId, route);
+        ClientModel.get_instance().claimRoute(playerId, route);
     }
 
     //Destination Cards (Model) functions
@@ -217,7 +213,7 @@ public class GamePlayService implements IGameService {
         Stack<TrainCard> deck = new Stack<>();
         deck.addAll(Arrays.asList(temp));
 
-        ClientModel.get_instance().getMyActiveGame().setTrainCardsDeck(deck);
+        ClientModel.get_instance().setTrainCardsDeck(deck);
     }
 
     public void switchingTurn() {

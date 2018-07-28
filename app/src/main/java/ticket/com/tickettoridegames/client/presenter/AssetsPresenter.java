@@ -19,8 +19,8 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         assetsView = view;
         gamePlayService = new GamePlayService();
         clientModel = ClientModel.get_instance();
-//        clientModel.addObserver(this);
-        clientModel.getMyActiveGame().addObserver(this);
+        clientModel.addObserver(this);
+        //clientModel.getMyActiveGame().addObserver(this);
 
         assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
 
@@ -34,24 +34,24 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
     @Override
     public void update(Observable observable, Object arg){
 //        clientModel = (ClientModel) observable;
-        Game game = (Game) observable;
+        ClientModel clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
             case BANKUPDATE:
                 // Someone else drew a card so update your view
-                assetsView.setBank(game.getTrainBank());
-                assetsView.setTrainDeckCount(game.getTrainCardsDeck().size());
+                assetsView.setBank(clientModel.getTrainBank());
+                assetsView.setTrainDeckCount(clientModel.getTrainCardsDeck().size());
                 break;
             case NEWROUTE:
-                assetsView.setRouteDeckCount(game.getDestinationCards().size());
+                assetsView.setRouteDeckCount(clientModel.getDestinationCards().size());
                 break;
             case NEW_DESTINATION_CARD:
-                assetsView.setRoutes(ClientModel.get_instance().getMyPlayer().getDestinationCards());
-                assetsView.setRouteDeckCount(game.getDestinationCards().size());
+                assetsView.setRoutes(clientModel.getMyPlayer().getDestinationCards());
+                assetsView.setRouteDeckCount(clientModel.getDestinationCards().size());
                 break;
             case NEWTRAINCARD:
                 assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
-                assetsView.setTrainDeckCount(game.getTrainCardsDeck().size());
+                assetsView.setTrainDeckCount(clientModel.getTrainCardsDeck().size());
                 break;
         }
     }

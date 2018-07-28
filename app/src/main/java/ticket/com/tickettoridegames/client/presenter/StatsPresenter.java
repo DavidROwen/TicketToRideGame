@@ -7,7 +7,6 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.IStatsView;
 import ticket.com.tickettoridegames.utility.TYPE;
-import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class StatsPresenter implements IStatsPresenter , Observer {
@@ -18,25 +17,29 @@ public class StatsPresenter implements IStatsPresenter , Observer {
     public StatsPresenter(IStatsView view){
         statsView = view;
         clientModel = ClientModel.get_instance();
-        //clientModel.addObserver(this);
-        clientModel.getMyActiveGame().addObserver(this);
+        clientModel.addObserver(this);
+        //clientModel.getMyActiveGame().addObserver(this);
 
         statsView.setChat(ClientModel.get_instance().getMyActiveGame().getChatList());
         statsView.setPlayerStats(ClientModel.get_instance().getMyActiveGame().getPlayerStats());
         statsView.setHistory(ClientModel.get_instance().getMyActiveGame().getGameHistory());
     }
 
+    public String getActiveGameId(){
+        return clientModel.getMyActiveGame().getId();
+    }
+
     @Override
     public void update(Observable observable, Object arg){
-        Game game = (Game) observable;
+        ClientModel clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         //Update the stats, chats and history here.
         switch(type){
             case NEWCHAT:
-                statsView.displayChat(game.getNewestChat());
+                statsView.displayChat(clientModel.getNewestChat(getActiveGameId()));
                 break;
-            case STATSUPDATE:
-                statsView.setPlayerStats(game.getPlayerStats());
+            case ROUTECLAIMED:
+                statsView.setPlayerStats(clientModel.getPlayerStats());
                 break;
             case ALLHISTORY:
                 statsView.setHistory(clientModel.getHistory());
@@ -45,7 +48,7 @@ public class StatsPresenter implements IStatsPresenter , Observer {
                 statsView.displayHistory(clientModel.getNewestGameHistory());
                 break;
             case NEWTRAINCARD:
-                statsView.setPlayerStats(game.getPlayerStats());
+                statsView.setPlayerStats(clientModel.getPlayerStats());
                 break;
             default:
                 // We got an update that we don't care about.

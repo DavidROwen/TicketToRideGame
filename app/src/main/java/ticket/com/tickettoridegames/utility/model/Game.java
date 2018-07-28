@@ -180,13 +180,11 @@ public class Game extends Observable {
     public void addToChat(Chat c){
         chatList.add(c);
         newestChat = c;
-        myNotify(TYPE.NEWCHAT);
     }
 
     public void addToHistory(PlayerAction pa){
         gameHistory.add(pa);
         newestHistory = pa;
-        myNotify(TYPE.HISTORYUPDATE);
     }
 
     public Chat getNewestChat(){
@@ -280,7 +278,6 @@ public class Game extends Observable {
     public void drawTrainCard(String playerId) {
         TrainCard card = trainCardsDeck.pop();
         players.get(playerId).addTrainCard(card);
-        myNotify(TYPE.NEWTRAINCARD);
         addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + card.getType()));
     }
 
@@ -343,7 +340,13 @@ public class Game extends Observable {
             initHandAll();
             initTrainBank();
         }
-        myNotify(TYPE.ALLHISTORY);
+    }
+
+    public void initHandAll() {
+        for(String curKey : players.keySet()) {
+            Player curPlayer = players.get(curKey);
+            initHand(curPlayer);
+        }
     }
 
     private void initTrainBank() {
@@ -353,13 +356,6 @@ public class Game extends Observable {
             } catch(Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void initHandAll() {
-        for(String curKey : players.keySet()) {
-            Player curPlayer = players.get(curKey);
-            initHand(curPlayer);
         }
     }
 
@@ -490,10 +486,8 @@ public class Game extends Observable {
         TrainCard pickedCard = trainBank.get(index);
 
         players.get(playerId).addTrainCard(pickedCard);
-        myNotify(TYPE.NEWTRAINCARD);
         //replace card
         trainBank.set(index, drawTrainCard());
-        myNotify(TYPE.BANKUPDATE);
         addToHistory(new PlayerAction(players.get(playerId).getUsername(), "picked up " + pickedCard.getType()));
     }
 
@@ -517,20 +511,14 @@ public class Game extends Observable {
         //add to routes
         routes.get(playerId).add(route);
         player.addClaimedRoute(route);
-        myNotify(TYPE.NEWROUTE);
         //cash out cards
         player.removeTrainCards(neededCards);
-        myNotify(TYPE.NEWTRAINCARD);
         //collect points
         player.addPoints(LENGTH_TO_POINTS[route.getLength()-1]);
-        myNotify(TYPE.STATSUPDATE);
         //place trains
         player.removeTrains(route.getLength());
-        myNotify(TYPE.STATSUPDATE);
         //record it
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.getStart() + " to " + route.getEnd()));
-        myNotify(TYPE.HISTORYUPDATE);
-
         return true;
     }
 
