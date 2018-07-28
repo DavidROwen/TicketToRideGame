@@ -561,7 +561,6 @@ public class Game extends Observable {
         this.trainCardsDeck = trainCardsDeck;
     }
     
-
     // This function returns all claimed routs associated with the color that they should be on the map
     public Map<Integer, Set<Route>> getClaimedRouteColors(){
         Map<Integer, Set<Route>> routes = new HashMap<>();
