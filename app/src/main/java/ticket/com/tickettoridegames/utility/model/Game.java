@@ -178,7 +178,7 @@ public class Game extends Observable {
     }
 
     public void addToChat(Chat c){
-        chatList.add(newestChat);
+        chatList.add(c);
         newestChat = c;
         myNotify(TYPE.NEWCHAT);
     }
