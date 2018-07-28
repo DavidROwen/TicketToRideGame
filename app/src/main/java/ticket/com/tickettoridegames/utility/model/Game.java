@@ -560,13 +560,7 @@ public class Game extends Observable {
     public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
         this.trainCardsDeck = trainCardsDeck;
     }
-
-    private void myNotify(Object arg) {
-        setChanged();
-        if(arg != null) { notifyObservers(arg); }
-        else { notifyObservers(); }
-        clearChanged();
-    }
+    
 
     // This function returns all claimed routs associated with the color that they should be on the map
     public Map<Integer, Set<Route>> getClaimedRouteColors(){
