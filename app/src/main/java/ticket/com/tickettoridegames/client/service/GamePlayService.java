@@ -111,8 +111,7 @@ public class GamePlayService implements IGameService {
 
     @Override
     public void switchTurn(String gameId) {
-        // why are we calling client code? todo: QUESTION: why we are doing this?
-        // new GameService().switchTurn(gameId);
+
         Command command = new Command(GameService.class, new GameService(),
                 "switchTurn", new Object[]{gameId}
                 );
@@ -216,7 +215,7 @@ public class GamePlayService implements IGameService {
         ClientModel.get_instance().setTrainCardsDeck(deck);
     }
 
-    public void switchingTurn() {
-        ClientModel.get_instance().getMyActiveGame().switchTurn();
+    public void switchingTurn(String gameId) {
+        ClientModel.get_instance().changeTurn(gameId);
     }
 }

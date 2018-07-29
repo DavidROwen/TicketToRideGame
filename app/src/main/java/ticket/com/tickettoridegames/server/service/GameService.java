@@ -181,13 +181,13 @@ public class GameService implements IGameService {
 
     @Override
     public void switchTurn(String gameId) {
-        Game game = ServerModel.getInstance().getGames().get(gameId);
+        Game game = ServerModel.getInstance().getGameById(gameId);
         game.switchTurn();
 
 //        new GamePlayService().switchingTurn();
-        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
-                "switchingTurn", null
+        Command switchingTurn = new Command(GamePlayService.class, new GamePlayService(),
+                "switchingTurn", new Object[]{gameId}
         );
-        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
+        CommandsManager.addCommandAllPlayers(switchingTurn, gameId);
     }
 }

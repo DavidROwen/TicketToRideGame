@@ -572,8 +572,8 @@ public class Game extends Observable {
         return routes;
     }
 
-    public Integer getTurnNumber() {
-        return turnNumber;
+    public String getTurnUsername() {
+        return players.get(turnOrder.get(turnNumber)).getUsername();
     }
 
     public String playerUpString() {

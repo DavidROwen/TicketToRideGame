@@ -260,6 +260,7 @@ public class ClientModel extends Observable {
     public void initGame(){
         getMyActiveGame().initGameNonRandom();
         myNotify(ALLHISTORY);
+        myNotify(TURNCHANGED);
     }
 
     public List<PlayerStats> getPlayerStats(){
@@ -304,6 +305,10 @@ public class ClientModel extends Observable {
 
         setChanged();
         notifyObservers(TURNCHANGED);
+    }
+
+    public String getTurnUsername(){
+        return getMyActiveGame().getTurnUsername();
     }
 
     public void claimRoute(String playerID, Route route){

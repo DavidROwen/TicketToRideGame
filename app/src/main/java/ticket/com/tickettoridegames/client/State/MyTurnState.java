@@ -24,8 +24,7 @@ public class MyTurnState extends PlayerState {
     }
 
     public void changeTurn(ClientModel cm) {
-        //todo add a GamePlayService function here
-        cm.changeTurn(cm.getCurrentGameID());
+        gamePlayService.switchTurn(cm.getCurrentGameID());
         cm.setState(NotMyTurnState.getInstance());
     }
 

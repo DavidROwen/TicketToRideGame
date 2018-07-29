@@ -887,6 +887,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         String routeName = (String) getKeyFromValue(trainTracks,route);
         String buttonName = (String) getKeyFromValue(routeButtons,routeName);
 
+        //todo .getPackageName() is causing error-> NullPointerException: name is null
         FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
         button.setBackgroundTintList(ColorStateList.valueOf(color));
     }

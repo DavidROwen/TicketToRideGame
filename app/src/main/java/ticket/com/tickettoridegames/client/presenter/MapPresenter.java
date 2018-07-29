@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
+import ticket.com.tickettoridegames.client.State.MyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
@@ -33,7 +34,7 @@ public class MapPresenter implements IMapPresenter, Observer {
             List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
             Set<DestinationCard> destinationCards = new HashSet<>(cards);
             mapView.displayDestinationCards(destinationCards);
-            mapView.disableTurn();
+            //mapView.disableTurn();
         }
         else {
             mapView.disablePickRoutes();
@@ -49,10 +50,15 @@ public class MapPresenter implements IMapPresenter, Observer {
             case TURNCHANGED:
                 // This will use state in the future
                 if (clientModel.isMyTurn()){
-                    mapView.enableTurn();
+                    clientModel.setState(MyTurnState.getInstance());
+                    mapView.displayMessage("It's your turn");
+                    //mapView.enableTurn();
+
                 }
                 else {
-                    mapView.disableTurn();
+                    //mapView.disableTurn();
+                    String playerTurn = "It's " + clientModel.getTurnUsername() + "'s Turn";
+                    mapView.displayMessage(playerTurn);
                 }
                 break;
             case NEWTEMPDECK:
@@ -114,8 +120,13 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void changeTurn(){
-        getCurrentState().changeTurn(clientModel);
-        mapView.displayMessage("It's now " + clientModel.getMyActiveGame().playerUpString() + "'s turn");
+        if(clientModel.isMyTurn()){
+            mapView.displayMessage("Ending Turn");
+            getCurrentState().changeTurn(clientModel);
+        }
+        else {
+            mapView.displayMessage("It's not your turn");
+        }
     }
 
     @Override
