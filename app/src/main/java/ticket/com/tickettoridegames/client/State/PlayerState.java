@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.utility.model.Route;
 
 public class PlayerState {
 
@@ -20,7 +21,7 @@ public class PlayerState {
 
     public void changeTurn(ClientModel cm) {}
 
-    public void claimRoute(ClientModel cm) {}
+    public void claimRoute(ClientModel cm, Route route) {}
 
     public void drawFromBank(ClientModel cm) {}
 }

@@ -25,7 +25,7 @@ public class StatsPresenter implements IStatsPresenter , Observer {
         statsView.setHistory(ClientModel.get_instance().getMyActiveGame().getGameHistory());
     }
 
-    public String getActiveGameId(){
+    private String getActiveGameId(){
         return clientModel.getMyActiveGame().getId();
     }
 

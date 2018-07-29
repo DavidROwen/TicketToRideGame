@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.Stack;
 
+import ticket.com.tickettoridegames.client.State.NotMyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
@@ -57,6 +58,7 @@ public class ClientModel extends Observable {
         if(gameList == null) {
             gameList = new HashMap<>();
         }
+        setState(NotMyTurnState.getInstance());
     }
 
     public PlayerState getCurrentState(){

@@ -24,7 +24,12 @@ public class NotMyTurnState extends PlayerState {
         //check somehow which state to change to..
 
         //for now just set it to active turn
-        cm.setState(MyTurnState.getInstance());
+        if(cm.isMyTurn()){
+            cm.setState(MyTurnState.getInstance());
+        }
+        else{
+            cm.setState(NotMyTurnState.getInstance());
+        }
     }
 
     public void claimRoute(ClientModel cm) {

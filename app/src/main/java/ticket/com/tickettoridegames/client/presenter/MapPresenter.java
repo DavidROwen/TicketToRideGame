@@ -71,6 +71,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         }
     }
 
+    //todo get rid of this function
     @Override
     public void passOff(){
         // Use this function for phase 2 pass off
@@ -91,7 +92,7 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void drawTrainCard() {
-        gamePlayService.drawTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId());
+        getCurrentState().drawTrainCard(clientModel);
     }
 
     /**
@@ -104,9 +105,7 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void drawDestinationCards(){
         if (clientModel.getMyPlayer().getTempDeck().size() == 0) {
-            String gameId = clientModel.getMyActiveGame().getId();
-            //get cards
-            gamePlayService.drawDestinationCard(clientModel.getUserId(), gameId);
+            getCurrentState().drawDestinationCard(clientModel);
         }
         else {
             mapView.displayMessage("You have already picked cards.");
@@ -115,7 +114,7 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void changeTurn(){
-        clientModel.changeTurn(clientModel.getMyActiveGame().getId());
+        getCurrentState().changeTurn(clientModel);
         mapView.displayMessage("It's now " + clientModel.getMyActiveGame().playerUpString() + "'s turn");
     }
 
@@ -125,13 +124,14 @@ public class MapPresenter implements IMapPresenter, Observer {
         TrainCard.TRAIN_TYPE type = TrainCard.TRAIN_TYPE.BLACK;
         if (route == null){
             mapView.displayMessage("No route selected.");
-            Route routeStub = new Route(new City("a"), new City("b"), length, type);
-            clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), routeStub);
+            //Route routeStub = new Route(new City("a"), new City("b"), length, type);
+            //clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), routeStub);
         }
         else {
             type = route.getType();
             length = route.getLength();
-            clientModel.claimRoute(clientModel.getMyPlayer().getId(), route);
+            getCurrentState().claimRoute(clientModel, route);
+//            clientModel.claimRoute(clientModel.getMyPlayer().getId(), route);
 //            clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
         }
         mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
@@ -154,7 +154,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         }
     }
 
-    public PlayerState getCurrentState(){
+    private PlayerState getCurrentState(){
         return clientModel.getCurrentState();
     }
 
