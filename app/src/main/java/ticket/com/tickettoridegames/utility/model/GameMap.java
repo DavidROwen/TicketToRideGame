@@ -1,5 +1,7 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,14 +10,16 @@ import java.util.Map;
 
 public class GameMap {
     private Map<String, Route> routes = new HashMap<>(); //key is route NAME
+    private Map<String, Pair<Route,Route>> doubleRoutesIndex = new HashMap<>(); //key is route name
     private Route newestClaimedRoute;
 
     public GameMap(){
-        initTrianTracks();
+        initRoutes();
+        initDoubleRoutesIndex();
     }
 
     public Boolean canClaim(Route route) {
-        return routes.get(route.NAME).canClaim();
+        return routes.get(route.NAME) != null && routes.get(route.NAME).canClaim();
     }
 
     public boolean claimRoute(String playerID, Route route){
@@ -48,7 +52,7 @@ public class GameMap {
         return newestClaimedRoute;
     }
 
-    private void initTrianTracks() {
+    private void initRoutes() {
         routes.put("vancouver_calgary", new Route("vancouver_calgary", new City("vancouver"), new City("calgary"), 3, TrainCard.TRAIN_TYPE.WILD, null));
         routes.put("vancouver_seattle_first", new Route("vancouver_seattle_first", new City("vancouver"), new City("seattle"), 1, TrainCard.TRAIN_TYPE.WILD, 1));
         routes.put("vancouver_seattle_second", new Route("vancouver_seattle_second", new City("vancouver"), new City("seattle"), 1, TrainCard.TRAIN_TYPE.WILD, 2));
@@ -149,5 +153,70 @@ public class GameMap {
         routes.put("montreal_newYork", new Route("montreal_newYork", new City("montreal"), new City("newYork"), 3, TrainCard.TRAIN_TYPE.BLUE, null));
         routes.put("newYork_boston_first", new Route("newYork_boston_first", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.YELLOW, 1));
         routes.put("newYork_boston_second", new Route("newYork_boston_second", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.RED, 2));
+    }
+
+    private void initDoubleRoutesIndex() {
+        for(String routeName: routes.keySet()) {
+            if(routeName.contains("_first")) {
+                Route route1 = routes.get(getBaseName(routeName) + "_first");
+                Route route2 = routes.get(getBaseName(routeName) + "_second");
+                Pair pair = new Pair(route1,route2);
+                doubleRoutesIndex.put(getBaseName(routeName), pair);
+                System.out.println(routes.get(getBaseName(routeName) + "_first").NAME);
+            }
+        }
+
+//        doubleRoutesIndex.put("vancouver_seattle", new Pair(routes.get("vancouver_seattle_first"), routes.get("vancouver_seattle_second")));
+//        doubleRoutesIndex.put("seattle_portland", new Pair(routes.get("seattle_portland_first"), routes.get("seattle_portland_second")));
+//        doubleRoutesIndex.put("portland_sanFran", new Pair(routes.get("portland_sanFran_first"), routes.get("portland_sanFran_second")));
+//        doubleRoutesIndex.put("sanFran_SLC", new Pair(routes.get("sanFran_SLC_first"), routes.get("sanFran_SLC_second")));
+//
+//        routes.put("sanFran_SLC_first", new Route("sanFran_SLC_first",new City("sanFran"), new City("SLC"), 5, TrainCard.TRAIN_TYPE.ORANGE, 1));
+//        routes.put("sanfran_LA_second", new Route("sanfran_LA_second",new City("sanFran"), new City("LA"), 3, TrainCard.TRAIN_TYPE.YELLOW, 2));
+//        routes.put("SLC_denver_first", new Route("SLC_denver_first",new City("SLC"), new City("denver"), 3, TrainCard.TRAIN_TYPE.YELLOW, 1));
+//        routes.put("denver_KC_first", new Route("denver_KC_first",new City("denver"), new City("KC"), 4, TrainCard.TRAIN_TYPE.BLACK, 1));
+//        routes.put("duluth_omaha_first", new Route("duluth_omaha_first",new City("duluth"), new City("omaha"), 2, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("omaha_KC_first", new Route("omaha_KC_first",new City("omaha"), new City("KC"), 1, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("KC_oklahomaCity_first", new Route("KC_oklahomaCity_first",new City("KC"), new City("oklahomaCity"), 2, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("KC_oklahomaCity_second", new Route("KC_oklahomaCity_second",new City("KC"), new City("oklahomaCity"), 2, TrainCard.TRAIN_TYPE.WILD, 2));
+//        routes.put("oklahomaCity_dallas_first", new Route("oklahomaCity_dallas_first",new City("oklahomaCity"), new City("dallas"), 2, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("oklahomaCity_dallas_second", new Route("oklahomaCity_dallas_second",new City("oklahomaCity"), new City("dallas"), 2, TrainCard.TRAIN_TYPE.WILD, 2));
+//        routes.put("dallas_houston_first", new Route("dallas_houston_first",new City("dallas"), new City("housten"), 1, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("dallas_houston_second", new Route("dallas_houston_second",new City("dallas"), new City("housten"), 1, TrainCard.TRAIN_TYPE.WILD, 2));
+//        routes.put("KC_saintLouis_first", new Route("KC_saintLouis_first",new City("KC"), new City("saintLouis"), 2, TrainCard.TRAIN_TYPE.BLUE, 1));
+//        routes.put("KC_saintLouis_second", new Route("omaha_chicago",new City("KC"), new City("saintLouis"), 2, TrainCard.TRAIN_TYPE.PINK, 2));
+//        routes.put("newOrleans_atlanta_first", new Route("newOrleans_atlanta_first",new City("newOrleans"), new City("atlanta"), 4, TrainCard.TRAIN_TYPE.YELLOW, 1));
+//        routes.put("newOrleans_atlanta_second", new Route("newOrleans_atlanta_second",new City("newOrleans"), new City("atlanta"), 4, TrainCard.TRAIN_TYPE.ORANGE, 2));
+//        routes.put("saintLouis_chicago_first", new Route("saintLouis_chicago_first",new City("saintLouis"), new City("chicago"), 2, TrainCard.TRAIN_TYPE.GREEN, 1));
+//        routes.put("saintLouis_chicago_second", new Route("saintLouis_chicago_second",new City("saintLouis"), new City("chicago"), 2, TrainCard.TRAIN_TYPE.WHITE, 2));
+//        routes.put("montreal_boston_first", new Route("montreal_boston_first", new City("montreal"), new City("boston"), 2, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("montreal_boston_second", new Route("montreal_boston_second", new City("montreal"), new City("boston"), 2, TrainCard.TRAIN_TYPE.WILD, 2));
+//        routes.put("chicago_pittsburg_first", new Route("chicago_pittsburg_first", new City("chicago"), new City("pittsburg"), 3, TrainCard.TRAIN_TYPE.ORANGE, 1));
+//        routes.put("chicago_pittsburg_second", new Route("chicago_pittsburg_second", new City("chocago"), new City("pittsburg"), 3, TrainCard.TRAIN_TYPE.BLACK, 2));
+//        routes.put("atlanta_raleigh_first", new Route("atlanta_raleigh_first", new City("atlanta"), new City("raleigh"), 2, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("atlanta_raleigh_second", new Route("atlanta_raleigh_second", new City("atlanta"), new City("raleigh"), 2, TrainCard.TRAIN_TYPE.WILD, 2));
+//        routes.put("raleigh_washington_first", new Route("raleigh_washington_first", new City("raleigh"), new City("washington"), 3, TrainCard.TRAIN_TYPE.WILD, 1));
+//        routes.put("raleigh_washington_second", new Route("raleigh_washington_second", new City("raleigh"), new City("washington"), 2, TrainCard.TRAIN_TYPE.WILD, 2));
+//        routes.put("washington_newYork_first", new Route("washington_newYork_first", new City("washington"), new City("newYork"), 2, TrainCard.TRAIN_TYPE.ORANGE, 1));
+//        routes.put("washington_newYork_second", new Route("washington_newYork_second", new City("washington"), new City("newYork"), 2, TrainCard.TRAIN_TYPE.BLACK, 2));
+//        routes.put("pittsburg_newYork_first", new Route("pittsburg_newYork_first", new City("pittsburg"), new City("newYork"), 2, TrainCard.TRAIN_TYPE.GREEN, 1));
+//        routes.put("pittsburg_newYork_second", new Route("pittsburg_newYork_second", new City("pittsburg"), new City("newYork"), 2, TrainCard.TRAIN_TYPE.WHITE, 2));
+//        routes.put("newYork_boston_first", new Route("newYork_boston_first", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.YELLOW, 1));
+//        routes.put("newYork_boston_second", new Route("newYork_boston_second", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.RED, 2));
+    }
+
+    public boolean isDouble(Route route) {
+        return doubleRoutesIndex.get(getBaseName(route.NAME)) != null;
+    }
+
+    public Route getDouble(Route route) {
+        if(!isDouble(route)) { return null; }
+
+        Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(route.NAME));
+        return routePair.first == route ? routePair.second : routePair.first;
+    }
+
+    private String getBaseName(String routeName) {
+        return routeName.replace("_first", "").replace("_second", ""); //remove tag
     }
 }

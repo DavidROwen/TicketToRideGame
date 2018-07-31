@@ -58,7 +58,6 @@ public class Game extends Observable {
         fillDestinationCards();
 
         fillDestinationCards();
-        setupRoutes();
     }
 
     public Game(String name, int numberOfPlayers){
@@ -77,11 +76,6 @@ public class Game extends Observable {
         this.destinationCards = new LinkedList<>();
 
         fillDestinationCards();
-        setupRoutes();
-    }
-
-    public void setupRoutes(){
-        // this function can set the default route data
     }
 
     public String getId() {
@@ -546,10 +540,19 @@ public class Game extends Observable {
         return true;
     }
 
+    //todo put canClaim in player
     private Boolean canClaim(Route route, Player player) {
         return map.canClaim(route)
+                && canWithDoubleRules(route, player)
                 && player.hasTrainCards(getNeededCards(route))
                 && player.hasTrains(route.LENGTH);
+    }
+
+    private boolean canWithDoubleRules(Route route, Player player) {
+        if(!map.isDouble(route)
+                || !map.getDouble(route).isOwned()) { return true; }
+        return players.size() >= 4
+                && !map.getDouble(route).getOwnerId().equals(player.getId());
     }
 
     private TrainCard[] getNeededCards(Route route) {

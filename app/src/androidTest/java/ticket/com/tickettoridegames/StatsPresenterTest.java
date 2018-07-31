@@ -96,8 +96,8 @@ public class StatsPresenterTest {
         //from completed destination cards
         //from claiming a route
         getARedCard();
-        Route redRoute = new Route(new City("a"), new City("b"), 1, TrainCard.TRAIN_TYPE.RED);
-        service.claimingRoute(userId, redRoute);
+        Route redRoute = new Route("a_b", new City("a"), new City("b"), 1, TrainCard.TRAIN_TYPE.RED, null);
+        service.claimingRoute(userId, redRoute.NAME);
         while(view.stats.get(1).getPoints() ==  0);
         while(view.stats.get(1).getNumberOfPieces() == 45);
     }
