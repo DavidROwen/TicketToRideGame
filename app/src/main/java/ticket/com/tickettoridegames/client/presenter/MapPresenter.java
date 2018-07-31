@@ -155,4 +155,6 @@ public class MapPresenter implements IMapPresenter, Observer {
         return clientModel.getCurrentState();
     }
 
+    public void setColorChoice(TrainCard.TRAIN_TYPE color){}
+
 }
