@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Your the Winner"
+                android:text="You're the Winner"
                 android:textColor="#880"
                 android:textSize="100dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
@@ -111,12 +111,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
-
-            <ListView
-                android:id="@+id/history"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
         </LinearLayout>
 
 
