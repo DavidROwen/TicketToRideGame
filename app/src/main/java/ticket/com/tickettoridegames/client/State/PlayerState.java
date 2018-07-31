@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class PlayerState {
 
@@ -20,7 +21,9 @@ public class PlayerState {
 
     public void changeTurn(ClientModel cm) {}
 
-    public void claimRoute(ClientModel cm, String route) {}
+    public Result claimRoute(ClientModel cm, String route) {
+        return new Result(false, null, "Claim hasn't been set up for cur state yet");
+    }
 
     public void drawFromBank(ClientModel cm) {}
 }

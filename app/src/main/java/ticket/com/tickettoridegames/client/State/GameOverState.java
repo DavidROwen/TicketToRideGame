@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class GameOverState extends PlayerState {
 
@@ -22,8 +23,8 @@ public class GameOverState extends PlayerState {
         //no turn to change to.
     }
 
-    public void claimRoute(ClientModel cm) {
-        //can't do that
+    public Result claimRoute(ClientModel cm) {
+        return new Result(false, null, "Game has already ended");
     }
 
     public void drawFromBank(ClientModel cm) {

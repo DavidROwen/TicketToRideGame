@@ -18,6 +18,7 @@ import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 /**
  * Creates game play related commands to be send to the server.
@@ -100,12 +101,12 @@ public class GamePlayService implements IGameService {
     //END Destination Card (Command) functions
 
     @Override
-    public void claimRoute(String gameId, String playerId, String route) {
+    public Result claimRoute(String gameId, String playerId, String route) {
 //        new GameService().claimRoute(gameId, playerId, route);
         Command command = new Command(GameService.class, new GameService(),
                 "claimRoute", new Object[]{gameId, playerId, route}
         );
-        ServerProxy.sendCommand(command);
+        return ServerProxy.sendCommand(command);
     }
 
     @Override

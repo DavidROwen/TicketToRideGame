@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.utility.service;
 import java.util.LinkedList;
 
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public interface IGameService {
     void initGame(String gameId);
@@ -19,7 +20,7 @@ public interface IGameService {
 
     void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards);
 
-    void claimRoute(String gameId, String playerId, String route);
+    Result claimRoute(String gameId, String playerId, String route);
 
     void switchTurn(String gameId);
 }

@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import ticket.com.tickettoridegames.utility.web.Result;
+
+import static ticket.com.tickettoridegames.utility.model.Game.LENGTH_TO_POINTS;
+
 public class Player {
     public enum COLOR {RED, YELLOW, GREEN, BLUE, BLACK}
 
@@ -169,11 +173,24 @@ public class Player {
         }
     }
 
-    public void subtractPoints(Integer points) { this.points -= points; }
+    public Result canClaim(TrainCard.TRAIN_TYPE type, Integer length) {
+        if(type == TrainCard.TRAIN_TYPE.GREY) { return new Result(false, null, "An alternative to grey trainType should have been selected"); }
+        else if(!hasTrainCards(getNeededCards(type,length))) { return new Result(false, null, "Player doesn't have the right cards"); }
+        else if(length > trains) { return new Result(false, null, "Player doesn't have enough trains"); }
+        else { return new Result(true, null, null); }
+    }
 
-    public void addPoints(Integer points) { this.points += points; }
+    public void claimRoute(TrainCard.TRAIN_TYPE type, Integer length) {
+        if(!canClaim(type, length).isSuccess()) { return; }
 
-    public void removeTrains(Integer length) { trains -= length; }
+        removeTrainCards(getNeededCards(type, length));
+        points += LENGTH_TO_POINTS[length-1];
+        trains -= length;
+    }
 
-    public Boolean hasTrains(Integer length) { return length <= trains; }
+    private TrainCard[] getNeededCards(TrainCard.TRAIN_TYPE type, Integer length) {
+        TrainCard[] neededCards = new TrainCard[length];
+        Arrays.fill(neededCards, new TrainCard(type));
+        return neededCards;
+    }
 }

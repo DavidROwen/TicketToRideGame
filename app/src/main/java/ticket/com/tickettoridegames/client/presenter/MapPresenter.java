@@ -15,6 +15,7 @@ import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class MapPresenter implements IMapPresenter, Observer {
 
@@ -116,8 +117,13 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void claimRoute(String route){
-        mapView.displayMessage("Tried to claim route: " + route);
-        getCurrentState().claimRoute(clientModel, route);
+        Result result = getCurrentState().claimRoute(clientModel, route);
+        if(result.isSuccess()) {
+            mapView.displayMessage("Successfully claimed: " + route);
+        } else {
+            mapView.displayMessage("Failed to claim route: " + route
+                    + "\n" + result.getErrorMessage());
+        }
     }
 
     @Override

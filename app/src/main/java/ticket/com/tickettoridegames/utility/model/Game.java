@@ -1,10 +1,8 @@
 package ticket.com.tickettoridegames.utility.model;
 
 import android.graphics.Color;
-import android.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +14,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.UUID;
+
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class Game extends Observable {
     public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
@@ -58,7 +58,6 @@ public class Game extends Observable {
         fillDestinationCards();
 
         fillDestinationCards();
-        setupRoutes();
     }
 
     public Game(String name, int numberOfPlayers){
@@ -77,11 +76,6 @@ public class Game extends Observable {
         this.destinationCards = new LinkedList<>();
 
         fillDestinationCards();
-        setupRoutes();
-    }
-
-    public void setupRoutes(){
-        // this function can set the default route data
     }
 
     public String getId() {
@@ -531,31 +525,43 @@ public class Game extends Observable {
         return trainBank;
     }
 
-    public Boolean claimRoute(String playerId, String routeName) {
+    public Result claimRoute(String playerId, String routeName, TrainCard.TRAIN_TYPE decidedType) {
+        Result result = players.get(playerId).canClaim(decidedType, map.getRoute(routeName).LENGTH);
+        if(!result.isSuccess()){ return result; }
+        return claim(playerId, routeName, decidedType);
+    }
+
+    public Result claimRoute(String playerID, String routeName) {
+        Result result = players.get(playerID).canClaim(map.getRoute(routeName).TYPE, map.getRoute(routeName).LENGTH);
+        if(!result.isSuccess()){ return result; }
+        return claim(playerID, routeName, map.getRoute(routeName).TYPE);
+    }
+
+    private Result claim(String playerId, String routeName, TrainCard.TRAIN_TYPE routeType) {
         Route route = map.getRoute(routeName);
         Player player = players.get(playerId);
 
-        if(!canClaim(route, player)) { return false; }
+        Result result = canClaim(route, player);
+        if(!result.isSuccess()) { return result; }
 
         map.claimRoute(playerId, route);
-        player.removeTrainCards(getNeededCards(route));
-        player.addPoints(LENGTH_TO_POINTS[route.LENGTH-1]);
-        player.removeTrains(route.LENGTH);
+        player.claimRoute(routeType, route.LENGTH); //routeType may be different from route.TYPE
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.START + " to " + route.END));
 
-        return true;
+        return result;
     }
 
-    private Boolean canClaim(Route route, Player player) {
-        return map.canClaim(route)
-                && player.hasTrainCards(getNeededCards(route))
-                && player.hasTrains(route.LENGTH);
+    private Result canClaim(Route route, Player player) {
+        if(!map.canClaim(route)) { return new Result(false, null, "Route has already been claimed"); }
+        return canWithDoubleRules(route, player);
     }
 
-    private TrainCard[] getNeededCards(Route route) {
-        TrainCard[] neededCards = new TrainCard[route.LENGTH];
-        Arrays.fill(neededCards, new TrainCard(route.TYPE));
-        return neededCards;
+    private Result canWithDoubleRules(Route route, Player player) {
+        if(!map.isDouble(route)
+                || !map.getDouble(route).isOwned()) { return new Result(true, null, null); }
+        else if(players.size() >= 4) { return new Result(false, null, "Game needs at least 4 players to play on the second route of a double route"); }
+        else if(!map.getDouble(route).getOwnerId().equals(player.getId())) { return new Result(false, null, "Players can't play on both routes of a double route"); }
+        else { return new Result(true, null, null); }
     }
 
     public List<PlayerStats> getPlayerStats(){
@@ -631,17 +637,5 @@ public class Game extends Observable {
         return new Pair(map.getNewestClaimedRoute(), color);
     }
 
-    public Integer completedDestinationPoints(Player player){
-        //ArrayList<>
-        Integer points = 0;
-        for (Route route:map.getPlayersRoutes(player.getId())) {
 
-        }
-        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations
-            if(!destinationCard.isCompleted()){ //if not completed
-
-            }
-        }
-        return points;
-    }
 }

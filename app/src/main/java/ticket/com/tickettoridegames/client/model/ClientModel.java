@@ -1,7 +1,5 @@
 package ticket.com.tickettoridegames.client.model;
 
-import android.util.Pair;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,12 +14,14 @@ import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.tickettoridegames.utility.model.Pair;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 import static ticket.com.tickettoridegames.utility.TYPE.ALLHISTORY;
 import static ticket.com.tickettoridegames.utility.TYPE.BANKUPDATE;
@@ -313,10 +313,21 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getTurnUsername();
     }
 
-    public void claimRoute(String playerID, String route){
-        Boolean status = getMyActiveGame().claimRoute(playerID, route);
+    public void claimRoute(String playerID, String route, TrainCard.TRAIN_TYPE decidedType) {
+        Result result = getMyActiveGame().claimRoute(playerID, route, decidedType);
 
-        if(status){
+        if(result.isSuccess()){
+            myNotify(NEWROUTE);
+            myNotify(NEWTRAINCARD);
+            myNotify(ROUTECLAIMED);
+            myNotify(HISTORYUPDATE);
+        }
+    }
+
+    public void claimRoute(String playerID, String route) {
+        Result result = getMyActiveGame().claimRoute(playerID, route);
+
+        if(result.isSuccess()){
             myNotify(NEWROUTE);
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);

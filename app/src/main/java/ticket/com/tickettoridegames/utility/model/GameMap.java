@@ -8,14 +8,16 @@ import java.util.Map;
 
 public class GameMap {
     private Map<String, Route> routes = new HashMap<>(); //key is route NAME
+    private Map<String, Pair<Route,Route>> doubleRoutesIndex = new HashMap<>(); //key is route name
     private Route newestClaimedRoute;
 
     public GameMap(){
-        initTrianTracks();
+        initRoutes();
+        initDoubleRoutesIndex();
     }
 
     public Boolean canClaim(Route route) {
-        return routes.get(route.NAME).canClaim();
+        return routes.get(route.NAME) != null && routes.get(route.NAME).canClaim();
     }
 
     public boolean claimRoute(String playerID, Route route){
@@ -59,7 +61,7 @@ public class GameMap {
         return newestClaimedRoute;
     }
 
-    private void initTrianTracks() {
+    private void initRoutes() {
         routes.put("vancouver_calgary", new Route("vancouver_calgary", new City("vancouver"), new City("calgary"), 3, TrainCard.TRAIN_TYPE.WILD, null));
         routes.put("vancouver_seattle_first", new Route("vancouver_seattle_first", new City("vancouver"), new City("seattle"), 1, TrainCard.TRAIN_TYPE.WILD, 1));
         routes.put("vancouver_seattle_second", new Route("vancouver_seattle_second", new City("vancouver"), new City("seattle"), 1, TrainCard.TRAIN_TYPE.WILD, 2));
@@ -160,5 +162,28 @@ public class GameMap {
         routes.put("montreal_newYork", new Route("montreal_newYork", new City("montreal"), new City("newYork"), 3, TrainCard.TRAIN_TYPE.BLUE, null));
         routes.put("newYork_boston_first", new Route("newYork_boston_first", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.YELLOW, 1));
         routes.put("newYork_boston_second", new Route("newYork_boston_second", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.RED, 2));
+    }
+
+    private void initDoubleRoutesIndex() {
+        for(String routeName: routes.keySet()) {
+            if(routeName.contains("_first")) {
+                doubleRoutesIndex.put(getBaseName(routeName), new Pair<Route, Route>(routes.get(getBaseName(routeName) + "_first"), routes.get(getBaseName(routeName) + "_second")));
+            }
+        }
+    }
+
+    public boolean isDouble(Route route) {
+        return doubleRoutesIndex.get(getBaseName(route.NAME)) != null;
+    }
+
+    public Route getDouble(Route route) {
+        if(!isDouble(route)) { return null; }
+
+        Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(route.NAME));
+        return routePair.first == route ? routePair.second : routePair.first;
+    }
+
+    private String getBaseName(String routeName) {
+        return routeName.replace("_first", "").replace("_second", ""); //remove tag
     }
 }

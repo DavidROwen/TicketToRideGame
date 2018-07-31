@@ -1,12 +1,11 @@
 package ticket.com.tickettoridegames.client.view;
 
-import android.util.Pair;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
+import ticket.com.tickettoridegames.utility.model.Pair;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 
