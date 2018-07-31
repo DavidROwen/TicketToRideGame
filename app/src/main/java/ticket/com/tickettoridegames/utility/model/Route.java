@@ -97,4 +97,20 @@ public class Route {
                 end + ": " + length.toString() + " points";
         return message;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Boolean claim(String playerID) {
+        if(!canClaim()) { return false; }
+
+        owned = true;
+        ownerId = playerID;
+        return true;
+    }
+
+    private boolean canClaim() {
+        return !isOwned();
+    }
 }
