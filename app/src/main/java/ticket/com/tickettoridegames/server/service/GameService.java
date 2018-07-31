@@ -3,21 +3,17 @@ package ticket.com.tickettoridegames.server.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.server.CommandsManager;
 import ticket.com.tickettoridegames.server.model.ServerModel;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
@@ -176,17 +172,16 @@ public class GameService implements IGameService {
     //End Destination Card Functions
 
     @Override
-    public void claimRoute(String gameId, String playerId, Route route) {
-        //todo
-//        Game game = ServerModel.getInstance().getGames().get(gameId);
-//        Boolean success = game.claimRoute(playerId, route);
-//        if(!success) { return; } //nothing changed
-//
-////        new GamePlayService().claimingRoute(playerId, route);
-//        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
-//                "claimingRoute", new Object[]{playerId, route}
-//        );
-//        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
+    public void claimRoute(String gameId, String playerId, String route) {
+        Game game = ServerModel.getInstance().getGames().get(gameId);
+        Boolean success = game.claimRoute(playerId, route);
+        if(!success) { return; } //nothing changed
+
+//        new GamePlayService().claimingRoute(playerId, route);
+        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
+                "claimingRoute", new Object[]{playerId, route}
+        );
+        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
     }
 
     @Override

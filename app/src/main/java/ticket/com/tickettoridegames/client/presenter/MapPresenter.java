@@ -116,16 +116,8 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void claimRoute(String route){
-        Integer length = 5;
-        TrainCard.TRAIN_TYPE type = TrainCard.TRAIN_TYPE.BLACK;
-        if (route == null){
-            mapView.displayMessage("No route selected.");
-        }
-        else {
-            //todo go to server
-            getCurrentState().claimRoute(clientModel, route);
-        }
         mapView.displayMessage("Tried to claim route: " + route);
+        getCurrentState().claimRoute(clientModel, route);
     }
 
     @Override

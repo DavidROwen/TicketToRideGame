@@ -15,7 +15,6 @@ import ticket.com.tickettoridegames.server.service.GameService;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
@@ -101,8 +100,8 @@ public class GamePlayService implements IGameService {
     //END Destination Card (Command) functions
 
     @Override
-    public void claimRoute(String gameId, String playerId, Route route) {
-//            new GameService().claimRoute(gameId, playerId, route);
+    public void claimRoute(String gameId, String playerId, String route) {
+//        new GameService().claimRoute(gameId, playerId, route);
         Command command = new Command(GameService.class, new GameService(),
                 "claimRoute", new Object[]{gameId, playerId, route}
         );
@@ -138,9 +137,8 @@ public class GamePlayService implements IGameService {
         ClientModel.get_instance().pickupTrainCard(playerId, index);
     }
 
-    public void claimingRoute(String playerId, Route route) {
-        //todo
-//        ClientModel.get_instance().claimRoute(playerId, route);
+    public void claimingRoute(String playerId, String route) {
+        ClientModel.get_instance().claimRoute(playerId, route);
     }
 
     //Destination Cards (Model) functions

@@ -532,7 +532,7 @@ public class Game extends Observable {
     }
 
     public Boolean claimRoute(String playerId, String routeName) {
-        Route route = map.getRoute(routeName); //todo individual params so not changeable
+        Route route = map.getRoute(routeName);
         Player player = players.get(playerId);
 
         if(!canClaim(route, player)) { return false; }

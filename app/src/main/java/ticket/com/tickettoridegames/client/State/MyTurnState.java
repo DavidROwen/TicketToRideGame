@@ -24,12 +24,11 @@ public class MyTurnState extends PlayerState {
 
     public void changeTurn(ClientModel cm) {
         gamePlayService.switchTurn(cm.getCurrentGameID());
-        cm.setState(NotMyTurnState.getInstance());
+        cm.setState(NotMyTurnState.getInstance()); //todo should be coming from server
     }
 
     public void claimRoute(ClientModel cm, String route) {
-        //todo add a GamePlayService function to call here
-        cm.claimRoute(cm.getUserId(), route);
+        gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
     }
 
     public void drawFromBank(ClientModel cm) {}
