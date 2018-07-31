@@ -25,6 +25,7 @@ import ticket.com.tickettoridegames.client.presenter.MapPresenter;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Route;
+import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public class MapFragment extends BasicFragment implements IMapView{
 
@@ -49,9 +50,6 @@ public class MapFragment extends BasicFragment implements IMapView{
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.map_fragment,parent,false);
-        //presenter = new MapPresenter(this);
-
-        //Init
         initButtonToRouteConversion();
 
         for(String buttonName : buttonToRouteConversion.keySet()) {
@@ -91,15 +89,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        placeTrainsButton = (Button)view.findViewById(R.id.button2);
-        placeTrainsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                //presenter.claimRoute(chosenRoute);
-            }
-        });
         presenter = new MapPresenter(this);
-
         return view;
     }
 
