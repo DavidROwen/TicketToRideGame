@@ -610,7 +610,6 @@ public class Game extends Observable {
                 return Color.BLACK;
             default:
                 return null;
-
         }
     }
 
@@ -634,7 +633,7 @@ public class Game extends Observable {
     public Pair<Route, Integer> getNewestClaimedRoute() {
         Player.COLOR playerColor =  players.get(map.getNewestClaimedRoute().getOwnerId()).getColor();
         Integer color = playerColorToColor(playerColor);
-        return new Pair(map.getNewestClaimedRoute(), color);
+        return new Pair<Route, Integer>(map.getNewestClaimedRoute(), color);
     }
 
 

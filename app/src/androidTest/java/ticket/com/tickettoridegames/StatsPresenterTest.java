@@ -4,23 +4,18 @@ import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
-import ticket.com.tickettoridegames.client.presenter.AssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.StatsPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
-import ticket.com.tickettoridegames.client.view.IAssetsView;
 import ticket.com.tickettoridegames.client.view.IStatsView;
 import ticket.com.tickettoridegames.client.web.Poller;
-import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.City;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
@@ -96,7 +91,7 @@ public class StatsPresenterTest {
         //from completed destination cards
         //from claiming a route
         getARedCard();
-        Route redRoute = new Route("a_b", new City("a"), new City("b"), 1, TrainCard.TRAIN_TYPE.RED, null);
+        Route redRoute = new Route("a_b", new City("a"), new City("b"), 1, TrainCard.TRAIN_TYPE.RED);
         service.claimingRoute(userId, redRoute.NAME);
         while(view.stats.get(1).getPoints() ==  0);
         while(view.stats.get(1).getNumberOfPieces() == 45);

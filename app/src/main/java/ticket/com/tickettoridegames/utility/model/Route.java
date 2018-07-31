@@ -8,15 +8,13 @@ public class Route {
     public final TrainCard.TRAIN_TYPE TYPE;
     public final City START;
     public final City END;
-    public final Integer routeNum; //if there is only one then it will be null
 
-    public Route(String name, City start, City end, Integer length, TrainCard.TRAIN_TYPE type, Integer routeNum) {
+    public Route(String name, City start, City end, Integer length, TrainCard.TRAIN_TYPE type) {
         this.NAME = name;
         this.START = start;
         this.END = end;
         this.LENGTH = length;
         this.TYPE = type;
-        this.routeNum = routeNum;
     }
 
     @Override
