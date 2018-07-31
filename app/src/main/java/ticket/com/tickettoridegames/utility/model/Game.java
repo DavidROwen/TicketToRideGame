@@ -271,11 +271,6 @@ public class Game extends Observable {
         return counts;
     }
 
-    private TrainCard getRandomTrainCard() {
-        Integer randInt = Math.abs(new Random().nextInt() % TrainCard.TRAIN_TYPE.values().length);
-        return new TrainCard(TrainCard.TRAIN_TYPE.values()[randInt]);
-    }
-
     public void drawTrainCard(String playerId) {
         TrainCard card = trainCardsDeck.pop();
         players.get(playerId).addTrainCard(card);
@@ -318,9 +313,27 @@ public class Game extends Observable {
     }
 
     private void initTrainCardDeck() {
-        for(int i = 0; i < NUM_CARDS_TRAINCARD_DECK; i++) {
-            trainCardsDeck.push(getRandomTrainCard());
+        for (TrainCard.TRAIN_TYPE type: TrainCard.TRAIN_TYPE.values()) {
+            Integer card_count = 12;
+            if (type == TrainCard.TRAIN_TYPE.WILD){
+                card_count = 14;
+            }
+            for (int i = 0; i < card_count; i++) {
+                trainDiscards.add(new TrainCard(type));
+            }
         }
+
+        Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
+        trainCardsDeck.addAll(trainDiscards);
+
+//        for(int i = 0; i < NUM_CARDS_TRAINCARD_DECK; i++) {
+//            trainCardsDeck.push(getRandomTrainCard());
+//        }
+    }
+
+    private TrainCard getRandomTrainCard() {
+        Integer randInt = Math.abs(new Random().nextInt() % TrainCard.TRAIN_TYPE.values().length);
+        return new TrainCard(TrainCard.TRAIN_TYPE.values()[randInt]);
     }
 
     public void initGame() {
