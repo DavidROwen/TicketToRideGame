@@ -4,6 +4,7 @@ import android.graphics.Rect;
 
 public class Route {
 
+    private String name = "";
     private boolean owned;
     private String ownerId;
     private Integer length;

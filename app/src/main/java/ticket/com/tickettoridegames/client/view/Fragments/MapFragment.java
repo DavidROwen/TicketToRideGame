@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -924,17 +925,14 @@ public class MapFragment extends BasicFragment implements IMapView{
         String routeName = (String) getKeyFromValue(trainTracks,route);
         String buttonName = (String) getKeyFromValue(routeButtons,routeName);
 
-        //todo .getPackageName() is causing error-> NullPointerException: name is null
         FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
         button.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
-    public void setClaimedRoutes(Map<Integer, Set<Route>> claimedRoutes){
-        for (Integer color :claimedRoutes.keySet()){
-            Set<Route> routes = claimedRoutes.get(color);
-            for (Route route : routes){
-                placeTrains(route, color);
-            }
+    @Override
+    public void setClaimedRoutes(List<Pair<Route, Integer>> routes) {
+        for (Pair<Route, Integer> each : routes){
+            placeTrains(each.first, each.second);
         }
     }
 

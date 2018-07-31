@@ -1,5 +1,8 @@
 package ticket.com.tickettoridegames.client.view;
 
+import android.util.Pair;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,5 +26,5 @@ public interface IMapView {
 
     void disablePickRoutes();
 
-    void setClaimedRoutes(Map<Integer, Set<Route>> routes);
+    void setClaimedRoutes(List<Pair<Route, Integer>> routes);
 }

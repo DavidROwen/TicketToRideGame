@@ -21,8 +21,6 @@ public class Player {
     private List<TrainCard> trainCards = new LinkedList<>();
     private Set<DestinationCard> destinationCards = new HashSet<>();
 
-    private Set<Route> claimedRoutes = new HashSet<>();
-
     public Player(String username, String id) {
         this.username = username;
         this.id = id;
@@ -125,10 +123,6 @@ public class Player {
         return trainCards.size() + destinationCards.size();
     }
 
-    public Integer getRouteCount(){
-        return claimedRoutes.size();
-    }
-
     public List<DestinationCard> getTempDeck(){return tempDeck;}
 
     public void setTempDeck(List<DestinationCard> deck){
@@ -145,7 +139,7 @@ public class Player {
         stats.setName(getUsername());
 //        stats.setNumberOfCards(getCardCount());
         stats.setNumberOfCards(trainCards.size());
-        stats.setNumberOfRoutes(getRouteCount());
+        stats.setNumberOfRoutes(destinationCards.size());
         stats.setPoints(getPoints());
         stats.setNumberOfPieces(trains);
         stats.setColor(getColorValue());
@@ -180,14 +174,4 @@ public class Player {
     public void removeTrains(Integer length) { trains -= length; }
 
     public Boolean hasTrains(Integer length) { return length <= trains; }
-
-    public Set<Route> getClaimedRoutes() {
-        return claimedRoutes;
-    }
-
-    public void setClaimedRoutes(Set<Route> claimedRoutes) {
-        this.claimedRoutes = claimedRoutes;
-    }
-
-    public void addClaimedRoute(Route route){ this.claimedRoutes.add(route);}
 }

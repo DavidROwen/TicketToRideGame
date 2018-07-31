@@ -1,43 +1,36 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class GameMap {
 
-    private Set<Route> routes;
-    private Map<String, Route> claimedRoutes;
+    private Map<String, Route> routes = new HashMap<>(); //key is route name
 
-    public GameMap(){
-        routes = new HashSet<>();
-        claimedRoutes = new HashMap<>();
-    }
+    public GameMap(){}
 
     public boolean claimRoute(String playerID, Route route){
-        if (claimedRoutes.containsValue(route)){
-            return false;
+        return true; //todo init routes here
+    }
+
+    public Map<String, Route> getRoutes() {
+        return Collections.unmodifiableMap(routes);
+    }
+
+    public List<Route> getClaimedRoutes() {
+        List<Route> claimed = new ArrayList<>();
+
+        for(String each : routes.keySet()) {
+            Route route = routes.get(each);
+            if(route.isOwned()) { claimed.add(route); }
         }
-        else {
-            claimedRoutes.put(playerID, route);
-            return true;
-        }
-    }
 
-    public Set<Route> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(Set<Route> routes) {
-        this.routes = routes;
-    }
-
-    public Map<String, Route> getClaimedRoutes() {
-        return claimedRoutes;
-    }
-
-    public void setClaimedRoutes(Map<String, Route> claimedRoutes) {
-        this.claimedRoutes = claimedRoutes;
+        return Collections.unmodifiableList(claimed);
     }
 }

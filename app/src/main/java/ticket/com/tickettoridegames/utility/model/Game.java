@@ -1,5 +1,8 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import android.graphics.Color;
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -557,7 +560,6 @@ public class Game extends Observable {
 
         //add to routes
         routes.get(playerId).add(route);
-        player.addClaimedRoute(route);
         //cash out cards
         player.removeTrainCards(neededCards);
         //collect points
@@ -609,14 +611,35 @@ public class Game extends Observable {
     }
     
     // This function returns all claimed routs associated with the color that they should be on the map
-    public Map<Integer, Set<Route>> getClaimedRouteColors(){
-        Map<Integer, Set<Route>> routes = new HashMap<>();
+    public List<Pair<Route, Integer>> getClaimedRoutes(){
+        List<Pair<Route, Integer>> routes = new ArrayList<>();
 
-        for (Player player : players.values()){
-            routes.put(player.getColorValue(),player.getClaimedRoutes());
+        for(Route each : map.getClaimedRoutes()) {
+            Player.COLOR playerColor =  players.get(each.getOwnerId()).getColor();
+            Integer color = playerColorToColor(playerColor);
+            routes.add(new Pair(each, color));
         }
 
         return routes;
+    }
+
+    //todo replace with map in player
+    private Integer playerColorToColor(Player.COLOR color) {
+        switch(color) {
+            case RED:
+                return Color.RED;
+            case YELLOW:
+                return Color.YELLOW;
+            case GREEN:
+                return Color.GREEN;
+            case BLUE:
+                return Color.BLUE;
+            case BLACK:
+                return Color.BLACK;
+            default:
+                return null;
+
+        }
     }
 
     public String getTurnUsername() {
