@@ -193,4 +193,6 @@ public class Player {
         Arrays.fill(neededCards, new TrainCard(type));
         return neededCards;
     }
+
+    public void subtractPoints(Integer points) { this.points -= points; }
 }
