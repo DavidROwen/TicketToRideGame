@@ -7,23 +7,30 @@ import java.util.List;
 import java.util.Map;
 
 public class GameMap {
-    private Map<String, Route> routes = new HashMap<>(); //key is route name
+    private Map<String, Route> routes = new HashMap<>(); //key is route NAME
     private Route newestClaimedRoute;
-
 
     public GameMap(){
         initTrianTracks();
     }
 
+    public Boolean canClaim(Route route) {
+        return routes.get(route.NAME).canClaim();
+    }
+
     public boolean claimRoute(String playerID, Route route){
-        if(!routes.get(route.getName()).claim(playerID)) { return false; }
+        if(!routes.get(route.NAME).canClaim()) { return false; }
 
         newestClaimedRoute = route;
-        return true;
+        return routes.get(route.NAME).claim(playerID);
     }
 
     public Map<String, Route> getRoutes() {
         return Collections.unmodifiableMap(routes);
+    }
+
+    public Route getRoute(String routeName) {
+        return routes.get(routeName);
     }
 
     public List<Route> getClaimedRoutes() {
@@ -35,6 +42,10 @@ public class GameMap {
         }
 
         return Collections.unmodifiableList(claimed);
+    }
+
+    public Route getNewestClaimedRoute() {
+        return newestClaimedRoute;
     }
 
     private void initTrianTracks() {
@@ -138,17 +149,5 @@ public class GameMap {
         routes.put("montreal_newYork", new Route("montreal_newYork", new City("montreal"), new City("newYork"), 3, TrainCard.TRAIN_TYPE.BLUE, null));
         routes.put("newYork_boston_first", new Route("newYork_boston_first", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.YELLOW, 1));
         routes.put("newYork_boston_second", new Route("newYork_boston_second", new City("newYork"), new City("boston"), 2, TrainCard.TRAIN_TYPE.RED, 2));
-    }
-
-    public Route getRoute(String routeName) {
-        return routes.get(routeName);
-    }
-
-    public Boolean isClaimed(Route route) {
-        return routes.get(route.getName()).isOwned();
-    }
-
-    public Route getNewestClaimedRoute() {
-        return newestClaimedRoute;
     }
 }

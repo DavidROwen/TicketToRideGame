@@ -532,40 +532,30 @@ public class Game extends Observable {
     }
 
     public Boolean claimRoute(String playerId, String routeName) {
-        Player player = players.get(playerId);
         Route route = map.getRoute(routeName); //todo individual params so not changeable
+        Player player = players.get(playerId);
 
-        //check not claimed
-        if(isClaimed(route)) { return false; }
+        if(!canClaim(route, player)) { return false; }
 
-        //check player has cards
-        TrainCard[] neededCards = getNeededCards(route);
-        if(!player.hasTrainCards(neededCards)) { return false; }
-
-        //check player has trains
-        if(!player.hasTrains(route.getLength())) { return false; }
-
-        //add to routes
         map.claimRoute(playerId, route);
-        //cash out cards
-        player.removeTrainCards(neededCards);
-        //collect points
-        player.addPoints(LENGTH_TO_POINTS[route.getLength()-1]);
-        //place trains
-        player.removeTrains(route.getLength());
-        //record it
-        addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.getStart() + " to " + route.getEnd()));
+        player.removeTrainCards(getNeededCards(route));
+        player.addPoints(LENGTH_TO_POINTS[route.LENGTH-1]);
+        player.removeTrains(route.LENGTH);
+        addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.START + " to " + route.END));
+
         return true;
     }
 
-    private TrainCard[] getNeededCards(Route route) {
-        TrainCard[] neededCards = new TrainCard[route.getLength()];
-        Arrays.fill(neededCards, new TrainCard(route.getType()));
-        return neededCards;
+    private Boolean canClaim(Route route, Player player) {
+        return map.canClaim(route)
+                && player.hasTrainCards(getNeededCards(route))
+                && player.hasTrains(route.LENGTH);
     }
 
-    private Boolean isClaimed(Route route) {
-        return map.isClaimed(route);
+    private TrainCard[] getNeededCards(Route route) {
+        TrainCard[] neededCards = new TrainCard[route.LENGTH];
+        Arrays.fill(neededCards, new TrainCard(route.TYPE));
+        return neededCards;
     }
 
     public List<PlayerStats> getPlayerStats(){

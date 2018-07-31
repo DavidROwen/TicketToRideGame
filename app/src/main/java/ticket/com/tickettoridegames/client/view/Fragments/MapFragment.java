@@ -39,7 +39,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     private Button drawRoutesButton;
     private Button placeTrainsButton;
 
-    private Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route name
+    private Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route NAME
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -210,7 +210,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     }
 
     public void placeTrains(Route route, Integer color){
-        String buttonName = (String) getKeyFromValue(buttonToRouteConversion,route.getName());
+        String buttonName = (String) getKeyFromValue(buttonToRouteConversion,route.NAME);
 
         FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
         button.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -226,7 +226,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     @Override
     public void claimRoute(Route route, Integer color) {
         placeTrains(route, color);
-    }
+    } //todo rename placetrains
 
     public static Object getKeyFromValue(Map hm, Object value) {
         for (Object o : hm.keySet()) {
