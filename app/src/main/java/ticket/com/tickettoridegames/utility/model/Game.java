@@ -32,6 +32,7 @@ public class Game extends Observable {
     // Stores the playerIDs in turn order
     private List<String> turnOrder;
     private Integer turnNumber = 0;
+    private Turn currentTurn = new Turn();
     private List<TrainCard> trainBank;
     private Map<String, List<Route>> routes = new HashMap<>();
 
@@ -39,7 +40,6 @@ public class Game extends Observable {
     private GameMap map;
     private List<DestinationCard> destinationCards;
     private Stack<TrainCard> trainCardsDeck = new Stack<>();
-//    private TrainCard topTrainCard;
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory = new LinkedList<>();
@@ -298,6 +298,7 @@ public class Game extends Observable {
 
     public void switchTurn() {
         turnNumber = (turnNumber + 1) % players.size();
+        currentTurn = new Turn();
         //notifies in clientModel
     }
 
@@ -574,6 +575,14 @@ public class Game extends Observable {
 
     public String getTurnUsername() {
         return players.get(turnOrder.get(turnNumber)).getUsername();
+    }
+
+    public Turn getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void setCurrentTurn(Turn currentTurn) {
+        this.currentTurn = currentTurn;
     }
 
     public String playerUpString() {

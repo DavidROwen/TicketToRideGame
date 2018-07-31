@@ -53,7 +53,6 @@ public class MapPresenter implements IMapPresenter, Observer {
                     clientModel.setState(MyTurnState.getInstance());
                     mapView.displayMessage("It's your turn");
                     //mapView.enableTurn();
-
                 }
                 else {
                     //mapView.disableTurn();
@@ -72,7 +71,6 @@ public class MapPresenter implements IMapPresenter, Observer {
             case ROUTECLAIMED:
                 mapView.setClaimedRoutes(clientModel.getClaimedRoutes());
             default:
-                //updated data we don't care about
                 break;
         }
     }
@@ -80,20 +78,8 @@ public class MapPresenter implements IMapPresenter, Observer {
     //todo get rid of this function
     @Override
     public void passOff(){
-        // Use this function for phase 2 pass off
-
         // Change turn
         clientModel.changeTurn(clientModel.getMyActiveGame().getId());
-
-        // Change face up deck cards
-        mapView.displayMessage("Prev trainCard at index 1: " + clientModel.getMyActiveGame().getTrainBank().get(1).getType());
-        clientModel.getMyActiveGame().pickupTrainCard(clientModel.getMyPlayer().getId(), 1);
-
-        // Route claiming.
-
-        // Player Points change
-
-        // Trains remaining change
     }
 
     @Override
