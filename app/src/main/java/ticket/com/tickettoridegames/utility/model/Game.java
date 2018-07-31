@@ -559,8 +559,8 @@ public class Game extends Observable {
     private Result canWithDoubleRules(Route route, Player player) {
         if(!map.isDouble(route)
                 || !map.getDouble(route).isOwned()) { return new Result(true, null, null); }
-        else if(players.size() >= 4) { return new Result(false, null, "Game needs at least 4 players to play on the second route of a double route"); }
-        else if(!map.getDouble(route).getOwnerId().equals(player.getId())) { return new Result(false, null, "Players can't play on both routes of a double route"); }
+        else if(players.size() < 4) { return new Result(false, null, "Game needs at least 4 players to play on the second route of a double route"); }
+        else if(map.getDouble(route).getOwnerId().equals(player.getId())) { return new Result(false, null, "Players can't play on both routes of a double route"); }
         else { return new Result(true, null, null); }
     }
 
@@ -610,7 +610,6 @@ public class Game extends Observable {
                 return Color.BLACK;
             default:
                 return null;
-
         }
     }
 
@@ -634,7 +633,7 @@ public class Game extends Observable {
     public Pair<Route, Integer> getNewestClaimedRoute() {
         Player.COLOR playerColor =  players.get(map.getNewestClaimedRoute().getOwnerId()).getColor();
         Integer color = playerColorToColor(playerColor);
-        return new Pair(map.getNewestClaimedRoute(), color);
+        return new Pair<Route, Integer>(map.getNewestClaimedRoute(), color);
     }
 
 
