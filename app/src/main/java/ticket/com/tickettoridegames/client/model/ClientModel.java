@@ -1,7 +1,5 @@
 package ticket.com.tickettoridegames.client.model;
 
-import android.util.Pair;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +14,7 @@ import ticket.com.tickettoridegames.utility.TYPE;
 import ticket.com.tickettoridegames.utility.model.Chat;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.tickettoridegames.utility.model.Pair;
 import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerAction;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;

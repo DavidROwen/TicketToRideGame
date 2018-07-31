@@ -1,7 +1,5 @@
 package ticket.com.tickettoridegames.utility.model;
 
-import android.util.Pair;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +13,7 @@ public class GameMap {
 
     public GameMap(){
         initRoutes();
-//        initDoubleRoutesIndex();
+        initDoubleRoutesIndex();
     }
 
     public Boolean canClaim(Route route) {
@@ -157,13 +155,8 @@ public class GameMap {
 
     private void initDoubleRoutesIndex() {
         for(String routeName: routes.keySet()) {
-            String base = getBaseName(routeName);
-            Route route1 = routes.get(getBaseName(routeName) + "_first");
-            Route route2 = routes.get(getBaseName(routeName) + "_second");
-            Pair pair = new Pair<Route, Route>(route1, route2);
-
             if(routeName.contains("_first")) {
-                doubleRoutesIndex.put(getBaseName(routeName), pair);
+                doubleRoutesIndex.put(getBaseName(routeName), new Pair<Route, Route>(routes.get(getBaseName(routeName) + "_first"), routes.get(getBaseName(routeName) + "_second")));
             }
         }
     }
