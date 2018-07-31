@@ -254,8 +254,13 @@ public class MapFragment extends BasicFragment implements IMapView{
     @Override
     public void setClaimedRoutes(List<Pair<Route, Integer>> routes) {
         for (Pair<Route, Integer> each : routes){
-            placeTrains(each.first, each.second);
+            claimRoute(each.first, each.second);
         }
+    }
+
+    @Override
+    public void claimRoute(Route route, Integer color) {
+        placeTrains(route, color);
     }
 
     public static Object getKeyFromValue(Map hm, Object value) {

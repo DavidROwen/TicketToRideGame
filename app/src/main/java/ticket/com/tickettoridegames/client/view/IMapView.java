@@ -24,6 +24,8 @@ public interface IMapView {
 
     void placeTrains(Route route, TrainCard.TRAIN_TYPE color);
 
+    void claimRoute(Route route, Integer color);
+
     void disablePickRoutes();
 
     void setClaimedRoutes(List<Pair<Route, Integer>> routes);

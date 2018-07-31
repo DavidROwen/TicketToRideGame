@@ -336,6 +336,10 @@ public class ClientModel extends Observable {
         return gameList.get(gameId);
     }
 
+    public Pair<Route,Integer> getNewestClaimedRoute() {
+        return getMyActiveGame().getNewestClaimedRoute();
+    }
+
     public void resetBank(String gameId){
         gameList.get(gameId).resetTrainBank();
 

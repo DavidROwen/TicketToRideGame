@@ -634,4 +634,10 @@ public class Game extends Observable {
         String id = turnOrder.get(turnNumber);
         return players.get(id).getUsername();
     }
+
+    public Pair<Route, Integer> getNewestClaimedRoute() {
+        Player.COLOR playerColor =  players.get(map.getNewestClaimedRoute().getOwnerId()).getColor();
+        Integer color = playerColorToColor(playerColor);
+        return new Pair(map.getNewestClaimedRoute(), color);
+    }
 }

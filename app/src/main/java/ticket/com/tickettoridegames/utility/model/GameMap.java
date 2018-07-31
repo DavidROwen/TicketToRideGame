@@ -1,5 +1,7 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,6 +15,7 @@ public class GameMap {
 
 //    private Map<String, Route> routes = new HashMap<>(); //key is route name
     private Map<String, Route> trainTracks = new HashMap<>(); //temp for routes //key is route name
+    private Route newestClaimedRoute;
 
 
     public GameMap(){
@@ -20,7 +23,10 @@ public class GameMap {
     }
 
     public boolean claimRoute(String playerID, Route route){
-        return trainTracks.get(route.getName()).claim(playerID);
+        if(!trainTracks.get(route.getName()).claim(playerID)) { return false; }
+
+        newestClaimedRoute = route;
+        return true;
     }
 
     public Map<String, Route> getRoutes() {
@@ -151,5 +157,9 @@ public class GameMap {
 
     public Boolean isClaimed(Route route) {
         return trainTracks.get(route.getName()).isOwned();
+    }
+
+    public Route getNewestClaimedRoute() {
+        return newestClaimedRoute;
     }
 }

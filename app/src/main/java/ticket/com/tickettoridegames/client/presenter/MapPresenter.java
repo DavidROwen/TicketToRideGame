@@ -67,7 +67,8 @@ public class MapPresenter implements IMapPresenter, Observer {
                 mapView.displayDestinationCards(destinationCards);
                 break;
             case ROUTECLAIMED:
-                mapView.setClaimedRoutes(clientModel.getClaimedRoutes()); //todo add individually
+                mapView.claimRoute(clientModel.getNewestClaimedRoute().first, clientModel.getNewestClaimedRoute().second);
+                break;
             default:
                 break;
         }
