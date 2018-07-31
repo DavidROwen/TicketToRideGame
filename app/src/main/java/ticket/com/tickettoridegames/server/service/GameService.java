@@ -89,6 +89,15 @@ public class GameService implements IGameService {
                 "pickingUpTrainCard", new Object[]{playerId, index}
         );
         CommandsManager.addCommandAllPlayers(pickCard, gameId);
+
+        if (game.tooManyLocos()){
+            game.resetTrainBank();
+            //        new GamePlayService().resetBank(playerId, index);
+            Command resetBank = new Command(GamePlayService.class, new GamePlayService(),
+                    "resetBank", new Object[]{gameId}
+            );
+            CommandsManager.addCommandAllPlayers(resetBank, gameId);
+        }
     }
 
     //Destination Card Functions

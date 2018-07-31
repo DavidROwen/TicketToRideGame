@@ -333,4 +333,13 @@ public class ClientModel extends Observable {
     private Game getGame(String gameId){
         return gameList.get(gameId);
     }
+
+    public void resetBank(String gameId){
+        gameList.get(gameId).resetTrainBank();
+
+        if (getMyActiveGame().getId().equals(gameId)){
+            setChanged();
+            notifyObservers(BANKUPDATE);
+        }
+    }
 }

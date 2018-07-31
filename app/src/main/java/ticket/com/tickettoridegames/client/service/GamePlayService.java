@@ -218,4 +218,6 @@ public class GamePlayService implements IGameService {
     public void switchingTurn(String gameId) {
         ClientModel.get_instance().changeTurn(gameId);
     }
+
+    public void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
 }

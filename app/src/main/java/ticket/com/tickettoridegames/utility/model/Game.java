@@ -40,6 +40,7 @@ public class Game extends Observable {
     private GameMap map;
     private List<DestinationCard> destinationCards;
     private Stack<TrainCard> trainCardsDeck = new Stack<>();
+    private List<TrainCard> trainDiscards = new ArrayList<>();
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory = new LinkedList<>();
@@ -490,6 +491,38 @@ public class Game extends Observable {
         //replace card
         trainBank.set(index, drawTrainCard());
         addToHistory(new PlayerAction(players.get(playerId).getUsername(), "picked up " + pickedCard.getType()));
+
+        if (tooManyLocos()){
+            resetTrainBank();
+        }
+    }
+
+    public boolean tooManyLocos(){
+        Integer locoCount = 0;
+        for (TrainCard card: trainBank){
+            if (card.getType() == TrainCard.TRAIN_TYPE.WILD){
+                locoCount++;
+                if (locoCount >= 3){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void resetTrainBank(){
+        for (TrainCard card: trainBank){
+            trainDiscards.add(card);
+        }
+        trainBank.clear();
+
+        Collections.shuffle(trainCardsDeck, new Random(trainCardsDeck.hashCode()));
+        for (int i = 0; i < 5; i++){
+            if (trainCardsDeck.empty()){
+                trainCardsDeck.addAll(trainDiscards);
+            }
+            trainBank.add(trainCardsDeck.pop());
+        }
     }
 
     public List<TrainCard> getTrainBank() {
