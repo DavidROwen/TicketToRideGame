@@ -525,27 +525,31 @@ public class Game extends Observable {
         return trainBank;
     }
 
-    public Boolean claimRoute(String playerId, String routeName) {
+    public Boolean claimRoute(String playerId, String routeName, TrainCard.TRAIN_TYPE decidedType) {
+        if(!players.get(playerId).canClaim(decidedType, map.getRoute(routeName).LENGTH)) { return false; }
+        return claim(playerId, routeName, decidedType);
+    }
+
+    public Boolean claimRoute(String playerID, String routeName) {
+        if(!players.get(playerID).canClaim(map.getRoute(routeName).TYPE, map.getRoute(routeName).LENGTH)) { return false; }
+        return claim(playerID, routeName, map.getRoute(routeName).TYPE);
+    }
+
+    private Boolean claim(String playerId, String routeName, TrainCard.TRAIN_TYPE routeType) {
         Route route = map.getRoute(routeName);
         Player player = players.get(playerId);
 
         if(!canClaim(route, player)) { return false; }
 
         map.claimRoute(playerId, route);
-        player.removeTrainCards(getNeededCards(route));
-        player.addPoints(LENGTH_TO_POINTS[route.LENGTH-1]);
-        player.removeTrains(route.LENGTH);
+        player.claimRoute(routeType, route.LENGTH); //routeType may be different from route.TYPE
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.START + " to " + route.END));
 
         return true;
     }
 
-    //todo put canClaim in player
     private Boolean canClaim(Route route, Player player) {
-        return map.canClaim(route)
-                && canWithDoubleRules(route, player)
-                && player.hasTrainCards(getNeededCards(route))
-                && player.hasTrains(route.LENGTH);
+        return map.canClaim(route) && canWithDoubleRules(route, player);
     }
 
     private boolean canWithDoubleRules(Route route, Player player) {
@@ -553,12 +557,6 @@ public class Game extends Observable {
                 || !map.getDouble(route).isOwned()) { return true; }
         return players.size() >= 4
                 && !map.getDouble(route).getOwnerId().equals(player.getId());
-    }
-
-    private TrainCard[] getNeededCards(Route route) {
-        TrainCard[] neededCards = new TrainCard[route.LENGTH];
-        Arrays.fill(neededCards, new TrainCard(route.TYPE));
-        return neededCards;
     }
 
     public List<PlayerStats> getPlayerStats(){
@@ -633,4 +631,6 @@ public class Game extends Observable {
         Integer color = playerColorToColor(playerColor);
         return new Pair(map.getNewestClaimedRoute(), color);
     }
+
+
 }

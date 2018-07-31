@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import static ticket.com.tickettoridegames.utility.model.Game.LENGTH_TO_POINTS;
+
 public class Player {
     public enum COLOR {RED, YELLOW, GREEN, BLUE, BLACK}
 
@@ -169,9 +171,23 @@ public class Player {
         }
     }
 
-    public void addPoints(Integer points) { this.points += points; }
+    public boolean canClaim(TrainCard.TRAIN_TYPE type, Integer length) {
+        return type != TrainCard.TRAIN_TYPE.GREY //should already be switched to a color
+                && hasTrainCards(getNeededCards(type,length))
+                && length <= trains;
+    }
 
-    public void removeTrains(Integer length) { trains -= length; }
+    public void claimRoute(TrainCard.TRAIN_TYPE type, Integer length) {
+        if(!canClaim(type, length)) { return; }
 
-    public Boolean hasTrains(Integer length) { return length <= trains; }
+        removeTrainCards(getNeededCards(type, length));
+        points += LENGTH_TO_POINTS[length-1];
+        trains -= length;
+    }
+
+    private TrainCard[] getNeededCards(TrainCard.TRAIN_TYPE type, Integer length) {
+        TrainCard[] neededCards = new TrainCard[length];
+        Arrays.fill(neededCards, new TrainCard(type));
+        return neededCards;
+    }
 }

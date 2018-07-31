@@ -313,7 +313,18 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getTurnUsername();
     }
 
-    public void claimRoute(String playerID, String route){
+    public void claimRoute(String playerID, String route, TrainCard.TRAIN_TYPE decidedType) {
+        Boolean status = getMyActiveGame().claimRoute(playerID, route, decidedType);
+
+        if(status){
+            myNotify(NEWROUTE);
+            myNotify(NEWTRAINCARD);
+            myNotify(ROUTECLAIMED);
+            myNotify(HISTORYUPDATE);
+        }
+    }
+
+    public void claimRoute(String playerID, String route) {
         Boolean status = getMyActiveGame().claimRoute(playerID, route);
 
         if(status){
