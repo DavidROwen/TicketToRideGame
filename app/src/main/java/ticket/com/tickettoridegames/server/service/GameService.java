@@ -177,15 +177,16 @@ public class GameService implements IGameService {
 
     @Override
     public void claimRoute(String gameId, String playerId, Route route) {
-        Game game = ServerModel.getInstance().getGames().get(gameId);
-        Boolean success = game.claimRoute(playerId, route);
-        if(!success) { return; } //nothing changed
-
-//        new GamePlayService().claimingRoute(playerId, route);
-        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
-                "claimingRoute", new Object[]{playerId, route}
-        );
-        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
+        //todo
+//        Game game = ServerModel.getInstance().getGames().get(gameId);
+//        Boolean success = game.claimRoute(playerId, route);
+//        if(!success) { return; } //nothing changed
+//
+////        new GamePlayService().claimingRoute(playerId, route);
+//        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
+//                "claimingRoute", new Object[]{playerId, route}
+//        );
+//        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
     }
 
     @Override

@@ -17,8 +17,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.UUID;
 
-import ticket.com.tickettoridegames.utility.TYPE;
-
 public class Game extends Observable {
     public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
 
@@ -37,7 +35,6 @@ public class Game extends Observable {
     private Integer turnNumber = 0;
     private Turn currentTurn = new Turn();
     private List<TrainCard> trainBank;
-    private Map<String, List<Route>> routes = new HashMap<>();
 
     // Map data
     private GameMap map;
@@ -124,7 +121,6 @@ public class Game extends Observable {
             }
             else{
                 players.put(p.getId(), p);
-                routes.put(p.getId(), new ArrayList<>());
                 numberOfPlayers++;
                 return true;
             }
@@ -259,16 +255,6 @@ public class Game extends Observable {
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
             counts.put(curPlayer.getId(), curPlayer.getTrains());
-        }
-
-        return counts;
-    }
-
-    public Map<String, Integer> getCountsOfRoutes() {
-        Map<String,Integer> counts = new HashMap<>();
-
-        for(String curId : players.keySet()) {
-            counts.put(curId, routes.get(curId).size());
         }
 
         return counts;
@@ -545,8 +531,9 @@ public class Game extends Observable {
         return trainBank;
     }
 
-    public Boolean claimRoute(String playerId, Route route) {
+    public Boolean claimRoute(String playerId, String routeName) {
         Player player = players.get(playerId);
+        Route route = map.getRoute(routeName); //todo individual params so not changeable
 
         //check not claimed
         if(isClaimed(route)) { return false; }
@@ -559,7 +546,7 @@ public class Game extends Observable {
         if(!player.hasTrains(route.getLength())) { return false; }
 
         //add to routes
-        routes.get(playerId).add(route);
+        map.claimRoute(playerId, route);
         //cash out cards
         player.removeTrainCards(neededCards);
         //collect points
@@ -578,19 +565,8 @@ public class Game extends Observable {
     }
 
     private Boolean isClaimed(Route route) {
-        for(String id : players.keySet()) {
-            for(Route cur : routes.get(id)) {
-//                if(cur == route) { return true; } //todo disabled for testing
-            }
-        }
-
-        return false;
+        return map.isClaimed(route);
     }
-
-    public Map<String, List<Route>> getRoutes() {
-        return routes;
-    }
-
 
     public List<PlayerStats> getPlayerStats(){
         List<PlayerStats> stats = new ArrayList<>();

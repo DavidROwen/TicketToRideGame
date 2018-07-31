@@ -13,9 +13,7 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.tickettoridegames.utility.TYPE;
-import ticket.com.tickettoridegames.utility.model.City;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
-import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public class MapPresenter implements IMapPresenter, Observer {
@@ -69,7 +67,7 @@ public class MapPresenter implements IMapPresenter, Observer {
                 mapView.displayDestinationCards(destinationCards);
                 break;
             case ROUTECLAIMED:
-                mapView.setClaimedRoutes(clientModel.getClaimedRoutes());
+                mapView.setClaimedRoutes(clientModel.getClaimedRoutes()); //todo add individually
             default:
                 break;
         }
@@ -116,7 +114,7 @@ public class MapPresenter implements IMapPresenter, Observer {
     }
 
     @Override
-    public void claimRoute(Route route){
+    public void claimRoute(String route){
         Integer length = 5;
         TrainCard.TRAIN_TYPE type = TrainCard.TRAIN_TYPE.BLACK;
         if (route == null){
@@ -125,14 +123,15 @@ public class MapPresenter implements IMapPresenter, Observer {
             //clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), routeStub);
         }
         else {
-            type = route.getType();
-            length = route.getLength();
+            //todo go to server
+//            type = route.getType();
+//            length = route.getLength();
             getCurrentState().claimRoute(clientModel, route);
 //            clientModel.claimRoute(clientModel.getMyPlayer().getId(), route);
 //            clientModel.getMyActiveGame().claimRoute(clientModel.getMyPlayer().getId(), route);
         }
-        mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
-                + " prevTrains: " + clientModel.getMyPlayer().getTrains());
+//        mapView.displayMessage("Tried to claim route, type: " + type.toString() + " length: " + length
+//                + " prevTrains: " + clientModel.getMyPlayer().getTrains());
     }
 
     @Override

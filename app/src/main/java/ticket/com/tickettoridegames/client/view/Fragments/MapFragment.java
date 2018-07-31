@@ -48,7 +48,6 @@ public class MapFragment extends BasicFragment implements IMapView{
     private Integer green = -16711936;
     private Integer black =  -16777216;
     private IMapPresenter presenter;
-    private Map<String, Route> trainTracks;
     private Button turnButton;
     private Button drawTrainsButton;
     private Button drawRoutesButton;
@@ -59,7 +58,6 @@ public class MapFragment extends BasicFragment implements IMapView{
 
     @Override
     public BasicFragment provideYourFragment() {
-
         return new MapFragment();
     }
 
@@ -68,7 +66,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.claimRoute(trainTracks.get(routeButtons.get(buttonName)));
+                presenter.claimRoute(routeButtons.get(buttonName));
             }
         });
     }
@@ -230,25 +228,24 @@ public class MapFragment extends BasicFragment implements IMapView{
     }
 
     public void placeTrains(Route route, TrainCard.TRAIN_TYPE color){
-        String routeName = (String) getKeyFromValue(trainTracks,route);
-        String buttonName = (String) getKeyFromValue(routeButtons,routeName);
-
-        if (color == TrainCard.TRAIN_TYPE.BLACK){
-            //buttonName.setBackgroundTintList(ColorStateList.valueOf(black));
-        }else if(color == TrainCard.TRAIN_TYPE.BLUE){
-            //buttonName.setBackgroundTintList(ColorStateList.valueOf(blue));
-        }else if(color == TrainCard.TRAIN_TYPE.YELLOW){
-            //buttonName.setBackgroundTintList(ColorStateList.valueOf(yellow));
-        }else if(color == TrainCard.TRAIN_TYPE.GREEN){
-            //buttonName.setBackgroundTintList(ColorStateList.valueOf(green));
-        }else if(color == TrainCard.TRAIN_TYPE.RED){
-            //buttonName.setBackgroundTintList(ColorStateList.valueOf(red));
-        }
+//        String routeName = (String) getKeyFromValue(trainTracks,route);
+//        String buttonName = (String) getKeyFromValue(routeButtons,routeName);
+//
+//        if (color == TrainCard.TRAIN_TYPE.BLACK){
+//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(black));
+//        }else if(color == TrainCard.TRAIN_TYPE.BLUE){
+//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(blue));
+//        }else if(color == TrainCard.TRAIN_TYPE.YELLOW){
+//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(yellow));
+//        }else if(color == TrainCard.TRAIN_TYPE.GREEN){
+//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(green));
+//        }else if(color == TrainCard.TRAIN_TYPE.RED){
+//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(red));
+//        }
     }
 
     public void placeTrains(Route route, Integer color){
-        String routeName = (String) getKeyFromValue(trainTracks,route);
-        String buttonName = (String) getKeyFromValue(routeButtons,routeName);
+        String buttonName = (String) getKeyFromValue(routeButtons,route.getName());
 
         FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
         button.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -275,6 +272,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         drawRoutesButton.setEnabled(false);
     }
 
+    //todo init names with gameMap so they always work
     private void initTrianTracks(){
         routeButtons.put("floatingActionButton13", "vancouver_calgary");
         routeButtons.put("floatingActionButton11", "vancouver_seattle_first");

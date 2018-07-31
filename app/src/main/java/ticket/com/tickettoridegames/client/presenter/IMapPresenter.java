@@ -16,7 +16,7 @@ public interface IMapPresenter {
 
     void changeTurn();
 
-    void claimRoute(Route route);
+    void claimRoute(String route);
 
     void setDestinationCards(LinkedList<DestinationCard> claimedCards, LinkedList<DestinationCard> discardedCards);
 

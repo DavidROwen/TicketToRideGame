@@ -139,7 +139,8 @@ public class GamePlayService implements IGameService {
     }
 
     public void claimingRoute(String playerId, Route route) {
-        ClientModel.get_instance().claimRoute(playerId, route);
+        //todo
+//        ClientModel.get_instance().claimRoute(playerId, route);
     }
 
     //Destination Cards (Model) functions
