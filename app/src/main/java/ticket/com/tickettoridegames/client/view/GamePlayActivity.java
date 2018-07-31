@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.design.widget.TabLayout;
@@ -49,6 +50,12 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void changeView(){
+        Intent intent = new Intent(GamePlayActivity.this, EndGameActivity.class);
+        startActivity(intent);
     }
 
     @Override

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import ticket.com.tickettoridegames.R;
 
-public class EndGameActivity extends AppCompatActivity {
+public class EndGameActivity extends AppCompatActivity implements IEndGameView{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,4 +4,5 @@ public interface IGamePlayActivity {
 
     void displayMessage(String message);
 
+    void changeView();
 }
