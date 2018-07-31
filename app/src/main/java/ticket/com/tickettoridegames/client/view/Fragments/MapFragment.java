@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -864,6 +865,42 @@ public class MapFragment extends BasicFragment implements IMapView{
                 });
 
         builder.create().show();
+    }
+
+    public void displayColorOptions(){
+
+        final CharSequence[] items = {"Black", "Blue", "Green", "Orange", "Pink", "Red", "White", "Yellow", "Wild"};
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        dialogBuilder.setTitle("Colors");
+        dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                String selectedText = items[item].toString();  //Selected item in listview
+
+                if (selectedText == "Black"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.BLACK);
+                }else if(selectedText == "Blue"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.BLUE);
+                }else if(selectedText == "Green"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.GREEN);
+                }else if(selectedText == "Orange"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.ORANGE);
+                }else if(selectedText == "Pink"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.PINK);
+                }else if(selectedText == "Red"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.RED);
+                }else if(selectedText == "White"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.WHITE);
+                }else if(selectedText == "Yellow"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.YELLOW);
+                }else if(selectedText == "Wild"){
+                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.WILD);
+                }
+            }
+        });
+        //Create alert dialog object via builder
+        AlertDialog alertDialogObject = dialogBuilder.create();
+        //Show the dialog
+        alertDialogObject.show();
     }
 
     public void placeTrains(Route route, TrainCard.TRAIN_TYPE color){
