@@ -44,6 +44,17 @@ public class GameMap {
         return Collections.unmodifiableList(claimed);
     }
 
+    public List<Route> getPlayersRoutes(String playerID) {
+        List<Route> playersRoutes = new ArrayList<>();
+
+        for(String each : routes.keySet()) {
+            Route route = routes.get(each);
+            if(route.getOwnerId() == playerID) { playersRoutes.add(route); }
+        }
+
+        return Collections.unmodifiableList(playersRoutes);
+    }
+
     public Route getNewestClaimedRoute() {
         return newestClaimedRoute;
     }

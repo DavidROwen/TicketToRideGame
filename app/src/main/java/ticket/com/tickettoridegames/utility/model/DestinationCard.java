@@ -4,11 +4,18 @@ public class DestinationCard {
     private City location;
     private City location2;
     private Integer value;
+    private boolean completed = false;
 
     public DestinationCard(City location, City location2, Integer value) {
         this.location = location;
         this.location2 = location2;
         this.value = value;
+    }
+
+    public boolean isCompleted(){return completed;}
+
+    public void setCompleted(){
+        completed = true;
     }
 
     public City getLocation() {

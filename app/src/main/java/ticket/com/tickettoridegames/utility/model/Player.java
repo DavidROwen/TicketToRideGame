@@ -169,6 +169,8 @@ public class Player {
         }
     }
 
+    public void subtractPoints(Integer points) { this.points -= points; }
+
     public void addPoints(Integer points) { this.points += points; }
 
     public void removeTrains(Integer length) { trains -= length; }

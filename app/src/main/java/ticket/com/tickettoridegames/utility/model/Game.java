@@ -630,4 +630,18 @@ public class Game extends Observable {
         Integer color = playerColorToColor(playerColor);
         return new Pair(map.getNewestClaimedRoute(), color);
     }
+
+    public Integer completedDestinationPoints(Player player){
+        //ArrayList<>
+        Integer points = 0;
+        for (Route route:map.getPlayersRoutes(player.getId())) {
+
+        }
+        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations
+            if(!destinationCard.isCompleted()){ //if not completed
+
+            }
+        }
+        return points;
+    }
 }
