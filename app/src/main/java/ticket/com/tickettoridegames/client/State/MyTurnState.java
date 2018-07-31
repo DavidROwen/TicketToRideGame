@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class MyTurnState extends PlayerState {
 
@@ -27,8 +28,8 @@ public class MyTurnState extends PlayerState {
         cm.setState(NotMyTurnState.getInstance()); //todo should be coming from server
     }
 
-    public void claimRoute(ClientModel cm, String route) {
-        gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
+    public Result claimRoute(ClientModel cm, String route) {
+        return gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
     }
 
     public void drawFromBank(ClientModel cm) {}

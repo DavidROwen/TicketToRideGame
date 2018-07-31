@@ -21,6 +21,7 @@ import ticket.com.tickettoridegames.utility.model.PlayerStats;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.model.User;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 import static ticket.com.tickettoridegames.utility.TYPE.ALLHISTORY;
 import static ticket.com.tickettoridegames.utility.TYPE.BANKUPDATE;
@@ -313,9 +314,9 @@ public class ClientModel extends Observable {
     }
 
     public void claimRoute(String playerID, String route, TrainCard.TRAIN_TYPE decidedType) {
-        Boolean status = getMyActiveGame().claimRoute(playerID, route, decidedType);
+        Result result = getMyActiveGame().claimRoute(playerID, route, decidedType);
 
-        if(status){
+        if(result.isSuccess()){
             myNotify(NEWROUTE);
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);
@@ -324,9 +325,9 @@ public class ClientModel extends Observable {
     }
 
     public void claimRoute(String playerID, String route) {
-        Boolean status = getMyActiveGame().claimRoute(playerID, route);
+        Result result = getMyActiveGame().claimRoute(playerID, route);
 
-        if(status){
+        if(result.isSuccess()){
             myNotify(NEWROUTE);
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);

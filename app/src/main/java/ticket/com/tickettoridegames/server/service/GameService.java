@@ -17,6 +17,7 @@ import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
 import ticket.com.tickettoridegames.utility.service.IGameService;
 import ticket.com.tickettoridegames.utility.web.Command;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class GameService implements IGameService {
     @Override
@@ -172,16 +173,17 @@ public class GameService implements IGameService {
     //End Destination Card Functions
 
     @Override
-    public void claimRoute(String gameId, String playerId, String route) {
+    public Result claimRoute(String gameId, String playerId, String route) {
         Game game = ServerModel.getInstance().getGames().get(gameId);
-        Boolean success = game.claimRoute(playerId, route);
-        if(!success) { return; } //nothing changed
+        Result result = game.claimRoute(playerId, route);
 
 //        new GamePlayService().claimingRoute(playerId, route);
         Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
                 "claimingRoute", new Object[]{playerId, route}
         );
         CommandsManager.addCommandAllPlayers(claimRoute, gameId);
+
+        return result;
     }
 
     @Override

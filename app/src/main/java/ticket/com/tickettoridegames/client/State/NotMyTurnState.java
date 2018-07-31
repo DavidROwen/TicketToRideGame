@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 public class NotMyTurnState extends PlayerState {
 
@@ -32,8 +33,8 @@ public class NotMyTurnState extends PlayerState {
         }
     }
 
-    public void claimRoute(ClientModel cm) {
-        //can't do that
+    public Result claimRoute(ClientModel cm) {
+        return new Result(false, null, "It's not your turn");
     }
 
     public void drawFromBank(ClientModel cm) {
