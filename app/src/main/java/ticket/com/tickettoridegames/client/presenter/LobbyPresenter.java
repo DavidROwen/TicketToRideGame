@@ -34,7 +34,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             if (result.isSuccess()) {
                 new GamePlayService().initGame(gameID);
                 lobbyView.displayMessage("Successfully started game.");
-                lobbyView.changeView();
+                //don't add lobbyView.changeView(), it's already in update
             } else {
                 // Error happened address as necessary.
                 lobbyView.displayMessage("Failed to start game. " + result.getErrorMessage());
