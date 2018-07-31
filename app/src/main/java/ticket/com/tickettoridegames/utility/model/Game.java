@@ -1,7 +1,6 @@
 package ticket.com.tickettoridegames.utility.model;
 
 import android.graphics.Color;
-import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
