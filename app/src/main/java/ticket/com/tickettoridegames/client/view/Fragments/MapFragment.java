@@ -2,73 +2,47 @@ package ticket.com.tickettoridegames.client.view.Fragments;
 
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.text.InputType;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.presenter.MapPresenter;
-import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IMapView;
-import ticket.com.tickettoridegames.utility.model.City;
 import ticket.com.tickettoridegames.utility.model.DestinationCard;
 import ticket.com.tickettoridegames.utility.model.Route;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
 
 public class MapFragment extends BasicFragment implements IMapView{
 
     // Variables
     View view;
-    private Integer red =  -65536;
-    private Integer blue = -16776961;
-    private Integer yellow = -256;
-    private Integer green = -16711936;
-    private Integer black =  -16777216;
+
     private IMapPresenter presenter;
+
     private Button turnButton;
     private Button drawTrainsButton;
     private Button drawRoutesButton;
     private Button placeTrainsButton;
-    private Route chosenRoute;
-    private String userInput;
-    private Map<String, String> routeButtons = new HashMap<>(); //the key is the button, the value is the route name
+
+    private Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route name
 
     @Override
     public BasicFragment provideYourFragment() {
         return new MapFragment();
-    }
-
-    private void initButton(String buttonName) {
-        FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.claimRoute(routeButtons.get(buttonName));
-            }
-        });
     }
 
     @Override
@@ -78,9 +52,9 @@ public class MapFragment extends BasicFragment implements IMapView{
         //presenter = new MapPresenter(this);
 
         //Init
-        initTrianTracks();
+        initButtonToRouteConversion();
 
-        for(String buttonName : routeButtons.keySet()) {
+        for(String buttonName : buttonToRouteConversion.keySet()) {
             initButton(buttonName);
         }
 
@@ -125,6 +99,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
         presenter = new MapPresenter(this);
+
         return view;
     }
 
@@ -245,7 +220,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     }
 
     public void placeTrains(Route route, Integer color){
-        String buttonName = (String) getKeyFromValue(routeButtons,route.getName());
+        String buttonName = (String) getKeyFromValue(buttonToRouteConversion,route.getName());
 
         FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
         button.setBackgroundTintList(ColorStateList.valueOf(color));
@@ -277,107 +252,117 @@ public class MapFragment extends BasicFragment implements IMapView{
         drawRoutesButton.setEnabled(false);
     }
 
+    private void initButton(String buttonName) {
+        FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.claimRoute(buttonToRouteConversion.get(buttonName));
+            }
+        });
+    }
+
     //todo init names with gameMap so they always work
-    private void initTrianTracks(){
-        routeButtons.put("floatingActionButton13", "vancouver_calgary");
-        routeButtons.put("floatingActionButton11", "vancouver_seattle_first");
-        routeButtons.put("floatingActionButton12", "vancouver_seattle_second");
-        routeButtons.put("floatingActionButton7", "seattle_portland_first");
-        routeButtons.put("floatingActionButton8", "seattle_portland_second");
-        routeButtons.put("floatingActionButton14", "seattle_calgary");
-        routeButtons.put("floatingActionButton36", "calgary_helena");
-        routeButtons.put("floatingActionButton10", "portland_sanFran_first");
-        routeButtons.put("floatingActionButton9", "portland_sanFran_second");
-        routeButtons.put("floatingActionButton34", "seattle_helena");
-        routeButtons.put("floatingActionButton31", "portland_SLC");
-        routeButtons.put("floatingActionButton18", "sanFran_SLC_first");
-        routeButtons.put("floatingActionButton17", "sanFran_SLC_second");
-        routeButtons.put("floatingActionButton15", "sanfran_LA_first");
-        routeButtons.put("floatingActionButton16", "sanfran_LA_second");
-        routeButtons.put("floatingActionButton22", "LA_lasVegas");
-        routeButtons.put("floatingActionButton21", "lasVegas_SLC");
-        routeButtons.put("floatingActionButton20", "LA_elPaso");
-        routeButtons.put("floatingActionButton19", "LA_pheonix");
-        routeButtons.put("floatingActionButton24", "pheonix_elPaso");
-        routeButtons.put("floatingActionButton25", "pheonix_santaFe");
-        routeButtons.put("floatingActionButton28", "elPaso_santaFe");
-        routeButtons.put("floatingActionButton23", "pheonix_denver");
-        routeButtons.put("floatingActionButton29", "santaFe_denver");
-        routeButtons.put("floatingActionButton33", "SLC_denver_first");
-        routeButtons.put("floatingActionButton32", "SLC_denver_second");
-        routeButtons.put("floatingActionButton30", "helena_SLC");
-        routeButtons.put("floatingActionButton39", "helena_denver");
-        routeButtons.put("floatingActionButton35", "calgary_winnipeg");
-        routeButtons.put("floatingActionButton42", "helena_winnipeg");
-        routeButtons.put("floatingActionButton41", "helena_duleth");
-        routeButtons.put("floatingActionButton40", "helena_omaha");
-        routeButtons.put("floatingActionButton44", "denver_omaha");
-        routeButtons.put("floatingActionButton73", "denver_KC_first");
-        routeButtons.put("floatingActionButton70", "denver_KC_second");
-        routeButtons.put("floatingActionButton38", "denver_oklahomaCity");
-        routeButtons.put("floatingActionButton69", "santaFe_oklahomaCity");
-        routeButtons.put("floatingActionButton27", "elPaso_oklahomaCity");
-        routeButtons.put("floatingActionButton37", "elPaso_dallas");
-        routeButtons.put("floatingActionButton26", "elPaso_houston");
-        routeButtons.put("floatingActionButton45", "winnipeg_saultStMarie");
-        routeButtons.put("floatingActionButton46", "winnipeg_duluth");
-        routeButtons.put("floatingActionButton86", "duluth_saultStMarie");
-        routeButtons.put("floatingActionButton85", "duluth_omaha_first");
-        routeButtons.put("floatingActionButton84", "duluth_omaha_second");
-        routeButtons.put("floatingActionButton75", "omaha_KC_first");
-        routeButtons.put("floatingActionButton74", "omaha_KC_second");
-        routeButtons.put("floatingActionButton51", "KC_oklahomaCity_first");
-        routeButtons.put("floatingActionButton52", "KC_oklahomaCity_second");
-        routeButtons.put("floatingActionButton48", "oklahomaCity_dallas_first");
-        routeButtons.put("floatingActionButton47", "oklahomaCity_dallas_second");
-        routeButtons.put("floatingActionButton49", "dallas_houston_first");
-        routeButtons.put("floatingActionButton50", "dallas_houston_second");
-        routeButtons.put("floatingActionButton43", "houston_newOrleans");
-        routeButtons.put("floatingActionButton54", "dallas_littleRock");
-        routeButtons.put("floatingActionButton53", "oklahoma_littleRock");
-        routeButtons.put("floatingActionButton78", "KC_saintLouis_first");
-        routeButtons.put("floatingActionButton76", "KC_saintLouis_second");
-        routeButtons.put("floatingActionButton88", "omaha_chicago");
-        routeButtons.put("floatingActionButton87", "duluth_chicago");
-        routeButtons.put("floatingActionButton55", "newOrleans_littleRock");
-        routeButtons.put("floatingActionButton68", "littleRock_saintLouis");
-        routeButtons.put("floatingActionButton60", "newOrleans_atlanta_first");
-        routeButtons.put("floatingActionButton59", "newOrleans_atlanta_second");
-        routeButtons.put("floatingActionButton67", "littleRock_Nashville");
-        routeButtons.put("floatingActionButton108", "saintLouis_nashville");
-        routeButtons.put("floatingActionButton110", "nashville_atlanta");
-        routeButtons.put("floatingActionButton79", "saintLouis_chicago_first");
-        routeButtons.put("floatingActionButton80", "saintLouis_chicago_second");
-        routeButtons.put("floatingActionButton91", "duluth_toronto");
-        routeButtons.put("floatingActionButton95", "saultStMarie_montreal");
-        routeButtons.put("floatingActionButton94", "saultStMarie_toronto");
-        routeButtons.put("floatingActionButton93", "toronto_montreal");
-        routeButtons.put("floatingActionButton92", "chicago_toronto");
-        routeButtons.put("floatingActionButton109", "montreal_boston_first");
-        routeButtons.put("floatingActionButton107", "montreal_boston_second");
-        routeButtons.put("floatingActionButton83", "chicago_pittsburg_first");
-        routeButtons.put("floatingActionButton82", "chicago_pittsburg_second");
-        routeButtons.put("floatingActionButton81", "saintLouis_pittsburg");
-        routeButtons.put("floatingActionButton96", "nashville_pittsburg");
-        routeButtons.put("floatingActionButton66", "nashville_raleigh");
-        routeButtons.put("floatingActionButton56", "newOrleans_miami");
-        routeButtons.put("floatingActionButton57", "atlanta_miami");
-        routeButtons.put("floatingActionButton61", "atlanta_charleston");
-        routeButtons.put("floatingActionButton63", "atlanta_raleigh_first");
-        routeButtons.put("floatingActionButton65", "atlanta_raleigh_second");
-        routeButtons.put("floatingActionButton58", "miami_charleston");
-        routeButtons.put("floatingActionButton62", "charleston_raleigh");
-        routeButtons.put("floatingActionButton97", "raleigh_pittsburg");
-        routeButtons.put("floatingActionButton99", "toronto_pittsburg");
-        routeButtons.put("floatingActionButton89", "raleigh_washington_first");
-        routeButtons.put("floatingActionButton90", "raleigh_washington_second");
-        routeButtons.put("floatingActionButton98", "pittsburg_washington");
-        routeButtons.put("floatingActionButton104", "washington_newYork_first");
-        routeButtons.put("floatingActionButton103", "washington_newYork_second");
-        routeButtons.put("floatingActionButton101", "pittsburg_newYork_first");
-        routeButtons.put("floatingActionButton102", "pittsburg_newYork_second");
-        routeButtons.put("floatingActionButton100", "montreal_newYork");
-        routeButtons.put("floatingActionButton105", "newYork_boston_first");
-        routeButtons.put("floatingActionButton106", "newYork_boston_second");
+    private void initButtonToRouteConversion(){
+        buttonToRouteConversion.put("floatingActionButton13", "vancouver_calgary");
+        buttonToRouteConversion.put("floatingActionButton11", "vancouver_seattle_first");
+        buttonToRouteConversion.put("floatingActionButton12", "vancouver_seattle_second");
+        buttonToRouteConversion.put("floatingActionButton7", "seattle_portland_first");
+        buttonToRouteConversion.put("floatingActionButton8", "seattle_portland_second");
+        buttonToRouteConversion.put("floatingActionButton14", "seattle_calgary");
+        buttonToRouteConversion.put("floatingActionButton36", "calgary_helena");
+        buttonToRouteConversion.put("floatingActionButton10", "portland_sanFran_first");
+        buttonToRouteConversion.put("floatingActionButton9", "portland_sanFran_second");
+        buttonToRouteConversion.put("floatingActionButton34", "seattle_helena");
+        buttonToRouteConversion.put("floatingActionButton31", "portland_SLC");
+        buttonToRouteConversion.put("floatingActionButton18", "sanFran_SLC_first");
+        buttonToRouteConversion.put("floatingActionButton17", "sanFran_SLC_second");
+        buttonToRouteConversion.put("floatingActionButton15", "sanfran_LA_first");
+        buttonToRouteConversion.put("floatingActionButton16", "sanfran_LA_second");
+        buttonToRouteConversion.put("floatingActionButton22", "LA_lasVegas");
+        buttonToRouteConversion.put("floatingActionButton21", "lasVegas_SLC");
+        buttonToRouteConversion.put("floatingActionButton20", "LA_elPaso");
+        buttonToRouteConversion.put("floatingActionButton19", "LA_pheonix");
+        buttonToRouteConversion.put("floatingActionButton24", "pheonix_elPaso");
+        buttonToRouteConversion.put("floatingActionButton25", "pheonix_santaFe");
+        buttonToRouteConversion.put("floatingActionButton28", "elPaso_santaFe");
+        buttonToRouteConversion.put("floatingActionButton23", "pheonix_denver");
+        buttonToRouteConversion.put("floatingActionButton29", "santaFe_denver");
+        buttonToRouteConversion.put("floatingActionButton33", "SLC_denver_first");
+        buttonToRouteConversion.put("floatingActionButton32", "SLC_denver_second");
+        buttonToRouteConversion.put("floatingActionButton30", "helena_SLC");
+        buttonToRouteConversion.put("floatingActionButton39", "helena_denver");
+        buttonToRouteConversion.put("floatingActionButton35", "calgary_winnipeg");
+        buttonToRouteConversion.put("floatingActionButton42", "helena_winnipeg");
+        buttonToRouteConversion.put("floatingActionButton41", "helena_duleth");
+        buttonToRouteConversion.put("floatingActionButton40", "helena_omaha");
+        buttonToRouteConversion.put("floatingActionButton44", "denver_omaha");
+        buttonToRouteConversion.put("floatingActionButton73", "denver_KC_first");
+        buttonToRouteConversion.put("floatingActionButton70", "denver_KC_second");
+        buttonToRouteConversion.put("floatingActionButton38", "denver_oklahomaCity");
+        buttonToRouteConversion.put("floatingActionButton69", "santaFe_oklahomaCity");
+        buttonToRouteConversion.put("floatingActionButton27", "elPaso_oklahomaCity");
+        buttonToRouteConversion.put("floatingActionButton37", "elPaso_dallas");
+        buttonToRouteConversion.put("floatingActionButton26", "elPaso_houston");
+        buttonToRouteConversion.put("floatingActionButton45", "winnipeg_saultStMarie");
+        buttonToRouteConversion.put("floatingActionButton46", "winnipeg_duluth");
+        buttonToRouteConversion.put("floatingActionButton86", "duluth_saultStMarie");
+        buttonToRouteConversion.put("floatingActionButton85", "duluth_omaha_first");
+        buttonToRouteConversion.put("floatingActionButton84", "duluth_omaha_second");
+        buttonToRouteConversion.put("floatingActionButton75", "omaha_KC_first");
+        buttonToRouteConversion.put("floatingActionButton74", "omaha_KC_second");
+        buttonToRouteConversion.put("floatingActionButton51", "KC_oklahomaCity_first");
+        buttonToRouteConversion.put("floatingActionButton52", "KC_oklahomaCity_second");
+        buttonToRouteConversion.put("floatingActionButton48", "oklahomaCity_dallas_first");
+        buttonToRouteConversion.put("floatingActionButton47", "oklahomaCity_dallas_second");
+        buttonToRouteConversion.put("floatingActionButton49", "dallas_houston_first");
+        buttonToRouteConversion.put("floatingActionButton50", "dallas_houston_second");
+        buttonToRouteConversion.put("floatingActionButton43", "houston_newOrleans");
+        buttonToRouteConversion.put("floatingActionButton54", "dallas_littleRock");
+        buttonToRouteConversion.put("floatingActionButton53", "oklahoma_littleRock");
+        buttonToRouteConversion.put("floatingActionButton78", "KC_saintLouis_first");
+        buttonToRouteConversion.put("floatingActionButton76", "KC_saintLouis_second");
+        buttonToRouteConversion.put("floatingActionButton88", "omaha_chicago");
+        buttonToRouteConversion.put("floatingActionButton87", "duluth_chicago");
+        buttonToRouteConversion.put("floatingActionButton55", "newOrleans_littleRock");
+        buttonToRouteConversion.put("floatingActionButton68", "littleRock_saintLouis");
+        buttonToRouteConversion.put("floatingActionButton60", "newOrleans_atlanta_first");
+        buttonToRouteConversion.put("floatingActionButton59", "newOrleans_atlanta_second");
+        buttonToRouteConversion.put("floatingActionButton67", "littleRock_Nashville");
+        buttonToRouteConversion.put("floatingActionButton108", "saintLouis_nashville");
+        buttonToRouteConversion.put("floatingActionButton110", "nashville_atlanta");
+        buttonToRouteConversion.put("floatingActionButton79", "saintLouis_chicago_first");
+        buttonToRouteConversion.put("floatingActionButton80", "saintLouis_chicago_second");
+        buttonToRouteConversion.put("floatingActionButton91", "duluth_toronto");
+        buttonToRouteConversion.put("floatingActionButton95", "saultStMarie_montreal");
+        buttonToRouteConversion.put("floatingActionButton94", "saultStMarie_toronto");
+        buttonToRouteConversion.put("floatingActionButton93", "toronto_montreal");
+        buttonToRouteConversion.put("floatingActionButton92", "chicago_toronto");
+        buttonToRouteConversion.put("floatingActionButton109", "montreal_boston_first");
+        buttonToRouteConversion.put("floatingActionButton107", "montreal_boston_second");
+        buttonToRouteConversion.put("floatingActionButton83", "chicago_pittsburg_first");
+        buttonToRouteConversion.put("floatingActionButton82", "chicago_pittsburg_second");
+        buttonToRouteConversion.put("floatingActionButton81", "saintLouis_pittsburg");
+        buttonToRouteConversion.put("floatingActionButton96", "nashville_pittsburg");
+        buttonToRouteConversion.put("floatingActionButton66", "nashville_raleigh");
+        buttonToRouteConversion.put("floatingActionButton56", "newOrleans_miami");
+        buttonToRouteConversion.put("floatingActionButton57", "atlanta_miami");
+        buttonToRouteConversion.put("floatingActionButton61", "atlanta_charleston");
+        buttonToRouteConversion.put("floatingActionButton63", "atlanta_raleigh_first");
+        buttonToRouteConversion.put("floatingActionButton65", "atlanta_raleigh_second");
+        buttonToRouteConversion.put("floatingActionButton58", "miami_charleston");
+        buttonToRouteConversion.put("floatingActionButton62", "charleston_raleigh");
+        buttonToRouteConversion.put("floatingActionButton97", "raleigh_pittsburg");
+        buttonToRouteConversion.put("floatingActionButton99", "toronto_pittsburg");
+        buttonToRouteConversion.put("floatingActionButton89", "raleigh_washington_first");
+        buttonToRouteConversion.put("floatingActionButton90", "raleigh_washington_second");
+        buttonToRouteConversion.put("floatingActionButton98", "pittsburg_washington");
+        buttonToRouteConversion.put("floatingActionButton104", "washington_newYork_first");
+        buttonToRouteConversion.put("floatingActionButton103", "washington_newYork_second");
+        buttonToRouteConversion.put("floatingActionButton101", "pittsburg_newYork_first");
+        buttonToRouteConversion.put("floatingActionButton102", "pittsburg_newYork_second");
+        buttonToRouteConversion.put("floatingActionButton100", "montreal_newYork");
+        buttonToRouteConversion.put("floatingActionButton105", "newYork_boston_first");
+        buttonToRouteConversion.put("floatingActionButton106", "newYork_boston_second");
     }
 }
