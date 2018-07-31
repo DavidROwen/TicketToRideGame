@@ -57,9 +57,11 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
     }
 
     @Override
-    public void drawFromBank(Integer stackID){
-        // We use the stack index to indicate what card should change.
-        //todo get rid of this?
+    public void drawFromBank(Integer index){
+        // We use the index to indicate what card should change.
+        if (true) {
+            pickupCard(index);
+        }
     }
 
     @Override

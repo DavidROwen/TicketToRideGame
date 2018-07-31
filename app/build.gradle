@@ -23,6 +23,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true //mocks asynctask
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
@@ -36,5 +37,6 @@ dependencies {
     implementation 'com.sun.net.httpserver:http:20070405'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation group: 'org.apache.commons', name: 'commons-io', version: '1.3.2' //for IOUtils
+    implementation 'org.apache.commons:commons-io:1.3.2'
+    //for IOUtils
 }

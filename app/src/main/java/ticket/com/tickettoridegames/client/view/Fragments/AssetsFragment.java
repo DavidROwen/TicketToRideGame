@@ -137,78 +137,77 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
         toast.show();
     }
-}
 
-class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
-    private int selected_position = 0; // You have to set this globally in the ImageAdapter class
-    private List<TrainCard> trainCards;
+    class ImageAdapter extends RecyclerView.Adapter<ImageCustomViewHolder> {
 
-    public ImageAdapter(List<TrainCard> trainCards) {
-        this.trainCards = trainCards;
-    }
+        private int selected_position = 0; // You have to set this globally in the ImageAdapter class
+        private List<TrainCard> trainCards;
 
-    @Override
-    public ImageCustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.
-                from(viewGroup.getContext()).
-                inflate(R.layout.train_pic, viewGroup, false);
+        public ImageAdapter(List<TrainCard> trainCards) {
+            this.trainCards = trainCards;
+        }
 
-        return new ImageCustomViewHolder(itemView);
-    }
+        @Override
+        public ImageCustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View itemView = LayoutInflater.
+                    from(viewGroup.getContext()).
+                    inflate(R.layout.train_pic, viewGroup, false);
 
-    @Override
-    public void onBindViewHolder(ImageCustomViewHolder holder, int i) {
-        holder.bindResult(trainCards.get(i));
-    }
+            return new ImageCustomViewHolder(itemView);
+        }
 
-    @Override
-    public int getItemCount() {
-        return trainCards.size();
-    }
-}
+        @Override
+        public void onBindViewHolder(ImageCustomViewHolder holder, int i) {
+            holder.bindResult(trainCards.get(i));
+        }
 
-class ImageCustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    protected ImageView train;
-
-    public ImageCustomViewHolder(View v) {
-        super(v);
-        v.setOnClickListener(this);
-        train = (ImageView)  v.findViewById(R.id.train);
-    }
-
-    public void bindResult(TrainCard trainCard){
-        if(trainCard.getType() == BLUE) {
-            train.setImageResource(R.drawable.blue);
-        }else if(trainCard.getType() == BLACK){
-            train.setImageResource(R.drawable.black);
-        }else if(trainCard.getType() == PINK){
-            train.setImageResource(R.drawable.pink);
-        }else if(trainCard.getType() == RED){
-            train.setImageResource(R.drawable.red);
-        }else if(trainCard.getType() == ORANGE){
-            train.setImageResource(R.drawable.orange);
-        }else if(trainCard.getType() == YELLOW){
-            train.setImageResource(R.drawable.yellow);
-        }else if(trainCard.getType() == WHITE){
-            train.setImageResource(R.drawable.white);
-        }else if(trainCard.getType() == GREEN){
-            train.setImageResource(R.drawable.green);
-        }else if(trainCard.getType() == WILD){
-            train.setImageResource(R.drawable.rainbow);
+        @Override
+        public int getItemCount() {
+            return trainCards.size();
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
-        v.setBackgroundColor(Color.GREEN);
+    class ImageCustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        protected ImageView train;
 
-//        IAssetsView assetsView = (IAssetsView) ((ViewGroup)v.getParent()).getParent(); //breaks
-//        assetsView.pickupCard(getAdapterPosition());
+        public ImageCustomViewHolder(View v) {
+            super(v);
+            v.setOnClickListener(this);
+            train = (ImageView)  v.findViewById(R.id.train);
+        }
 
-        //makes a hidden text that is read when button is clicked
-        train = (ImageView)  v.findViewById(R.id.train);
-        //GamePlayActivity.GameID.setText(gameName.getText().toString());    //Game ID is textview where the info of touch is stored
+        public void bindResult(TrainCard trainCard){
+            if(trainCard.getType() == BLUE) {
+                train.setImageResource(R.drawable.blue);
+            }else if(trainCard.getType() == BLACK){
+                train.setImageResource(R.drawable.black);
+            }else if(trainCard.getType() == PINK){
+                train.setImageResource(R.drawable.pink);
+            }else if(trainCard.getType() == RED){
+                train.setImageResource(R.drawable.red);
+            }else if(trainCard.getType() == ORANGE){
+                train.setImageResource(R.drawable.orange);
+            }else if(trainCard.getType() == YELLOW){
+                train.setImageResource(R.drawable.yellow);
+            }else if(trainCard.getType() == WHITE){
+                train.setImageResource(R.drawable.white);
+            }else if(trainCard.getType() == GREEN){
+                train.setImageResource(R.drawable.green);
+            }else if(trainCard.getType() == WILD){
+                train.setImageResource(R.drawable.rainbow);
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+
+            // if the player can draw then return a toast and say that you drew.
+            v.setBackgroundColor(Color.GREEN);
+
+            presenter.drawFromBank(getAdapterPosition());
+        }
     }
 }
+
