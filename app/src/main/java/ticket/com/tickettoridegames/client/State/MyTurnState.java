@@ -2,7 +2,6 @@ package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
-import ticket.com.tickettoridegames.utility.model.Route;
 
 public class MyTurnState extends PlayerState {
 
@@ -28,7 +27,7 @@ public class MyTurnState extends PlayerState {
         cm.setState(NotMyTurnState.getInstance());
     }
 
-    public void claimRoute(ClientModel cm, Route route) {
+    public void claimRoute(ClientModel cm, String route) {
         //todo add a GamePlayService function to call here
         cm.claimRoute(cm.getUserId(), route);
     }

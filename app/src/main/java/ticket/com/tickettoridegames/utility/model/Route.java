@@ -4,33 +4,35 @@ import android.graphics.Rect;
 
 public class Route {
 
-    private boolean owned;
-    private String ownerId;
-    private Integer length;
-    private TrainCard.TRAIN_TYPE type;
-    private City start;
-    private City end;
-    private Integer routeNum; //if there is only one then it will be null
+    private final String name;
+    private boolean owned = false;
+    private String ownerId = null;
+    private final Integer length;
+    private final TrainCard.TRAIN_TYPE type;
+    private final City start;
+    private final City end;
+    private final Integer routeNum; //if there is only one then it will be null
 
-    public Route() {}
+//    public Route() {}
 
-    public Route(boolean owned, String ownerId, Integer length, City start, City end) {
-        this.owned = owned;
-        this.ownerId = ownerId;
-        this.length = length;
-        this.start = start;
-        this.end = end;
-    }
+//    public Route(boolean owned, String ownerId, Integer length, City start, City end) {
+//        this.owned = owned;
+//        this.ownerId = ownerId;
+//        this.length = length;
+//        this.start = start;
+//        this.end = end;
+//    }
 
-    public Route(City start, City end, Integer length, TrainCard.TRAIN_TYPE type) {
-        this.start = start;
-        this.end = end;
-        this.length = length;
-        this.type = type;
+//    public Route(City start, City end, Integer length, TrainCard.TRAIN_TYPE type) {
+//        this.start = start;
+//        this.end = end;
+//        this.length = length;
+//        this.type = type;
+//
+//    }
 
-    }
-
-    public Route(City start, City end, Integer length, TrainCard.TRAIN_TYPE type, Integer routeNum) {
+    public Route(String name, City start, City end, Integer length, TrainCard.TRAIN_TYPE type, Integer routeNum) {
+        this.name = name;
         this.start = start;
         this.end = end;
         this.length = length;
@@ -58,24 +60,12 @@ public class Route {
         return length;
     }
 
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
     public City getStart() {
         return start;
     }
 
-    public void setStart(City start) {
-        this.start = start;
-    }
-
     public City getEnd() {
         return end;
-    }
-
-    public void setEnd(City end) {
-        this.end = end;
     }
 
     @Override
@@ -95,5 +85,21 @@ public class Route {
         String message = start + "->" +
                 end + ": " + length.toString() + " points";
         return message;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Boolean claim(String playerID) {
+        if(!canClaim()) { return false; }
+
+        owned = true;
+        ownerId = playerID;
+        return true;
+    }
+
+    private boolean canClaim() {
+        return !isOwned();
     }
 }

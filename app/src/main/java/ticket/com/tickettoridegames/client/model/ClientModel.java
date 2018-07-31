@@ -1,5 +1,7 @@
 package ticket.com.tickettoridegames.client.model;
 
+import android.util.Pair;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -311,7 +313,7 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getTurnUsername();
     }
 
-    public void claimRoute(String playerID, Route route){
+    public void claimRoute(String playerID, String route){
         Boolean status = getMyActiveGame().claimRoute(playerID, route);
 
         if(status){
@@ -322,8 +324,8 @@ public class ClientModel extends Observable {
         }
     }
 
-    public Map<Integer, Set<Route>> getClaimedRoutes(){
-        return getMyActiveGame().getClaimedRouteColors();
+    public List<Pair<Route,Integer>> getClaimedRoutes(){
+        return getMyActiveGame().getClaimedRoutes();
     }
 
     public boolean isMyTurn(){
@@ -332,6 +334,10 @@ public class ClientModel extends Observable {
 
     private Game getGame(String gameId){
         return gameList.get(gameId);
+    }
+
+    public Pair<Route,Integer> getNewestClaimedRoute() {
+        return getMyActiveGame().getNewestClaimedRoute();
     }
 
     public void resetBank(String gameId){

@@ -1,5 +1,8 @@
 package ticket.com.tickettoridegames.utility.model;
 
+import android.graphics.Color;
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,8 +16,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.UUID;
-
-import ticket.com.tickettoridegames.utility.TYPE;
 
 public class Game extends Observable {
     public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
@@ -34,7 +35,6 @@ public class Game extends Observable {
     private Integer turnNumber = 0;
     private Turn currentTurn = new Turn();
     private List<TrainCard> trainBank;
-    private Map<String, List<Route>> routes = new HashMap<>();
 
     // Map data
     private GameMap map;
@@ -121,7 +121,6 @@ public class Game extends Observable {
             }
             else{
                 players.put(p.getId(), p);
-                routes.put(p.getId(), new ArrayList<>());
                 numberOfPlayers++;
                 return true;
             }
@@ -256,16 +255,6 @@ public class Game extends Observable {
         for(String curKey : players.keySet()) {
             Player curPlayer = players.get(curKey);
             counts.put(curPlayer.getId(), curPlayer.getTrains());
-        }
-
-        return counts;
-    }
-
-    public Map<String, Integer> getCountsOfRoutes() {
-        Map<String,Integer> counts = new HashMap<>();
-
-        for(String curId : players.keySet()) {
-            counts.put(curId, routes.get(curId).size());
         }
 
         return counts;
@@ -542,8 +531,9 @@ public class Game extends Observable {
         return trainBank;
     }
 
-    public Boolean claimRoute(String playerId, Route route) {
+    public Boolean claimRoute(String playerId, String routeName) {
         Player player = players.get(playerId);
+        Route route = map.getRoute(routeName); //todo individual params so not changeable
 
         //check not claimed
         if(isClaimed(route)) { return false; }
@@ -556,8 +546,7 @@ public class Game extends Observable {
         if(!player.hasTrains(route.getLength())) { return false; }
 
         //add to routes
-        routes.get(playerId).add(route);
-        player.addClaimedRoute(route);
+        map.claimRoute(playerId, route);
         //cash out cards
         player.removeTrainCards(neededCards);
         //collect points
@@ -576,19 +565,8 @@ public class Game extends Observable {
     }
 
     private Boolean isClaimed(Route route) {
-        for(String id : players.keySet()) {
-            for(Route cur : routes.get(id)) {
-//                if(cur == route) { return true; } //todo disabled for testing
-            }
-        }
-
-        return false;
+        return map.isClaimed(route);
     }
-
-    public Map<String, List<Route>> getRoutes() {
-        return routes;
-    }
-
 
     public List<PlayerStats> getPlayerStats(){
         List<PlayerStats> stats = new ArrayList<>();
@@ -609,14 +587,35 @@ public class Game extends Observable {
     }
     
     // This function returns all claimed routs associated with the color that they should be on the map
-    public Map<Integer, Set<Route>> getClaimedRouteColors(){
-        Map<Integer, Set<Route>> routes = new HashMap<>();
+    public List<Pair<Route, Integer>> getClaimedRoutes(){
+        List<Pair<Route, Integer>> routes = new ArrayList<>();
 
-        for (Player player : players.values()){
-            routes.put(player.getColorValue(),player.getClaimedRoutes());
+        for(Route each : map.getClaimedRoutes()) {
+            Player.COLOR playerColor =  players.get(each.getOwnerId()).getColor();
+            Integer color = playerColorToColor(playerColor);
+            routes.add(new Pair(each, color));
         }
 
         return routes;
+    }
+
+    //todo replace with map in player
+    private Integer playerColorToColor(Player.COLOR color) {
+        switch(color) {
+            case RED:
+                return Color.RED;
+            case YELLOW:
+                return Color.YELLOW;
+            case GREEN:
+                return Color.GREEN;
+            case BLUE:
+                return Color.BLUE;
+            case BLACK:
+                return Color.BLACK;
+            default:
+                return null;
+
+        }
     }
 
     public String getTurnUsername() {
@@ -634,5 +633,11 @@ public class Game extends Observable {
     public String playerUpString() {
         String id = turnOrder.get(turnNumber);
         return players.get(id).getUsername();
+    }
+
+    public Pair<Route, Integer> getNewestClaimedRoute() {
+        Player.COLOR playerColor =  players.get(map.getNewestClaimedRoute().getOwnerId()).getColor();
+        Integer color = playerColorToColor(playerColor);
+        return new Pair(map.getNewestClaimedRoute(), color);
     }
 }
