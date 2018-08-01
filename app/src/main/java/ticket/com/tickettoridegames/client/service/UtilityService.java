@@ -6,7 +6,7 @@ import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class UtilityService {
-    public static final String TESTER_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/Tester.java";
+    public static final String TESTER_SERVICE_PATH = "ticket.com.server.server.service.Tester";
 
     private ClientModel clientModel;
 

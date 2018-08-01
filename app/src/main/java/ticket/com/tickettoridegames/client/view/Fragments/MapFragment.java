@@ -63,7 +63,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         }
 
         //Now specific components here
-        drawTrainsButton = (Button)view.findViewById(R.id.button1);
+        drawTrainsButton = view.findViewById(R.id.button1);
         drawTrainsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -71,7 +71,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        drawRoutesButton = (Button)view.findViewById(R.id.button5);
+        drawRoutesButton = view.findViewById(R.id.button5);
         drawRoutesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -79,7 +79,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        Button passOffButton = (Button)view.findViewById(R.id.pass_off_button);
+        Button passOffButton = view.findViewById(R.id.pass_off_button);
         passOffButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -87,7 +87,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        turnButton = (Button)view.findViewById(R.id.turn_button);
+        turnButton = view.findViewById(R.id.turn_button);
         turnButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

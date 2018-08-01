@@ -65,7 +65,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
         view = inflater.inflate(R.layout.assets_fragment,parent,false);
 
-        ListView routes = (ListView)view.findViewById(R.id.routes);
+        ListView routes = view.findViewById(R.id.routes);
         adapter=new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 listRoutes);
@@ -84,7 +84,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         hand.sort(TrainCard::compareTo);
         this.hand = hand;
 
-        myHandRecyclerView = (RecyclerView) view.findViewById(R.id.ownedTrains);
+        myHandRecyclerView = view.findViewById(R.id.ownedTrains);
         myHandRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(hand);
         myHandRecyclerView.setAdapter(myAdapter);
@@ -93,7 +93,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     @Override
     public void setBank(List<TrainCard> trainBank){
         this.trainBank = trainBank;
-        myBankRecyclerView = (RecyclerView) view.findViewById(R.id.trainBank);
+        myBankRecyclerView = view.findViewById(R.id.trainBank);
         myBankRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         myAdapter = new ImageAdapter(trainBank);
         myBankRecyclerView.setAdapter(myAdapter);
@@ -174,7 +174,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         public ImageCustomViewHolder(View v) {
             super(v);
             v.setOnClickListener(this);
-            train = (ImageView)  v.findViewById(R.id.train);
+            train = v.findViewById(R.id.train);
         }
 
         public void bindResult(TrainCard trainCard){

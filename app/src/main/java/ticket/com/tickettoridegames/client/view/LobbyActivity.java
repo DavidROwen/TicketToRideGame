@@ -73,7 +73,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
 
         chat_input = findViewById(R.id.chat_input_msg);
 
-        Button startButton = (Button) findViewById(R.id.start_game_button);
+        Button startButton = findViewById(R.id.start_game_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +81,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
             }
         });
 
-        Button sendButton = (Button) findViewById(R.id.chat_send_button);
+        Button sendButton = findViewById(R.id.chat_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

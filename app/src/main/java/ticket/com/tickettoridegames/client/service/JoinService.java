@@ -8,8 +8,8 @@ import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class JoinService {
-    public static final String CREATE_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/CreateGameService.java";
-    public static final String JOIN_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/JoinService.java";
+    public static final String CREATE_GAME_SERVICE_PATH = "ticket.com.server.server.service.CreateGameService";
+    public static final String JOIN_GAME_SERVICE_PATH = "ticket.com.server.server.service.JoinService";
     private static ClientModel clientModel = ClientModel.get_instance();
 
     public JoinService(){

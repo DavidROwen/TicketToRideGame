@@ -71,7 +71,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
 
         chat_input = view.findViewById(R.id.chat_input_msg);
 
-        Button chatButton = (Button)view.findViewById(R.id.chat_send_button);
+        Button chatButton = view.findViewById(R.id.chat_send_button);
         chatButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -119,7 +119,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     @Override
     public void setPlayerStats(List<PlayerStats> playerStats){
         this.playerStats = playerStats;
-        myRecyclerView = (RecyclerView) view.findViewById(R.id.statsrecyclerview);
+        myRecyclerView = view.findViewById(R.id.statsrecyclerview);
 
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myAdapter = new StatsAdapter(playerStats);
@@ -180,11 +180,11 @@ class StatsCustomViewHolder extends RecyclerView.ViewHolder{
 
     public StatsCustomViewHolder(View v) {
         super(v);
-        line1 = (TextView)  v.findViewById(R.id.textView1);
-        line2 = (TextView)  v.findViewById(R.id.textView2);
-        line3 = (TextView)  v.findViewById(R.id.textView3);
-        line4 = (TextView)  v.findViewById(R.id.textView4);
-        line5 = (TextView)  v.findViewById(R.id.textView5);
+        line1 = v.findViewById(R.id.textView1);
+        line2 = v.findViewById(R.id.textView2);
+        line3 = v.findViewById(R.id.textView3);
+        line4 = v.findViewById(R.id.textView4);
+        line5 = v.findViewById(R.id.textView5);
     }
 
     public void bindResult(PlayerStats playerStat){

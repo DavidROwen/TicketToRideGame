@@ -118,12 +118,7 @@ public class Game extends Observable {
             }
         }
         else{
-            if(players.containsKey(p.getId())){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return players.containsKey(p.getId());
         }
     }
 

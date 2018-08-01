@@ -10,6 +10,9 @@ import ticket.com.utility.web.Result;
  * This service is used by the LobbyPresenter to handle chat and start the games.
  */
 public class LobbyService {
+    public static final String START_GAME_SERVICE_PATH = "ticket.com.server.server.service.StartGameService";
+    public static final String CHAT_GAME_SERVICE_PATH = "ticket.com.server.server.service.ChatService";
+
 
     public LobbyService(){}
 
@@ -32,7 +35,7 @@ public class LobbyService {
     public static Result startGame(String gameID){
         try{
             Result  result = ServerProxy.sendCommand(
-                    new Command(ticket.com.server.server.service.StartGameService.class.getName(),
+                    new Command(START_GAME_SERVICE_PATH,
                             ticket.com.server.server.service.StartGameService.class,
                             ticket.com.server.server.service.StartGameService.class.newInstance(),
                             "startGame",
@@ -71,7 +74,7 @@ public class LobbyService {
     public static Result sendChat(String gameID, String userID, String message){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.server.server.service.ChatService.class.getName(),
+                    new Command(CHAT_GAME_SERVICE_PATH,
                             ticket.com.server.server.service.ChatService.class,
                             ticket.com.server.server.service.ChatService.class.newInstance(),
                             "chat",

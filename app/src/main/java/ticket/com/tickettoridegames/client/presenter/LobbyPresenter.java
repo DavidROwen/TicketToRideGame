@@ -30,7 +30,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             lobbyView.displayMessage("Invalid game ID");
         }
         else {
-            Result result = lobbyService.startGame(gameID);
+            Result result = LobbyService.startGame(gameID);
             if (result.isSuccess()) {
                 new GamePlayService().initGame(gameID);
                 lobbyView.displayMessage("Successfully started game.");
@@ -53,7 +53,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             lobbyView.displayMessage("Invalid player ID");
         }
         else {
-            Result result = lobbyService.sendChat(gameID,userID,message);
+            Result result = LobbyService.sendChat(gameID,userID,message);
             if (result.isSuccess()){
                 // don't do anything right?
             }

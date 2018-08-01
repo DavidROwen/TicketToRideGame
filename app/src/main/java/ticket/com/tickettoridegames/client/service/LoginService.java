@@ -7,8 +7,8 @@ import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class LoginService {
-    public static final String LOGIN_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/LoginService.java";
-    public static final String REGISTER_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/RegisterService.java";
+    public static final String LOGIN_GAME_SERVICE_PATH = "ticket.com.server.server.service.LoginService";
+    public static final String REGISTER_GAME_SERVICE_PATH = "ticket.com.server.server.service.RegisterService";
 
     private ClientModel clientModel;
 

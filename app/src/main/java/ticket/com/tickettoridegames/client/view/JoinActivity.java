@@ -109,7 +109,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     @Override
     public void setGames(Map<String, Game> games){
         this.games = games;
-        gameListRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        gameListRecyclerView = findViewById(R.id.myrecyclerview);
         gameListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         myAdapter = new GameAdapter(games);
         gameListRecyclerView.setAdapter(myAdapter);

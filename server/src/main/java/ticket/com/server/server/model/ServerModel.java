@@ -14,8 +14,8 @@ import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class ServerModel {
-    public static final String JOIN_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/app/src/main/java/ticket/com/tickettoridegames/client/service/JoinService.java";
-    public static final String LOBBY_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/app/src/main/java/ticket/com/tickettoridegames/client/service/LobbyService.java";
+    public static final String JOIN_SERVICE_PATH = "/app/src/main/java/ticket/com/tickettoridegames/client/service/JoinService.java";
+    public static final String LOBBY_SERVICE_PATH = "/app/src/main/java/ticket/com/tickettoridegames/client/service/LobbyService.java";
 
     private static ServerModel instance = null;
 
