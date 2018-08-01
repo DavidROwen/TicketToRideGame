@@ -14,6 +14,8 @@ import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class ServerModel {
+    public static final String JOIN_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/app/src/main/java/ticket/com/tickettoridegames/client/service/JoinService.java";
+    public static final String LOBBY_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/app/src/main/java/ticket/com/tickettoridegames/client/service/LobbyService.java";
 
     private static ServerModel instance = null;
 
@@ -52,7 +54,7 @@ public class ServerModel {
                 Command command;
                 Game currentGame = games.get(gameId);
                 try{
-                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class,
+                    command = new Command(JOIN_SERVICE_PATH,
                             null,
                             "addGame",
                             new Object[]{currentGame});
@@ -80,7 +82,7 @@ public class ServerModel {
                     Command command;
                     Game currentGame = games.get(gameId);
                     try{
-                        command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class,
+                        command = new Command(JOIN_SERVICE_PATH,
                                 null,
                                 "addGame",
                                 new Object[]{currentGame});
@@ -109,7 +111,7 @@ public class ServerModel {
             for(String id : activeUsers.keySet()){
                 Command command;
                 try{
-                    command = new Command(ticket.com.tickettoridegames.client.service.JoinService.class,
+                    command = new Command(JOIN_SERVICE_PATH,
                             null,
                             "addGame",
                             new Object[]{game});
@@ -145,7 +147,7 @@ public class ServerModel {
                 for(String id : activeUsers.keySet()){
                     Command command;
                     try{
-                        command = new Command(JoinService.class,
+                        command = new Command(JOIN_SERVICE_PATH,
                                 null,
                                 "addPlayer",
                                 new Object[]{game.getId(), player});
@@ -173,7 +175,7 @@ public class ServerModel {
         for(String id : game.getPlayersId()){
             Command command;
             try {
-                command = new Command(ticket.com.tickettoridegames.client.service.LobbyService.class,
+                command = new Command(LOBBY_SERVICE_PATH,
                         null,
                         "updateChat",
                         new Object[]{game.getId(), chat});
@@ -197,7 +199,7 @@ public class ServerModel {
                 Command command;
                 try{
                     command = new Command(
-                            LobbyService.class,
+                            LOBBY_SERVICE_PATH,
                             null,
                             "startingGame",
                             new Object[]{game.getId()});

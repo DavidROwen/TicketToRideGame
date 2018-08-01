@@ -8,7 +8,8 @@ import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class JoinService {
-
+    public static final String CREATE_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/CreateGameService.java";
+    public static final String JOIN_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/JoinService.java";
     private static ClientModel clientModel = ClientModel.get_instance();
 
     public JoinService(){
@@ -23,7 +24,7 @@ public class JoinService {
     public static Result createGame(String userId, String gameName, int numberOfPlayers){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.server.server.service.CreateGameService.class.getName(),
+                    new Command(CREATE_GAME_SERVICE_PATH,
                             ticket.com.server.server.service.CreateGameService.class,
                             ticket.com.server.server.service.CreateGameService.class.newInstance(),
                             "createGame",
@@ -46,7 +47,7 @@ public class JoinService {
     public static Result joinGame(String userID, String gameID){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.server.server.service.JoinService.class.getName(),
+                    new Command(JOIN_GAME_SERVICE_PATH,
                             ticket.com.server.server.service.JoinService.class,
                             ticket.com.server.server.service.JoinService.class.newInstance(),
                             "join",

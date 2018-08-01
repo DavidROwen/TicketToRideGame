@@ -6,8 +6,19 @@ import java.lang.reflect.Method;
 public class Command {
     //allows null instead of empty paramValues
     //for static method, null
-    public Command(Class<?> methodsClass, Object instance, String methodName, Object[] paramValues) {
-        this.className = methodsClass.getName();
+//    public Command(Class<?> methodsClass, Object instance, String methodName, Object[] paramValues) {
+//        this.className = methodsClass.getName();
+//        this.instance = instance;
+//        if(instance != null) { instanceType = instance.getClass(); }//type will get lost in serialization
+//        this.methodName = methodName;
+//        if(paramValues != null) {
+//            this.paramValues = paramValues;
+//            this.paramTypes = calcTypes(paramValues);
+//        }
+//    }
+
+    public Command(String methodsClass, Object instance, String methodName, Object[] paramValues) {
+        this.className = methodsClass;
         this.instance = instance;
         if(instance != null) { instanceType = instance.getClass(); }//type will get lost in serialization
         this.methodName = methodName;

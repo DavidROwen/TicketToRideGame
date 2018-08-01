@@ -20,6 +20,8 @@ import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class GameService implements IGameService {
+    public static final String GAME_PLAY_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/app/src/main/java/ticket/com/tickettoridegames/client/service/GamePlayService.java"
+
     @Override
     public void initGame(String gameId) {
         Game game = ServerModel.getInstance().getGames().get(gameId);
@@ -28,7 +30,7 @@ public class GameService implements IGameService {
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
 //        new GamePlayService().setTurnOrder(turnOrder);
-        Command initTurnOrder = new Command(GamePlayService.class, new GamePlayService(),
+        Command initTurnOrder = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "setTurnOrder", new Object[]{turnOrder}
         );
         CommandsManager.addCommandAllPlayers(initTurnOrder, gameId);
@@ -36,7 +38,7 @@ public class GameService implements IGameService {
         //playerColors //because it's generated randomly
         Map<String, Player.COLOR> colors = game.getPlayersColors();
 //        new GamePlayService().setPlayersColors(colors);
-        Command initColors = new Command(GamePlayService.class, new GamePlayService(),
+        Command initColors = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "setPlayersColors", new Object[]{colors}
         );
         CommandsManager.addCommandAllPlayers(initColors, gameId);
@@ -44,7 +46,7 @@ public class GameService implements IGameService {
         //trainDeck //because it's generated randomly
         Stack<TrainCard> trainCardsDeck = game.getTrainCardsDeck();
 //        new GamePlayService().setTrainCardsDeck(trainCardsDeck);
-        Command setTrainCardsDeck = new Command(GamePlayService.class, new GamePlayService(),
+        Command setTrainCardsDeck = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "setTrainCardsDeck", new Object[]{trainCardsDeck}
         );
         CommandsManager.addCommandAllPlayers(setTrainCardsDeck, gameId);
@@ -52,7 +54,7 @@ public class GameService implements IGameService {
         //everything else
         ServerModel.getInstance().getGames().get(gameId).initGameNonRandom();
 //        new GamePlayService().initiatingGameNonRandom();
-        Command initHands = new Command(GamePlayService.class, new GamePlayService(),
+        Command initHands = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "initiatingGameNonRandom", new Object[]{}
         );
         CommandsManager.addCommandAllPlayers(initHands, gameId);
@@ -69,7 +71,7 @@ public class GameService implements IGameService {
         game.drawTrainCard(playerId);
 
 //        new GamePlayService().drawingTrainCard(playerId);
-        Command addTrainCard = new Command(GamePlayService.class, new GamePlayService(),
+        Command addTrainCard = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "drawingTrainCard", new Object[]{playerId}
         );
         CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
@@ -82,7 +84,7 @@ public class GameService implements IGameService {
         game.pickupTrainCard(playerId, index);
 
 //        new GamePlayService().pickingUpTrainCard(playerId, index);
-        Command pickCard = new Command(GamePlayService.class, new GamePlayService(),
+        Command pickCard = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "pickingUpTrainCard", new Object[]{playerId, index}
         );
         CommandsManager.addCommandAllPlayers(pickCard, gameId);
@@ -90,7 +92,7 @@ public class GameService implements IGameService {
         if (game.tooManyLocos()){
             game.resetTrainBank();
             //        new GamePlayService().resetBank(playerId, index);
-            Command resetBank = new Command(GamePlayService.class, new GamePlayService(),
+            Command resetBank = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                     "resetBank", new Object[]{gameId}
             );
             CommandsManager.addCommandAllPlayers(resetBank, gameId);
@@ -104,7 +106,7 @@ public class GameService implements IGameService {
         List<DestinationCard> drawnCards = ServerModel.getInstance().drawTemporaryDestinationCards(gameId);
 
         try {
-            Command tempDeck = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+            Command tempDeck = new Command(GAME_PLAY_SERVICE_PATH, GamePlayService.class.newInstance(),
                     "setTempDeck", new Object[]{drawnCards});
             CommandsManager.addCommand(tempDeck, playerId);
         }
@@ -134,7 +136,7 @@ public class GameService implements IGameService {
         //send commands to the other games updating destination cards.
         Command claimCommand = null;
         try {
-            claimCommand = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+            claimCommand = new Command(GAME_PLAY_SERVICE_PATH, GamePlayService.class.newInstance(),
                     "updateDestinationCards", new Object[]{playerId, cards});
         }
         catch (Exception e){
@@ -161,7 +163,7 @@ public class GameService implements IGameService {
 //        ServerModel.getInstance().addDestinationCard(gameId, cards);
         Command discardCards = null;
         try {
-            discardCards = new Command(GamePlayService.class, GamePlayService.class.newInstance(),
+            discardCards = new Command(GAME_PLAY_SERVICE_PATH, GamePlayService.class.newInstance(),
                     "discardDestinationCards", new Object[]{cards}
             );
         }
@@ -178,7 +180,7 @@ public class GameService implements IGameService {
         Result result = game.claimRoute(playerId, route);
 
 //        new GamePlayService().claimingRoute(playerId, route);
-        Command claimRoute = new Command(GamePlayService.class, new GamePlayService(),
+        Command claimRoute = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "claimingRoute", new Object[]{playerId, route}
         );
         CommandsManager.addCommandAllPlayers(claimRoute, gameId);
@@ -192,7 +194,7 @@ public class GameService implements IGameService {
         game.switchTurn();
 
 //        new GamePlayService().switchingTurn();
-        Command switchingTurn = new Command(GamePlayService.class, new GamePlayService(),
+        Command switchingTurn = new Command(GAME_PLAY_SERVICE_PATH, new GamePlayService(),
                 "switchingTurn", new Object[]{gameId}
         );
         CommandsManager.addCommandAllPlayers(switchingTurn, gameId);

@@ -7,6 +7,8 @@ import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class LoginService {
+    public static final String LOGIN_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/LoginService.java";
+    public static final String REGISTER_GAME_SERVICE_PATH = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/RegisterService.java";
 
     private ClientModel clientModel;
 
@@ -17,7 +19,7 @@ public class LoginService {
     public Result login(User user){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.server.server.service.LoginService.class.getName(),
+                    new Command(LOGIN_GAME_SERVICE_PATH,
                             ticket.com.server.server.service.LoginService.class,
                             ticket.com.server.server.service.LoginService.class.newInstance(),
                             "login",
@@ -40,7 +42,7 @@ public class LoginService {
     public Result register(User user){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.server.server.service.RegisterService.class.getName(),
+                    new Command(REGISTER_GAME_SERVICE_PATH,
                             ticket.com.server.server.service.RegisterService.class,
                             ticket.com.server.server.service.RegisterService.class.newInstance(),
                             "register",
