@@ -2,8 +2,8 @@ package ticket.com.tickettoridegames.client.service;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Result;
 
 public class UtilityService {
 
@@ -16,8 +16,8 @@ public class UtilityService {
     public Result clearServer(){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.tickettoridegames.server.service.Tester.class,
-                            ticket.com.tickettoridegames.server.service.Tester.class.newInstance(),
+                    new Command(ticket.com.server.server.service.Tester.class,
+                            ticket.com.server.server.service.Tester.class.newInstance(),
                             "clear",
                             null)
             );

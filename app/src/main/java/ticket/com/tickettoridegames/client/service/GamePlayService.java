@@ -11,14 +11,14 @@ import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
-import ticket.com.tickettoridegames.server.service.GameService;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
-import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
-import ticket.com.tickettoridegames.utility.service.IGameService;
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.server.server.service.GameService;
+import ticket.com.utility.utility.model.DestinationCard;
+import ticket.com.utility.utility.model.Player;
+import ticket.com.utility.utility.model.PlayerAction;
+import ticket.com.utility.utility.model.TrainCard;
+import ticket.com.utility.service.IGameService;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Result;
 
 /**
  * Creates game play related commands to be send to the server.

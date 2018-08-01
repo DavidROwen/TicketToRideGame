@@ -6,9 +6,9 @@ import java.lang.reflect.Type;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import ticket.com.tickettoridegames.server.CommandsManager;
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.server.server.CommandsManager;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Result;
 
 public class ServerProxy {
     public static Result sendCommand(Command command) {

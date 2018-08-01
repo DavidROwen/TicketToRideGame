@@ -7,8 +7,8 @@ import org.junit.Test;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
-import ticket.com.tickettoridegames.utility.model.User;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.utility.model.User;
+import ticket.com.utility.web.Result;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;

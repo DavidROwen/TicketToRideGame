@@ -24,7 +24,7 @@ import java.util.Map;
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IJoinPresenter;
 import ticket.com.tickettoridegames.client.presenter.JoinPresenter;
-import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.utility.model.Game;
 
 public class JoinActivity extends AppCompatActivity implements IJoinView{
 

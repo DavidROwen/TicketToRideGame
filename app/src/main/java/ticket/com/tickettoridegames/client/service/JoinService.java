@@ -2,10 +2,10 @@ package ticket.com.tickettoridegames.client.service;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.model.Game;
+import ticket.com.utility.model.Player;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Result;
 
 public class JoinService {
 
@@ -23,9 +23,9 @@ public class JoinService {
     public static Result createGame(String userId, String gameName, int numberOfPlayers){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.tickettoridegames.server.service.CreateGameService.class.getName(),
-                            ticket.com.tickettoridegames.server.service.CreateGameService.class,
-                            ticket.com.tickettoridegames.server.service.CreateGameService.class.newInstance(),
+                    new Command(ticket.com.server.server.service.CreateGameService.class.getName(),
+                            ticket.com.server.server.service.CreateGameService.class,
+                            ticket.com.server.server.service.CreateGameService.class.newInstance(),
                             "createGame",
                             new Class<?>[]{String.class, String.class, int.class},
                             new Object[]{userId, gameName, numberOfPlayers})
@@ -46,9 +46,9 @@ public class JoinService {
     public static Result joinGame(String userID, String gameID){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.tickettoridegames.server.service.JoinService.class.getName(),
-                            ticket.com.tickettoridegames.server.service.JoinService.class,
-                            ticket.com.tickettoridegames.server.service.JoinService.class.newInstance(),
+                    new Command(ticket.com.server.server.service.JoinService.class.getName(),
+                            ticket.com.server.server.service.JoinService.class,
+                            ticket.com.server.server.service.JoinService.class.newInstance(),
                             "join",
                             new Class<?>[]{String.class, String.class,},
                             new Object[]{userID, gameID})

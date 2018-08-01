@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ticket.com.tickettoridegames.R;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
+import ticket.com.utility.model.PlayerStats;
 
 import static android.graphics.Color.GRAY;
 

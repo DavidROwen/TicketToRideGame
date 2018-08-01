@@ -7,8 +7,7 @@ import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
-import ticket.com.tickettoridegames.utility.TYPE;
-import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.utility.TYPE;
 
 public class AssetsPresenter implements IAssetsPresenter, Observer {
     private GamePlayService gamePlayService;

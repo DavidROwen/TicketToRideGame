@@ -4,11 +4,11 @@ import org.junit.Test;
 import java.util.Queue;
 
 import ticket.com.tickettoridegames.client.web.ServerProxy;
-import ticket.com.tickettoridegames.server.CommandsManager;
-import ticket.com.tickettoridegames.server.service.CreateGameService;
-import ticket.com.tickettoridegames.server.service.Tester;
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.server.server.CommandsManager;
+import ticket.com.server.server.service.CreateGameService;
+import ticket.com.server.server.service.Tester;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Result;
 
 public class ServerProxyTest {
     @Test

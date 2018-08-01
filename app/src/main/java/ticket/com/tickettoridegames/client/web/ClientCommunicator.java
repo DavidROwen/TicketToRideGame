@@ -13,8 +13,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Serializer;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Serializer;
 
 public class ClientCommunicator {
 	public static Object send(Command command, Type returnType) {

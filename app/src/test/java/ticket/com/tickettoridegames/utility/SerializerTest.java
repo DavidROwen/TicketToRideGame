@@ -2,8 +2,8 @@ package ticket.com.tickettoridegames.utility;
 
 import org.junit.Test;
 
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Serializer;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Serializer;
 
 public class SerializerTest {
     @Test

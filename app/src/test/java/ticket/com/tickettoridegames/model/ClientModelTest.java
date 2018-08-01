@@ -5,9 +5,9 @@ import org.junit.Test;
 import java.util.Map;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.User;
+import ticket.com.utility.utility.model.Game;
+import ticket.com.utility.utility.model.Player;
+import ticket.com.utility.utility.model.User;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

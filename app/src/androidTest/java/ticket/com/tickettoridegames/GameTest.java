@@ -5,14 +5,13 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import ticket.com.tickettoridegames.utility.model.City;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
-import ticket.com.tickettoridegames.utility.model.Route;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
+import ticket.com.utility.utility.model.City;
+import ticket.com.utility.utility.model.Game;
+import ticket.com.utility.utility.model.Player;
+import ticket.com.utility.utility.model.PlayerStats;
+import ticket.com.utility.utility.model.Route;
+import ticket.com.utility.utility.model.TrainCard;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

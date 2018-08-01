@@ -3,8 +3,8 @@ package ticket.com.tickettoridegames.client.State;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.model.Game;
+import ticket.com.utility.web.Result;
 
 public class MyTurnState extends PlayerState {
 

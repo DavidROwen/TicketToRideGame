@@ -17,7 +17,8 @@ import java.util.Set;
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.ILobbyPresenter;
 import ticket.com.tickettoridegames.client.presenter.LobbyPresenter;
-import ticket.com.tickettoridegames.utility.model.Chat;
+import ticket.com.utility.model.Chat;
+
 /**
  * LobbyActivity is the view that shows the players who have so far signed up and implements the live chat
  *

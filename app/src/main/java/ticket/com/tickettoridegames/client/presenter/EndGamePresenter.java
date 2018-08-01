@@ -4,7 +4,7 @@ import java.util.List;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.view.IEndGameView;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
+import ticket.com.utility.model.PlayerStats;
 
 public class EndGamePresenter {
     private ClientModel clientModel;

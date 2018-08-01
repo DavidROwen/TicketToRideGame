@@ -1,13 +1,12 @@
 package ticket.com.tickettoridegames.client.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
-import ticket.com.tickettoridegames.utility.model.Pair;
-import ticket.com.tickettoridegames.utility.model.Route;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
+import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.Pair;
+import ticket.com.utility.model.Route;
+import ticket.com.utility.model.TrainCard;
 
 public interface IMapView {
 

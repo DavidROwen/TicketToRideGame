@@ -14,16 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IStatsPresenter;
 import ticket.com.tickettoridegames.client.presenter.StatsPresenter;
 import ticket.com.tickettoridegames.client.view.IStatsView;
-import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
+import ticket.com.utility.utility.model.Chat;
+import ticket.com.utility.utility.model.PlayerAction;
+import ticket.com.utility.utility.model.PlayerStats;
 
 import static android.graphics.Color.GRAY;
 

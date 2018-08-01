@@ -3,7 +3,7 @@ package ticket.com.tickettoridegames.client.view;
 import java.util.List;
 import java.util.Set;
 
-import ticket.com.tickettoridegames.utility.model.Chat;
+import ticket.com.utility.model.Chat;
 
 public interface ILobbyView {
 

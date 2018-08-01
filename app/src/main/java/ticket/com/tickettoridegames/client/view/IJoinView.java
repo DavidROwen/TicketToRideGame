@@ -2,7 +2,7 @@ package ticket.com.tickettoridegames.client.view;
 
 import java.util.Map;
 
-import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.utility.model.Game;
 
 public interface IJoinView {
 

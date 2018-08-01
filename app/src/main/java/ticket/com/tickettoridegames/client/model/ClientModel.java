@@ -10,31 +10,32 @@ import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.State.NotMyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
-import ticket.com.tickettoridegames.utility.TYPE;
-import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Pair;
-import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
-import ticket.com.tickettoridegames.utility.model.Route;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
-import ticket.com.tickettoridegames.utility.model.User;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.TYPE;
+import ticket.com.utility.model.Chat;
+import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.Game;
+import ticket.com.utility.model.Pair;
+import ticket.com.utility.model.Player;
+import ticket.com.utility.model.PlayerAction;
+import ticket.com.utility.model.PlayerStats;
+import ticket.com.utility.model.Route;
+import ticket.com.utility.model.TrainCard;
+import ticket.com.utility.model.User;
+import ticket.com.utility.web.Result;
 
-import static ticket.com.tickettoridegames.utility.TYPE.ALLHISTORY;
-import static ticket.com.tickettoridegames.utility.TYPE.BANKUPDATE;
-import static ticket.com.tickettoridegames.utility.TYPE.DESTINATIONUPDATE;
-import static ticket.com.tickettoridegames.utility.TYPE.DISCARDDESTINATION;
-import static ticket.com.tickettoridegames.utility.TYPE.HISTORYUPDATE;
-import static ticket.com.tickettoridegames.utility.TYPE.NEWCHAT;
-import static ticket.com.tickettoridegames.utility.TYPE.NEWROUTE;
-import static ticket.com.tickettoridegames.utility.TYPE.NEWTEMPDECK;
-import static ticket.com.tickettoridegames.utility.TYPE.NEWTRAINCARD;
-import static ticket.com.tickettoridegames.utility.TYPE.ROUTECLAIMED;
-import static ticket.com.tickettoridegames.utility.TYPE.START;
-import static ticket.com.tickettoridegames.utility.TYPE.TURNCHANGED;
+import static ticket.com.utility.TYPE.ALLHISTORY;
+import static ticket.com.utility.TYPE.BANKUPDATE;
+import static ticket.com.utility.TYPE.DESTINATIONUPDATE;
+import static ticket.com.utility.TYPE.DISCARDDESTINATION;
+import static ticket.com.utility.TYPE.HISTORYUPDATE;
+import static ticket.com.utility.TYPE.NEWCHAT;
+import static ticket.com.utility.TYPE.NEWROUTE;
+import static ticket.com.utility.TYPE.NEWTEMPDECK;
+import static ticket.com.utility.TYPE.NEWTRAINCARD;
+import static ticket.com.utility.TYPE.ROUTECLAIMED;
+import static ticket.com.utility.TYPE.START;
+import static ticket.com.utility.TYPE.TURNCHANGED;
+
 
 public class ClientModel extends Observable {
 
