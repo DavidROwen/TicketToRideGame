@@ -263,6 +263,8 @@ public class ClientModel extends Observable {
         getMyActiveGame().initGameNonRandom();
         myNotify(ALLHISTORY);
         myNotify(TURNCHANGED);
+        myNotify(NEWTRAINCARD);
+        myNotify(BANKUPDATE);
     }
 
     public List<PlayerStats> getPlayerStats(){
