@@ -33,6 +33,8 @@ public class MapFragment extends BasicFragment implements IMapView{
     View view;
 
     private IMapPresenter presenter;
+    private boolean created;
+    private boolean firstCall;
 
     private Button turnButton;
     private Button drawTrainsButton;
@@ -40,6 +42,11 @@ public class MapFragment extends BasicFragment implements IMapView{
     private Button placeTrainsButton;
 
     private Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route NAME
+
+    public MapFragment(){
+        created = false;
+        firstCall = true;
+    }
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -89,7 +96,10 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        presenter = new MapPresenter(this);
+        if(!created){
+            created = true;
+            presenter = new MapPresenter(this);
+        }
         return view;
     }
 
@@ -150,10 +160,12 @@ public class MapFragment extends BasicFragment implements IMapView{
                             discardedCards.add(three);
                         }
 
-                        presenter.setDestinationCards(claimedCards, discardedCards);
+                        presenter.setDestinationCards(claimedCards, discardedCards, firstCall);
                     }
                 });
-
+        if(firstCall){
+            firstCall = false;
+        }
         builder.create().show();
     }
 
