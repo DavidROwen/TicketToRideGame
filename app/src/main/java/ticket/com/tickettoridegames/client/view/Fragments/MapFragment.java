@@ -115,6 +115,10 @@ public class MapFragment extends BasicFragment implements IMapView{
         drawTrainsButton.setEnabled(false);
     }
 
+    public void setFirstCall(boolean val){
+        firstCall = val;
+    }
+
     public void displayDestinationCards(Set<DestinationCard> destinationCards){
         Object[] myArr = destinationCards.toArray();
         DestinationCard one = (DestinationCard) myArr[0];
@@ -163,9 +167,6 @@ public class MapFragment extends BasicFragment implements IMapView{
                         presenter.setDestinationCards(claimedCards, discardedCards, firstCall);
                     }
                 });
-        if(firstCall){
-            firstCall = false;
-        }
         builder.create().show();
     }
 
