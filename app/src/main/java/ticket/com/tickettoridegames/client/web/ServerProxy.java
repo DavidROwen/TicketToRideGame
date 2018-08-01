@@ -21,7 +21,7 @@ public class ServerProxy {
 
     public static Queue<Command> getCommands(String id) {
         //public static Queue<Command> getCommands(String playerId)
-        Command command = new Command(COMMAND_MANAGER_PATH, "getCommands", new Object[]{id});
+        Command command = new Command(COMMAND_MANAGER_PATH, null, "getCommands", new Object[]{id});
 
         final Type COMMANDS_TYPE = new TypeToken<Queue<Command>>(){}.getType();
         Object results =  ClientCommunicator.send(command, COMMANDS_TYPE);
