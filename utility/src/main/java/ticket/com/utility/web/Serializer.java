@@ -57,10 +57,10 @@ public class Serializer {
             jsonObject.addProperty("methodName", src.getMethodName());
             jsonObject.add("paramTypes", calcParamTypes(src));
             jsonObject.add("paramValues", calcParamValues(src));
-            if(src.getInstance() != null) {
-                jsonObject.addProperty("instanceType", src.getInstanceType().getName());
-                jsonObject.add("instance", calcInstance(src));
-            }
+//            if(src.getInstance() != null) {
+//                jsonObject.addProperty("instanceType", src.getInstanceType().getName());
+//                jsonObject.add("instance", calcInstance(src));
+//            }
 
             return jsonObject;
         }
@@ -143,27 +143,27 @@ public class Serializer {
             String methodName = jsonObject.get("methodName").getAsString();
             Class<?>[] paramTypes = calcParamTypes(jsonObject); //because object is ambiguous
             Object[] paramValues = calcParamValues(jsonObject, paramTypes);
-            Class<?> instanceType = calcInstanceType(jsonObject); //because object is ambiguous
-            Object instance = calcInstance(jsonObject, instanceType);
+//            Class<?> instanceType = calcInstanceType(jsonObject); //because object is ambiguous
+//            Object instance = calcInstance(jsonObject, instanceType);
 
             //build object
-            return new Command(methodsClass.getName(), instanceType, instance, methodName, paramTypes, paramValues); //types may be object
+            return new Command(methodsClass.getName(), methodName, paramTypes, paramValues); //types may be object
         }
 
         private Class<?> calcMethodsClass(JsonObject jsonObject) {
             return calcType(jsonObject.get("className"));
         }
 
-        private Object calcInstance(JsonObject jsonObject, Class<?> instanceType) {
-            if(jsonObject.get("instance") == null) { return null; } //static methods
-//            System.out.println("look here: " + jsonObject.get getString("instance"));
-            return calcObject(jsonObject.get("instance").getAsJsonObject(), instanceType);
-        }
-
-        private Class<?> calcInstanceType(JsonObject jsonObject) {
-            if(jsonObject.get("instance") == null) { return null; } //static methods
-            return calcType(jsonObject.get("instanceType"));
-        }
+//        private Object calcInstance(JsonObject jsonObject, Class<?> instanceType) {
+//            if(jsonObject.get("instance") == null) { return null; } //static methods
+////            System.out.println("look here: " + jsonObject.get getString("instance"));
+//            return calcObject(jsonObject.get("instance").getAsJsonObject(), instanceType);
+//        }
+//
+//        private Class<?> calcInstanceType(JsonObject jsonObject) {
+//            if(jsonObject.get("instance") == null) { return null; } //static methods
+//            return calcType(jsonObject.get("instanceType"));
+//        }
 
         private Object[] calcParamValues(JsonObject jsonObject, Class<?>[] paramTypes) {
             Object[] paramValues;

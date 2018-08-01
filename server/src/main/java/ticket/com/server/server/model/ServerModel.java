@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import ticket.com.server.server.CommandsManager;
+import ticket.com.server.server.service.GameService;
 import ticket.com.utility.model.Chat;
 import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Game;
@@ -14,11 +15,10 @@ import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class ServerModel {
-    public static final String JOIN_SERVICE_PATH = "/app/src/main/java/ticket/com/tickettoridegames/client/service/JoinService.java";
-    public static final String LOBBY_SERVICE_PATH = "/app/src/main/java/ticket/com/tickettoridegames/client/service/LobbyService.java";
+    public static final String JOIN_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.JoinService";
+    public static final String LOBBY_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.LobbyService";
 
     private static ServerModel instance = null;
-
     public static ServerModel getInstance(){
         if(instance == null){
             instance  = new ServerModel();

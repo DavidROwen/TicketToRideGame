@@ -36,11 +36,10 @@ public class LobbyService {
         try{
             Result  result = ServerProxy.sendCommand(
                     new Command(START_GAME_SERVICE_PATH,
-                            ticket.com.server.server.service.StartGameService.class,
-                            ticket.com.server.server.service.StartGameService.class.newInstance(),
+                            null,
                             "startGame",
-                            new Class<?>[]{String.class},
-                            new Object[]{gameID})
+                            new Object[]{gameID}
+                            )
             );
             return result;
         }
@@ -75,11 +74,10 @@ public class LobbyService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(CHAT_GAME_SERVICE_PATH,
-                            ticket.com.server.server.service.ChatService.class,
-                            ticket.com.server.server.service.ChatService.class.newInstance(),
+                            null,
                             "chat",
-                            new Class<?>[]{String.class,String.class,String.class},
-                            new Object[]{gameID,userID,message})
+                            new Object[]{gameID,userID,message}
+                            )
             );
             return result;
         } catch (Exception e){

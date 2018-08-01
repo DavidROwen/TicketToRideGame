@@ -18,9 +18,10 @@ public class UtilityService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(TESTER_SERVICE_PATH,
-                            ticket.com.server.server.service.Tester.class.newInstance(),
+                            null,
                             "clear",
-                            null)
+                            null
+                    )
             );
             if (result.isSuccess()) {
                 // Parse/get the user from the response here.
