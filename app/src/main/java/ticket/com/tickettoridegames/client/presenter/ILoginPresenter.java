@@ -6,4 +6,5 @@ public interface ILoginPresenter {
 
     void register(String username, String password, String passwordConfirm);
 
+    void setUrl(String url);
 }

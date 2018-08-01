@@ -80,4 +80,9 @@ public class LoginPresenter implements ILoginPresenter, Observer{
 //            loginView.changeView();
 //        }
     }
+
+    @Override
+    public void setUrl(String url) {
+        loginService.setUrl(url);
+    }
 }
