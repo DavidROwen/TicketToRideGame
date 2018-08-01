@@ -21,20 +21,17 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         gamePlayService = new GamePlayService();
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
-        //clientModel.getMyActiveGame().addObserver(this);
-
-        assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
 
         String userID = clientModel.getUserId();
-        assetsView.setHand(clientModel.getMyActiveGame().getPlayer(userID).getTrainCards());
-        assetsView.setRoutes(clientModel.getMyActiveGame().getPlayer(userID).getDestinationCards());
+        assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
+        assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
+        assetsView.setRoutes(clientModel.getMyPlayer().getDestinationCards());
         assetsView.setTrainDeckCount(clientModel.getMyActiveGame().getTrainCardsDeck().size());
         assetsView.setRouteDeckCount(clientModel.getMyActiveGame().getDestinationCards().size());
     }
 
     @Override
     public void update(Observable observable, Object arg){
-//        clientModel = (ClientModel) observable;
         ClientModel clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){

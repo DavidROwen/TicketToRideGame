@@ -34,7 +34,7 @@ public class Game extends Observable {
     private List<String> turnOrder;
     private Integer turnNumber = 0;
     private Turn currentTurn = new Turn();
-    private List<TrainCard> trainBank;
+    private List<TrainCard> trainBank = new LinkedList<>();
 
     // Map data
     private GameMap map;
@@ -54,7 +54,6 @@ public class Game extends Observable {
         this.turnOrder = new LinkedList<>();
         this.map = new GameMap();
         this.destinationCards = new LinkedList<>();
-        this.trainBank = new LinkedList<>();
         fillDestinationCards();
 
         fillDestinationCards();
@@ -69,7 +68,6 @@ public class Game extends Observable {
         this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
         this.newestChat = null;
-        this.trainBank = new LinkedList<>();
         this.isStarted = false;
         this.turnOrder = new LinkedList<>();
         this.map = new GameMap();
@@ -306,9 +304,11 @@ public class Game extends Observable {
                 card_count = 14;
             }
             for (int i = 0; i < card_count; i++) {
-                trainDiscards.add(new TrainCard(type));
+                trainCardsDeck.add(new TrainCard(type));
             }
         }
+        Collections.shuffle(trainCardsDeck, new Random(getId().hashCode()));
+        assert(trainCardsDeck.size() == 110);
     }
 
     private TrainCard getRandomTrainCard() {
@@ -321,6 +321,9 @@ public class Game extends Observable {
             initTurnOrder();
             initColors();
             initTrainCardDeck();
+        }
+        else {
+            System.out.println("initGame() called multiple times :(");
         }
     }
 
@@ -336,6 +339,9 @@ public class Game extends Observable {
             initHandAll();
             initTrainBank();
         }
+        else {
+            System.out.println("initGameNonRandom() called multiple times :(");
+        }
     }
 
     public void initHandAll() {
@@ -347,12 +353,10 @@ public class Game extends Observable {
 
     private void initTrainBank() {
         for(int i = 0; i < NUM_CARDS_TRAINCARD_BANK; i++) {
-            try {
-                trainBank.add(drawTrainCard());
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
+            trainBank.add(drawTrainCard());
         }
+        assert(trainCardsDeck.size() == 110 - (4*players.size() + 5));
+        assert(trainBank.size() == 5);
     }
 
     //max of 7 players //for 7 colors

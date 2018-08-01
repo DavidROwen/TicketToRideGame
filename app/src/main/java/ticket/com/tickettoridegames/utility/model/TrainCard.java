@@ -1,7 +1,7 @@
 package ticket.com.tickettoridegames.utility.model;
 
 public class TrainCard implements Comparable<TrainCard>{
-    public enum TRAIN_TYPE {RED, BLUE, GREEN, PINK, ORANGE, WHITE, BLACK, YELLOW, GREY, WILD} //todo remove wild
+    public enum TRAIN_TYPE {PINK, WHITE, BLUE, YELLOW, ORANGE, BLACK, RED, GREEN, WILD}
     public static final Integer NUM_TYPES = 9;
 
     private TRAIN_TYPE type;

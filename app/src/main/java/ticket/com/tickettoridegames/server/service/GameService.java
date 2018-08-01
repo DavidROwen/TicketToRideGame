@@ -22,8 +22,8 @@ import ticket.com.tickettoridegames.utility.web.Result;
 public class GameService implements IGameService {
     @Override
     public void initGame(String gameId) {
-        ServerModel.getInstance().getGames().get(gameId).initGame();
         Game game = ServerModel.getInstance().getGames().get(gameId);
+        game.initGame();
 
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();

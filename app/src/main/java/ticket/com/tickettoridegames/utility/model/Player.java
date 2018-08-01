@@ -178,10 +178,16 @@ public class Player {
     }
 
     public Result canClaim(TrainCard.TRAIN_TYPE type, Integer length) {
-        if(type == TrainCard.TRAIN_TYPE.GREY) { return new Result(false, null, "An alternative to grey trainType should have been selected"); }
-        else if(!hasTrainCards(getNeededCards(type,length))) { return new Result(false, null, "Player doesn't have the right cards"); }
-        else if(length > trains) { return new Result(false, null, "Player doesn't have enough trains"); }
-        else { return new Result(true, null, null); }
+        //if(type == TrainCard.TRAIN_TYPE.GREY) { return new Result(false, null, "An alternative to grey trainType should have been selected"); }
+        if(!hasTrainCards(getNeededCards(type,length))) {
+            return new Result(false, null, "Player doesn't have the right cards");
+        }
+        else if(length > trains) {
+            return new Result(false, null, "Player doesn't have enough trains");
+        }
+        else {
+            return new Result(true, null, null);
+        }
     }
 
     public void claimRoute(TrainCard.TRAIN_TYPE type, Integer length) {

@@ -191,7 +191,7 @@ public class ServerModel {
     public boolean startGame(String gameId) throws Exception {
         Game game = games.get(gameId);
         if(game == null){
-            throw new Exception();
+            throw new Exception("Null game passed into start game");
         }
         if(game.getNumberOfPlayers() > 1){
             game.setStarted(true);
@@ -211,7 +211,7 @@ public class ServerModel {
             }
             return true;
         }
-            return false;
+        return false;
     }
     //Destination Card Functions
     public List<DestinationCard> drawTemporaryDestinationCards(String gameId) {

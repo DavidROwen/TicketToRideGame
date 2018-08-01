@@ -127,7 +127,7 @@ public class GamePlayService implements IGameService {
     }
 
     public void initiatingGameNonRandom() {
-        ClientModel.get_instance().initGame();
+        ClientModel.get_instance().initMyGameNonRandom();
     }
 
     public void drawingTrainCard(String playerId) {

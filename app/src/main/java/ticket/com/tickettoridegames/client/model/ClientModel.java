@@ -259,7 +259,7 @@ public class ClientModel extends Observable {
         getMyActiveGame().setTrainCardsDeck(deck);
     }
 
-    public void initGame(){
+    public void initMyGameNonRandom(){
         getMyActiveGame().initGameNonRandom();
         myNotify(ALLHISTORY);
         myNotify(TURNCHANGED);
