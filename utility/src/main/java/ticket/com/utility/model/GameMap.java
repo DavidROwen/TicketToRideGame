@@ -40,12 +40,6 @@ public class GameMap {
     //assumes that it canClaim
     public Boolean claimRoute(String playerID, Route route){
         newestClaimedRoute = route;
-        return routes.get(route.NAME).claim(playerID); //also updates doubleRoutesIndex
-    }
-
-    private Route getFromDoublesRoutesIndex(String name) {
-        Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(name));
-        return routePair.first.NAME.equals(name) ? routePair.second : routePair.first;
         if(isDouble(route)) {
             Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(route.NAME));
             if(routePair.first.NAME.equals(route.NAME)) { routePair.first.claim(playerID); }
