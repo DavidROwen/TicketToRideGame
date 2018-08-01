@@ -25,6 +25,8 @@ public class JoinService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(CREATE_GAME_SERVICE_PATH,
+                            null,
+                            null,
                             "createGame",
                             new Class<?>[]{String.class, String.class, int.class},
                             new Object[]{userId, gameName, numberOfPlayers})
@@ -46,9 +48,10 @@ public class JoinService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(JOIN_GAME_SERVICE_PATH,
+                            null,
                             "join",
-                            new Class<?>[]{String.class, String.class,},
-                            new Object[]{userID, gameID})
+                            new Object[]{userID, gameID}
+                            )
             );
             return result;
         } catch (Exception e){

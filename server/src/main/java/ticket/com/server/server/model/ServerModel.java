@@ -17,8 +17,6 @@ import ticket.com.utility.web.Command;
 public class ServerModel {
     public static final String JOIN_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.JoinService";
     public static final String LOBBY_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.LobbyService";
-    public static final String JOIN_SERVICE_PATH = "/app/src/main/java/ticket/com/tickettoridegames/client/service/JoinService.java";
-    public static final String LOBBY_SERVICE_PATH = "/app/src/main/java/ticket/com/tickettoridegames/client/service/LobbyService.java";
 
     private static ServerModel instance = null;
     public static ServerModel getInstance(){

@@ -20,7 +20,8 @@ public class UtilityService {
                     new Command(TESTER_SERVICE_PATH,
                             null,
                             "clear",
-                            null)
+                            null
+                    )
             );
             if (result.isSuccess()) {
                 // Parse/get the user from the response here.

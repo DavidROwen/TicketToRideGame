@@ -20,9 +20,10 @@ public class LoginService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(LOGIN_GAME_SERVICE_PATH,
+                            null,
                             "login",
-                            new Class<?>[]{String.class, String.class},
-                            new Object[]{user.getUsername(), user.getPassword()})
+                            new Object[]{user.getUsername(), user.getPassword()}
+                            )
             );
             if (result.isSuccess()){
                 // Parse/get the user from the response here.
@@ -41,8 +42,8 @@ public class LoginService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(REGISTER_GAME_SERVICE_PATH,
+                            null,
                             "register",
-                            new Class<?>[]{String.class, String.class},
                             new Object[]{user.getUsername(), user.getPassword()})
             );
             if (result.isSuccess()){

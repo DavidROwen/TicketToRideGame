@@ -57,10 +57,10 @@ public class Serializer {
             jsonObject.addProperty("methodName", src.getMethodName());
             jsonObject.add("paramTypes", calcParamTypes(src));
             jsonObject.add("paramValues", calcParamValues(src));
-            if(src.getInstance() != null) {
-                jsonObject.addProperty("instanceType", src.getInstanceType().getName());
-                jsonObject.add("instance", calcInstance(src));
-            }
+//            if(src.getInstance() != null) {
+//                jsonObject.addProperty("instanceType", src.getInstanceType().getName());
+//                jsonObject.add("instance", calcInstance(src));
+//            }
 
             return jsonObject;
         }
