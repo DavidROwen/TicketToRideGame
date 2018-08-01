@@ -1,10 +1,14 @@
-Ticket to Ride Instructions:
 
-   Server Main Class:
+ Full Java package name of your server's "main" class:
+    ticket.com.tickettoridegames.server.ServerCommunicator
 
-   Command line parameters for the server
+  Explanation of any command-line parameters accepted by your server:
+    Port number
 
-   Java package name of the client app
+  Java package name of your client app:
+    ticket.com.tickettoridegames.client.view.LoginActivity
 
-   Emulator Type:
-      Google Nexus 10 Tablet API 27 or 28
+  The type/size of emulator/device your app should be tested on
+    Nexus 10, API 28, Landscape
+
+
