@@ -5,25 +5,22 @@ import ticket.com.utility.web.Result;
 
 public class LoginService {
 
-    public Result login(String username, String password){
-
-        System.out.println("Login request received: Username:"+username+" Password:"+password);
+    public static Result login(String username, String password){
+        System.out.println("Login request received: Username:" + username + " Password:" + password);
 
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
 
         try {
             String userId = sm.loginUser(username, password);
-            if(userId == null){
+            if (userId == null) {
                 result.setSuccess(false);
                 result.setErrorMessage("Password incorrect");
-            }
-            else{
+            } else {
                 result.setSuccess(true);
                 result.setMessage(userId);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             result.setSuccess(false);
             result.setErrorMessage("User does not exist");
         }

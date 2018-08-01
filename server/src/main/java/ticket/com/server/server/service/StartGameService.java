@@ -5,7 +5,7 @@ import ticket.com.utility.web.Result;
 
 public class StartGameService {
 
-    public Result startGame(String gameId){
+    public static Result startGame(String gameId){
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
 

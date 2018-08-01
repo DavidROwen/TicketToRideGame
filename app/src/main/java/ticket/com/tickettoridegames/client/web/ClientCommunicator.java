@@ -47,7 +47,6 @@ public class ClientCommunicator {
 			HttpURLConnection connection = openConnection(GENERIC_DESIGNATOR);
 			sendToServer(connection, commands[0]);
 			String input = receive(connection);
-
 			connection.disconnect();
 			return input;
 		}
