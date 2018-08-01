@@ -14,6 +14,9 @@ public class Command {
         if(paramValues != null) {
             this.paramValues = paramValues;
             this.paramTypes = calcTypes(paramValues);
+        } else {
+            this.paramValues = new Object[]{};
+            this.paramTypes = new Class<?>[]{};
         }
     }
 
@@ -28,6 +31,9 @@ public class Command {
         if(paramValues != null) {
             this.paramTypes = paramTypes;
             this.paramValues = paramValues;
+        } else {
+            this.paramValues = new Object[]{};
+            this.paramTypes = new Class<?>[]{};
         }
     }
 
@@ -94,11 +100,11 @@ public class Command {
 
     private String className;
     private String methodName;
-    private Object[] paramValues = new Object[]{};
+    private final Object[] paramValues;
     private Object instance;
 
     private Class<?> instanceType = null; //for serialization
-    private Class<?>[] paramTypes = new Class<?>[]{}; //for serialization
+    private final Class<?>[] paramTypes; //for serialization
 
     private Class<?>[] calcTypes(Object[] paramValues) {
         Class<?>[] types = new Class<?>[paramValues.length];
