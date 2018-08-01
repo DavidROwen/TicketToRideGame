@@ -27,4 +27,8 @@ public class ServerProxy {
 
         return results != null ? (Queue) results : new LinkedBlockingQueue<>(); //ignore error
     }
+
+    public static void setUrl(String url) {
+        ClientCommunicator.setUrl(url);
+    }
 }
