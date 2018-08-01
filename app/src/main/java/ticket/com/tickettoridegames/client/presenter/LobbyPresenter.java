@@ -7,8 +7,8 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.ILobbyView;
-import ticket.com.tickettoridegames.utility.TYPE;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.TYPE;
+import ticket.com.utility.web.Result;
 
 public class LobbyPresenter implements ILobbyPresenter, Observer {
 
@@ -30,9 +30,9 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             lobbyView.displayMessage("Invalid game ID");
         }
         else {
-            Result result = lobbyService.startGame(gameID);
+            Result result = LobbyService.startGame(gameID);
+            GamePlayService.initGame(gameID);
             if (result.isSuccess()) {
-                new GamePlayService().initGame(gameID);
                 lobbyView.displayMessage("Successfully started game.");
                 //don't add lobbyView.changeView(), it's already in update
             } else {
@@ -53,7 +53,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             lobbyView.displayMessage("Invalid player ID");
         }
         else {
-            Result result = lobbyService.sendChat(gameID,userID,message);
+            Result result = LobbyService.sendChat(gameID,userID,message);
             if (result.isSuccess()){
                 // don't do anything right?
             }

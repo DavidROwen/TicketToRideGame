@@ -2,10 +2,11 @@ package ticket.com.tickettoridegames.client.service;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Result;
 
 public class UtilityService {
+    public static final String TESTER_SERVICE_PATH = "ticket.com.server.server.service.Tester";
 
     private ClientModel clientModel;
 
@@ -16,10 +17,11 @@ public class UtilityService {
     public Result clearServer(){
         try {
             Result result = ServerProxy.sendCommand(
-                    new Command(ticket.com.tickettoridegames.server.service.Tester.class,
-                            ticket.com.tickettoridegames.server.service.Tester.class.newInstance(),
+                    new Command(TESTER_SERVICE_PATH,
+                            null,
                             "clear",
-                            null)
+                            null
+                    )
             );
             if (result.isSuccess()) {
                 // Parse/get the user from the response here.

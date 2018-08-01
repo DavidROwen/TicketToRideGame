@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ticket.com.tickettoridegames.R;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
+import ticket.com.utility.model.PlayerStats;
 
 import static android.graphics.Color.GRAY;
 
@@ -35,7 +35,7 @@ public class EndGameActivity extends AppCompatActivity implements IEndGameView{
     @Override
     public void setPlayerStats(List<PlayerStats> playerStats){
         this.playerStats = playerStats;
-        myRecyclerView = (RecyclerView) findViewById(R.id.statsrecyclerview);
+        myRecyclerView = findViewById(R.id.statsrecyclerview);
 
         myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         myAdapter = new StatsAdapter(playerStats);
@@ -49,7 +49,7 @@ public class EndGameActivity extends AppCompatActivity implements IEndGameView{
 
     @Override
     public void setWinner(String player){
-        winnerNameText = (TextView) findViewById(R.id.PlayerName);
+        winnerNameText = findViewById(R.id.PlayerName);
         winnerNameText.setText(player);
     }
 
@@ -94,11 +94,11 @@ public class EndGameActivity extends AppCompatActivity implements IEndGameView{
 
         public StatsCustomViewHolder(View v) {
             super(v);
-            line1 = (TextView)  v.findViewById(R.id.textView1);
-            line2 = (TextView)  v.findViewById(R.id.textView2);
-            line3 = (TextView)  v.findViewById(R.id.textView3);
-            line4 = (TextView)  v.findViewById(R.id.textView4);
-            line5 = (TextView)  v.findViewById(R.id.textView5);
+            line1 = v.findViewById(R.id.textView1);
+            line2 = v.findViewById(R.id.textView2);
+            line3 = v.findViewById(R.id.textView3);
+            line4 = v.findViewById(R.id.textView4);
+            line5 = v.findViewById(R.id.textView5);
         }
 
         public void bindResult(PlayerStats playerStat){

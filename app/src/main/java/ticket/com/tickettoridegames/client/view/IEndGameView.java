@@ -2,7 +2,7 @@ package ticket.com.tickettoridegames.client.view;
 
 import java.util.List;
 
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
+import ticket.com.utility.model.PlayerStats;
 
 public interface IEndGameView {
 

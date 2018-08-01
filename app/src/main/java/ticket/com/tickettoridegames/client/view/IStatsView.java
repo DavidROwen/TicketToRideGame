@@ -2,9 +2,9 @@ package ticket.com.tickettoridegames.client.view;
 
 import java.util.List;
 
-import ticket.com.tickettoridegames.utility.model.Chat;
-import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.PlayerStats;
+import ticket.com.utility.model.Chat;
+import ticket.com.utility.model.PlayerAction;
+import ticket.com.utility.model.PlayerStats;
 
 public interface IStatsView {
 

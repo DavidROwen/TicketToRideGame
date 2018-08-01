@@ -24,7 +24,7 @@ import java.util.Map;
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IJoinPresenter;
 import ticket.com.tickettoridegames.client.presenter.JoinPresenter;
-import ticket.com.tickettoridegames.utility.model.Game;
+import ticket.com.utility.model.Game;
 
 public class JoinActivity extends AppCompatActivity implements IJoinView{
 
@@ -109,7 +109,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     @Override
     public void setGames(Map<String, Game> games){
         this.games = games;
-        gameListRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        gameListRecyclerView = findViewById(R.id.myrecyclerview);
         gameListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         myAdapter = new GameAdapter(games);
         gameListRecyclerView.setAdapter(myAdapter);

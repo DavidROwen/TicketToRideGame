@@ -1,14 +1,11 @@
 package ticket.com.tickettoridegames;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-
 import org.junit.Test;
 
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
-import ticket.com.tickettoridegames.utility.model.User;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.model.User;
+import ticket.com.utility.web.Result;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

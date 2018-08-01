@@ -6,7 +6,7 @@ import java.util.Observer;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IGamePlayActivity;
-import ticket.com.tickettoridegames.utility.TYPE;
+import ticket.com.utility.TYPE;
 
 public class GamePlayPresenter implements IGamePlayPresenter, Observer {
 

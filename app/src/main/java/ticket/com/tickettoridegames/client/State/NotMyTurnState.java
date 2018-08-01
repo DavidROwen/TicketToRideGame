@@ -2,7 +2,7 @@ package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.web.Result;
 
 public class NotMyTurnState extends PlayerState {
 

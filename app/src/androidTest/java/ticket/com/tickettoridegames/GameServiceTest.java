@@ -13,11 +13,11 @@ import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
 import ticket.com.tickettoridegames.client.web.Poller;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
-import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
-import ticket.com.tickettoridegames.utility.model.User;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.Player;
+import ticket.com.utility.model.TrainCard;
+import ticket.com.utility.model.User;
+import ticket.com.utility.web.Result;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;

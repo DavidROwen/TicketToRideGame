@@ -7,8 +7,8 @@ import org.junit.Test;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.service.LoginService;
 import ticket.com.tickettoridegames.client.service.UtilityService;
-import ticket.com.tickettoridegames.utility.model.User;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.model.User;
+import ticket.com.utility.web.Result;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -40,20 +40,20 @@ public class JoinServiceTest {
         Assert.assertTrue(result.isSuccess());
         String userID = result.getMessage();
 
-        result = joinService.createGame(userID,"gamename", 2);
+        result = JoinService.createGame(userID,"gamename", 2);
         // System.out.println(result.toString());
         assertTrue(result.isSuccess());
         String gameID = result.getMessage();
 
-        result = joinService.joinGame(userID, gameID);
+        result = JoinService.joinGame(userID, gameID);
         //System.out.println(result.toString());
         assertTrue(result.isSuccess());
 
-        result = joinService.joinGame(userID, "asdfasasf");
+        result = JoinService.joinGame(userID, "asdfasasf");
         //System.out.println(result.toString());
         assertFalse(result.isSuccess());
 
-        result = joinService.joinGame("asfasdfasdfasdf", gameID);
+        result = JoinService.joinGame("asfasdfasdfasdf", gameID);
         //System.out.println(result.toString());
         assertFalse(result.isSuccess());
     }

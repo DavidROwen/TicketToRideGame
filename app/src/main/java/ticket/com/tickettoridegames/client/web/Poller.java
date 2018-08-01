@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
-import ticket.com.tickettoridegames.utility.web.Command;
+import ticket.com.utility.web.Command;
 
 public class Poller {
     private PollTask pollerTask;

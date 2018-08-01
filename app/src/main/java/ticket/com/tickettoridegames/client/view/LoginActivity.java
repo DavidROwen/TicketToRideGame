@@ -37,11 +37,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         Poller poller = new Poller();
 
         // Set up the login form.
-        loginPasswordEditText = (EditText) findViewById(R.id.password);
-        registerPasswordEditText = (EditText) findViewById(R.id.password2);
-        usernameLoginEditText = (EditText) findViewById(R.id.userName);
-        usernameRegEditText = (EditText) findViewById(R.id.userName2);
-        confirmPasswordText = (EditText) findViewById(R.id.confirm);
+        loginPasswordEditText = findViewById(R.id.password);
+        registerPasswordEditText = findViewById(R.id.password2);
+        usernameLoginEditText = findViewById(R.id.userName);
+        usernameRegEditText = findViewById(R.id.userName2);
+        confirmPasswordText = findViewById(R.id.confirm);
         urlTextInput = findViewById(R.id.UrlTextInput);
         urlTextInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
             }
         });
 
-        Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
+        Button mSignInButton = findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
             }
         });
 
-        Button mRegisterInButton = (Button) findViewById(R.id.register_button);
+        Button mRegisterInButton = findViewById(R.id.register_button);
         mRegisterInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

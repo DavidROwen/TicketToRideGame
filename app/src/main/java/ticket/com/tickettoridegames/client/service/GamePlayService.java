@@ -11,14 +11,12 @@ import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.web.ServerProxy;
-import ticket.com.tickettoridegames.server.service.GameService;
-import ticket.com.tickettoridegames.utility.model.DestinationCard;
-import ticket.com.tickettoridegames.utility.model.Player;
-import ticket.com.tickettoridegames.utility.model.PlayerAction;
-import ticket.com.tickettoridegames.utility.model.TrainCard;
-import ticket.com.tickettoridegames.utility.service.IGameService;
-import ticket.com.tickettoridegames.utility.web.Command;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.Player;
+import ticket.com.utility.model.PlayerAction;
+import ticket.com.utility.model.TrainCard;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Result;
 
 /**
  * Creates game play related commands to be send to the server.
@@ -26,7 +24,8 @@ import ticket.com.tickettoridegames.utility.web.Result;
  *
  * @invariant All commands have a void return type because they are used to execute commands
  */
-public class GamePlayService implements IGameService {
+public class GamePlayService {
+    public static final String GAME_SERVICE_STRING = "ticket.com.server.server.service.GameService";
     /**
      * Starts the game for everyone in a game lobby.
      *
@@ -36,39 +35,35 @@ public class GamePlayService implements IGameService {
      * @post the game has been started on the server and on each client in the game
      * @param gameId a string id that corresponds to a game on the server
      */
-    @Override
-    public void initGame(String gameId) {
+    public static void initGame(String gameId) {
 //            new GameService.initGame(gameId);
-        Command command = new Command(GameService.class, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "initGame", new Object[]{gameId}
         );
         ServerProxy.sendCommand(command);
 
     }
 
-    @Override
-    public void drawTrainCard(String playerId, String gameId) {
+    public static void drawTrainCard(String playerId, String gameId) {
 //            new GameService().drawTrainCard(playerId, gameId);
-        Command command = new Command(GameService.class, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "drawTrainCard", new Object[]{playerId, gameId}
                 );
         ServerProxy.sendCommand(command);
     }
 
-    @Override
-    public void pickupTrainCard(String playerId, String gameId, Integer index) {
+    public static void pickupTrainCard(String playerId, String gameId, Integer index) {
 //            new GameService().pickupTrainCard(playerId, gameId, index);
-        Command command = new Command(GameService.class, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "pickupTrainCard", new Object[]{playerId, gameId, index}
         );
         ServerProxy.sendCommand(command);
     }
 
     //Destination Card (Command) commands
-    @Override
     public void drawDestinationCard(String playerId, String gameId) {
         try {
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
+            Command command = new Command(GAME_SERVICE_STRING, null,
                     "drawDestinationCard", new Object[]{playerId, gameId}
             );
             ServerProxy.sendCommand(command);
@@ -77,10 +72,9 @@ public class GamePlayService implements IGameService {
         }
     }
 
-    @Override
-    public void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards){
+    public static void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards){
         try{
-            Command command = new Command(GameService.class, GameService.class.newInstance(),
+            Command command = new Command(GAME_SERVICE_STRING, null,
                     "claimDestinationCard", new Object[]{playerId, gameId, cards});
             ServerProxy.sendCommand(command);
         }
@@ -89,61 +83,58 @@ public class GamePlayService implements IGameService {
         }
     }
 
-    @Override
     public void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
 //                    GamePlayService.class.newInstance().discardDestinationCards(cards);
 //        new GameService().returnDestinationCard(gameId, cards);
-        Command command = new Command(GameService.class, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "returnDestinationCard", new Object[]{gameId, cards}
         );
         ServerProxy.sendCommand(command);
     }
     //END Destination Card (Command) functions
 
-    @Override
-    public Result claimRoute(String gameId, String playerId, String route) {
+    public static Result claimRoute(String gameId, String playerId, String route) {
 //        new GameService().claimRoute(gameId, playerId, route);
-        Command command = new Command(GameService.class, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "claimRoute", new Object[]{gameId, playerId, route}
         );
         return ServerProxy.sendCommand(command);
     }
 
-    @Override
-    public void switchTurn(String gameId) {
+    public static void switchTurn(String gameId) {
 
-        Command command = new Command(GameService.class, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "switchTurn", new Object[]{gameId}
                 );
         ServerProxy.sendCommand(command);
     }
 
-    public void setTurnOrder(LinkedList<String> order) {
+    public static void setTurnOrder(LinkedList<String> order) {
         ClientModel.get_instance().setTurnOrder(order);
     }
 
-    public void setPlayersColors(HashMap<String, Player.COLOR> colors) {
+    public static void setPlayersColors(HashMap<String, Player.COLOR> colors) {
         ClientModel.get_instance().setPlayersColors(colors);
     }
 
-    public void initiatingGameNonRandom() {
+    public static void initiatingGameNonRandom() {
         ClientModel.get_instance().initMyGameNonRandom();
     }
 
-    public void drawingTrainCard(String playerId) {
+    public static void drawingTrainCard(String playerId) {
         ClientModel.get_instance().drawTrainCard(playerId);
     }
 
-    public void pickingUpTrainCard(String playerId, Integer index) {
+    public static void pickingUpTrainCard(String playerId, Integer index) {
         ClientModel.get_instance().pickupTrainCard(playerId, index);
     }
 
-    public void claimingRoute(String playerId, String route) {
+    public static void claimingRoute(String playerId, String route) {
         ClientModel.get_instance().claimRoute(playerId, route);
     }
 
     //Destination Cards (Model) functions
-    public void setTempDeck(ArrayList<DestinationCard> tempDeck){
+    public static void setTempDeck(ArrayList<DestinationCard> tempDeck){
         //deserialized destination cards as linkedtreemap
         ArrayList<DestinationCard> temp = new ArrayList<>();
         for(int i = 0; i < tempDeck.size(); i++) {
@@ -158,7 +149,7 @@ public class GamePlayService implements IGameService {
         ClientModel.get_instance().setMyPlayerTempDeck(temp);
     }
 
-    public void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
+    public static void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
         //deserialized destination cards as linkedtreemap
         ArrayList<DestinationCard> temp = new ArrayList<>();
         for(int i = 0; i < cards.size(); i++) {
@@ -173,7 +164,7 @@ public class GamePlayService implements IGameService {
         ClientModel.get_instance().updateDestinationCards(playerId, temp);
     }
 
-    public void discardDestinationCards(LinkedList<DestinationCard> cards){
+    public static void discardDestinationCards(LinkedList<DestinationCard> cards){
         //deserialized destination cards as linkedtreemap
         ArrayList<DestinationCard> temp = new ArrayList<>();
         for(int i = 0; i < cards.size(); i++) {
@@ -190,12 +181,12 @@ public class GamePlayService implements IGameService {
     //END Destination Cards (Model) functions
 
     //Game History functions
-    public void addToHistory(PlayerAction history){
+    public static void addToHistory(PlayerAction history){
         ClientModel.get_instance().addGameHistory(history);
     }
     //END Game History functions
 
-    public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
+    public static void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
         //build array //in order
         TrainCard[] temp = new TrainCard[trainCardsDeck.size()];
         for(int i = temp.length-1; i >= 0; i--) {
@@ -214,9 +205,9 @@ public class GamePlayService implements IGameService {
         ClientModel.get_instance().setTrainCardsDeck(deck);
     }
 
-    public void switchingTurn(String gameId) {
+    public static void switchingTurn(String gameId) {
         ClientModel.get_instance().changeTurn(gameId);
     }
 
-    public void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
+    public static void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
 }

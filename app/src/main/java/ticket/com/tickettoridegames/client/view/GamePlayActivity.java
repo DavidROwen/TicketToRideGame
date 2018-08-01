@@ -20,11 +20,11 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_play);
 
-        ViewPager pager = (ViewPager)findViewById(R.id.mediaViewPager);
+        ViewPager pager = findViewById(R.id.mediaViewPager);
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager(),getApplicationContext(), new String[]{"Map","Stats","Assets"},3);
         pager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.swipeTabs);
+        TabLayout tabLayout = findViewById(R.id.swipeTabs);
         tabLayout.setupWithViewPager(pager);
     }
 

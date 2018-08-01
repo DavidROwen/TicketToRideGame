@@ -6,8 +6,8 @@ import java.util.Observer;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.IStatsView;
-import ticket.com.tickettoridegames.utility.TYPE;
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.TYPE;
+import ticket.com.utility.web.Result;
 
 public class StatsPresenter implements IStatsPresenter , Observer {
 
