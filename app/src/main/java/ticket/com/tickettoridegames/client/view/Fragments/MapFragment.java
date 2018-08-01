@@ -117,6 +117,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         final boolean [] selected = {false, false, false};
 //
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(false);
         builder.setTitle("Pick Routes")
                 .setMultiChoiceItems(items, selected, new DialogInterface.OnMultiChoiceClickListener() {
                     public void onClick(DialogInterface dialogInterface, int item, boolean b) {

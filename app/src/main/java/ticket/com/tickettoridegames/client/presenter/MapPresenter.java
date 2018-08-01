@@ -60,9 +60,6 @@ public class MapPresenter implements IMapPresenter, Observer {
                 }
                 break;
             case NEWTEMPDECK:
-                String gameId = clientModel.getMyActiveGame().getId();
-                String output = "options: ";
-
                 List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
                 Set<DestinationCard> destinationCards = new HashSet<>(cards);
                 mapView.displayDestinationCards(destinationCards);
@@ -97,6 +94,7 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void drawDestinationCards(){
         if (clientModel.getMyPlayer().getTempDeck().size() == 0) {
+            mapView.displayMessage("Drawing Destination Cards");
             getCurrentState().drawDestinationCard(clientModel);
         }
         else {
