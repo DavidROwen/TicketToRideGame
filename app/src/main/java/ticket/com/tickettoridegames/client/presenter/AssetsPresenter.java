@@ -13,6 +13,7 @@ import ticket.com.tickettoridegames.utility.model.Game;
 public class AssetsPresenter implements IAssetsPresenter, Observer {
     private GamePlayService gamePlayService;
     private ClientModel clientModel;
+
     private IAssetsView assetsView;
 
     public AssetsPresenter(IAssetsView view){
@@ -66,10 +67,14 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
 
     @Override
     public void pickupCard(Integer index) {
-        gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
+        getCurrentState().drawFromBank(this, index);
     }
 
     public PlayerState getCurrentState(){
         return clientModel.getCurrentState();
+    }
+
+    public IAssetsView getAssetsView() {
+        return assetsView;
     }
 }

@@ -1,7 +1,9 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class MyTurnState extends PlayerState {
@@ -32,6 +34,27 @@ public class MyTurnState extends PlayerState {
         return gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
     }
 
-    public void drawFromBank(ClientModel cm) {}
+    public void drawFromBank(IAssetsPresenter presenter, Integer index) {
+        ClientModel clientModel = ClientModel.get_instance();
+        Game game = clientModel.getMyActiveGame();
+        if (game.getCurrentTurn().getBannedBankIndex() == null || game.getCurrentTurn().getBannedBankIndex() != index) {
+            // check these before modifying the deck to prevent race conditions
+            boolean wildCard = game.isBankCardWild(index);
+            if (game.isTopCardWild()) {
+                game.getCurrentTurn().setBannedBankIndex(index);
+            }
+
+            // send command to server
+            gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
+
+            // end turn based on drawing a bank wild
+            if (wildCard) {
+                gamePlayService.switchTurn(game.getId());
+            }
+        }
+        else {
+            presenter.getAssetsView().displayMessage("You are not allowed to draw a Locomotive you just revealed.");
+        }
+    }
 
 }

@@ -3,6 +3,8 @@ package ticket.com.tickettoridegames.client.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
     private EditText usernameLoginEditText;
     private EditText usernameRegEditText;
     private EditText confirmPasswordText;
+    private EditText urlTextInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,19 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         usernameLoginEditText = (EditText) findViewById(R.id.userName);
         usernameRegEditText = (EditText) findViewById(R.id.userName2);
         confirmPasswordText = (EditText) findViewById(R.id.confirm);
+        urlTextInput = findViewById(R.id.UrlTextInput);
+        urlTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                presenter.setUrl(editable.toString());
+            }
+        });
 
         Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(new View.OnClickListener() {

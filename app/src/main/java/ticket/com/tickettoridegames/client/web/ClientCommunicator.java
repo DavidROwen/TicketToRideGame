@@ -36,6 +36,11 @@ public class ClientCommunicator {
 		return null; //error
 	}
 
+	public static void setUrl(String url) {
+		if(!url.isEmpty()) { urlPrefix = url; }
+		else { urlPrefix = DEFAULT_URL_PREFIX; }
+	}
+
 	private static class SendTask extends AsyncTask<Command, Void, String> {
 		@Override
 		protected String doInBackground(Command... commands) {
@@ -48,18 +53,20 @@ public class ClientCommunicator {
 		}
 	}
 
-	private static final String GENERIC_DESIGNATOR = "/generic";
-	private static final int SERVER_PORT_NUMBER = 8082;
-
 	private static final String SERVER_HOST = "10.0.2.2";
-	private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
+	private static final int SERVER_PORT_NUMBER = 8082;
+	private static final String DEFAULT_URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
+	private static String urlPrefix = DEFAULT_URL_PREFIX;
+
 	private static final String HTTP_POST = "POST";
+
+	private static final String GENERIC_DESIGNATOR = "/generic";
 
 	private static HttpURLConnection openConnection(String designator) {
 		HttpURLConnection connection = null;
 
 		try {
-			URL url = new URL(URL_PREFIX + designator);
+			URL url = new URL(urlPrefix + designator);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod(HTTP_POST);
 			connection.setDoOutput(true);

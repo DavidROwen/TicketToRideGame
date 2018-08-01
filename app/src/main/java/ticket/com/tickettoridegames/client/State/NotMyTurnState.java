@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class NotMyTurnState extends PlayerState {
@@ -37,7 +38,7 @@ public class NotMyTurnState extends PlayerState {
         return new Result(false, null, "It's not your turn");
     }
 
-    public void drawFromBank(ClientModel cm) {
-        //can't do that either
+    public void drawFromBank(IAssetsPresenter presenter, Integer index) {
+        presenter.getAssetsView().displayMessage("It's not your turn.");
     }
 }

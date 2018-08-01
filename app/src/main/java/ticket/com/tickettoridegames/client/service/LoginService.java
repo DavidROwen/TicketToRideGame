@@ -59,4 +59,8 @@ public class LoginService {
             return new Result(false, "", e.toString());
         }
     }
+
+    public void setUrl(String url) {
+        ServerProxy.setUrl(url);
+    }
 }

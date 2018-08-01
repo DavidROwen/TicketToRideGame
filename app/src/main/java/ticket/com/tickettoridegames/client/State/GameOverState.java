@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class GameOverState extends PlayerState {
@@ -27,7 +28,6 @@ public class GameOverState extends PlayerState {
         return new Result(false, null, "Game has already ended");
     }
 
-    public void drawFromBank(ClientModel cm) {
-        //nope
+    public void drawFromBank(IAssetsPresenter presenter, Integer index) {
     }
 }

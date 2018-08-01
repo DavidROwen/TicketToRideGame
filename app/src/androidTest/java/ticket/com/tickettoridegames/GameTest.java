@@ -35,32 +35,33 @@ public class GameTest {
 
     @Test
     public void testClaimRoute() {
-//        initToGamePlay();
-//
-//        Route routeBlack = new Route("a_b", new City("a"), new City("b"), 2, TrainCard.TRAIN_TYPE.BLACK, 1);
-//        Route routeWhite = new Route("b_c", new City("b"), new City("c"), 2, TrainCard.TRAIN_TYPE.WHITE, 1);
-//        Route routeWhiteLong = new Route("b_c", new City("b"), new City("c"), 3, TrainCard.TRAIN_TYPE.WHITE, 1);
-//
-//        //try to claim without the cards
-//        assertFalse(game.claimRoute(player1.getId(), routeBlack.NAME)); //no cards
-//
-//        player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));
-//        player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));
-//        assertFalse(game.claimRoute(player1.getId(), routeBlack.NAME)); //wrong cards
-//
-//        //claim
-//        assertTrue(game.claimRoute(player1.getId(), routeWhite.NAME));
-////        assertEquals(game.getMap().getClaimedRoutes().contains()getRoutes().get(player1.getId()).size(), 1); //track claim
-//        assertEquals(player1.getTrainCards().size(), 0); //cashed in cards
-//
-//        //try to reclaim
-//        player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));
-//        player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));
-//        assertFalse(game.claimRoute(player1.getId(), routeWhite.NAME));
-//
-//        //claim with wilds
-//        player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
-//        assertTrue(game.claimRoute(player1.getId(), routeWhiteLong.NAME));
+        initToGamePlay();
+        Map<String, Route> routes = game.getMap().getRoutes();
+
+        Route winnipeg_duluth = routes.get("winnipeg_duluth"); //4 blacks
+        assertFalse(game.claimRoute(player1.getId(), winnipeg_duluth.NAME).isSuccess()); //no cards
+
+        for(int i = 0; i < 4; i++) {
+            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));
+        }
+        assertFalse(game.claimRoute(player1.getId(), winnipeg_duluth.NAME).isSuccess()); //wrong cards
+
+
+        Route littleRock_Nashville = routes.get("littleRock_Nashville"); //3 whites
+        assertTrue(game.claimRoute(player1.getId(), littleRock_Nashville.NAME).isSuccess()); //claim
+        assertFalse(routes.get("littleRock_Nashville").canClaim()); //track claimed
+        assertEquals(player1.getTrainCards().size(), 1); //cashed in cards
+
+
+        for(int i = 0; i < 2; i++) {
+            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));
+        }
+        assertFalse(game.claimRoute(player1.getId(), littleRock_Nashville.NAME).isSuccess()); //fail to reclaim
+
+
+        Route chicago_toronto = routes.get("chicago_toronto"); //4 whites
+        player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+        assertTrue(game.claimRoute(player1.getId(), chicago_toronto.NAME).isSuccess()); //claim with wilds
     }
 
     @Test

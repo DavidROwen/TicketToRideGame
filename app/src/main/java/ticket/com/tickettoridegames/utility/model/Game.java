@@ -1,7 +1,6 @@
 package ticket.com.tickettoridegames.utility.model;
 
 import android.graphics.Color;
-import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -256,12 +255,16 @@ public class Game extends Observable {
     }
 
     public void drawTrainCard(String playerId) {
-        TrainCard card = trainCardsDeck.pop();
+        TrainCard card = drawTrainCard();
         players.get(playerId).addTrainCard(card);
         addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + card.getType()));
     }
 
     private TrainCard drawTrainCard() {
+        if (trainCardsDeck.empty()){
+            Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
+            trainCardsDeck.addAll(trainDiscards);
+        }
         return trainCardsDeck.pop();
     }
 
@@ -306,13 +309,6 @@ public class Game extends Observable {
                 trainDiscards.add(new TrainCard(type));
             }
         }
-
-        Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
-        trainCardsDeck.addAll(trainDiscards);
-
-//        for(int i = 0; i < NUM_CARDS_TRAINCARD_DECK; i++) {
-//            trainCardsDeck.push(getRandomTrainCard());
-//        }
     }
 
     private TrainCard getRandomTrainCard() {
@@ -329,6 +325,7 @@ public class Game extends Observable {
     }
 
     private boolean IsInitialized(){
+        // TODO: improve the checking here to always be accurate
         return trainBank.size() != 0;
     }
 
@@ -508,17 +505,9 @@ public class Game extends Observable {
     }
 
     public void resetTrainBank(){
-        for (TrainCard card: trainBank){
-            trainDiscards.add(card);
-        }
-        trainBank.clear();
-
-        Collections.shuffle(trainCardsDeck, new Random(trainCardsDeck.hashCode()));
-        for (int i = 0; i < 5; i++){
-            if (trainCardsDeck.empty()){
-                trainCardsDeck.addAll(trainDiscards);
-            }
-            trainBank.add(trainCardsDeck.pop());
+        for (int i = 0; i < NUM_CARDS_TRAINCARD_BANK; i++){
+            trainDiscards.add(trainBank.get(i));
+            trainBank.set(i, drawTrainCard());
         }
     }
 
@@ -675,4 +664,15 @@ public class Game extends Observable {
         }
         return points;
     }
+
+    public boolean isBankCardWild(Integer index){
+        TrainCard card = getTrainBank().get(index);
+        return card.getType() == TrainCard.TRAIN_TYPE.WILD;
+    }
+
+    public boolean isTopCardWild(){
+        TrainCard card = trainCardsDeck.peek();
+        return card.getType() == TrainCard.TRAIN_TYPE.WILD;
+    }
+
 }
