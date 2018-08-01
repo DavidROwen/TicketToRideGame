@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ticket.com.tickettoridegames.utility.web.Result;
+import ticket.com.utility.web.Result;
+
 
 public class GameMap {
     private Map<String, Route> routes = new HashMap<>(); //key is route NAME

@@ -1,6 +1,7 @@
 package ticket.com.utility.model;
 
-import ticket.com.tickettoridegames.utility.web.Result;
+
+import ticket.com.utility.web.Result;
 
 public class Route {
     public final String NAME;
