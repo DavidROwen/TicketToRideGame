@@ -623,7 +623,7 @@ public class Game extends Observable {
     }
 
 
-    public Integer completedDestinationPoints(Player player){
+    public void addDestinationCardPoints(Player player){
         ArrayList<ArrayList<String>> groups = new ArrayList<>();
         List<Route> playersRoutes = map.getPlayersRoutes(player.getId());
         List<Route> storedRoutes = new ArrayList<>();
@@ -659,16 +659,22 @@ public class Game extends Observable {
             }
         }
 
-        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations
-            if(!destinationCard.isCompleted()){ //if not completed
+        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and gives points for completed ones
                 for(ArrayList<String> group:groups){
                     if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
+                        destinationCard.setCompleted();
                         points = points + destinationCard.getValue();
                     }
                 }
+        }
+
+        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and subtracts points for uncompleted ones
+            if(!destinationCard.isCompleted()){
+                points = points - destinationCard.getValue();
             }
         }
-        return points;
+
+        player.addPoints(points); // gives player points from destination cards
     }
 
     public ArrayList<ArrayList<String>> TestCompletedDestinationPoints(List<Route> playersRoutes){
