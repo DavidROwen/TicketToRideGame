@@ -41,7 +41,8 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(initColors, gameId);
 
         //trainDeck //because it's generated randomly
-        Stack<TrainCard> trainCardsDeck = game.getTrainCardsDeck();
+        Stack<TrainCard> trainCardsDeck = new Stack<>();
+        trainCardsDeck.addAll(game.getTrainCardsDeck()); //otherwise it's getting changed before transfer
 //        new GamePlayService().setTrainCardsDeck(trainCardsDeck);
         Command setTrainCardsDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
                 "setTrainCardsDeck", new Object[]{trainCardsDeck}

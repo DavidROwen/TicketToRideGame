@@ -328,8 +328,8 @@ public class ClientModel extends Observable {
         }
     }
 
-    public void claimRoute(String playerID, String route) {
-        Result result = getMyActiveGame().claimRoute(playerID, route);
+    public void claimRoute(String playerID, String routeName) {
+        Result result = getMyActiveGame().claimRoute(playerID, routeName);
 
         if(result.isSuccess()){
             getCurrentState().changeTurn(this);

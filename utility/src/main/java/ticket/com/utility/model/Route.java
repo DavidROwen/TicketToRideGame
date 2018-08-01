@@ -1,5 +1,7 @@
 package ticket.com.utility.model;
 
+import ticket.com.tickettoridegames.utility.web.Result;
+
 public class Route {
     public final String NAME;
     private boolean owned = false;
@@ -29,16 +31,16 @@ public class Route {
         return message;
     }
 
+    //assuming canClaim
     public Boolean claim(String playerID) {
-        if(!canClaim()) { return false; }
-
         owned = true;
         ownerId = playerID;
         return true;
     }
 
-    public Boolean canClaim() {
-        return !owned;
+    public Result canClaim() {
+        if(owned) { return new Result(false, null, "Route has already been claimed"); }
+        else { return new Result(true, null, null); }
     }
 
     public Boolean isOwned() {

@@ -18,6 +18,8 @@ public interface IMapView {
 
     void displayDestinationCards(Set<DestinationCard> destinationCards);
 
+    void setFirstCall(boolean val);
+
     void displayColorOptions();
 
     void placeTrains(Route route, TrainCard.TRAIN_TYPE color);

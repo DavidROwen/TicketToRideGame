@@ -45,6 +45,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     private Set<DestinationCard> destinationCards;
     private ArrayList<String> listRoutes=new ArrayList<>(); //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
     private ArrayAdapter<String> adapter; //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    private boolean created;
 
     //Widgets
     private RecyclerView myHandRecyclerView;
@@ -54,6 +55,9 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     private TextView trainDeckCount;
     private TextView routesDeckCount;
 
+    public AssetsFragment(){
+        created = false;
+    }
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -74,7 +78,10 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         trainDeckCount = view.findViewById(R.id.trainBankCount);
         routesDeckCount = view.findViewById(R.id.routesDeckCount);
 
-        presenter = new AssetsPresenter(this);
+        if(!created) {
+            presenter = new AssetsPresenter(this);
+            created = true;
+        }
         return view;
         //return null;
     }
