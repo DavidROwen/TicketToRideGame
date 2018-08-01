@@ -37,12 +37,12 @@ public class GameMap {
     //assumes that it canClaim
     public Boolean claimRoute(String playerID, Route route){
         newestClaimedRoute = route;
+        if(isDouble(route)) {
+            Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(route.NAME));
+            if(routePair.first.NAME.equals(route.NAME)) { routePair.first.claim(playerID); }
+            else { routePair.second.claim(playerID); }
+        }
         return routes.get(route.NAME).claim(playerID); //also updates doubleRoutesIndex
-    }
-
-    private Route getFromDoublesRoutesIndex(String name) {
-        Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(name));
-        return routePair.first.NAME.equals(name) ? routePair.second : routePair.first;
     }
 
     public Map<String, Route> getRoutes() {
@@ -69,7 +69,7 @@ public class GameMap {
 
         for(String each : routes.keySet()) {
             Route route = routes.get(each);
-            if(route.getOwnerId() == playerID) { playersRoutes.add(route); }
+            if(route.getOwnerId().equals(playerID)) { playersRoutes.add(route); }
         }
 
         return Collections.unmodifiableList(playersRoutes);
@@ -196,7 +196,8 @@ public class GameMap {
 
     public Route getDouble(Route route) {
         if(!isDouble(route)) { return null; }
-        return getFromDoublesRoutesIndex(route.NAME);
+        Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(route.NAME));
+        return routePair.first.NAME.equals(route.NAME) ? routePair.second : routePair.first;
     }
 
     private String getBaseName(String routeName) {
