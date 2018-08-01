@@ -25,8 +25,6 @@ import ticket.com.utility.web.Result;
  * @invariant All commands have a void return type because they are used to execute commands
  */
 public class GamePlayService {
-    public static final String GAME_SERVICE_STRING = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/GameService.java";
-public class GamePlayService implements IGameService {
     public static final String GAME_SERVICE_STRING = "ticket.com.server.server.service.GameService";
     /**
      * Starts the game for everyone in a game lobby.

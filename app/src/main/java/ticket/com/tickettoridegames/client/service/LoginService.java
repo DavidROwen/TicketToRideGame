@@ -20,8 +20,6 @@ public class LoginService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(LOGIN_GAME_SERVICE_PATH,
-                            ticket.com.server.server.service.LoginService.class,
-                            ticket.com.server.server.service.LoginService.class.newInstance(),
                             "login",
                             new Class<?>[]{String.class, String.class},
                             new Object[]{user.getUsername(), user.getPassword()})
@@ -43,8 +41,6 @@ public class LoginService {
         try {
             Result result = ServerProxy.sendCommand(
                     new Command(REGISTER_GAME_SERVICE_PATH,
-                            ticket.com.server.server.service.RegisterService.class,
-                            ticket.com.server.server.service.RegisterService.class.newInstance(),
                             "register",
                             new Class<?>[]{String.class, String.class},
                             new Object[]{user.getUsername(), user.getPassword()})

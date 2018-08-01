@@ -31,10 +31,10 @@ public class Command {
     //use if types are Object
     //allows null instead of empty paramValues
     //for static method, null
-    public Command(String className, Class<?> instanceType, Object instance, String methodName, Class<?>[] paramTypes, Object[] paramValues) {
+    public Command(String className, String methodName, Class<?>[] paramTypes, Object[] paramValues) {
         this.className = className;
-        this.instanceType = instanceType;
-        this.instance = instance;
+        this.instanceType = null;
+        this.instance = null;
         this.methodName = methodName;
         if(paramValues != null) {
             this.paramTypes = paramTypes;
