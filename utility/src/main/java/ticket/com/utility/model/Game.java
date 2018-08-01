@@ -1,7 +1,5 @@
 package ticket.com.utility.model;
 
-import android.graphics.Color;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,6 +16,8 @@ import java.util.UUID;
 import ticket.com.utility.web.Result;
 
 public class Game extends Observable {
+
+
     public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
 
     //General game data
@@ -593,15 +593,15 @@ public class Game extends Observable {
     private Integer playerColorToColor(Player.COLOR color) {
         switch(color) {
             case RED:
-                return Color.RED;
+                return 0xffff0000;
             case YELLOW:
-                return Color.YELLOW;
+                return 0xffffff00;
             case GREEN:
-                return Color.GREEN;
+                return 0xff00ff00;
             case BLUE:
-                return Color.BLUE;
+                return 0xff0000ff;
             case BLACK:
-                return Color.BLACK;
+                return 0xff000000;
             default:
                 return null;
         }
