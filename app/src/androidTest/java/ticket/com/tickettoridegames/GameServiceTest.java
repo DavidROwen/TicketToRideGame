@@ -51,6 +51,8 @@ public class GameServiceTest {
 
     @Test
     public void testDrawTrainCard() {
+        initToGameplay();
+
         //prepare
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4){} //initialized
 
@@ -68,6 +70,8 @@ public class GameServiceTest {
 
     @Test
     public void testTrainBank() {
+        initToGameplay();
+
         while(ClientModel.get_instance().getMyActiveGame().getTrainBank().size() != 5){} //initialized
 
         //prepare
@@ -128,7 +132,7 @@ public class GameServiceTest {
         //create game
         Result joinResult = JoinService.createGame(otherId, "gameName", 2);
         gameId = joinResult.getMessage();
-        while(ClientModel.get_instance().getGames().isEmpty()){}
+        while(ClientModel.get_instance().getGames().isEmpty());
 
         //join game
         Player player1 = new Player(otherPlayer.getUsername(), otherPlayer.getId());
@@ -136,12 +140,13 @@ public class GameServiceTest {
 
         Player player2 = new Player(user.getUsername(), user.getId());
         JoinService.joinGame(userId, gameId);
-        while(ClientModel.get_instance().getMyActiveGame() == null){}
+        while(ClientModel.get_instance().getMyActiveGame() == null);
 
         //start game
         LobbyService.startGame(gameId);
         while(!ClientModel.get_instance().isGameStarted(gameId)){}
 
+        //init game
         service = new GamePlayService();
         service.initGame(gameId);
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4);
