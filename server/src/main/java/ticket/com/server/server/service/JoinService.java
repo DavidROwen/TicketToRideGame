@@ -5,7 +5,7 @@ import ticket.com.utility.web.Result;
 
 public class JoinService {
 
-    public Result join(String userId, String gameId){
+    public static Result join(String userId, String gameId){
 
         System.out.println("Join game request received: UserID:"+userId+" GameID:"+gameId);
 

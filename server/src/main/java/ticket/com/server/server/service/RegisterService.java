@@ -6,7 +6,7 @@ import ticket.com.utility.web.Result;
 
 public class RegisterService {
 
-    public Result register(String username, String password){
+    public static Result register(String username, String password){
 
         System.out.println("Register request received: Username:"+username+" Password:"+password);
 
