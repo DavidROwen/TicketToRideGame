@@ -48,4 +48,8 @@ public class Route {
     public String getOwnerId() {
         return ownerId;
     }
+
+    public String getStartCity(){return START.getName();}
+
+    public String getEndCity(){return END.getName();}
 }

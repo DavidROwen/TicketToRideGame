@@ -638,14 +638,39 @@ public class Game extends Observable {
     }
 
     public Integer completedDestinationPoints(Player player){
-        //ArrayList<>
+        ArrayList<ArrayList<String>> groups = new ArrayList<>();
+        List<Route> playersRoutes = map.getPlayersRoutes(player.getId());
         Integer points = 0;
-        for (Route route:map.getPlayersRoutes(player.getId())) {
+        Boolean Continue = true;
 
-        }
+            for (Route route:playersRoutes) {
+                ArrayList<String> group = new ArrayList<>();
+                group.add(route.getStartCity());
+                group.add(route.getEndCity());
+                playersRoutes.remove(route);
+
+                while (Continue) {
+                    for (Route innerRoute : playersRoutes) {
+                        if (group.contains(innerRoute.getStartCity())) {
+                            group.add(innerRoute.getEndCity());
+                            playersRoutes.remove(innerRoute);
+                        } else if (group.contains(innerRoute.getEndCity())) {
+                            group.add(innerRoute.getStartCity());
+                            playersRoutes.remove(innerRoute);
+                        }
+                    }
+                    Continue = false;
+                }
+                groups.add(group);
+            }
+
         for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations
             if(!destinationCard.isCompleted()){ //if not completed
-
+                for(ArrayList<String> group:groups){
+                    if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
+                        points = points + destinationCard.getValue();
+                    }
+                }
             }
         }
         return points;
