@@ -9,10 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.utility.model.City;
+import ticket.com.tickettoridegames.utility.model.Game;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
+import ticket.com.tickettoridegames.utility.model.Route;
 
 import static android.graphics.Color.GRAY;
 
