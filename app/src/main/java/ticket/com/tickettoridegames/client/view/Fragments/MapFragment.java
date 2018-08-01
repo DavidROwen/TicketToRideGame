@@ -41,7 +41,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     private Button drawRoutesButton;
     private Button placeTrainsButton;
 
-    private Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route NAME
+    public Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route NAME
 
     public MapFragment(){
         created = false;
@@ -266,7 +266,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     }
 
     //todo init names with gameMap so they always work
-    private void initButtonToRouteConversion(){
+    public void initButtonToRouteConversion(){
         buttonToRouteConversion.put("floatingActionButton13", "vancouver_calgary");
         buttonToRouteConversion.put("floatingActionButton11", "vancouver_seattle_first");
         buttonToRouteConversion.put("floatingActionButton12", "vancouver_seattle_second");
@@ -280,8 +280,8 @@ public class MapFragment extends BasicFragment implements IMapView{
         buttonToRouteConversion.put("floatingActionButton31", "portland_SLC");
         buttonToRouteConversion.put("floatingActionButton18", "sanFran_SLC_first");
         buttonToRouteConversion.put("floatingActionButton17", "sanFran_SLC_second");
-        buttonToRouteConversion.put("floatingActionButton15", "sanfran_LA_first");
-        buttonToRouteConversion.put("floatingActionButton16", "sanfran_LA_second");
+        buttonToRouteConversion.put("floatingActionButton15", "sanFran_LA_first");
+        buttonToRouteConversion.put("floatingActionButton16", "sanFran_LA_second");
         buttonToRouteConversion.put("floatingActionButton22", "LA_lasVegas");
         buttonToRouteConversion.put("floatingActionButton21", "lasVegas_SLC");
         buttonToRouteConversion.put("floatingActionButton20", "LA_elPaso");
@@ -297,7 +297,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         buttonToRouteConversion.put("floatingActionButton39", "helena_denver");
         buttonToRouteConversion.put("floatingActionButton35", "calgary_winnipeg");
         buttonToRouteConversion.put("floatingActionButton42", "helena_winnipeg");
-        buttonToRouteConversion.put("floatingActionButton41", "helena_duleth");
+        buttonToRouteConversion.put("floatingActionButton41", "helena_duluth");
         buttonToRouteConversion.put("floatingActionButton40", "helena_omaha");
         buttonToRouteConversion.put("floatingActionButton44", "denver_omaha");
         buttonToRouteConversion.put("floatingActionButton73", "denver_KC_first");
@@ -322,7 +322,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         buttonToRouteConversion.put("floatingActionButton50", "dallas_houston_second");
         buttonToRouteConversion.put("floatingActionButton43", "houston_newOrleans");
         buttonToRouteConversion.put("floatingActionButton54", "dallas_littleRock");
-        buttonToRouteConversion.put("floatingActionButton53", "oklahoma_littleRock");
+        buttonToRouteConversion.put("floatingActionButton53", "oklahomaCity_littleRock");
         buttonToRouteConversion.put("floatingActionButton78", "KC_saintLouis_first");
         buttonToRouteConversion.put("floatingActionButton76", "KC_saintLouis_second");
         buttonToRouteConversion.put("floatingActionButton88", "omaha_chicago");
@@ -331,7 +331,7 @@ public class MapFragment extends BasicFragment implements IMapView{
         buttonToRouteConversion.put("floatingActionButton68", "littleRock_saintLouis");
         buttonToRouteConversion.put("floatingActionButton60", "newOrleans_atlanta_first");
         buttonToRouteConversion.put("floatingActionButton59", "newOrleans_atlanta_second");
-        buttonToRouteConversion.put("floatingActionButton67", "littleRock_Nashville");
+        buttonToRouteConversion.put("floatingActionButton67", "littleRock_nashville");
         buttonToRouteConversion.put("floatingActionButton108", "saintLouis_nashville");
         buttonToRouteConversion.put("floatingActionButton110", "nashville_atlanta");
         buttonToRouteConversion.put("floatingActionButton79", "saintLouis_chicago_first");
