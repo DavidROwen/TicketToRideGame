@@ -18,9 +18,6 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.ILoginPresenter;
 import ticket.com.tickettoridegames.client.presenter.LoginPresenter;
 import ticket.com.tickettoridegames.client.web.Poller;
-import ticket.com.tickettoridegames.utility.model.City;
-import ticket.com.tickettoridegames.utility.model.Game;
-import ticket.com.tickettoridegames.utility.model.Route;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView{
 
