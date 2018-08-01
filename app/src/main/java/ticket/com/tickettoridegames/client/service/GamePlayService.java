@@ -197,7 +197,6 @@ public class GamePlayService implements IGameService {
 
     public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
         //build array //in order
-        //todo loses the top 8 cards in serialization
         TrainCard[] temp = new TrainCard[trainCardsDeck.size()];
         for(int i = temp.length-1; i >= 0; i--) {
             //convert from LinkedTreeMap
