@@ -41,7 +41,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     private Button drawRoutesButton;
     private Button placeTrainsButton;
 
-    public Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route NAME
+    private Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route NAME
 
     public MapFragment(){
         created = false;
@@ -266,7 +266,7 @@ public class MapFragment extends BasicFragment implements IMapView{
     }
 
     //todo init names with gameMap so they always work
-    public void initButtonToRouteConversion(){
+    private void initButtonToRouteConversion(){
         buttonToRouteConversion.put("floatingActionButton13", "vancouver_calgary");
         buttonToRouteConversion.put("floatingActionButton11", "vancouver_seattle_first");
         buttonToRouteConversion.put("floatingActionButton12", "vancouver_seattle_second");

@@ -13,6 +13,7 @@ import ticket.com.tickettoridegames.utility.model.Player;
 import ticket.com.tickettoridegames.utility.model.PlayerStats;
 import ticket.com.tickettoridegames.utility.model.Route;
 import ticket.com.tickettoridegames.utility.model.TrainCard;
+import ticket.com.tickettoridegames.utility.web.Result;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -46,12 +47,10 @@ public class GameTest {
         }
         assertFalse(game.claimRoute(player1.getId(), winnipeg_duluth.NAME).isSuccess()); //wrong cards
 
-
-        Route littleRock_Nashville = routes.get("littleRock_Nashville"); //3 whites
+        Route littleRock_Nashville = routes.get("littleRock_nashville"); //3 whites
         assertTrue(game.claimRoute(player1.getId(), littleRock_Nashville.NAME).isSuccess()); //claim
-        assertFalse(routes.get("littleRock_Nashville").canClaim()); //track claimed
+        assertFalse(routes.get("littleRock_nashville").canClaim().isSuccess()); //track claimed
         assertEquals(player1.getTrainCards().size(), 1); //cashed in cards
-
 
         for(int i = 0; i < 2; i++) {
             player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));
@@ -69,40 +68,48 @@ public class GameTest {
         initToGamePlay();
         Map<String, Route> routes = game.getMap().getRoutes();
 
-        //not double
         for(int i = 0; i < 6; i++) {
             player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.YELLOW));
         }
-        assertTrue(game.claimRoute(player1.getId(), "seattle_helena").isSuccess());
 
-        //other not claimed
+        Result result = game.claimRoute(player1.getId(), "seattle_helena");
+        assertTrue(result.isSuccess()); //not double
+        System.out.println("Success: " + result.getErrorMessage());
+
         //green/pink 5
         for(int i = 0; i < 5; i++) {
             player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.GREEN));
         }
-        assertTrue(game.claimRoute(player1.getId(), "portland_sanFran_first").isSuccess());
+        result = game.claimRoute(player1.getId(), "portland_sanFran_first");
+        assertTrue(result.isSuccess()); //other not claimed
+        System.out.println("Success: " + result.getErrorMessage());
 
-        //insufficient players
         for(int i = 0; i < 5; i++) {
-            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.PINK));
+            player2.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.PINK));
         }
-        assertFalse(game.claimRoute(player1.getId(), "portland_sanFran_second").isSuccess());
+        result = game.claimRoute(player2.getId(), "portland_sanFran_second");
+        assertFalse(result.isSuccess()); //insufficient players
+        System.out.println("Insufficient: " + result.getErrorMessage());
 
-        //add players
+        //add sufficient players
         Player player3 = new Player("username3", "id3");
         game.addPlayers(player3);
         Player player4 = new Player("username4", "id4");
         game.addPlayers(player4);
 
-        //claimed by same player
-        assertFalse(game.claimRoute(player1.getId(), "portland_sanFran_second").isSuccess());
-
-        //normal
         for(int i = 0; i < 5; i++) {
             player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.PINK));
         }
-        assertFalse(game.claimRoute(player2.getId(), "portland_sanFran_second").isSuccess());
+        result = game.claimRoute(player1.getId(), "portland_sanFran_second");
+        assertFalse(result.isSuccess());
+        System.out.println("Same player: " + result.getErrorMessage()); //claimed by same player
 
+        for(int i = 0; i < 5; i++) {
+            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.PINK));
+        }
+        result = game.claimRoute(player2.getId(), "portland_sanFran_second");
+        assertTrue(result.isSuccess());
+        System.out.println("Success: " + result.getErrorMessage()); //normal
     }
 
     @Test
