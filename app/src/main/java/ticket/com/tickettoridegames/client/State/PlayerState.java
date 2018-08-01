@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
+import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.utility.web.Result;
 
 public class PlayerState {
@@ -25,5 +26,5 @@ public class PlayerState {
         return new Result(false, null, "Claim hasn't been set up for cur state yet");
     }
 
-    public void drawFromBank(ClientModel cm) {}
+    public void drawFromBank(IAssetsPresenter presenter, Integer index) {}
 }

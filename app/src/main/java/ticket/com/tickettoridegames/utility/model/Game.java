@@ -308,10 +308,6 @@ public class Game extends Observable {
 
         Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
         trainCardsDeck.addAll(trainDiscards);
-
-//        for(int i = 0; i < NUM_CARDS_TRAINCARD_DECK; i++) {
-//            trainCardsDeck.push(getRandomTrainCard());
-//        }
     }
 
     private TrainCard getRandomTrainCard() {
@@ -649,4 +645,15 @@ public class Game extends Observable {
         }
         return points;
     }
+
+    public boolean isBankCardWild(Integer index){
+        TrainCard card = getTrainBank().get(index);
+        return card.getType() == TrainCard.TRAIN_TYPE.WILD;
+    }
+
+    public boolean isTopCardWild(){
+        TrainCard card = trainCardsDeck.peek();
+        return card.getType() == TrainCard.TRAIN_TYPE.WILD;
+    }
+
 }
