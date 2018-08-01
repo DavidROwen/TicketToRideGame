@@ -109,32 +109,32 @@ public class GamePlayService {
         ServerProxy.sendCommand(command);
     }
 
-    public void setTurnOrder(LinkedList<String> order) {
+    public static void setTurnOrder(LinkedList<String> order) {
         ClientModel.get_instance().setTurnOrder(order);
     }
 
-    public void setPlayersColors(HashMap<String, Player.COLOR> colors) {
+    public static void setPlayersColors(HashMap<String, Player.COLOR> colors) {
         ClientModel.get_instance().setPlayersColors(colors);
     }
 
-    public void initiatingGameNonRandom() {
+    public static void initiatingGameNonRandom() {
         ClientModel.get_instance().initMyGameNonRandom();
     }
 
-    public void drawingTrainCard(String playerId) {
+    public static void drawingTrainCard(String playerId) {
         ClientModel.get_instance().drawTrainCard(playerId);
     }
 
-    public void pickingUpTrainCard(String playerId, Integer index) {
+    public static void pickingUpTrainCard(String playerId, Integer index) {
         ClientModel.get_instance().pickupTrainCard(playerId, index);
     }
 
-    public void claimingRoute(String playerId, String route) {
+    public static void claimingRoute(String playerId, String route) {
         ClientModel.get_instance().claimRoute(playerId, route);
     }
 
     //Destination Cards (Model) functions
-    public void setTempDeck(ArrayList<DestinationCard> tempDeck){
+    public static void setTempDeck(ArrayList<DestinationCard> tempDeck){
         //deserialized destination cards as linkedtreemap
         ArrayList<DestinationCard> temp = new ArrayList<>();
         for(int i = 0; i < tempDeck.size(); i++) {
@@ -149,7 +149,7 @@ public class GamePlayService {
         ClientModel.get_instance().setMyPlayerTempDeck(temp);
     }
 
-    public void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
+    public static void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
         //deserialized destination cards as linkedtreemap
         ArrayList<DestinationCard> temp = new ArrayList<>();
         for(int i = 0; i < cards.size(); i++) {
@@ -164,7 +164,7 @@ public class GamePlayService {
         ClientModel.get_instance().updateDestinationCards(playerId, temp);
     }
 
-    public void discardDestinationCards(LinkedList<DestinationCard> cards){
+    public static void discardDestinationCards(LinkedList<DestinationCard> cards){
         //deserialized destination cards as linkedtreemap
         ArrayList<DestinationCard> temp = new ArrayList<>();
         for(int i = 0; i < cards.size(); i++) {
@@ -181,12 +181,12 @@ public class GamePlayService {
     //END Destination Cards (Model) functions
 
     //Game History functions
-    public void addToHistory(PlayerAction history){
+    public static void addToHistory(PlayerAction history){
         ClientModel.get_instance().addGameHistory(history);
     }
     //END Game History functions
 
-    public void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
+    public static void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
         //build array //in order
         //todo loses the top 8 cards in serialization
         TrainCard[] temp = new TrainCard[trainCardsDeck.size()];
@@ -206,9 +206,9 @@ public class GamePlayService {
         ClientModel.get_instance().setTrainCardsDeck(deck);
     }
 
-    public void switchingTurn(String gameId) {
+    public static void switchingTurn(String gameId) {
         ClientModel.get_instance().changeTurn(gameId);
     }
 
-    public void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
+    public static void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
 }
