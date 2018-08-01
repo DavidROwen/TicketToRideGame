@@ -20,9 +20,9 @@ import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IStatsPresenter;
 import ticket.com.tickettoridegames.client.presenter.StatsPresenter;
 import ticket.com.tickettoridegames.client.view.IStatsView;
-import ticket.com.utility.utility.model.Chat;
-import ticket.com.utility.utility.model.PlayerAction;
-import ticket.com.utility.utility.model.PlayerStats;
+import ticket.com.utility.model.Chat;
+import ticket.com.utility.model.PlayerAction;
+import ticket.com.utility.model.PlayerStats;
 
 import static android.graphics.Color.GRAY;
 

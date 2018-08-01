@@ -21,18 +21,18 @@ import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.AssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
-import ticket.com.utility.utility.model.DestinationCard;
-import ticket.com.utility.utility.model.TrainCard;
+import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.TrainCard;
 
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.BLACK;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.BLUE;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.GREEN;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.ORANGE;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.PINK;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.RED;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.WHITE;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.WILD;
-import static ticket.com.utility.utility.model.TrainCard.TRAIN_TYPE.YELLOW;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.BLACK;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.BLUE;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.GREEN;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.ORANGE;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.PINK;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.RED;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.WHITE;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.WILD;
+import static ticket.com.utility.model.TrainCard.TRAIN_TYPE.YELLOW;
 
 public class AssetsFragment extends BasicFragment implements IAssetsView{
 

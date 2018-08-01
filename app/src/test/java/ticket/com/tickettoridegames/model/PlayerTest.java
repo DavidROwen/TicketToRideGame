@@ -2,8 +2,8 @@ package ticket.com.tickettoridegames.model;
 
 import org.junit.Test;
 
-import ticket.com.utility.utility.model.Player;
-import ticket.com.utility.utility.model.TrainCard;
+import ticket.com.utility.model.Player;
+import ticket.com.utility.model.TrainCard;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
