@@ -129,6 +129,10 @@ public class Player {
 
     public List<DestinationCard> getTempDeck(){return tempDeck;}
 
+    public boolean hasTempDeck(){
+        return tempDeck.size() == 0;
+    }
+
     public void setTempDeck(List<DestinationCard> deck){
         tempDeck = deck;
     }

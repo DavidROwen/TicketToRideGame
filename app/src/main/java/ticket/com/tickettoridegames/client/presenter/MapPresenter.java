@@ -35,10 +35,9 @@ public class MapPresenter implements IMapPresenter, Observer {
             mapView.displayDestinationCards(destinationCards);
             //mapView.disableTurn();
         }
-        else {
-            mapView.disablePickRoutes();
-        }
         mapView.setClaimedRoutes(clientModel.getClaimedRoutes());
+        //temp fix
+        checkTurn();
     }
 
     @Override
@@ -47,17 +46,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         TYPE type = (TYPE) arg;
         switch(type){
             case TURNCHANGED:
-                // This will use state in the future
-                if (clientModel.isMyTurn()){
-                    clientModel.setState(MyTurnState.getInstance());
-                    mapView.displayMessage("It's your turn");
-                    //mapView.enableTurn();
-                }
-                else {
-                    //mapView.disableTurn();
-                    String playerTurn = "It's " + clientModel.getTurnUsername() + "'s Turn";
-                    mapView.displayMessage(playerTurn);
-                }
+                checkTurn();
                 break;
             case NEWTEMPDECK:
                 List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
@@ -69,6 +58,17 @@ public class MapPresenter implements IMapPresenter, Observer {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void checkTurn(){
+        if (clientModel.isMyTurn()){
+            clientModel.setState(MyTurnState.getInstance());
+            mapView.displayMessage("It's your turn");
+        }
+        else {
+            String playerTurn = "It's " + clientModel.getTurnUsername() + "'s Turn";
+            mapView.displayMessage(playerTurn);
         }
     }
 
@@ -93,7 +93,7 @@ public class MapPresenter implements IMapPresenter, Observer {
      */
     @Override
     public void drawDestinationCards(){
-        if (clientModel.getMyPlayer().getTempDeck().size() == 0) {
+        if (clientModel.getMyPlayer().hasTempDeck()) {
             mapView.displayMessage("Drawing Destination Cards");
             getCurrentState().drawDestinationCard(clientModel);
         }
@@ -125,8 +125,15 @@ public class MapPresenter implements IMapPresenter, Observer {
     }
 
     @Override
-    public void setDestinationCards(LinkedList<DestinationCard> claimedCards, LinkedList<DestinationCard> discardedCards){
-        if (claimedCards.size() < 2){
+    public void setDestinationCards(LinkedList<DestinationCard> claimedCards, LinkedList<DestinationCard> discardedCards, boolean firstCall){
+        int minimumCount;
+        if(firstCall){
+            minimumCount = 2;
+        }
+        else{
+            minimumCount = 1;
+        }
+        if (claimedCards.size() < minimumCount){
             mapView.displayMessage("Too few routes picked");
             List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
             Set<DestinationCard> newCards = new HashSet<>(cards);
