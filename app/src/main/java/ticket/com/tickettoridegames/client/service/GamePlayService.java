@@ -15,12 +15,6 @@ import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Player;
 import ticket.com.utility.model.PlayerAction;
 import ticket.com.utility.model.TrainCard;
-import ticket.com.server.server.service.GameService;
-import ticket.com.utility.model.DestinationCard;
-import ticket.com.utility.model.Player;
-import ticket.com.utility.model.PlayerAction;
-import ticket.com.utility.model.TrainCard;
-import ticket.com.utility.service.IGameService;
 import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
@@ -30,6 +24,8 @@ import ticket.com.utility.web.Result;
  *
  * @invariant All commands have a void return type because they are used to execute commands
  */
+public class GamePlayService {
+    public static final String GAME_SERVICE_STRING = "/Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/main/java/ticket/com/server/server/service/GameService.java";
 public class GamePlayService implements IGameService {
     public static final String GAME_SERVICE_STRING = "ticket.com.server.server.service.GameService";
     /**
@@ -41,39 +37,35 @@ public class GamePlayService implements IGameService {
      * @post the game has been started on the server and on each client in the game
      * @param gameId a string id that corresponds to a game on the server
      */
-    @Override
-    public void initGame(String gameId) {
+    public static void initGame(String gameId) {
 //            new GameService.initGame(gameId);
-        Command command = new Command(GAME_SERVICE_STRING, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "initGame", new Object[]{gameId}
         );
         ServerProxy.sendCommand(command);
 
     }
 
-    @Override
-    public void drawTrainCard(String playerId, String gameId) {
+    public static void drawTrainCard(String playerId, String gameId) {
 //            new GameService().drawTrainCard(playerId, gameId);
-        Command command = new Command(GAME_SERVICE_STRING, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "drawTrainCard", new Object[]{playerId, gameId}
                 );
         ServerProxy.sendCommand(command);
     }
 
-    @Override
-    public void pickupTrainCard(String playerId, String gameId, Integer index) {
+    public static void pickupTrainCard(String playerId, String gameId, Integer index) {
 //            new GameService().pickupTrainCard(playerId, gameId, index);
-        Command command = new Command(GAME_SERVICE_STRING, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "pickupTrainCard", new Object[]{playerId, gameId, index}
         );
         ServerProxy.sendCommand(command);
     }
 
     //Destination Card (Command) commands
-    @Override
     public void drawDestinationCard(String playerId, String gameId) {
         try {
-            Command command = new Command(GAME_SERVICE_STRING, GameService.class.newInstance(),
+            Command command = new Command(GAME_SERVICE_STRING, null,
                     "drawDestinationCard", new Object[]{playerId, gameId}
             );
             ServerProxy.sendCommand(command);
@@ -82,10 +74,9 @@ public class GamePlayService implements IGameService {
         }
     }
 
-    @Override
-    public void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards){
+    public static void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards){
         try{
-            Command command = new Command(GAME_SERVICE_STRING, GameService.class.newInstance(),
+            Command command = new Command(GAME_SERVICE_STRING, null,
                     "claimDestinationCard", new Object[]{playerId, gameId, cards});
             ServerProxy.sendCommand(command);
         }
@@ -94,30 +85,27 @@ public class GamePlayService implements IGameService {
         }
     }
 
-    @Override
     public void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
 //                    GamePlayService.class.newInstance().discardDestinationCards(cards);
 //        new GameService().returnDestinationCard(gameId, cards);
-        Command command = new Command(GAME_SERVICE_STRING, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "returnDestinationCard", new Object[]{gameId, cards}
         );
         ServerProxy.sendCommand(command);
     }
     //END Destination Card (Command) functions
 
-    @Override
-    public Result claimRoute(String gameId, String playerId, String route) {
+    public static Result claimRoute(String gameId, String playerId, String route) {
 //        new GameService().claimRoute(gameId, playerId, route);
-        Command command = new Command(GAME_SERVICE_STRING, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "claimRoute", new Object[]{gameId, playerId, route}
         );
         return ServerProxy.sendCommand(command);
     }
 
-    @Override
-    public void switchTurn(String gameId) {
+    public static void switchTurn(String gameId) {
 
-        Command command = new Command(GAME_SERVICE_STRING, new GameService(),
+        Command command = new Command(GAME_SERVICE_STRING, null,
                 "switchTurn", new Object[]{gameId}
                 );
         ServerProxy.sendCommand(command);
