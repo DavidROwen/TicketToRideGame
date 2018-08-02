@@ -113,53 +113,5 @@ public class AssetsPresenterTest {
         view = new AssetsViewStub();
         presenter = new AssetsPresenter(view);
     }
-
-    private class AssetsViewStub implements IAssetsView {
-        public List<TrainCard> hand;
-        public List<TrainCard> trainBank;
-        public Set<DestinationCard> routes;
-
-        @Override
-        public void setHand(List<TrainCard> hand) {
-            this.hand = hand;
-        }
-
-        @Override
-        public void setBank(List<TrainCard> trainBank) {
-            this.trainBank = trainBank;
-        }
-
-        @Override
-        public TrainCard getBankChoice(TrainCard trainCard) {
-            //todo should return an index
-            return null;
-        }
-
-        @Override
-        public void setRoutes(Set<DestinationCard> destinationCards) {
-            this.routes = destinationCards;
-        }
-
-        @Override
-        public void displayMessage(String message) {
-            System.out.println("message: " + message);
-        }
-
-        @Override
-        public void pickupCard(Integer index) {
-
-        }
-
-        @Override
-        public void addRoute(Set<DestinationCard> destinationCards) {
-
-        }
-
-        @Override
-        public void setTrainDeckCount(Integer size){}
-
-        @Override
-        public void setRouteDeckCount(Integer size){}
-
-    }
 }
+
