@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.Stack;
 
+import ticket.com.tickettoridegames.client.State.MyTurnState;
 import ticket.com.tickettoridegames.client.State.NotMyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.utility.TYPE;
@@ -307,6 +308,13 @@ public class ClientModel extends Observable {
     public void changeTurn(String gameId){
         Game game = getGame(gameId);
         game.switchTurn();
+
+        if (game.isMyTurn(getMyPlayer().getId())){
+            setState(MyTurnState.getInstance());
+        }
+        else {
+            setState(NotMyTurnState.getInstance());
+        }
 
         setChanged();
         notifyObservers(TURNCHANGED);

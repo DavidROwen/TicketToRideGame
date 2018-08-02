@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
+import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.utility.web.Result;
 
 public class NotMyTurnState extends PlayerState {
@@ -17,9 +18,8 @@ public class NotMyTurnState extends PlayerState {
         //should we send back a message or just leave this blank?
     }
 
-    public void drawDestinationCard(ClientModel cm){
-        //can't draw it's not your turn
-        //send a message back?
+    public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){
+        presenter.getMapView().displayMessage("Not your turn, you may not draw destination cards.");
     }
 
     public void changeTurn(ClientModel cm) {

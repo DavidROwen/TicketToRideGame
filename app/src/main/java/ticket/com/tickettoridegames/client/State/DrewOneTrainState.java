@@ -7,33 +7,32 @@ import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.web.Result;
 
-public class MyTurnState extends PlayerState {
+public class DrewOneTrainState extends PlayerState {
 
-    private static MyTurnState instance = new MyTurnState();
+    private static DrewOneTrainState instance = new DrewOneTrainState();
     private GamePlayService gamePlayService;
-    public static MyTurnState getInstance(){
+    public static DrewOneTrainState getInstance(){
         return instance;
     }
-    private MyTurnState(){
+    private DrewOneTrainState(){
         gamePlayService = new GamePlayService();
     }
 
+    public void enter(ClientModel cm){}
+
+    public void exit(ClientModel cm){}
+
     public void drawTrainCard(ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
-        cm.setState(DrewOneTrainState.getInstance());
-    }
-
-    public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){
-        gamePlayService.drawDestinationCard(cm.getUserId(), cm.getCurrentGameID());
-    }
-
-    public void changeTurn(ClientModel cm) {
         gamePlayService.switchTurn(cm.getCurrentGameID());
-        cm.setState(NotMyTurnState.getInstance()); //todo should be coming from server
     }
+
+    public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
+
+    public void changeTurn(ClientModel cm) {}
 
     public Result claimRoute(ClientModel cm, String route) {
-        return gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
+        return new Result(false, null, "Cannot claim a route after drawing a card.");
     }
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {
@@ -44,15 +43,12 @@ public class MyTurnState extends PlayerState {
         boolean wildCard = game.isBankCardWild(index);
 
         // send command to server
-        gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
-
-        // end turn based on drawing a bank wild
-        if (wildCard) {
+        if (!wildCard) {
+            gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
             gamePlayService.switchTurn(game.getId());
         }
         else {
-            clientModel.setState(DrewOneTrainState.getInstance());
+            presenter.getAssetsView().displayMessage("You are not allowed to draw a locomotive on your second draw.");
         }
     }
-
 }

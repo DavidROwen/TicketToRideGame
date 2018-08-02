@@ -34,7 +34,6 @@ public class Game extends Observable {
     // Stores the playerIDs in turn order
     private List<String> turnOrder;
     private Integer turnNumber = 0;
-    private Turn currentTurn = new Turn();
     private List<TrainCard> trainBank = new LinkedList<>();
 
     // Map data
@@ -275,7 +274,6 @@ public class Game extends Observable {
 
     public void switchTurn() {
         turnNumber = (turnNumber + 1) % players.size();
-        currentTurn = new Turn();
         //notifies in clientModel
     }
 
@@ -597,14 +595,6 @@ public class Game extends Observable {
 
     public String getTurnUsername() {
         return players.get(turnOrder.get(turnNumber)).getUsername();
-    }
-
-    public Turn getCurrentTurn() {
-        return currentTurn;
-    }
-
-    public void setCurrentTurn(Turn currentTurn) {
-        this.currentTurn = currentTurn;
     }
 
     public String playerUpString() {

@@ -21,6 +21,7 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     private GamePlayService gamePlayService;
     private ClientModel clientModel;
+
     private IMapView mapView;
     
     public MapPresenter(IMapView view) {
@@ -94,8 +95,7 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void drawDestinationCards(){
         if (clientModel.getMyPlayer().hasTempDeck()) {
-            mapView.displayMessage("Drawing Destination Cards");
-            getCurrentState().drawDestinationCard(clientModel);
+            getCurrentState().drawDestinationCard(this, clientModel);
         }
         else {
             mapView.displayMessage("You have already picked cards.");
@@ -158,4 +158,7 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     public void setColorChoice(TrainCard.TRAIN_TYPE color){}
 
+    public IMapView getMapView() {
+        return mapView;
+    }
 }

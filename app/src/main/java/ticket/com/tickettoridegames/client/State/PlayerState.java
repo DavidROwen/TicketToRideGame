@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.State;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
+import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.utility.web.Result;
 
 public class PlayerState {
@@ -18,7 +19,7 @@ public class PlayerState {
 
     public void drawTrainCard(ClientModel cm){}
 
-    public void drawDestinationCard(ClientModel cm){}
+    public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
 
     public void changeTurn(ClientModel cm) {}
 
