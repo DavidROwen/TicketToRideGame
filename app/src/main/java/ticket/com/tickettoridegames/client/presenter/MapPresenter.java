@@ -65,10 +65,12 @@ public class MapPresenter implements IMapPresenter, Observer {
     private void checkTurn(){
         if (clientModel.isMyTurn()){
             clientModel.setState(MyTurnState.getInstance());
+            mapView.enableTurn();
             mapView.displayMessage("It's your turn");
         }
         else {
             String playerTurn = "It's " + clientModel.getTurnUsername() + "'s Turn";
+            mapView.disableTurn();
             mapView.displayMessage(playerTurn);
         }
     }
