@@ -36,10 +36,8 @@ public class MapFragment extends BasicFragment implements IMapView{
     private boolean created;
     private boolean firstCall;
 
-    private Button turnButton;
     private Button drawTrainsButton;
     private Button drawRoutesButton;
-    private Button placeTrainsButton;
 
     private Map<String, String> buttonToRouteConversion = new HashMap<>(); //the key is the button, the value is the route NAME
 
@@ -72,29 +70,13 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        drawRoutesButton = view.findViewById(R.id.pass_off_button);
+        drawRoutesButton = view.findViewById(R.id.draw_routes_button);
         drawRoutesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 presenter.drawDestinationCards();
             }
         });
-
-//        Button passOffButton = view.findViewById(R.id.pass_off_button);
-//        passOffButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                presenter.passOff();
-//            }
-//        });
-
-//        turnButton = view.findViewById(R.id.turn_button);
-//        turnButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                presenter.changeTurn();
-//            }
-//        });
 
         if(!created){
             created = true;
@@ -104,14 +86,10 @@ public class MapFragment extends BasicFragment implements IMapView{
     }
 
     public void enableTurn(){
-        turnButton.setEnabled(true);
-        placeTrainsButton.setEnabled(true);
         drawTrainsButton.setEnabled(true);
     }
 
     public void disableTurn(){
-        turnButton.setEnabled(false);
-        placeTrainsButton.setEnabled(false);
         drawTrainsButton.setEnabled(false);
     }
 

@@ -626,7 +626,7 @@
         android:layout_width="25dp"
         android:layout_height="26dp"
         android:layout_alignTop="@+id/floatingActionButton7"
-        android:layout_toEndOf="@+id/pass_off_button"
+        android:layout_toEndOf="@+id/draw_routes_button"
         android:clickable="true"
         app:backgroundTint="@android:color/darker_gray"
         app:srcCompat="@android:drawable/list_selector_background" />
@@ -809,7 +809,7 @@
         android:layout_height="26dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="272dp"
-        android:layout_toEndOf="@+id/pass_off_button"
+        android:layout_toEndOf="@+id/draw_routes_button"
         android:clickable="true"
         app:backgroundTint="@android:color/darker_gray"
         app:srcCompat="@android:drawable/list_selector_background" />
@@ -881,7 +881,7 @@
         android:layout_width="25dp"
         android:layout_height="26dp"
         android:layout_above="@+id/floatingActionButton19"
-        android:layout_alignStart="@+id/pass_off_button"
+        android:layout_alignStart="@+id/draw_routes_button"
         android:clickable="true"
         app:backgroundTint="@android:color/darker_gray"
         app:srcCompat="@android:drawable/list_selector_background" />
@@ -954,7 +954,7 @@
         android:id="@+id/floatingActionButton31"
         android:layout_width="25dp"
         android:layout_height="26dp"
-        android:layout_alignStart="@+id/pass_off_button"
+        android:layout_alignStart="@+id/draw_routes_button"
         android:layout_alignTop="@+id/floatingActionButton10"
         android:clickable="true"
         app:backgroundTint="@android:color/darker_gray"
@@ -1091,7 +1091,7 @@
         android:visibility="invisible"/>
 
     <Button
-        android:id="@+id/pass_off_button"
+        android:id="@+id/draw_routes_button"
         android:layout_width="161dp"
         android:layout_height="119dp"
         android:layout_alignParentBottom="true"
