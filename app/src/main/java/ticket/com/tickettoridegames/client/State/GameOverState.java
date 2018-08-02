@@ -25,7 +25,7 @@ public class GameOverState extends PlayerState {
         //no turn to change to.
     }
 
-    public Result claimRoute(ClientModel cm) {
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm) {
         return new Result(false, null, "Game has already ended");
     }
 

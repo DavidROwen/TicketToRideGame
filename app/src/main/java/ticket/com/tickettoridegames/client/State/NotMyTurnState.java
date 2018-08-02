@@ -34,7 +34,7 @@ public class NotMyTurnState extends PlayerState {
         }
     }
 
-    public Result claimRoute(ClientModel cm) {
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm) {
         return new Result(false, null, "It's not your turn");
     }
 

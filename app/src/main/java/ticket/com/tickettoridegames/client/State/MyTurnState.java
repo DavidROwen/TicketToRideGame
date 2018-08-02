@@ -1,10 +1,14 @@
 package ticket.com.tickettoridegames.client.State;
 
+import java.util.List;
+import java.util.Map;
+
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.utility.model.Game;
+import ticket.com.utility.model.Pair;
 import ticket.com.utility.web.Result;
 
 public class MyTurnState extends PlayerState {
@@ -32,7 +36,13 @@ public class MyTurnState extends PlayerState {
         cm.setState(NotMyTurnState.getInstance()); //todo should be coming from server
     }
 
-    public Result claimRoute(ClientModel cm, String route) {
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String route) {
+        if (cm.getMyActiveGame().isRouteWild(route)){
+            Map<String, Integer> playerCards = cm.getMyPlayer().getColorCardCounts();
+            presenter.getMapView().displayColorOptions(playerCards);
+            return new Result(true, "Picking color for wild route.", null);
+        }
+
         return gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
     }
 

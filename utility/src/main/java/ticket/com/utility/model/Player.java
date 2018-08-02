@@ -1,9 +1,11 @@
 package ticket.com.utility.model;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ticket.com.utility.web.Result;
@@ -205,4 +207,27 @@ public class Player {
     }
 
     public void addPoints(Integer points) { this.points += points; }
+
+    public Map<String, Integer> getColorCardCounts(){
+
+        Map<String, Integer> items = new HashMap<>();
+
+        items.put("BLACK",0);
+        items.put("BLUE",0);
+        items.put("GREEN",0);
+        items.put("ORANGE",0);
+        items.put( "PINK",0);
+        items.put( "RED",0);
+        items.put( "WHITE",0);
+        items.put( "YELLOW",0);
+        items.put( "WILD",0);
+
+        for (TrainCard card: trainCards){
+            Integer count = items.get(card.getType().toString());
+            count++;
+            items.put(card.getType().toString(), count); ;
+        }
+
+        return items;
+    }
 }

@@ -23,8 +23,8 @@ public class PlayerState {
 
     public void changeTurn(ClientModel cm) {}
 
-    public Result claimRoute(ClientModel cm, String route) {
-        return new Result(false, null, "Claim hasn't been set up for cur state yet");
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String route) {
+        return new Result(false, null, "It is not your turn, you are not able to claim routes.");
     }
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {}
