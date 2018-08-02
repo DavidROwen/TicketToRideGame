@@ -103,12 +103,6 @@ public class GameTest {
         assertFalse(result.isSuccess());
         System.out.println("Same player: " + result.getErrorMessage()); //claimed by same player
 
-        for(int i = 0; i < 5; i++) {
-            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.PINK));
-        }
-        result = game.claimRoute(player1.getId(), "portland_sanFran_second");
-        assertFalse(result.isSuccess());
-        System.out.println("Same player: " + result.getErrorMessage()); //claimed by same player
         result = game.claimRoute(player2.getId(), "portland_sanFran_second");
         assertTrue(result.isSuccess());
         System.out.println("Success: " + result.getErrorMessage()); //normal
@@ -119,18 +113,12 @@ public class GameTest {
         initToGamePlay();
         Map<String, Route> routes = game.getMap().getRoutes();
 
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.BLUE));
         }
         Result result = game.claimRoute(player1.getId(), "KC_saintLouis_first"); //2 blue
         assertTrue(result.isSuccess()); //normal
         System.out.println("Success: " + result.getErrorMessage());
-        for(int i = 0; i < 5; i++) {
-            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.PINK));
-        }
-        result = game.claimRoute(player2.getId(), "portland_sanFran_second");
-        assertTrue(result.isSuccess());
-        System.out.println("Success: " + result.getErrorMessage()); //normal
     }
 
     @Test
