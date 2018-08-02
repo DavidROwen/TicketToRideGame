@@ -71,7 +71,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        drawRoutesButton = view.findViewById(R.id.button5);
+        drawRoutesButton = view.findViewById(R.id.pass_off_button);
         drawRoutesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
