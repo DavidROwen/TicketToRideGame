@@ -278,17 +278,20 @@ public class Game extends Observable {
     }
 
     public Boolean isMyTurn(String playerId) {
+        if (turnOrder.size() == 0){
+            initTurnOrder();
+        }
         return playerId.equals(turnOrder.get(turnNumber));
     }
 
     private void initTurnOrder() {
         //all players
-        for(String curKey : players.keySet()) {
-            Player curPlayer = players.get(curKey);
-            turnOrder.add(curPlayer.getId());
+        if (turnOrder.size() == 0) {
+            for (String curKey : players.keySet()) {
+                Player curPlayer = players.get(curKey);
+                turnOrder.add(curPlayer.getId());
+            }
         }
-        //shuffle
-        Collections.shuffle(turnOrder);
     }
 
     private void initTrainCardDeck() {
