@@ -21,12 +21,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
 
-        String userID = clientModel.getUserId();
-        assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
-        assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
-        assetsView.setRoutes(clientModel.getMyPlayer().getDestinationCards());
-        assetsView.setTrainDeckCount(clientModel.getMyActiveGame().getTrainCardsDeck().size());
-        assetsView.setRouteDeckCount(clientModel.getMyActiveGame().getDestinationCards().size());
+        updateView();
     }
 
     @Override
@@ -51,6 +46,14 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
                 assetsView.setTrainDeckCount(clientModel.getTrainCardsDeck().size());
                 break;
         }
+    }
+
+    public void updateView(){
+        assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
+        assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
+        assetsView.setRoutes(clientModel.getMyPlayer().getDestinationCards());
+        assetsView.setTrainDeckCount(clientModel.getMyActiveGame().getTrainCardsDeck().size());
+        assetsView.setRouteDeckCount(clientModel.getMyActiveGame().getDestinationCards().size());
     }
 
     @Override

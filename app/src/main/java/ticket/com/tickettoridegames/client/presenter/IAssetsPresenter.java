@@ -7,5 +7,7 @@ public interface IAssetsPresenter {
 
     void pickupCard(Integer index);
 
+    void updateView();
+
     IAssetsView getAssetsView();
 }

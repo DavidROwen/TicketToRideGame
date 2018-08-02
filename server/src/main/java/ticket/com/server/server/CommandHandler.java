@@ -26,13 +26,13 @@ public class CommandHandler implements HttpHandler {
         inputStreamReader.close();
 
         //process command
-        Object result = command.execute();
+        Object obj = command.execute();
 
         //send output
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0); //!!!must go before output stream // 0 means the response body has an unknown amount of stuff in it
 
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(exchange.getResponseBody());
-        Serializer.toJsonOutput(result, outputStreamWriter);
+        Serializer.toJsonOutput(obj, outputStreamWriter);
         outputStreamWriter.close();
 
         exchange.close();

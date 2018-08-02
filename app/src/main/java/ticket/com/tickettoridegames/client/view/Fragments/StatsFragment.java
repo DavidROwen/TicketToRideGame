@@ -37,6 +37,7 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     List<PlayerAction> gameHistory;
     List<Chat> chats;
     View view;
+    private boolean created;
 
     // Widgets
     private RecyclerView myRecyclerView;
@@ -44,6 +45,10 @@ public class StatsFragment extends BasicFragment implements IStatsView{
     private EditText chat_input;
 
     private IStatsPresenter presenter;
+
+    public StatsFragment(){
+        created = false;
+    }
 
     @Override
     public BasicFragment provideYourFragment() {
@@ -79,7 +84,10 @@ public class StatsFragment extends BasicFragment implements IStatsView{
             }
         });
 
-        presenter = new StatsPresenter(this);
+        if(!created) {
+            presenter = new StatsPresenter(this);
+            created = true;
+        }
 
         return view;
     }

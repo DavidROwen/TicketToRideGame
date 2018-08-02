@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import ticket.com.utility.web.Result;
 
+
 public class Game extends Observable {
 
 
@@ -514,44 +515,36 @@ public class Game extends Observable {
         return trainBank;
     }
 
-    public Result claimRoute(String playerId, String routeName, TrainCard.TRAIN_TYPE decidedType) {
-        Result result = players.get(playerId).canClaim(decidedType, map.getRoute(routeName).LENGTH);
-        if(!result.isSuccess()){ return result; }
-        return claim(playerId, routeName, decidedType);
-    }
-
     public Result claimRoute(String playerID, String routeName) {
-        Result result = players.get(playerID).canClaim(map.getRoute(routeName).TYPE, map.getRoute(routeName).LENGTH);
-        if(!result.isSuccess()){ return result; }
-        return claim(playerID, routeName, map.getRoute(routeName).TYPE);
+        return claimRoute(playerID, routeName, map.getRoutes().get(routeName).TYPE);
     }
 
-    private Result claim(String playerId, String routeName, TrainCard.TRAIN_TYPE routeType) {
+    public Result claimRoute(String playerId, String routeName, TrainCard.TRAIN_TYPE routeType) {
         Route route = map.getRoute(routeName);
         Player player = players.get(playerId);
 
-        Result result = canClaim(route, player);
+        Result result = canClaim(playerId, route, routeType);
         if(!result.isSuccess()) { return result; }
 
         map.claimRoute(playerId, route);
-        player.claimRoute(routeType, route.LENGTH); //routeType may be different from route.TYPE
+        player.claimRoute(routeType, route.LENGTH);
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.START + " to " + route.END));
 
         return result;
     }
 
-    private Result canClaim(Route route, Player player) {
-        if(!map.canClaim(route)) { return new Result(false, null, "Route has already been claimed"); }
-        return canWithDoubleRules(route, player);
+    private Result canClaim(String playerId, Route route, TrainCard.TRAIN_TYPE routeType) {
+        //map
+        Result mapResult = map.canClaim(route, playerId, players.size());
+        if(!mapResult.isSuccess()) { return mapResult; }
+
+        //player
+        Result playerResult = players.get(playerId).canClaim(routeType, map.getRoute(route.NAME).LENGTH);
+        if(!playerResult.isSuccess()) { return playerResult; }
+
+        return new Result(true, null, null);
     }
 
-    private Result canWithDoubleRules(Route route, Player player) {
-        if(!map.isDouble(route)
-                || !map.getDouble(route).isOwned()) { return new Result(true, null, null); }
-        else if(players.size() < 4) { return new Result(false, null, "Game needs at least 4 players to play on the second route of a double route"); }
-        else if(map.getDouble(route).getOwnerId().equals(player.getId())) { return new Result(false, null, "Players can't play on both routes of a double route"); }
-        else { return new Result(true, null, null); }
-    }
 
     public List<PlayerStats> getPlayerStats(){
         List<PlayerStats> stats = new ArrayList<>();
@@ -625,43 +618,97 @@ public class Game extends Observable {
         return new Pair<Route, Integer>(map.getNewestClaimedRoute(), color);
     }
 
-    public Integer completedDestinationPoints(Player player){
+
+    public void addDestinationCardPoints(Player player){
         ArrayList<ArrayList<String>> groups = new ArrayList<>();
         List<Route> playersRoutes = map.getPlayersRoutes(player.getId());
+        List<Route> storedRoutes = new ArrayList<>();
         Integer points = 0;
-        Boolean Continue = true;
 
-            for (Route route:playersRoutes) {
+        for (Route route:playersRoutes) {
+            if(!storedRoutes.contains(route)) {
                 ArrayList<String> group = new ArrayList<>();
                 group.add(route.getStartCity());
                 group.add(route.getEndCity());
-                playersRoutes.remove(route);
+                storedRoutes.add(route);
 
-                while (Continue) {
+                while (true) {
+                    Boolean Continue = false;
                     for (Route innerRoute : playersRoutes) {
-                        if (group.contains(innerRoute.getStartCity())) {
-                            group.add(innerRoute.getEndCity());
-                            playersRoutes.remove(innerRoute);
-                        } else if (group.contains(innerRoute.getEndCity())) {
-                            group.add(innerRoute.getStartCity());
-                            playersRoutes.remove(innerRoute);
+                        if(!storedRoutes.contains(innerRoute)) {
+                            if (group.contains(innerRoute.getStartCity())) { //never gets here
+                                group.add(innerRoute.getEndCity());
+                                storedRoutes.add(innerRoute);
+                                Continue = true;
+                            } else if (group.contains(innerRoute.getEndCity())) {
+                                group.add(innerRoute.getStartCity());
+                                storedRoutes.add(innerRoute);
+                                Continue = true;
+                            }
                         }
                     }
-                    Continue = false;
+                    if(!Continue){
+                        break;
+                    }
                 }
                 groups.add(group);
             }
+        }
 
-        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations
-            if(!destinationCard.isCompleted()){ //if not completed
+        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and gives points for completed ones
                 for(ArrayList<String> group:groups){
                     if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
+                        destinationCard.setCompleted();
                         points = points + destinationCard.getValue();
                     }
                 }
+        }
+
+        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and subtracts points for uncompleted ones
+            if(!destinationCard.isCompleted()){
+                points = points - destinationCard.getValue();
             }
         }
-        return points;
+
+        player.addPoints(points); // gives player points from destination cards
+    }
+
+    public ArrayList<ArrayList<String>> TestCompletedDestinationPoints(List<Route> playersRoutes){
+        ArrayList<ArrayList<String>> groups = new ArrayList<>();
+        Integer points = 0;
+        List<Route> storedRoutes = new ArrayList<>();
+
+        for (Route route:playersRoutes) {
+            if(!storedRoutes.contains(route)) {
+                ArrayList<String> group = new ArrayList<>();
+                group.add(route.getStartCity());
+                group.add(route.getEndCity());
+                storedRoutes.add(route);
+
+                while (true) {
+                    Boolean Continue = false;
+                    for (Route innerRoute : playersRoutes) {
+                        if(!storedRoutes.contains(innerRoute)) {
+                            if (group.contains(innerRoute.getStartCity())) { //never gets here
+                                group.add(innerRoute.getEndCity());
+                                storedRoutes.add(innerRoute);
+                                Continue = true;
+                            } else if (group.contains(innerRoute.getEndCity())) {
+                                group.add(innerRoute.getStartCity());
+                                storedRoutes.add(innerRoute);
+                                Continue = true;
+                            }
+                        }
+                    }
+                    if(!Continue){
+                        break;
+                    }
+                }
+                groups.add(group);
+            }
+        }
+
+        return groups;
     }
 
     public boolean isBankCardWild(Integer index){
