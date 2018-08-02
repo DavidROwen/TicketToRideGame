@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
@@ -102,10 +103,17 @@ public class GamePlayService {
     }
 
     public static void switchTurn(String gameId) {
-
         Command command = new Command(GAME_SERVICE_STRING, null,
                 "switchTurn", new Object[]{gameId}
                 );
+        ServerProxy.sendCommand(command);
+    }
+
+
+    public static void getHand(String playerId, String gameId) {
+        Command command = new Command(GAME_SERVICE_STRING, null,
+                "getHand", new Object[]{playerId, gameId}
+        );
         ServerProxy.sendCommand(command);
     }
 
@@ -210,4 +218,23 @@ public class GamePlayService {
     }
 
     public static void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
+
+    public static void gettingHand(String playerId, LinkedList<TrainCard> serverHand) {
+        List<TrainCard> clientHand = ClientModel.get_instance().getMyActiveGame().getPlayer(playerId).getTrainCards();
+
+        try {
+            if (clientHand.size() != serverHand.size()) {
+                throw new AssertionError();
+            }
+            for (int i = 0; i < clientHand.size(); i++) {
+                if (clientHand.get(i) == serverHand.get(i)) {
+                    throw new AssertionError();
+                }
+            }
+        } catch (AssertionError e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Checked that client and server side have the same trainCards");
+    }
 }

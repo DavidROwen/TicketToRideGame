@@ -33,7 +33,7 @@ public class MyTurnState extends PlayerState {
 
     public void changeTurn(ClientModel cm) {
         gamePlayService.switchTurn(cm.getCurrentGameID());
-        cm.setState(NotMyTurnState.getInstance()); //todo should be coming from server
+        cm.setState(NotMyTurnState.getInstance());
     }
 
     public Result claimRoute(IMapPresenter presenter, ClientModel cm, String route) {

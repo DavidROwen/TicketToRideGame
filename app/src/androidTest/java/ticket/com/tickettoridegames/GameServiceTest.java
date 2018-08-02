@@ -28,7 +28,6 @@ public class GameServiceTest {
     private String userId;
     private String gameId;
 
-    private Poller poller;
     private GamePlayService service;
 
     @Test
@@ -114,6 +113,23 @@ public class GameServiceTest {
         while(ClientModel.get_instance().getMyActiveGame().getDestinationCards().size() == prevSize);
     }
 
+    @Test
+    public void testGetHand() {
+        initToGameplay();
+
+        service.getHand(userId, gameId);
+
+        service.drawTrainCard(userId, gameId);
+        service.drawTrainCard(userId, gameId);
+        service.drawTrainCard(userId, gameId);
+        service.drawTrainCard(userId, gameId);
+
+        service.getHand(userId, gameId);
+        service.drawTrainCard(userId, gameId);
+
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4 + 4 + 1);
+    }
+
     private void initToGameplay() {
         new UtilityService().clearServer();
 
@@ -127,7 +143,7 @@ public class GameServiceTest {
         userId = registerResult1.getMessage();
 
         //poller
-        poller = new Poller(); //get it going
+        Poller poller = new Poller(); //get it going
 
         //create game
         Result joinResult = JoinService.createGame(otherId, "gameName", 2);
