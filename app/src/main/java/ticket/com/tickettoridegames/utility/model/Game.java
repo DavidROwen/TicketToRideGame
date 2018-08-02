@@ -279,7 +279,6 @@ public class Game extends Observable {
 
     public void switchTurn() {
         turnNumber = (turnNumber + 1) % players.size();
-        currentTurn = new Turn();
         //notifies in clientModel
     }
 
