@@ -250,7 +250,7 @@ public class Game extends Observable {
     public void drawTrainCard(String playerId) {
         TrainCard card = drawTrainCard();
         players.get(playerId).addTrainCard(card);
-        addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + card.getType()));
+        addToHistory(new PlayerAction(players.get(playerId).getUsername(), "did a blind draw"));
     }
 
     private TrainCard drawTrainCard() {
@@ -394,6 +394,7 @@ public class Game extends Observable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + String.valueOf(cards.size()) + " destination cards"));
     }
 
     /**
@@ -412,7 +413,6 @@ public class Game extends Observable {
 
     private void addDestinationCard(DestinationCard card) {
         destinationCards.add(card);
-//        addToHistory(new PlayerAction(playerId, "drew a destination card")); //todo
     }
 
     private void fillDestinationCards() {

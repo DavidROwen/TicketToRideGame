@@ -226,6 +226,7 @@ public class ClientModel extends Observable {
         Game game = getMyActiveGame();
         game.claimDestinationCards(cards, playerId);
         myNotify(DESTINATIONUPDATE);
+        myNotify(HISTORYUPDATE);
     }
 
     public void discardDestinationCards(List<DestinationCard> cards){
