@@ -79,21 +79,21 @@ public class MapFragment extends BasicFragment implements IMapView{
             }
         });
 
-        Button passOffButton = view.findViewById(R.id.pass_off_button);
-        passOffButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                presenter.passOff();
-            }
-        });
+//        Button passOffButton = view.findViewById(R.id.pass_off_button);
+//        passOffButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                presenter.passOff();
+//            }
+//        });
 
-        turnButton = view.findViewById(R.id.turn_button);
-        turnButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                presenter.changeTurn();
-            }
-        });
+//        turnButton = view.findViewById(R.id.turn_button);
+//        turnButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                presenter.changeTurn();
+//            }
+//        });
 
         if(!created){
             created = true;

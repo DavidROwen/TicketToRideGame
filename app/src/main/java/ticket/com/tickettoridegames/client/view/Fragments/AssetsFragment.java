@@ -44,7 +44,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     private List<TrainCard> trainBank;
     private Set<DestinationCard> destinationCards;
     private ArrayList<String> listRoutes=new ArrayList<>(); //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    private ArrayAdapter<String> adapter; //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    private ArrayAdapter<String> adapter;                   //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     private boolean created;
 
     //Widgets
