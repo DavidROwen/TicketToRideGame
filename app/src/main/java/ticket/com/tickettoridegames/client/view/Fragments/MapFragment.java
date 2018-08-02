@@ -87,10 +87,12 @@ public class MapFragment extends BasicFragment implements IMapView{
 
     public void enableTurn(){
         drawTrainsButton.setEnabled(true);
+        drawRoutesButton.setEnabled(true);
     }
 
     public void disableTurn(){
         drawTrainsButton.setEnabled(false);
+        drawRoutesButton.setEnabled(false);
     }
 
     public void setFirstCall(boolean val){
