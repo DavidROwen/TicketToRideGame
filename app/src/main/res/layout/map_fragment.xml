@@ -1087,7 +1087,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="354dp"
-        android:text="Place Trains" />
+        android:text="Place Trains"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/pass_off_button"
@@ -1096,7 +1097,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="186dp"
-        android:text="Pass Off Button" />
+        android:text="Pass Off Button"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/button5"
@@ -1116,6 +1118,7 @@
         android:layout_marginBottom="18dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/holo_green_light"
-        android:text="End Turn    Name" />
+        android:text="End Turn"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

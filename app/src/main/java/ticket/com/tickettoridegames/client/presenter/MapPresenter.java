@@ -118,6 +118,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         Result result = getCurrentState().claimRoute(clientModel, route);
         if(result.isSuccess()) {
             mapView.displayMessage("Successfully claimed: " + route);
+            changeTurn();
         } else {
             mapView.displayMessage("Failed to claim route: " + route
                     + "\n" + result.getErrorMessage());
@@ -148,6 +149,7 @@ public class MapPresenter implements IMapPresenter, Observer {
             }
             else{
                 mapView.disablePickRoutes();
+                changeTurn();
             }
         }
     }
