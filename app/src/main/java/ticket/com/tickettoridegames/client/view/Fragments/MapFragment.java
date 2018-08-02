@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -169,9 +170,20 @@ public class MapFragment extends BasicFragment implements IMapView{
         builder.create().show();
     }
 
-    public void displayColorOptions(){
+    public void displayColorOptions(Map<String, Integer> playerCardCount){
 
-        final CharSequence[] items = {"Black", "Blue", "Green", "Orange", "Pink", "Red", "White", "Yellow", "Wild"};
+        final CharSequence[] items = {
+                "Black: "+playerCardCount.get("BLACK"),
+                "Blue: "+playerCardCount.get("BLUE"),
+                "Green: "+playerCardCount.get("GREEN"),
+                "Orange: "+playerCardCount.get("ORANGE"),
+                "Pink: "+playerCardCount.get("PINK"),
+                "Red: "+playerCardCount.get("RED"),
+                "White: "+playerCardCount.get("WHITE"),
+                "Yellow: "+playerCardCount.get("YELLOW"),
+                "Wild: "+playerCardCount.get("WILD")};
+
+//        final CharSequence[] items = {"Black", "Blue", "Green", "Orange", "Pink", "Red", "White", "Yellow", "Wild"};
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         dialogBuilder.setTitle("Colors");
         dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
@@ -203,23 +215,6 @@ public class MapFragment extends BasicFragment implements IMapView{
         AlertDialog alertDialogObject = dialogBuilder.create();
         //Show the dialog
         alertDialogObject.show();
-    }
-
-    public void placeTrains(Route route, TrainCard.TRAIN_TYPE color){
-//        String routeName = (String) getKeyFromValue(trainTracks,route);
-//        String buttonName = (String) getKeyFromValue(routeButtons,routeName);
-//
-//        if (color == TrainCard.TRAIN_TYPE.BLACK){
-//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(black));
-//        }else if(color == TrainCard.TRAIN_TYPE.BLUE){
-//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(blue));
-//        }else if(color == TrainCard.TRAIN_TYPE.YELLOW){
-//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(yellow));
-//        }else if(color == TrainCard.TRAIN_TYPE.GREEN){
-//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(green));
-//        }else if(color == TrainCard.TRAIN_TYPE.RED){
-//            //buttonName.setBackgroundTintList(ColorStateList.valueOf(red));
-//        }
     }
 
     public void placeTrains(Route route, Integer color){

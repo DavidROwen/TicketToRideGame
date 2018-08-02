@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ticket.com.utility.model.DestinationCard;
@@ -20,9 +21,7 @@ public interface IMapView {
 
     void setFirstCall(boolean val);
 
-    void displayColorOptions();
-
-    void placeTrains(Route route, TrainCard.TRAIN_TYPE color);
+    void displayColorOptions(Map<String, Integer> playerCardCount);
 
     void claimRoute(Route route, Integer color);
 

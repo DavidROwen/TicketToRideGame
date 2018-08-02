@@ -709,9 +709,12 @@ public class Game extends Observable {
         return card.getType() == TrainCard.TRAIN_TYPE.WILD;
     }
 
+    public boolean isRouteWild(String routeName){
+        return map.getRoutes().get(routeName).TYPE == TrainCard.TRAIN_TYPE.WILD;
+    }
+
     public boolean isTopCardWild(){
         TrainCard card = trainCardsDeck.peek();
         return card.getType() == TrainCard.TRAIN_TYPE.WILD;
     }
-
 }

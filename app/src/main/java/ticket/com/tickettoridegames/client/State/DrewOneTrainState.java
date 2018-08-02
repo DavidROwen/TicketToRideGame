@@ -31,7 +31,7 @@ public class DrewOneTrainState extends PlayerState {
 
     public void changeTurn(ClientModel cm) {}
 
-    public Result claimRoute(ClientModel cm, String route) {
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String route) {
         return new Result(false, null, "Cannot claim a route after drawing a card.");
     }
 
