@@ -10,9 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.ILoginPresenter;

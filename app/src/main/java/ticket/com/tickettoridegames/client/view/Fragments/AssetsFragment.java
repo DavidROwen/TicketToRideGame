@@ -82,6 +82,9 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
             presenter = new AssetsPresenter(this);
             created = true;
         }
+        else{
+            presenter.updateView();
+        }
         return view;
         //return null;
     }
@@ -108,12 +111,14 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     @Override
     public void setTrainDeckCount(Integer size){
-        trainDeckCount.setText("Cards in deck: "+size.toString());
+        String text = "Cards in deck " + size.toString();
+        trainDeckCount.setText(text);
     }
 
     @Override
     public void setRouteDeckCount(Integer size){
-        routesDeckCount.setText("Cards in deck: "+size.toString());
+        String text = "Cards in deck: " + size.toString();
+        routesDeckCount.setText(text);
     }
 
     @Override
