@@ -148,7 +148,6 @@ public class MapPresenter implements IMapPresenter, Observer {
                 mapView.setFirstCall(false);
             }
             else{
-                mapView.disablePickRoutes();
                 changeTurn();
             }
         }
