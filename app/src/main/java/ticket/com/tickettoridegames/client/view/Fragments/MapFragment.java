@@ -88,11 +88,21 @@ public class MapFragment extends BasicFragment implements IMapView{
     public void enableTurn(){
         drawTrainsButton.setEnabled(true);
         drawRoutesButton.setEnabled(true);
+
+        for(String buttonName : buttonToRouteConversion.keySet()) {
+            FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
+            button.setEnabled(true);
+        }
     }
 
     public void disableTurn(){
         drawTrainsButton.setEnabled(false);
         drawRoutesButton.setEnabled(false);
+
+        for(String buttonName : buttonToRouteConversion.keySet()) {
+            FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
+            button.setEnabled(false);
+        }
     }
 
     public void setFirstCall(boolean val){
