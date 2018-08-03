@@ -23,6 +23,7 @@ public class Player {
 
     private List<DestinationCard> tempDeck = new LinkedList<>();
     private List<TrainCard> trainCards = new LinkedList<>();
+    private TrainCard newestTrainCard;
     private Set<DestinationCard> destinationCards = new HashSet<>();
 
     public Player(String username, String id) {
@@ -80,6 +81,7 @@ public class Player {
 
     public void addTrainCard(TrainCard card) {
         trainCards.add(card);
+        newestTrainCard = card;
     }
 
     public Boolean removeTrainCards(TrainCard...cards) {
@@ -240,5 +242,9 @@ public class Player {
         }
 
         return items;
+    }
+
+    public TrainCard getNewestTrainCard() {
+        return newestTrainCard;
     }
 }

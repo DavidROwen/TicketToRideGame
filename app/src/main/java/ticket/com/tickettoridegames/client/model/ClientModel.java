@@ -29,6 +29,7 @@ import static ticket.com.utility.TYPE.BANKUPDATE;
 import static ticket.com.utility.TYPE.DESTINATIONUPDATE;
 import static ticket.com.utility.TYPE.DISCARDDESTINATION;
 import static ticket.com.utility.TYPE.HISTORYUPDATE;
+import static ticket.com.utility.TYPE.MAP_DREW_TRAINCARD;
 import static ticket.com.utility.TYPE.NEWCHAT;
 import static ticket.com.utility.TYPE.NEWROUTE;
 import static ticket.com.utility.TYPE.NEWTEMPDECK;
@@ -278,6 +279,7 @@ public class ClientModel extends Observable {
         getMyActiveGame().drawTrainCard(playerId);
         myNotify(NEWTRAINCARD);
         myNotify(HISTORYUPDATE);
+        if(getUser().getId().equals(playerId)) { myNotify(MAP_DREW_TRAINCARD); }
     }
 
     public void pickupTrainCard(String playerId, Integer index){

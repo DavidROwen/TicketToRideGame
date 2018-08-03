@@ -16,5 +16,6 @@ public enum TYPE {
     DISCARDDESTINATION, //discard a destination card
     ADD_PLAYER,
     TURNCHANGED,
+    MAP_DREW_TRAINCARD, //when you draw from the deck //meant to display message on drawing players screen
     ROUTECLAIMED
 }
