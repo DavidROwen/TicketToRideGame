@@ -16,7 +16,6 @@ import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.utility.TYPE;
 import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Pair;
-import ticket.com.utility.model.Route;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
@@ -112,7 +111,7 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void claimRoute(String routeName){
-        if(ClientModel.get_instance().getMyActiveGame().isRouteWild(routeName) && getCurrentState().canClaim()) {
+        if(ClientModel.get_instance().getMyActiveGame().isRouteWild(routeName) && getCurrentState().canClaim(routeName)) {
             Map<String, Integer> playerCards = clientModel.getMyPlayer().getColorCardCounts();
             mapView.displayColorOptions(playerCards, routeName);
         } else {

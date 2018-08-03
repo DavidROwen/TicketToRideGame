@@ -33,7 +33,7 @@ public class DrewOneTrainState extends PlayerState {
     public void changeTurn(ClientModel cm) {}
 
     @Override
-    public boolean canClaim() {
+    public boolean canClaim(String routeName) {
         return false;
     }
 

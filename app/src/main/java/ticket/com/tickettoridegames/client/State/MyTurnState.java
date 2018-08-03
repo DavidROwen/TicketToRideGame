@@ -38,8 +38,11 @@ public class MyTurnState extends PlayerState {
     }
 
     @Override
-    public boolean canClaim() {
-        return true;
+    public boolean canClaim(String routeName) {
+        return ClientModel.get_instance().getMyActiveGame().getMap().canClaim(
+                routeName, ClientModel.get_instance().getMyPlayer().getId(),
+                ClientModel.get_instance().getMyActiveGame().getNumberOfPlayers()
+        ).isSuccess();
     }
 
     @Override

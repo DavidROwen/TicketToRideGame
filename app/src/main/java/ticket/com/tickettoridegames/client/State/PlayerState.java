@@ -30,7 +30,7 @@ public class PlayerState {
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {}
 
-    public boolean canClaim() {
+    public boolean canClaim(String routeName) {
         return false;
     }
 }

@@ -36,7 +36,7 @@ public class NotMyTurnState extends PlayerState {
     }
 
     @Override
-    public boolean canClaim() {
+    public boolean canClaim(String routeName) {
         return false;
     }
 
