@@ -6,8 +6,6 @@ import ticket.com.utility.model.Game;
 
 public interface IJoinView {
 
-    void setGames(Map<String, Game> games);
-
     String getNewPlayerColor();
 
     String getNewGameName();
@@ -18,4 +16,5 @@ public interface IJoinView {
 
     void displayMessage(String message);
 
+    void addGame(Game game);
 }

@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames.client.view;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,6 @@ import ticket.com.tickettoridegames.client.presenter.JoinPresenter;
 import ticket.com.utility.model.Game;
 
 public class JoinActivity extends AppCompatActivity implements IJoinView{
-
     private IJoinPresenter presenter;
     Map<String, Game> games;
 
@@ -38,7 +39,9 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     private Spinner playerNumber;
     private Spinner playerColor;
     private static RecyclerView gameListRecyclerView;
-    private RecyclerView.Adapter myAdapter;
+    private GameAdapter myAdapter;
+
+    private View curHighlighted;
 
     // EditTexts
     private EditText gameNameText;
@@ -67,6 +70,11 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
                 clearListSelection();
             }
         });
+
+        gameListRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        gameListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        myAdapter = new GameAdapter();
+        gameListRecyclerView.setAdapter(myAdapter);
 
         GameID = findViewById(R.id.textField);
         privateGameButton = findViewById(R.id.private_game_switch);
@@ -107,12 +115,9 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
 
 
     @Override
-    public void setGames(Map<String, Game> games){
-        this.games = games;
-        gameListRecyclerView = findViewById(R.id.myrecyclerview);
-        gameListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        myAdapter = new GameAdapter(games);
-        gameListRecyclerView.setAdapter(myAdapter);
+    public void addGame(Game game) {
+        myAdapter.addGame(game);
+        myAdapter.notifyDataSetChanged();
     }
 
     // This function is used to prevent problems when joining a game fails.
@@ -156,20 +161,21 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         Toast toast = Toast.makeText(JoinActivity.this, message, Toast.LENGTH_LONG);
         toast.show();
     }
+
+    public View getCurHighlighted() {
+        return curHighlighted;
+    }
+
+    public void setCurHighlighted(View curHighlighted) {
+        this.curHighlighted = curHighlighted;
+    }
 }
 
 class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     int selected_position = 0; // You have to set this globally in the Adapter class
-    Map<String, Game> games;
-    String[] keySet; //ArrayList<String> maybe
+    List<Game> games = new LinkedList<>();
     List<CustomViewHolder> views = new ArrayList<>();
-
-
-    public GameAdapter(Map<String, Game> games) {
-        this.games = games;
-        this.keySet = games.keySet().toArray(new String[0]);
-    }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -182,19 +188,23 @@ class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
-        holder.bindResult(games, keySet[i]);
+        holder.bindResult(games.get(i));
         views.add(holder);
     }
 
     @Override
     public int getItemCount() {
-        return keySet.length;
+        return games.size();
     }
 
     public void clearSelection(){
         for (CustomViewHolder holder: views){
             holder.clearBackground();
         }
+    }
+
+    public void addGame(Game game) {
+        games.add(game);
     }
 }
 
@@ -212,15 +222,18 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         gameName = v.findViewById(R.id.textView1);
         playerNames = v.findViewById(R.id.textView2);
         playerCount = v.findViewById(R.id.textView3);
+
+        JoinActivity activity = (JoinActivity) v.getContext();
+//        if(activity.getCurHighlighted() != null) {
+//            activity.getCurHighlighted().setBackgroundColor(Color.GREEN);
+//        }
     }
 
-    public void bindResult(Map<String, Game> games, String key){
-        Game newGame = games.get(key);
-
-        gameId = newGame.getId();
-        gameName.setText(newGame.getName());
-        playerNames.setText(newGame.getPlayerNamesString());
-        playerCount.setText(newGame.getNumberOfPlayers() + "/" + newGame.getMaxPlayers());
+    public void bindResult(Game game){
+        gameId = game.getId();
+        gameName.setText(game.getName());
+        playerNames.setText(game.getPlayerNamesString());
+        playerCount.setText(game.getNumberOfPlayers() + "/" + game.getMaxPlayers());
     }
 
     public void clearBackground(){
@@ -230,7 +243,15 @@ class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
-        v.setBackgroundColor(Color.GREEN);
+
+        JoinActivity activity = (JoinActivity) v.getContext();
+        //clear prev highlight
+        if(activity.getCurHighlighted() != null) {
+            activity.getCurHighlighted().setBackgroundColor(Color.TRANSPARENT);
+        }
+        //set new highlight
+        activity.setCurHighlighted(v);
+        activity.getCurHighlighted().setBackgroundColor(Color.GREEN);
 
         //makes a hidden text that is read when button is clicked
         JoinActivity.GameID.setText(gameId);

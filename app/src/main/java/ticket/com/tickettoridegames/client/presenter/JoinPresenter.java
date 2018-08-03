@@ -6,6 +6,7 @@ import java.util.Observer;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.view.IJoinView;
+import ticket.com.utility.TYPE;
 import ticket.com.utility.web.Result;
 
 public class JoinPresenter implements IJoinPresenter, Observer {
@@ -73,7 +74,9 @@ public class JoinPresenter implements IJoinPresenter, Observer {
     @Override
     public void update(Observable observable, Object arg){
         clientModel = (ClientModel) observable;
-        joinView.setGames(clientModel.getGames());
+        if(arg == TYPE.NEW_GAME_ADDED) {
+            joinView.addGame(clientModel.getGames().get(clientModel.getNewestGameId()));
+        }
 //        if (!clientModel.getCurrentGameID().isEmpty()){
 //            joinView.changeView();
 //        }
