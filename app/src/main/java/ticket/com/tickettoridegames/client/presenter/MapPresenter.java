@@ -14,6 +14,8 @@ import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.utility.TYPE;
 import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.Pair;
+import ticket.com.utility.model.Route;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
@@ -152,6 +154,15 @@ public class MapPresenter implements IMapPresenter, Observer {
             else{
                 changeTurn();
             }
+        }
+    }
+
+    @Override
+    public void setClaimedRoutes() {
+        List<Pair<Route, Integer>> claimedRoutes = clientModel.getClaimedRoutes();
+
+        for(Pair<Route, Integer> each : claimedRoutes) {
+            mapView.claimRoute(each.first, each.second);
         }
     }
 
