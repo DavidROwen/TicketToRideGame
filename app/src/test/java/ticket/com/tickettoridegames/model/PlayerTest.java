@@ -16,11 +16,11 @@ public class PlayerTest {
 
         //test add
         player.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.GREEN));
-        player.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.BLUE));
+        player.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.GREEN));
         assertEquals((Integer) player.getTrainCards().size(), (Integer) 2);
 
         //test has and remove
-        assertFalse(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.RED), new TrainCard(TrainCard.TRAIN_TYPE.GREEN)));
-        assertTrue(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.BLUE), new TrainCard(TrainCard.TRAIN_TYPE.GREEN)));
+        assertFalse(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.RED), new TrainCard(TrainCard.TRAIN_TYPE.RED)));
+        assertTrue(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.GREEN), new TrainCard(TrainCard.TRAIN_TYPE.GREEN)));
     }
 }

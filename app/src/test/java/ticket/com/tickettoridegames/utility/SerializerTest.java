@@ -9,7 +9,7 @@ public class SerializerTest {
     @Test
     public void toAndFromPrimitives() {
         Integer exp = 4;
-        String json = Serializer.toJson(new Command(Integer.class.getName(), null, null, "valueOf", new Class<?>[]{int.class}, new Object[]{4}));
+        String json = Serializer.toJson(new Command(Integer.class.getName(), "valueOf", new Class<?>[]{int.class}, new Object[]{4}));
         Command command = (Command) Serializer.fromJson(json, Command.class);
         Integer act = (Integer) command.execute();
 

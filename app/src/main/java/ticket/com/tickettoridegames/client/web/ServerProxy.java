@@ -16,9 +16,6 @@ public class ServerProxy {
         final Type RESULTS_TYPE = new TypeToken<Result>(){}.getType();
         Object object = ClientCommunicator.send(command, RESULTS_TYPE);
 
-        if(object == null) {
-            System.out.println("Returned NULL:" + command.toString());
-        }
         return object != null ? (Result) object : new Result(false, null, "client communicator failed");
     }
 

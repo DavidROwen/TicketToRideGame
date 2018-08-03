@@ -28,9 +28,6 @@ public class CommandHandler implements HttpHandler {
         //process command
         Object obj = command.execute();
 
-        if(obj == null) {
-            System.out.println("Resulted in NULL: " + command.toString());
-        }
         //send output
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0); //!!!must go before output stream // 0 means the response body has an unknown amount of stuff in it
 

@@ -24,8 +24,6 @@ public class MyTurnState extends PlayerState {
 
     public void drawTrainCard(ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
-        gamePlayService.getHand(ClientModel.get_instance().getMyPlayer().getId(),
-                ClientModel.get_instance().getMyActiveGame().getId());
         cm.setState(DrewOneTrainState.getInstance());
     }
 
@@ -46,8 +44,6 @@ public class MyTurnState extends PlayerState {
         }
 
         Result result = gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
-        gamePlayService.getHand(ClientModel.get_instance().getMyPlayer().getId(),
-                ClientModel.get_instance().getMyActiveGame().getId());
         return result;
     }
 
@@ -68,9 +64,6 @@ public class MyTurnState extends PlayerState {
         else {
             clientModel.setState(DrewOneTrainState.getInstance());
         }
-
-        gamePlayService.getHand(ClientModel.get_instance().getMyPlayer().getId(),
-                ClientModel.get_instance().getMyActiveGame().getId());
     }
 
 }

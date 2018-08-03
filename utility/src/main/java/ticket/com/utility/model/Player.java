@@ -113,7 +113,7 @@ public class Player {
         if(cards == null || cards.length == 0) { return false; }
         if(cards.length > trainCards.size()) { return false; } //impossible
         TrainCard.TRAIN_TYPE cardsType = cards[0].getType();
-        for(TrainCard each : trainCards) {
+        for(TrainCard each : cards) {
             if(each.getType() != cardsType) { return false; } //cards are all same type
         }
 
