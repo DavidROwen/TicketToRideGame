@@ -26,6 +26,8 @@ public class DrewOneTrainState extends PlayerState {
     public void drawTrainCard(ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
         gamePlayService.switchTurn(cm.getCurrentGameID());
+
+        cm.setState(NotMyTurnState.getInstance());
     }
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
