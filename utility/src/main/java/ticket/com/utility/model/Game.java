@@ -566,34 +566,15 @@ public class Game extends Observable {
     }
     
     // This function returns all claimed routs associated with the color that they should be on the map
-    public List<Pair<Route, Integer>> getClaimedRoutes(){
-        List<Pair<Route, Integer>> routes = new ArrayList<>();
+    public List<Pair<String, Integer>> getClaimedRoutes(){
+        List<Pair<String, Integer>> claimed = new ArrayList<>();
 
-        for(Route each : map.getClaimedRoutes()) {
-            Player.COLOR playerColor =  players.get(each.getOwnerId()).getColor();
-            Integer color = playerColorToColor(playerColor);
-            routes.add(new Pair(each, color));
+        for(Pair<String,String> each : map.getClaimedRoutes()) {
+            Integer playerColor =  players.get(each.second).getColorValue();
+            claimed.add(new Pair<String, Integer>(each.first, playerColor));
         }
 
-        return routes;
-    }
-
-    //todo replace with map in player
-    private Integer playerColorToColor(Player.COLOR color) {
-        switch(color) {
-            case RED:
-                return 0xffff0000;
-            case YELLOW:
-                return 0xffffff00;
-            case GREEN:
-                return 0xff00ff00;
-            case BLUE:
-                return 0xff0000ff;
-            case BLACK:
-                return 0xff000000;
-            default:
-                return null;
-        }
+        return claimed;
     }
 
     public String getTurnUsername() {
@@ -605,10 +586,11 @@ public class Game extends Observable {
         return players.get(id).getUsername();
     }
 
-    public Pair<Route, Integer> getNewestClaimedRoute() {
-        Player.COLOR playerColor =  players.get(map.getNewestClaimedRoute().getOwnerId()).getColor();
-        Integer color = playerColorToColor(playerColor);
-        return new Pair<Route, Integer>(map.getNewestClaimedRoute(), color);
+    public Pair<String, Integer> getNewestClaimedRoute() {
+        Pair<String, String> routeInfo = map.getNewestClaimedRoute();
+        Integer playerColor =  players.get(routeInfo.second).getColorValue();
+
+        return new Pair<String, Integer>(routeInfo.first, playerColor);
     }
 
 

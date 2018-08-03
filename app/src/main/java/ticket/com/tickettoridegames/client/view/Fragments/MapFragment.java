@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,8 +21,6 @@ import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.presenter.MapPresenter;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.utility.model.DestinationCard;
-import ticket.com.utility.model.Pair;
-import ticket.com.utility.model.Route;
 import ticket.com.utility.model.TrainCard;
 
 public class MapFragment extends BasicFragment implements IMapView{
@@ -53,10 +49,9 @@ public class MapFragment extends BasicFragment implements IMapView{
 
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-
         view = inflater.inflate(R.layout.map_fragment,parent,false);
-        initButtonToRouteConversion();
 
+        initButtonToRouteConversion();
         for(String buttonName : buttonToRouteConversion.keySet()) {
             initButton(buttonName);
         }
@@ -82,6 +77,9 @@ public class MapFragment extends BasicFragment implements IMapView{
             created = true;
             presenter = new MapPresenter(this);
         }
+
+        presenter.setClaimedRoutes();
+
         return view;
     }
 
@@ -197,24 +195,13 @@ public class MapFragment extends BasicFragment implements IMapView{
         alertDialogObject.show();
     }
 
-    public void placeTrains(Route route, Integer color){
-        String buttonName = (String) getKeyFromValue(buttonToRouteConversion,route.NAME);
+    @Override
+    public void claimRoute(String routeName, Integer colorValue) {
+        String buttonName = (String) getKeyFromValue(buttonToRouteConversion, routeName);
 
         FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
-        button.setBackgroundTintList(ColorStateList.valueOf(color));
+        button.setBackgroundTintList(ColorStateList.valueOf(colorValue));
     }
-
-    @Override
-    public void setClaimedRoutes(List<Pair<Route, Integer>> routes) {
-        for (Pair<Route, Integer> each : routes){
-            claimRoute(each.first, each.second);
-        }
-    }
-
-    @Override
-    public void claimRoute(Route route, Integer color) {
-        placeTrains(route, color);
-    } //todo rename placetrains
 
     public static Object getKeyFromValue(Map hm, Object value) {
         for (Object o : hm.keySet()) {
@@ -240,7 +227,6 @@ public class MapFragment extends BasicFragment implements IMapView{
         });
     }
 
-    //todo init names with gameMap so they always work
     private void initButtonToRouteConversion(){
         buttonToRouteConversion.put("floatingActionButton13", "vancouver_calgary");
         buttonToRouteConversion.put("floatingActionButton11", "vancouver_seattle_first");

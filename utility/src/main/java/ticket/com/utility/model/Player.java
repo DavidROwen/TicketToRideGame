@@ -175,24 +175,20 @@ public class Player {
     }
 
     public Integer getColorValue(){
-        if (color != null) {
-            switch (color) {
-                case RED:
-                    return -65535;
-                case BLUE:
-                    return -16776961;
-                case YELLOW:
-                    return -256;
-                case GREEN:
-                    return -16711936;
-                case BLACK:
-                    return -16777216;
-                default:
-                    return 0;
-            }
-        }
-        else {
-            return 0;
+        if(color == null) { return 0; }
+        switch(color) {
+            case RED:
+                return 0xffff0000;
+            case YELLOW:
+                return 0xffffff00;
+            case GREEN:
+                return 0xff00ff00;
+            case BLUE:
+                return 0xff0000ff;
+            case BLACK:
+                return 0xff000000;
+            default:
+                return null;
         }
     }
 

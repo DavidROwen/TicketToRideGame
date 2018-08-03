@@ -8,12 +8,11 @@ import java.util.Map;
 
 import ticket.com.utility.web.Result;
 
-import ticket.com.utility.web.Result;
-
 
 public class GameMap {
     private Map<String, Route> routes = new HashMap<>(); //key is route NAME
     private Map<String, Pair<Route,Route>> doubleRoutesIndex = new HashMap<>(); //key is route name
+    private Map<String, Route> claimedRoutes = new HashMap<>(); //key is route NAME
     private Route newestClaimedRoute;
 
     public GameMap(){
@@ -40,6 +39,8 @@ public class GameMap {
     //assumes that it canClaim
     public Boolean claimRoute(String playerID, Route route){
         newestClaimedRoute = route;
+        claimedRoutes.put(route.NAME, route);
+
         if(isDouble(route)) {
             Pair<Route, Route> routePair = doubleRoutesIndex.get(getBaseName(route.NAME));
             if(routePair.first.NAME.equals(route.NAME)) { routePair.first.claim(playerID); }
@@ -56,12 +57,14 @@ public class GameMap {
         return routes.get(routeName);
     }
 
-    public List<Route> getClaimedRoutes() {
-        List<Route> claimed = new ArrayList<>();
+    public List<Pair<String, String>> getClaimedRoutes() {
+        List<Pair<String, String>> claimed = new ArrayList<>();
 
-        for(String each : routes.keySet()) {
-            Route route = routes.get(each);
-            if(route.isOwned()) { claimed.add(route); }
+        for(String each : claimedRoutes.keySet()) {
+            Route route = claimedRoutes.get(each);
+            if(claimedRoutes.get(each).isOwned()) {
+                claimed.add(new Pair<String, String>(route.NAME, route.getOwnerId()));
+            }
         }
 
         return Collections.unmodifiableList(claimed);
@@ -78,8 +81,9 @@ public class GameMap {
         return Collections.unmodifiableList(playersRoutes);
     }
 
-    public Route getNewestClaimedRoute() {
-        return newestClaimedRoute;
+    //returns pair of routeId and ownerId
+    public Pair<String, String> getNewestClaimedRoute() {
+        return new Pair<String, String>(newestClaimedRoute.NAME, newestClaimedRoute.getOwnerId());
     }
 
     private void initRoutes() {
@@ -205,5 +209,9 @@ public class GameMap {
 
     private String getBaseName(String routeName) {
         return routeName.replace("_first", "").replace("_second", ""); //remove tag
+    }
+
+    public String getOwner(String routeId) {
+        return routes.get(routeId).getOwnerId();
     }
 }

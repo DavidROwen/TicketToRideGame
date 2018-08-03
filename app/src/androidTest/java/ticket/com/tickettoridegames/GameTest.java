@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import ticket.com.utility.model.Game;
+import ticket.com.utility.model.Pair;
 import ticket.com.utility.model.Player;
 import ticket.com.utility.model.PlayerStats;
 import ticket.com.utility.model.Route;
@@ -22,6 +23,11 @@ public class GameTest {
     Game game;
     Player player1;
     Player player2;
+
+    @Test
+    public void testInitGame() {
+        initToGamePlay();
+    }
 
     @Test //with enum
     public void testSetColors() {
@@ -138,6 +144,33 @@ public class GameTest {
         assertEquals(stats.get(1).getNumberOfCards(), (Integer)6); //player1
     }
 
+    @Test
+    public void testGetRoutes() {
+        initToGamePlay();
+
+        //get ready to claim routes
+        for(int i = 0; i < 2; i++) {
+            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.GREEN));
+        }
+        for(int i = 0; i < 2; i++) {
+            player2.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.YELLOW));
+        }
+
+        //claim some routes
+        game.claimRoute(player1.getId(),"pittsburg_newYork_first"); //2 green
+        game.claimRoute(player2.getId(),"newYork_boston_first"); //2 yellows
+
+        List<Pair<String, Integer>> routes = game.getClaimedRoutes();
+        //check that they're in the returned list
+        assertTrue(routes.size() == 2);
+        assertTrue(routes.get(0).first.equals("pittsburg_newYork_first")
+                || routes.get(0).first.equals("newYork_boston_first")
+        );
+        assertTrue(routes.get(1).first.equals("pittsburg_newYork_first")
+                || routes.get(1).first.equals("newYork_boston_first")
+        );
+    }
+
     public void initToGamePlay() {
         game = new Game();
         game.setMaxPlayers(4);
@@ -146,5 +179,9 @@ public class GameTest {
         game.addPlayers(player1);
         player2 = new Player("username2", "id2");
         game.addPlayers(player2);
+
+        game.setId("id");
+        game.initGame();
+        game.initGameNonRandom();
     }
 }

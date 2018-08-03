@@ -349,7 +349,7 @@ public class ClientModel extends Observable {
         }
     }
 
-    public List<Pair<Route,Integer>> getClaimedRoutes(){
+    public List<Pair<String, Integer>> getClaimedRoutes(){
         return getMyActiveGame().getClaimedRoutes();
     }
 
@@ -361,7 +361,7 @@ public class ClientModel extends Observable {
         return gameList.get(gameId);
     }
 
-    public Pair<Route,Integer> getNewestClaimedRoute() {
+    public Pair<String,Integer> getNewestClaimedRoute() {
         return getMyActiveGame().getNewestClaimedRoute();
     }
 

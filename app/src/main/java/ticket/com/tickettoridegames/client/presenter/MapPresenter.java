@@ -38,7 +38,6 @@ public class MapPresenter implements IMapPresenter, Observer {
             mapView.displayDestinationCards(destinationCards);
             //mapView.disableTurn();
         }
-        mapView.setClaimedRoutes(clientModel.getClaimedRoutes());
         //temp fix
         checkTurn();
     }
@@ -75,13 +74,6 @@ public class MapPresenter implements IMapPresenter, Observer {
             mapView.disableTurn();
             mapView.displayMessage(playerTurn);
         }
-    }
-
-    //todo get rid of this function
-    @Override
-    public void passOff(){
-        // Change turn
-        clientModel.changeTurn(clientModel.getMyActiveGame().getId());
     }
 
     @Override
@@ -159,9 +151,9 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void setClaimedRoutes() {
-        List<Pair<Route, Integer>> claimedRoutes = clientModel.getClaimedRoutes();
+        List<Pair<String, Integer>> claimedRoutes = clientModel.getClaimedRoutes();
 
-        for(Pair<Route, Integer> each : claimedRoutes) {
+        for(Pair<String, Integer> each : claimedRoutes) {
             mapView.claimRoute(each.first, each.second);
         }
     }
