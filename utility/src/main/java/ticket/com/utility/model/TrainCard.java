@@ -20,7 +20,8 @@ public class TrainCard implements Comparable<TrainCard>{
 
     @Override
     public boolean equals(Object obj) {
-        return ((TrainCard)obj).type == this.type;
+        boolean result = ((TrainCard)obj).type == this.type;
+        return result;
     }
 
     @Override
@@ -31,5 +32,10 @@ public class TrainCard implements Comparable<TrainCard>{
     @Override
     public int compareTo(TrainCard card){
         return type.compareTo(card.getType());
+    }
+
+    @Override
+    public String toString() {
+        return type.toString();
     }
 }

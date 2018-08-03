@@ -24,6 +24,8 @@ public class MyTurnState extends PlayerState {
 
     public void drawTrainCard(ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
+        gamePlayService.getHand(ClientModel.get_instance().getMyPlayer().getId(),
+                ClientModel.get_instance().getMyActiveGame().getId());
         cm.setState(DrewOneTrainState.getInstance());
     }
 
@@ -43,7 +45,10 @@ public class MyTurnState extends PlayerState {
             return new Result(true, "Picking color for wild route.", null);
         }
 
-        return gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
+        Result result = gamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(), route);
+        gamePlayService.getHand(ClientModel.get_instance().getMyPlayer().getId(),
+                ClientModel.get_instance().getMyActiveGame().getId());
+        return result;
     }
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {
@@ -63,6 +68,9 @@ public class MyTurnState extends PlayerState {
         else {
             clientModel.setState(DrewOneTrainState.getInstance());
         }
+
+        gamePlayService.getHand(ClientModel.get_instance().getMyPlayer().getId(),
+                ClientModel.get_instance().getMyActiveGame().getId());
     }
 
 }

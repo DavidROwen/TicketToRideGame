@@ -97,17 +97,34 @@ public class Player {
     }
 
     //assuming all the same kind in parameter
+//    public Boolean hasTrainCards(TrainCard...cards) {
+//        TrainCard[] adjustedCards = adjustForWilds(cards);
+//
+//        //convert it to strings for comparison
+//        List<String> myTypes = new LinkedList<>();
+//        List<String> cardsTypes = new LinkedList<>();
+//        for(TrainCard card : trainCards) { myTypes.add(card.getType().toString()); }
+//        for(TrainCard card : adjustedCards) { cardsTypes.add(card.getType().toString()); }
+//
+//        return myTypes.containsAll(cardsTypes);
+//    }
+
     public Boolean hasTrainCards(TrainCard...cards) {
+        if(cards == null || cards.length == 0) { return false; }
+        if(cards.length > trainCards.size()) { return false; } //impossible
+        TrainCard.TRAIN_TYPE cardsType = cards[0].getType();
+        for(TrainCard each : trainCards) {
+            if(each.getType() != cardsType) { return false; } //cards are all same type
+        }
+
         TrainCard[] adjustedCards = adjustForWilds(cards);
-
-        //convert it to strings for comparison
-        List<String> myTypes = new LinkedList<>();
-        List<String> cardsTypes = new LinkedList<>();
-        for(TrainCard card : trainCards) { myTypes.add(card.getType().toString()); }
-        for(TrainCard card : adjustedCards) { cardsTypes.add(card.getType().toString()); }
-
-//        List<TrainCard> setCards = new LinkedList<>(Arrays.asList(adjustedCards)); //couldn't figure out
-        return myTypes.containsAll(cardsTypes);
+        int neededMatches = adjustedCards.length;
+        int curMatches = 0;
+        for(TrainCard each : trainCards) {
+            if(each.getType() == cardsType) { curMatches++; }
+            if(curMatches >= neededMatches) { return true; } //success
+        }
+        return false; //didn't have enough matches
     }
 
     private TrainCard[] adjustForWilds(TrainCard[] cards) {

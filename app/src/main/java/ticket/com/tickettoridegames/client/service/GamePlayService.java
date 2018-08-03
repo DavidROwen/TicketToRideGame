@@ -219,10 +219,27 @@ public class GamePlayService {
 
     public static void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
 
-    public static void gettingHand(String playerId, LinkedList<TrainCard> serverHand) {
+    public static void gettingHand(String playerId, LinkedList<TrainCard> hand) {
         List<TrainCard> clientHand = ClientModel.get_instance().getMyActiveGame().getPlayer(playerId).getTrainCards();
 
+        TrainCard[] temp = new TrainCard[hand.size()];
+        for(int i = temp.length-1; i >= 0; i--) {
+            //convert from LinkedTreeMap
+            Gson gson = new Gson();
+            JsonObject obj = gson.toJsonTree(hand.pop()).getAsJsonObject();
+            TrainCard card = gson.fromJson(obj, TrainCard.class);
+
+            temp[i] = card;
+        }
+
+        //build stack
+        LinkedList<TrainCard> serverHand = new LinkedList<>();
+        serverHand.addAll(Arrays.asList(temp));
+
         try {
+            if(clientHand == null || serverHand == null) {
+                throw new NullPointerException();
+            }
             if (clientHand.size() != serverHand.size()) {
                 throw new AssertionError();
             }
@@ -232,9 +249,21 @@ public class GamePlayService {
                 }
             }
         } catch (AssertionError e) {
+            printHand(clientHand, true);
+            printHand(serverHand, false);
+            e.printStackTrace();
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
         System.out.println("Checked that client and server side have the same trainCards");
+    }
+
+    private static void printHand(List<TrainCard> hand, boolean client) {
+        System.out.print(client ? "Client: " : "Server: ");
+        for(TrainCard each : hand) {
+            System.out.print(each.toString() + " ");
+        }
+        System.out.print(".\n");
     }
 }
