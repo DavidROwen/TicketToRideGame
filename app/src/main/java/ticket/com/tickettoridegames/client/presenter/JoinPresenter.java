@@ -73,9 +73,18 @@ public class JoinPresenter implements IJoinPresenter, Observer {
 
     @Override
     public void update(Observable observable, Object arg){
+        if(arg == null) { return; }
+
         clientModel = (ClientModel) observable;
-        if(arg == TYPE.NEW_GAME_ADDED) {
-            joinView.addGame(clientModel.getGames().get(clientModel.getNewestGameId()));
+        TYPE type = (TYPE) arg;
+
+        switch(type) {
+            case NEW_GAME_ADDED:
+                joinView.addGame(clientModel.getGames().get(clientModel.getNewestGameId()));
+                break;
+            case PLAYER_ADDED:
+                joinView.addPlayer(clientModel.getNewestPlayerAdded().first, clientModel.getNewestPlayerAdded().second);
+                break;
         }
 //        if (!clientModel.getCurrentGameID().isEmpty()){
 //            joinView.changeView();

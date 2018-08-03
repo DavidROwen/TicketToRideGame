@@ -57,6 +57,7 @@ public class ClientModel extends Observable {
     private Player myPlayer = null;
 
     private String newestGameId;
+    private Pair<String, String> newestPlayerAdded;
 
     private PlayerState currentState;
 
@@ -156,9 +157,9 @@ public class ClientModel extends Observable {
     public void addPlayerToGame(String gameID, Player player){
         Game game = gameList.get(gameID);
         game.addPlayers(player);
+        newestPlayerAdded = new Pair<String, String>(gameID, player.getId());
         //gameList.put(gameID, game);
-        setChanged();
-        notifyObservers(TYPE.ADD_PLAYER);
+        myNotify(TYPE.PLAYER_ADDED);
     }
 
     public void removePlayerFromGame(String gameID, Player player){
@@ -363,5 +364,9 @@ public class ClientModel extends Observable {
 
     public String getNewestGameId() {
         return newestGameId;
+    }
+
+    public Pair<String, String> getNewestPlayerAdded() {
+        return newestPlayerAdded;
     }
 }

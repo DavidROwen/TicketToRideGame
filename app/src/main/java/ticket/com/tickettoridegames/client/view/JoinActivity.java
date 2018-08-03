@@ -169,6 +169,11 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void setCurHighlighted(View curHighlighted) {
         this.curHighlighted = curHighlighted;
     }
+
+    @Override
+    public void addPlayer(String gameId, String playerId) {
+        myAdapter.notifyDataSetChanged(); //game in client model and game in adapter should be linked
+    }
 }
 
 class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {

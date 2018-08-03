@@ -17,4 +17,6 @@ public interface IJoinView {
     void displayMessage(String message);
 
     void addGame(Game game);
+
+    void addPlayer(String gameId, String playerId);
 }

@@ -87,7 +87,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             case ALLCHAT:
                 lobbyView.setChat(clientModel.getGameChat(clientModel.getCurrentGameID()));
                 break;
-            case ADD_PLAYER:
+            case PLAYER_ADDED:
                 lobbyView.addPlayerName(clientModel.getUser().getUsername());
                 break;
             default:

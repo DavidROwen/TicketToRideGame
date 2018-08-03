@@ -13,9 +13,10 @@ public enum TYPE {
     NEWTRAINCARD,
     NEWTEMPDECK,        //destination cards that the player can choose from
     DISCARDDESTINATION, //discard a destination card
-    ADD_PLAYER,
+    PLAYER_ADDED,
     TURNCHANGED,
     MAP_DREW_TRAINCARD, //when you draw from the deck //meant to display message on drawing players screen
     ROUTECLAIMED,
     NEW_GAME_ADDED;
 }
+
