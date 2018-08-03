@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.presenter;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -110,13 +111,29 @@ public class MapPresenter implements IMapPresenter, Observer {
     }
 
     @Override
-    public void claimRoute(String route){
-        Result result = getCurrentState().claimRoute(this, clientModel, route);
+    public void claimRoute(String routeName){
+        if(ClientModel.get_instance().getMyActiveGame().isRouteWild(routeName) && getCurrentState().canClaim()) {
+            Map<String, Integer> playerCards = clientModel.getMyPlayer().getColorCardCounts();
+            mapView.displayColorOptions(playerCards, routeName);
+        } else {
+            Result result = getCurrentState().claimRoute(this, clientModel, routeName,
+                    clientModel.getMyActiveGame().getType(routeName));
+            displayClaimResult(result, routeName);
+        }
+    }
+
+    @Override
+    public void claimGreyRoute(String routeName, TrainCard.TRAIN_TYPE typeChoice) {
+        Result result = getCurrentState().claimRoute(this, clientModel, routeName, typeChoice);
+        displayClaimResult(result, routeName);
+    }
+
+    private void displayClaimResult(Result result, String routeName) {
         if (result.isSuccess()) {
             mapView.displayMessage(result.getMessage());
             changeTurn();
         } else {
-            mapView.displayMessage("Failed to claim route: " + route
+            mapView.displayMessage("Failed to claim route: " + routeName
                     + "\n" + result.getErrorMessage());
         }
     }

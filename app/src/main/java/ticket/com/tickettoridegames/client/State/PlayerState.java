@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.State;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
+import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
 public class PlayerState {
@@ -23,9 +24,13 @@ public class PlayerState {
 
     public void changeTurn(ClientModel cm) {}
 
-    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String route) {
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String routeName, TrainCard.TRAIN_TYPE routeType) {
         return new Result(false, null, "It is not your turn, you are not able to claim routes.");
     }
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {}
+
+    public boolean canClaim() {
+        return false;
+    }
 }

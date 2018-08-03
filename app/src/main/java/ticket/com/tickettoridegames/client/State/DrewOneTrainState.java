@@ -5,6 +5,7 @@ import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.utility.model.Game;
+import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
 public class DrewOneTrainState extends PlayerState {
@@ -31,7 +32,13 @@ public class DrewOneTrainState extends PlayerState {
 
     public void changeTurn(ClientModel cm) {}
 
-    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String route) {
+    @Override
+    public boolean canClaim() {
+        return false;
+    }
+
+    @Override
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String routeName, TrainCard.TRAIN_TYPE routeType) {
         return new Result(false, null, "Cannot claim a route after drawing a card.");
     }
 

@@ -22,4 +22,6 @@ public interface IMapPresenter {
     IMapView getMapView();
 
     void setClaimedRoutes();
+
+    void claimGreyRoute(String routeName, TrainCard.TRAIN_TYPE typeChoice);
 }

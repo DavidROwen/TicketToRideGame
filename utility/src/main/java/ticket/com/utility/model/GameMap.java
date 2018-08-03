@@ -217,4 +217,8 @@ public class GameMap {
     public Map<String, Pair<String, String>> getDoubleRoutesIndex() {
         return Collections.unmodifiableMap(doubleRoutesIndex);
     }
+
+    public TrainCard.TRAIN_TYPE getType(String routeName) {
+        return routes.get(routeName).TYPE;
+    }
 }

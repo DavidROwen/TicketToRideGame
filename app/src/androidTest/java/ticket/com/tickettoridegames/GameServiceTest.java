@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -128,6 +129,27 @@ public class GameServiceTest {
         service.drawTrainCard(userId, gameId);
 
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4 + 4 + 1);
+    }
+
+    @Test
+    public void testClaimRoute() {
+        initToGameplay();
+
+        //get cards //state changes in presenter level
+        ArrayList<TrainCard> twoBlues = new ArrayList<>();
+        for(int i = 0; i < 2; i++) {
+            twoBlues.add(new TrainCard(TrainCard.TRAIN_TYPE.BLUE));
+        }
+        List<TrainCard> cards = ClientModel.get_instance().getMyPlayer().getTrainCards();
+        while(!cards.containsAll(twoBlues)) {
+            int prevHandSize = cards.size();
+            GamePlayService.drawTrainCard(userId, gameId);
+            while (cards.size() == prevHandSize) ;
+        }
+
+        //claim
+        GamePlayService.claimRoute(gameId, userId, "KC_saintLouis_first", TrainCard.TRAIN_TYPE.BLUE); //2 blue
+        while(ClientModel.get_instance().getMyActiveGame().getClaimedRoutes().size() == 0);
     }
 
     private void initToGameplay() {

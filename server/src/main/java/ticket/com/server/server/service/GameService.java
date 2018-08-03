@@ -167,13 +167,13 @@ public class GameService {
     }
     //End Destination Card Functions
 
-    public static Result claimRoute(String gameId, String playerId, String route) {
+    public static Result claimRoute(String gameId, String playerId, String route, TrainCard.TRAIN_TYPE typeChoice) {
         Game game = ServerModel.getInstance().getGames().get(gameId);
-        Result result = game.claimRoute(playerId, route);
+        Result result = game.claimRoute(playerId, route, typeChoice);
 
 //        new GamePlayService().claimingRoute(playerId, route);
         Command claimRoute = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "claimingRoute", new Object[]{playerId, route}
+                "claimingRoute", new Object[]{playerId, route, typeChoice}
         );
         CommandsManager.addCommandAllPlayers(claimRoute, gameId);
 

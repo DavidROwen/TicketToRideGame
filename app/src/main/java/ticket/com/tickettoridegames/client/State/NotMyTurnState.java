@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.State;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
+import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
 public class NotMyTurnState extends PlayerState {
@@ -34,7 +35,13 @@ public class NotMyTurnState extends PlayerState {
         }
     }
 
-    public Result claimRoute(IMapPresenter presenter, ClientModel cm) {
+    @Override
+    public boolean canClaim() {
+        return false;
+    }
+
+    @Override
+    public Result claimRoute(IMapPresenter presenter, ClientModel cm, String routeName, TrainCard.TRAIN_TYPE routeType) {
         return new Result(false, null, "It's not your turn");
     }
 

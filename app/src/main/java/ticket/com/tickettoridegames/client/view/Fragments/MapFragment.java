@@ -148,8 +148,8 @@ public class MapFragment extends BasicFragment implements IMapView{
         builder.create().show();
     }
 
-    public void displayColorOptions(Map<String, Integer> playerCardCount){
-
+    @Override
+    public void displayColorOptions(Map<String, Integer> playerCardCount, String routeName){
         final CharSequence[] items = {
                 "Black: "+playerCardCount.get("BLACK"),
                 "Blue: "+playerCardCount.get("BLUE"),
@@ -161,34 +161,34 @@ public class MapFragment extends BasicFragment implements IMapView{
                 "Yellow: "+playerCardCount.get("YELLOW"),
                 "Wild: "+playerCardCount.get("WILD")};
 
-//        final CharSequence[] items = {"Black", "Blue", "Green", "Orange", "Pink", "Red", "White", "Yellow", "Wild"};
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         dialogBuilder.setTitle("Colors");
         dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 String selectedText = items[item].toString();  //Selected item in listview
 
-                if (selectedText == "Black"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.BLACK);
-                }else if(selectedText == "Blue"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.BLUE);
-                }else if(selectedText == "Green"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.GREEN);
-                }else if(selectedText == "Orange"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.ORANGE);
-                }else if(selectedText == "Pink"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.PINK);
-                }else if(selectedText == "Red"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.RED);
-                }else if(selectedText == "White"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.WHITE);
-                }else if(selectedText == "Yellow"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.YELLOW);
-                }else if(selectedText == "Wild"){
-                    presenter.setColorChoice(TrainCard.TRAIN_TYPE.WILD);
+                if (selectedText.contains("Black")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.BLACK);
+                }else if(selectedText.contains("Blue")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.BLUE);
+                }else if(selectedText.contains("Green")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.GREEN);
+                }else if(selectedText.contains("Orange")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.ORANGE);
+                }else if(selectedText.contains("Pink")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.PINK);
+                }else if(selectedText.contains("Red")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.RED);
+                }else if(selectedText.contains("White")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.WHITE);
+                }else if(selectedText.contains("Yellow")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.YELLOW);
+                }else if(selectedText.contains("Wild")){
+                    presenter.claimGreyRoute(routeName, TrainCard.TRAIN_TYPE.WILD);
                 }
             }
         });
+
         //Create alert dialog object via builder
         AlertDialog alertDialogObject = dialogBuilder.create();
         //Show the dialog

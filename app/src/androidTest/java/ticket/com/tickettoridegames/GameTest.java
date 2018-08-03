@@ -115,9 +115,21 @@ public class GameTest {
     }
 
     @Test
+    public void testClaimGrey() {
+        initToGamePlay();
+
+        for (int i = 0; i < 2; i++) {
+            player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.BLUE));
+        }
+        Result falseResult = game.claimRoute(player1.getId(), "elPaso_santaFe"); //2 wilds
+        assertFalse(falseResult.isSuccess()); //wrong function
+        Result trueResult = game.claimRoute(player1.getId(), "elPaso_santaFe", TrainCard.TRAIN_TYPE.BLUE); //2 wilds
+        assertTrue(trueResult.isSuccess()); //normal
+    }
+
+    @Test
     public void testClaimRandom() {
         initToGamePlay();
-        Map<String, Route> routes = game.getMap().getRoutes();
 
         for (int i = 0; i < 2; i++) {
             player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.BLUE));

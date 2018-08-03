@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.TrainCard;
 
 public interface IMapView {
 
@@ -17,7 +18,7 @@ public interface IMapView {
 
     void setFirstCall(boolean val);
 
-    void displayColorOptions(Map<String, Integer> playerCardCount);
+    void displayColorOptions(Map<String, Integer> playerCardCount, String routeName);
 
     void claimRoute(String routeName, Integer colorValue);
 

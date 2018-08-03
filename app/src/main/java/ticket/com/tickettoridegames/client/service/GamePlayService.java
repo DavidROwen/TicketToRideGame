@@ -94,10 +94,10 @@ public class GamePlayService {
     }
     //END Destination Card (Command) functions
 
-    public static Result claimRoute(String gameId, String playerId, String route) {
+    public static Result claimRoute(String gameId, String playerId, String route, TrainCard.TRAIN_TYPE typeChoice) {
 //        new GameService().claimRoute(gameId, playerId, route);
         Command command = new Command(GAME_SERVICE_STRING, null,
-                "claimRoute", new Object[]{gameId, playerId, route}
+                "claimRoute", new Object[]{gameId, playerId, route, typeChoice}
         );
         return ServerProxy.sendCommand(command);
     }
@@ -137,8 +137,8 @@ public class GamePlayService {
         ClientModel.get_instance().pickupTrainCard(playerId, index);
     }
 
-    public static void claimingRoute(String playerId, String route) {
-        ClientModel.get_instance().claimRoute(playerId, route);
+    public static void claimingRoute(String playerId, String route, TrainCard.TRAIN_TYPE typeChoice) {
+        ClientModel.get_instance().claimRoute(playerId, route, typeChoice);
     }
 
     //Destination Cards (Model) functions

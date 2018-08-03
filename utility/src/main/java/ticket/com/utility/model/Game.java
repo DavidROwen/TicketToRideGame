@@ -687,11 +687,15 @@ public class Game extends Observable {
     }
 
     public boolean isRouteWild(String routeName){
-        return map.getRoutes().get(routeName).TYPE == TrainCard.TRAIN_TYPE.WILD;
+        return map.getType(routeName) == TrainCard.TRAIN_TYPE.WILD;
     }
 
     public boolean isTopCardWild(){
         TrainCard card = trainCardsDeck.peek();
         return card.getType() == TrainCard.TRAIN_TYPE.WILD;
+    }
+
+    public TrainCard.TRAIN_TYPE getType(String routeName) {
+        return map.getType(routeName);
     }
 }
