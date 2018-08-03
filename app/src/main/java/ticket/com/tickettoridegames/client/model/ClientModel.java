@@ -173,7 +173,7 @@ public class ClientModel extends Observable {
         Game game = gameList.get(gameId);
         game.setStarted(true);
 
-        notifyObservers(START);
+        myNotify(START);
     }
 
     public boolean isGameStarted(String gameId) {
