@@ -55,7 +55,7 @@ public class GameTest {
         Route littleRock_Nashville = routes.get("littleRock_nashville"); //3 whites
         assertTrue(game.claimRoute(player1.getId(), littleRock_Nashville.NAME).isSuccess()); //claim
         assertFalse(routes.get("littleRock_nashville").canClaim().isSuccess()); //track claimed
-        assertEquals(player1.getTrainCards().size(), 1); //cashed in cards
+        assertEquals(4+1, player1.getTrainCards().size()); //cashed in cards
 
         for(int i = 0; i < 2; i++) {
             player1.addTrainCard(new TrainCard(TrainCard.TRAIN_TYPE.WHITE));

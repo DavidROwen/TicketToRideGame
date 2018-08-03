@@ -4,6 +4,8 @@ package ticket.com.utility.model;
 import ticket.com.utility.web.Result;
 
 public class Route {
+    public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
+
     public final String NAME;
     private boolean owned = false;
     private String ownerId = null;
@@ -27,9 +29,7 @@ public class Route {
     }
 
     public String to_String(){
-        String message = START + "->" +
-                END + ": " + LENGTH.toString() + " points";
-        return message;
+        return  START + "->" + END + ": " + getPoints() + " points";
     }
 
     //assuming canClaim
@@ -55,4 +55,8 @@ public class Route {
     public String getStartCity(){return START.getName();}
 
     public String getEndCity(){return END.getName();}
+
+    public Integer getPoints() {
+        return LENGTH_TO_POINTS[LENGTH-1]; //-1 because length starts at 1
+    }
 }

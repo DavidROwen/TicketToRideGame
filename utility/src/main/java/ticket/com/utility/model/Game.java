@@ -17,10 +17,6 @@ import ticket.com.utility.web.Result;
 
 
 public class Game extends Observable {
-
-
-    public static final Integer LENGTH_TO_POINTS[] = new Integer[]{1,2,4,7,10,15};
-
     //General game data
     private Map<String, Player> players;
     private List<Chat> chatList;
@@ -379,7 +375,7 @@ public class Game extends Observable {
         return dc;
     }
 
-    public List drawDestinationCards(){
+    public List<DestinationCard> drawDestinationCards(){
         //list type subject to change
         ArrayList<DestinationCard> list = new ArrayList<>();
         for(int i = 0; i < 3; i++){
@@ -521,26 +517,25 @@ public class Game extends Observable {
     }
 
     public Result claimRoute(String playerId, String routeName, TrainCard.TRAIN_TYPE routeType) {
-        Route route = map.getRoute(routeName);
         Player player = players.get(playerId);
 
-        Result result = canClaim(playerId, route, routeType);
+        Result result = canClaim(playerId, routeName, routeType);
         if(!result.isSuccess()) { return result; }
 
-        map.claimRoute(playerId, route);
-        player.claimRoute(routeType, route.LENGTH);
-        addToHistory(new PlayerAction(player.getUsername(), "claimed " + route.START + " to " + route.END));
+        map.claimRoute(playerId, routeName);
+        player.claimRoute(routeType, map.getLength(routeName), map.getPoints(routeName));
+        addToHistory(new PlayerAction(player.getUsername(), "claimed " + map.toString(routeName)));
 
         return result;
     }
 
-    private Result canClaim(String playerId, Route route, TrainCard.TRAIN_TYPE routeType) {
+    private Result canClaim(String playerId, String routeName, TrainCard.TRAIN_TYPE routeType) {
         //map
-        Result mapResult = map.canClaim(route, playerId, players.size());
+        Result mapResult = map.canClaim(routeName, playerId, players.size());
         if(!mapResult.isSuccess()) { return mapResult; }
 
         //player
-        Result playerResult = players.get(playerId).canClaim(routeType, map.getRoute(route.NAME).LENGTH);
+        Result playerResult = players.get(playerId).canClaim(routeType, map.getRoute(routeName).LENGTH);
         if(!playerResult.isSuccess()) { return playerResult; }
 
         return new Result(true, null, null);

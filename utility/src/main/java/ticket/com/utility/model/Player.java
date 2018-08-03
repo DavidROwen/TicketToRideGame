@@ -10,8 +10,6 @@ import java.util.Set;
 
 import ticket.com.utility.web.Result;
 
-import static ticket.com.utility.model.Game.LENGTH_TO_POINTS;
-
 public class Player {
     public enum COLOR {RED, YELLOW, GREEN, BLUE, BLACK}
 
@@ -205,11 +203,11 @@ public class Player {
         }
     }
 
-    public void claimRoute(TrainCard.TRAIN_TYPE type, Integer length) {
+    public void claimRoute(TrainCard.TRAIN_TYPE type, Integer length, Integer points) {
         if(!canClaim(type, length).isSuccess()) { return; }
 
         removeTrainCards(getNeededCards(type, length));
-        points += LENGTH_TO_POINTS[length-1];
+        this.points += points;
         trains -= length;
     }
 
