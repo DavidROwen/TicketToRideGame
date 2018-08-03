@@ -38,7 +38,7 @@ public class MapPresenter implements IMapPresenter, Observer {
             mapView.displayDestinationCards(destinationCards);
             //mapView.disableTurn();
         }
-        //temp fix
+
         checkTurn();
     }
 
@@ -71,7 +71,8 @@ public class MapPresenter implements IMapPresenter, Observer {
         }
     }
 
-    private void checkTurn(){
+    @Override
+    public void checkTurn(){
         if (clientModel.isMyTurn()){
             clientModel.setState(MyTurnState.getInstance());
             mapView.enableTurn();
