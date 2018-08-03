@@ -19,14 +19,13 @@ import ticket.com.utility.model.Pair;
 import ticket.com.utility.model.Player;
 import ticket.com.utility.model.PlayerAction;
 import ticket.com.utility.model.PlayerStats;
-import ticket.com.utility.model.Route;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.model.User;
 import ticket.com.utility.web.Result;
 
 import static ticket.com.utility.TYPE.ALLHISTORY;
 import static ticket.com.utility.TYPE.BANKUPDATE;
-import static ticket.com.utility.TYPE.DESTINATIONUPDATE;
+import static ticket.com.utility.TYPE.NEW_DESTINATION_CARD;
 import static ticket.com.utility.TYPE.DISCARDDESTINATION;
 import static ticket.com.utility.TYPE.HISTORYUPDATE;
 import static ticket.com.utility.TYPE.MAP_DREW_TRAINCARD;
@@ -226,7 +225,7 @@ public class ClientModel extends Observable {
     public void updateDestinationCards(String playerId, List<DestinationCard> cards){
         Game game = getMyActiveGame();
         game.claimDestinationCards(cards, playerId);
-        myNotify(DESTINATIONUPDATE);
+        myNotify(NEW_DESTINATION_CARD);
         myNotify(HISTORYUPDATE);
     }
 

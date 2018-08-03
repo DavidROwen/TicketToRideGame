@@ -50,6 +50,9 @@ public class StatsPresenter implements IStatsPresenter , Observer {
             case NEWTRAINCARD:
                 statsView.setPlayerStats(clientModel.getPlayerStats());
                 break;
+            case NEW_DESTINATION_CARD:
+                statsView.setPlayerStats(clientModel.getPlayerStats());
+                break;
             default:
                 // We got an update that we don't care about.
                 break;

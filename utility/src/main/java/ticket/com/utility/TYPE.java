@@ -12,7 +12,6 @@ public enum TYPE {
     NEW_DESTINATION_CARD, //assets view
     NEWTRAINCARD,
     NEWTEMPDECK,        //destination cards that the player can choose from
-    DESTINATIONUPDATE,  //Update a player owned destination card
     DISCARDDESTINATION, //discard a destination card
     ADD_PLAYER,
     TURNCHANGED,
