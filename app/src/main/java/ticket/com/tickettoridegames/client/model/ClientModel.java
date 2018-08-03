@@ -56,6 +56,8 @@ public class ClientModel extends Observable {
     private Game myActiveGame = null;
     private Player myPlayer = null;
 
+    private String newestGameId;
+
     private PlayerState currentState;
 
     private ClientModel() {
@@ -112,9 +114,10 @@ public class ClientModel extends Observable {
             return false;
         }
         gameList.put(game.getId(), game);
+        newestGameId = game.getId();
+
         // notify lobby presenter
-        setChanged();
-        notifyObservers();
+        myNotify(TYPE.NEW_GAME_ADDED);
         return true;
     }
 
@@ -361,5 +364,9 @@ public class ClientModel extends Observable {
             setChanged();
             notifyObservers(BANKUPDATE);
         }
+    }
+
+    public String getNewestGameId() {
+        return newestGameId;
     }
 }
