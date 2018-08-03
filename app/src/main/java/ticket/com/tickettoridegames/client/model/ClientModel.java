@@ -328,19 +328,7 @@ public class ClientModel extends Observable {
     public void claimRoute(String playerID, String route, TrainCard.TRAIN_TYPE decidedType) {
         Result result = getMyActiveGame().claimRoute(playerID, route, decidedType);
 
-        if(result.isSuccess()){
-            getCurrentState().changeTurn(this);
-            myNotify(NEWROUTE);
-            myNotify(NEWTRAINCARD);
-            myNotify(ROUTECLAIMED);
-            myNotify(HISTORYUPDATE);
-        }
-    }
-
-    public void claimRoute(String playerID, String routeName) {
-        Result result = getMyActiveGame().claimRoute(playerID, routeName);
-
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             getCurrentState().changeTurn(this);
             myNotify(NEWROUTE);
             myNotify(NEWTRAINCARD);

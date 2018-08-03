@@ -49,10 +49,6 @@ public class GameMap {
         return Collections.unmodifiableMap(routes);
     }
 
-    public Route getRoute(String routeName) {
-        return routes.get(routeName);
-    }
-
     public List<Pair<String, String>> getClaimedRoutes() {
         return Collections.unmodifiableList(claimedRoutes);
     }

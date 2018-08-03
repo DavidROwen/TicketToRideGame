@@ -512,10 +512,6 @@ public class Game extends Observable {
         return trainBank;
     }
 
-    public Result claimRoute(String playerID, String routeName) {
-        return claimRoute(playerID, routeName, map.getRoutes().get(routeName).TYPE);
-    }
-
     public Result claimRoute(String playerId, String routeName, TrainCard.TRAIN_TYPE routeType) {
         Player player = players.get(playerId);
 
@@ -535,7 +531,7 @@ public class Game extends Observable {
         if(!mapResult.isSuccess()) { return mapResult; }
 
         //player
-        Result playerResult = players.get(playerId).canClaim(routeType, map.getRoute(routeName).LENGTH);
+        Result playerResult = players.get(playerId).canClaim(routeType, map.getLength(routeName));
         if(!playerResult.isSuccess()) { return playerResult; }
 
         return new Result(true, null, null);

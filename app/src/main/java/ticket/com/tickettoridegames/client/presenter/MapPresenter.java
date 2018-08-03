@@ -178,17 +178,6 @@ public class MapPresenter implements IMapPresenter, Observer {
         return clientModel.getCurrentState();
     }
 
-    public void setColorChoice(TrainCard.TRAIN_TYPE color){
-//        Result result = getCurrentState().claimRoute(this, clientModel, route);
-//        if (result.isSuccess()) {
-//            mapView.displayMessage(result.getMessage());
-//            changeTurn();
-//        } else {
-//            mapView.displayMessage("Failed to claim route: " + route
-//                    + "\n" + result.getErrorMessage());
-//        }
-    }
-
     public IMapView getMapView() {
         return mapView;
     }

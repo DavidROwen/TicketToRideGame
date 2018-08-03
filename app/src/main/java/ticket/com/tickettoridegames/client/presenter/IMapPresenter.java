@@ -17,8 +17,6 @@ public interface IMapPresenter {
 
     void setDestinationCards(LinkedList<DestinationCard> claimedCards, LinkedList<DestinationCard> discardedCards, boolean firstCall);
 
-    void setColorChoice(TrainCard.TRAIN_TYPE color);
-
     IMapView getMapView();
 
     void setClaimedRoutes();
