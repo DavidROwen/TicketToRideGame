@@ -138,7 +138,7 @@ public class ServerModel {
         Player player = new Player(user.getUsername(),user.getId());
         Game game = games.get(gameId);
         if(game == null){
-            throw new Exception();
+            throw new Exception("Game not found with id "+gameId);
         }
         else{
             boolean addSuccess = game.addPlayers(player);
@@ -151,6 +151,36 @@ public class ServerModel {
                                 null,
                                 "addPlayer",
                                 new Object[]{game.getId(), player});
+                    }
+                    catch (Exception e){
+                        command = null;
+                    }
+                    CommandsManager.instance().addCommand(command,id);
+                }
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+    public boolean removePlayerFromGame(String gameId, String playerId) throws Exception{
+        Game game = games.get(gameId);
+        if(game == null){
+            throw new Exception("Game not found with id "+gameId);
+        }
+        else{
+            boolean removeSuccess = game.removePlayer(playerId);
+            if(removeSuccess){
+                System.out.println("User: " + playerId + " removed from game: " + gameId);
+                for(String id : activeUsers.keySet()){
+                    Command command;
+                    try{
+                        command = new Command(LOBBY_SERVICE_PATH,
+                                null,
+                                "removePlayer",
+                                new Object[]{gameId, playerId});
                     }
                     catch (Exception e){
                         command = null;

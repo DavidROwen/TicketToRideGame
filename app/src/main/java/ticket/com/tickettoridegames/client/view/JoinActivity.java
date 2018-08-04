@@ -52,8 +52,6 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        presenter = new JoinPresenter(this);
-
         createGameButton = findViewById(R.id.create_game_button);
         createGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -93,6 +91,8 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
                 R.array.colors, android.R.layout.simple_spinner_item);
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
+
+        presenter = new JoinPresenter(this);
 
 //        //######################################testing purposes##########################################
 //        Game one = new Game("one", 5);

@@ -57,8 +57,6 @@ public class LobbyActivity extends Activity implements ILobbyView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
 
-        presenter = new LobbyPresenter(this);
-
         ListView playerList = findViewById(R.id.listViewPlayers);
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
@@ -81,6 +79,12 @@ public class LobbyActivity extends Activity implements ILobbyView{
             }
         });
 
+        Button leaveButton = findViewById(R.id.leave_game_button);
+        leaveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) { presenter.leaveGame();}
+        });
+
         Button sendButton = findViewById(R.id.chat_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +92,8 @@ public class LobbyActivity extends Activity implements ILobbyView{
                 presenter.sendMessage(chat_input.getText().toString());
             }
         });
+
+        presenter = new LobbyPresenter(this);
 
         //################################testing purposes############################################
 //        Set<String> players = new HashSet<>();
@@ -106,6 +112,12 @@ public class LobbyActivity extends Activity implements ILobbyView{
     @Override
     public void changeView(){
         Intent intent = new Intent(LobbyActivity.this, GamePlayActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void leaveGame(){
+        Intent intent = new Intent(LobbyActivity.this, JoinActivity.class);
         startActivity(intent);
     }
 

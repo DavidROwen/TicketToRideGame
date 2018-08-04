@@ -49,6 +49,24 @@ public class LobbyService {
         }
     }
 
+    public static Result leaveGame(String gameID, String playerID){
+        try{
+            Result  result = ServerProxy.sendCommand(
+                    new Command(START_GAME_SERVICE_PATH,
+                            null,
+                            "leaveGame",
+                            new Object[]{gameID, playerID}
+                    )
+            );
+            return result;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return new Result(false,"",e.toString());
+        }
+    }
+
+
     /**
      * This function sends a message from the current user to all other users in the current lobby
      *
@@ -119,6 +137,10 @@ public class LobbyService {
      */
     public static void startingGame(String gameId){
         ClientModel.get_instance().startGame(gameId);
+    }
+
+    public static void removePlayer(String gameID, String playerId){
+        ClientModel.get_instance().removePlayerFromGame(gameID,playerId);
     }
 
 }

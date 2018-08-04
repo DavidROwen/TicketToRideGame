@@ -18,4 +18,6 @@ public interface ILobbyView {
     void changeView();
 
     void displayMessage(String toast);
+
+    void leaveGame();
 }

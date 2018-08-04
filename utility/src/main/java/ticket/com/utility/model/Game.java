@@ -93,6 +93,10 @@ public class Game extends Observable {
         return string;
     }
 
+    public Player getPlayerByID(String playerId){
+        return players.get(playerId);
+    }
+
     public Set<String> getPlayerNames() {
         Set<String> names = new HashSet<>();
         for (String key:players.keySet()) {
@@ -119,9 +123,10 @@ public class Game extends Observable {
         }
     }
 
-    public boolean removePlayer(Player p){
-        if (players.containsValue(p)){
+    public boolean removePlayer(String p){
+        if (players.containsKey(p)){
             players.remove(p);
+            numberOfPlayers--;
             return true;
         }
         else {
