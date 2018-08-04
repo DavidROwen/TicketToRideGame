@@ -15,8 +15,7 @@ public class TrainCard implements Comparable<TrainCard>{
 
     @Override
     public boolean equals(Object obj) {
-        boolean result = ((TrainCard)obj).type == this.type;
-        return result;
+        return ((TrainCard) obj).getType().equals(this.type);
     }
 
     @Override

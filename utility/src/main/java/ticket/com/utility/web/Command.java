@@ -4,19 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class Command {
-    //allows null instead of empty paramValues
-    //for static method, null
-//    public Command(Class<?> methodsClass, Object instance, String methodName, Object[] paramValues) {
-//        this.className = methodsClass.getName();
-//        this.instance = instance;
-//        if(instance != null) { instanceType = instance.getClass(); }//type will get lost in serialization
-//        this.methodName = methodName;
-//        if(paramValues != null) {
-//            this.paramValues = paramValues;
-//            this.paramTypes = calcTypes(paramValues);
-//        }
-//    }
-
     public Command(String methodsClass, Object instance, String methodName, Object[] paramValues) {
         this.className = methodsClass;
         this.instance = instance;
@@ -29,6 +16,7 @@ public class Command {
             this.paramValues = new Object[]{};
             this.paramTypes = new Class<?>[]{};
         }
+        ID = curId++;
     }
 
     //use if types are Object
@@ -46,6 +34,7 @@ public class Command {
             this.paramValues = new Object[]{};
             this.paramTypes = new Class<?>[]{};
         }
+        ID = curId++;
     }
 
     public Object execute() {
@@ -109,13 +98,16 @@ public class Command {
         return str;
     }
 
+    private static Integer curId = 0;
+
     private String className;
     private String methodName;
-    private final Object[] paramValues;
-    private Object instance;
-
     private Class<?> instanceType = null; //for serialization
+    private Object instance;
     private final Class<?>[] paramTypes; //for serialization
+    private final Object[] paramValues;
+
+    public final Integer ID;
 
     private Class<?>[] calcTypes(Object[] paramValues) {
         Class<?>[] types = new Class<?>[paramValues.length];
