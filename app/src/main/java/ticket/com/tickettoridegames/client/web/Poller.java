@@ -24,6 +24,7 @@ public class Poller {
     }
 
     private static Integer POLL_INTERVAL_MS = 2000;
+    private static Integer prevCommandId = -1;
 
     private static class PollTask extends AsyncTask<Object, Command, Void> {
         @Override
@@ -70,11 +71,20 @@ public class Poller {
         do {
             next = commands.poll();
             if(next != null) {
+                checkId(next);
                 Object result = next.execute();
 //                results.add(result);
             }
         }while(next != null);
 
 //        return results;
+    }
+
+    private static void checkId(Command next) {
+        if(next.ID <= prevCommandId) {
+            System.out.println("Commands were received out of order");
+            throw new AssertionError();
+        }
+        prevCommandId = next.ID;
     }
 }

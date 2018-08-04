@@ -91,7 +91,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     @Override
     public void setHand(List<TrainCard> hand){
-        hand.sort(TrainCard::compareTo);
+        //sorts it before setting, because hand is unmodifiable
         this.hand = hand;
 
         myHandRecyclerView = view.findViewById(R.id.ownedTrains);

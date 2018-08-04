@@ -136,12 +136,8 @@ public class GameServiceTest {
         initToGameplay();
 
         //get cards //state changes in presenter level
-        ArrayList<TrainCard> twoBlues = new ArrayList<>();
-        for(int i = 0; i < 2; i++) {
-            twoBlues.add(new TrainCard(TrainCard.TRAIN_TYPE.BLUE));
-        }
         List<TrainCard> cards = ClientModel.get_instance().getMyPlayer().getTrainCards();
-        while(!cards.containsAll(twoBlues)) {
+        while(!ClientModel.get_instance().getMyPlayer().canClaim(TrainCard.TRAIN_TYPE.BLUE, 2).isSuccess()) {
             int prevHandSize = cards.size();
             GamePlayService.drawTrainCard(userId, gameId);
             while (cards.size() == prevHandSize) ;
