@@ -66,6 +66,10 @@ public class MapPresenter implements IMapPresenter, Observer {
                 GamePlayService.checkHand(ClientModel.get_instance().getMyPlayer().getId(), //todo testing
                         ClientModel.get_instance().getMyActiveGame().getId());
                 break;
+            case GAME_OVER:
+                if (clientModel.getMyActiveGame().getGameOver()){
+                    mapView.endGame();
+                }
             default:
                 break;
         }
@@ -78,7 +82,7 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void drawTrainCard() {
-        getCurrentState().drawTrainCard(clientModel);
+        getCurrentState().drawTrainCard(this , clientModel);
     }
 
     /**

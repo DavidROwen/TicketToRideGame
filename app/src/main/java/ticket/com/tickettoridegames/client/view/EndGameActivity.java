@@ -49,6 +49,11 @@ public class EndGameActivity extends AppCompatActivity implements IEndGameView{
 //    }
 
     @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
+    @Override
     public void setWinner(String player){
         winnerNameText = findViewById(R.id.PlayerName);
         winnerNameText.setText(player);

@@ -1,6 +1,7 @@
 package ticket.com.utility.model;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -91,16 +92,21 @@ public class Player {
     public void addTrainCard(TrainCard card) {
         trainCards.add(card);
         newestTrainCard = card;
+        System.out.println(username + " added " + card.toString());
     }
 
-    public Boolean removeTrainCards(TrainCard...cards) {
+    private Boolean removeTrainCards(TrainCard...cards) {
         if(!hasTrainCards(cards)) { return false; }
 
+        int wildsUsed = 0;
         for(TrainCard card : cards) {
             if(!trainCards.remove(card)) {
                 trainCards.remove(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+                wildsUsed++;
             }
         }
+        System.out.println(username + " used " + (cards.length - wildsUsed) + " " + cards[0].toString() +
+            " and " + wildsUsed + " WILD");
 
         return true;
     }
@@ -148,7 +154,7 @@ public class Player {
     }
 
     public List<TrainCard> getTrainCards() {
-        return trainCards;
+        return Collections.unmodifiableList(trainCards);
     }
 
     public Integer getCardCount(){
@@ -204,10 +210,12 @@ public class Player {
     public Result canClaim(TrainCard.TRAIN_TYPE type, Integer length) {
         //if(type == TrainCard.TRAIN_TYPE.GREY) { return new Result(false, null, "An alternative to grey trainType should have been selected"); }
         if(!hasTrainCards(getNeededCards(type,length))) {
-            return new Result(false, null, "Player doesn't have the right cards");
+            System.out.println("failed to claim route because player doesn't have the right cards");
+            return new Result(false, null, username + " doesn't have the right cards");
         }
         else if(length > trains) {
-            return new Result(false, null, "Player doesn't have enough trains");
+            System.out.println("failed to claim route because player doesn't have enough trains");
+            return new Result(false, null, username + " doesn't have enough trains");
         }
         else {
             return new Result(true, null, null);
@@ -255,5 +263,9 @@ public class Player {
 
     public TrainCard getNewestTrainCard() {
         return newestTrainCard;
+    }
+
+    public void sortHand() {
+        trainCards.sort(TrainCard::compareTo);
     }
 }

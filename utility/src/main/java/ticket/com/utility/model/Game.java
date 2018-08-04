@@ -26,6 +26,7 @@ public class Game extends Observable {
     private int numberOfPlayers = 0;
     private boolean isStarted = false;
     private Chat newestChat;
+    private Boolean gameOver = false;
 
     // Stores the playerIDs in turn order
     private List<String> turnOrder = new ArrayList<>();
@@ -93,6 +94,10 @@ public class Game extends Observable {
         return string;
     }
 
+    public Player getPlayerByID(String playerId){
+        return players.get(playerId);
+    }
+
     public Set<String> getPlayerNames() {
         Set<String> names = new HashSet<>();
         for (String key:players.keySet()) {
@@ -119,9 +124,10 @@ public class Game extends Observable {
         }
     }
 
-    public boolean removePlayer(Player p){
-        if (players.containsValue(p)){
+    public boolean removePlayer(String p){
+        if (players.containsKey(p)){
             players.remove(p);
+            numberOfPlayers--;
             return true;
         }
         else {
@@ -535,6 +541,9 @@ public class Game extends Observable {
         map.claimRoute(playerId, routeName);
         player.claimRoute(routeType, map.getLength(routeName), map.getPoints(routeName));
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + map.toString(routeName)));
+        // TODO: make this messge nicer
+        addToHistory(new PlayerAction(player.getUsername(), "claimed " + routeName));
+
 
         return result;
     }
@@ -700,12 +709,15 @@ public class Game extends Observable {
         return map.getType(routeName) == TrainCard.TRAIN_TYPE.WILD;
     }
 
-    public boolean isTopCardWild(){
-        TrainCard card = trainCardsDeck.peek();
-        return card.getType() == TrainCard.TRAIN_TYPE.WILD;
-    }
-
     public TrainCard.TRAIN_TYPE getType(String routeName) {
         return map.getType(routeName);
+    }
+
+    public Boolean getGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(Boolean gameOver) {
+        this.gameOver = gameOver;
     }
 }

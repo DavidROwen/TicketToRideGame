@@ -17,5 +17,7 @@ public enum TYPE {
     TURNCHANGED,
     MAP_DREW_TRAINCARD, //when you draw from the deck //meant to display message on drawing players screen
     ROUTECLAIMED,
+    REMOVED_PLAYER,
+    GAME_OVER,
     NEW_GAME_ADDED;
 }

@@ -23,4 +23,6 @@ public interface IMapView {
     void claimRoute(String routeName, Integer colorValue);
 
     void disablePickRoutes();
+
+    void endGame();
 }

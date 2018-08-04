@@ -18,7 +18,7 @@ public class PlayerState {
         //override in subclass if needed
     }
 
-    public void drawTrainCard(ClientModel cm){}
+    public void drawTrainCard(IMapPresenter presenter, ClientModel cm){}
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
 

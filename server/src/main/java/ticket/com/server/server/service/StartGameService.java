@@ -26,4 +26,25 @@ public class StartGameService {
         return result;
     }
 
+    public static Result leaveGame(String gameId, String playerId){
+        Result result = new Result();
+        ServerModel sm = ServerModel.getInstance();
+
+        try{
+            if(sm.removePlayerFromGame(gameId, playerId)){
+                result.setSuccess(true);
+                result.setMessage("Removed Player");
+            }
+            else{
+                result.setSuccess(false);
+                result.setErrorMessage("Error removing player");
+            }
+        }
+        catch(Exception e){
+            result.setSuccess(false);
+            result.setErrorMessage(e.toString());
+        }
+        return result;
+    }
+
 }

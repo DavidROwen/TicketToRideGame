@@ -8,6 +8,7 @@ import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.service.LobbyService;
 import ticket.com.tickettoridegames.client.view.ILobbyView;
 import ticket.com.utility.TYPE;
+import ticket.com.utility.model.Chat;
 import ticket.com.utility.web.Result;
 
 public class LobbyPresenter implements ILobbyPresenter, Observer {
@@ -21,6 +22,15 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
         lobbyService = new LobbyService();
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
+
+        resetPlayersList();
+        setChat();
+    }
+
+    private void setChat(){
+        if (clientModel.getMyActiveGame() != null){
+            lobbyView.setChat(clientModel.getMyActiveGame().getChatList());
+        }
     }
 
     @Override
@@ -38,6 +48,23 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             } else {
                 // Error happened address as necessary.
                 lobbyView.displayMessage("Failed to start game. " + result.getErrorMessage());
+            }
+        }
+    }
+
+    @Override
+    public void leaveGame(){
+        String gameID = clientModel.getUser().getGameId();
+        if (gameID == null || gameID.equals("")){
+            lobbyView.displayMessage("Invalid game ID");
+        }
+        else {
+            Result result = LobbyService.leaveGame(gameID, clientModel.getMyPlayer().getId());
+            if (result.isSuccess()) {
+                lobbyView.displayMessage("Successfully left game.");
+            } else {
+                // Error happened address as necessary.
+                lobbyView.displayMessage("Failed to leave game. " + result.getErrorMessage());
             }
         }
     }
@@ -90,6 +117,10 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
             case PLAYER_ADDED:
                 lobbyView.addPlayerName(clientModel.getUser().getUsername());
                 break;
+            case REMOVED_PLAYER:
+                if (clientModel.getMyPlayer() == null){
+                    lobbyView.leaveGame();
+                }
             default:
                 // update we don't care about
                 break;
@@ -98,7 +129,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
         resetPlayersList();
     }
 
-    private void resetPlayersList() {
+    public void resetPlayersList() {
         lobbyView.resetPlayers(clientModel.getGamePlayersName(clientModel.getCurrentGameID()));
     }
 }

@@ -25,6 +25,7 @@ import ticket.com.utility.web.Result;
 
 import static ticket.com.utility.TYPE.ALLHISTORY;
 import static ticket.com.utility.TYPE.BANKUPDATE;
+import static ticket.com.utility.TYPE.GAME_OVER;
 import static ticket.com.utility.TYPE.NEW_DESTINATION_CARD;
 import static ticket.com.utility.TYPE.DISCARDDESTINATION;
 import static ticket.com.utility.TYPE.HISTORYUPDATE;
@@ -33,6 +34,7 @@ import static ticket.com.utility.TYPE.NEWCHAT;
 import static ticket.com.utility.TYPE.NEWROUTE;
 import static ticket.com.utility.TYPE.NEWTEMPDECK;
 import static ticket.com.utility.TYPE.NEWTRAINCARD;
+import static ticket.com.utility.TYPE.REMOVED_PLAYER;
 import static ticket.com.utility.TYPE.ROUTECLAIMED;
 import static ticket.com.utility.TYPE.START;
 import static ticket.com.utility.TYPE.TURNCHANGED;
@@ -162,13 +164,20 @@ public class ClientModel extends Observable {
         myNotify(TYPE.PLAYER_ADDED);
     }
 
-    public void removePlayerFromGame(String gameID, Player player){
+    public void removePlayerFromGame(String gameID, String playerId){
         Game game = gameList.get(gameID);
-        game.removePlayer(player);
-        //gameList.put(gameID, game);
+        if (gameID.equals(myActiveGame.getId())){
+            myActiveGame.removePlayer(playerId);
+            myActiveGame = null;
+            myPlayer = null;
+        }
+
+        game.removePlayer(playerId);
+
         setChanged();
-        notifyObservers();
+        notifyObservers(REMOVED_PLAYER);
     }
+
 
     public void startGame(String gameId){
         Game game = gameList.get(gameId);
@@ -183,24 +192,28 @@ public class ClientModel extends Observable {
     }
 
     public Game getMyActiveGame() {
-        if(myActiveGame == null) { locateMyActiveGame(); }
+        if(myActiveGame == null) { return locateMyActiveGame(); }
         return myActiveGame;
     }
 
-    private void locateMyActiveGame() {
+    private Game locateMyActiveGame() {
         //check every player in every game
         for (String curKey : gameList.keySet()) {
             Game curGame = gameList.get(curKey);
             if (curGame.getPlayer(getUserId()) != null) {
                 myActiveGame = curGame;
-                break; //done
+                return myActiveGame;
             }
         }
+        return null;
     }
 
     public Player getMyPlayer() {
         if(myPlayer != null) { return myPlayer; } //convenience function
-        return getMyActiveGame().getPlayer(getUserId());
+        if (locateMyActiveGame() != null) {
+            return getMyActiveGame().getPlayer(getUserId());
+        }
+        return null;
     }
 
     public List<PlayerAction> getHistory(){
@@ -372,5 +385,16 @@ public class ClientModel extends Observable {
 
     public boolean isInitialized() {
         return getMyActiveGame() != null && getMyActiveGame().isInitialized();
+    }
+
+    public Boolean getGameOver(String gameId) {
+        return gameList.get(gameId).getGameOver();
+    }
+
+    public void setGameOver(String gameId, Boolean gameOver) {
+        gameList.get(gameId).setGameOver(gameOver);
+
+        setChanged();
+        notifyObservers(GAME_OVER);
     }
 }

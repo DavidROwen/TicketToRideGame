@@ -7,6 +7,7 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.JoinService;
 import ticket.com.tickettoridegames.client.view.IJoinView;
 import ticket.com.utility.TYPE;
+import ticket.com.utility.model.Game;
 import ticket.com.utility.web.Result;
 
 public class JoinPresenter implements IJoinPresenter, Observer {
@@ -20,6 +21,14 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         joinService = new JoinService();
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
+
+        setGames();
+    }
+
+    private void setGames(){
+        for(Game game: clientModel.getGames().values()){
+            joinView.addGame(game);
+        }
     }
 
     @Override

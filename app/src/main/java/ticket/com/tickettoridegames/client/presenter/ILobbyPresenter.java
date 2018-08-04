@@ -4,5 +4,7 @@ public interface ILobbyPresenter {
 
     void startGame();
 
+    void leaveGame();
+
     void sendMessage(String message);
 }

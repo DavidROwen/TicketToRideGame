@@ -68,7 +68,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/sign_in_button"
@@ -118,7 +118,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
 
             <TextView
                 android:id="@+id/Confirm"
@@ -135,7 +135,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/register_button"
