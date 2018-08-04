@@ -264,4 +264,8 @@ public class Player {
     public TrainCard getNewestTrainCard() {
         return newestTrainCard;
     }
+
+    public void sortHand() {
+        trainCards.sort(TrainCard::compareTo);
+    }
 }

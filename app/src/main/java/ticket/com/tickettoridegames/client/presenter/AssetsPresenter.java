@@ -42,6 +42,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
                 assetsView.setRouteDeckCount(clientModel.getDestinationCards().size());
                 break;
             case NEWTRAINCARD:
+                clientModel.getMyPlayer().sortHand();
                 assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
                 assetsView.setTrainDeckCount(clientModel.getTrainCardsDeck().size());
                 break;
@@ -50,6 +51,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
 
     public void updateView(){
         assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
+        clientModel.getMyPlayer().sortHand();
         assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
         assetsView.setRoutes(clientModel.getMyPlayer().getDestinationCards());
         assetsView.setTrainDeckCount(clientModel.getMyActiveGame().getTrainCardsDeck().size());
