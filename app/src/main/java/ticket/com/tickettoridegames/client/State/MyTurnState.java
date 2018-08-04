@@ -66,6 +66,7 @@ public class MyTurnState extends PlayerState {
         // end turn based on drawing a bank wild
         if (wildCard) {
             gamePlayService.switchTurn(game.getId());
+            clientModel.setState(NotMyTurnState.getInstance());
         }
         else {
             clientModel.setState(DrewOneTrainState.getInstance());

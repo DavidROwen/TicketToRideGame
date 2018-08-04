@@ -26,7 +26,6 @@ public class DrewOneTrainState extends PlayerState {
     public void drawTrainCard(ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
         gamePlayService.switchTurn(cm.getCurrentGameID());
-
         cm.setState(NotMyTurnState.getInstance());
     }
 
@@ -55,6 +54,7 @@ public class DrewOneTrainState extends PlayerState {
         if (!wildCard) {
             gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
             gamePlayService.switchTurn(game.getId());
+            clientModel.setState(NotMyTurnState.getInstance());
         }
         else {
             presenter.getAssetsView().displayMessage("You are not allowed to draw a locomotive on your second draw.");
