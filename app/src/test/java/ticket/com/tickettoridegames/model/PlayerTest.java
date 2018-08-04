@@ -20,7 +20,7 @@ public class PlayerTest {
         assertEquals((Integer) player.getTrainCards().size(), (Integer) 2);
 
         //test has and remove
-        assertFalse(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.RED), new TrainCard(TrainCard.TRAIN_TYPE.RED)));
-        assertTrue(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.GREEN), new TrainCard(TrainCard.TRAIN_TYPE.GREEN)));
+//        assertFalse(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.RED), new TrainCard(TrainCard.TRAIN_TYPE.RED)));
+//        assertTrue(player.removeTrainCards(new TrainCard(TrainCard.TRAIN_TYPE.GREEN), new TrainCard(TrainCard.TRAIN_TYPE.GREEN)));
     }
 }

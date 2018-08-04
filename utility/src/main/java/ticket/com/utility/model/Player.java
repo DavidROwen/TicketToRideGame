@@ -1,6 +1,7 @@
 package ticket.com.utility.model;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -93,7 +94,7 @@ public class Player {
         newestTrainCard = card;
     }
 
-    public Boolean removeTrainCards(TrainCard...cards) {
+    private Boolean removeTrainCards(TrainCard...cards) {
         if(!hasTrainCards(cards)) { return false; }
 
         for(TrainCard card : cards) {
@@ -148,7 +149,7 @@ public class Player {
     }
 
     public List<TrainCard> getTrainCards() {
-        return trainCards;
+        return Collections.unmodifiableList(trainCards);
     }
 
     public Integer getCardCount(){
