@@ -223,7 +223,7 @@ public class ServerModel {
         if(game == null){
             throw new Exception("Null game passed into start game");
         }
-        if(game.getNumberOfPlayers() > 1){
+        if(game.getNumberOfPlayers() == game.getMaxPlayers()){
             game.setStarted(true);
             for(String playerId : game.getPlayersId()){
                 Command command;
