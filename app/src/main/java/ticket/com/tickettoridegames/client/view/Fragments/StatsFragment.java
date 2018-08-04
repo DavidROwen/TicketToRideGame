@@ -80,7 +80,9 @@ public class StatsFragment extends BasicFragment implements IStatsView{
         chatButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                presenter.sendMessage(chat_input.getText().toString());
+                String input = chat_input.getText().toString();
+                chat_input.setText("");
+                presenter.sendMessage(input);
             }
         });
 
