@@ -79,7 +79,7 @@ public class MyTurnState extends PlayerState {
     @Override
     public void transition(ClientModel clientModel){
         if (!clientModel.isMyTurn()) {
-            clientModel.setState(MyTurnState.getInstance());
+            clientModel.setState(NotMyTurnState.getInstance());
         }
     }
 }

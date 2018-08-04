@@ -69,17 +69,6 @@ public class GameOverState extends PlayerState {
         }
     }
 
+    @Override
     public void transition(ClientModel clientModel){}
-    public void checkTurn(IMapPresenter presenter){
-        ClientModel cm = ClientModel.get_instance();
-        if (cm.isMyTurn()) {
-            cm.setState(GameOverState.getInstance());
-            presenter.getMapView().displayMessage("It's your turn");
-        }
-        else {
-            cm.setState(LastRoundState.getInstance());
-            String playerTurn = "It's " + cm.getTurnUsername() + "'s Turn";
-            presenter.getMapView().displayMessage(playerTurn);
-        }
-    }
 }

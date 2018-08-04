@@ -45,6 +45,8 @@ public class Game extends Observable {
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
     private final int INIT_HAND_SIZE = 4; //comment
 
+    private boolean initializedCorrectly = false;
+
     public Game(){
         this.players = new HashMap<>();
         this.chatList = new ArrayList<>();
@@ -319,7 +321,7 @@ public class Game extends Observable {
     }
 
     public void initGame() {
-        if (!isInitialized()) {
+        if (!initializedCorrectly) {
             initTurnOrder();
             initColors();
             initTrainCardDeck();
@@ -330,7 +332,7 @@ public class Game extends Observable {
     }
 
     // TODO: improve the checking here to always be accurate
-    private boolean isInitialized(){
+    public boolean isInitialized(){
         if(id == null) { return false; }
         if(!isStarted) { return false; }
         if(turnOrder == null || turnOrder.size() != players.size()) { return false; }
@@ -350,7 +352,7 @@ public class Game extends Observable {
     //convenience function so it can be called from the client side also
     //must be separate so train deck can be passed before altered
     public void initGameNonRandom() {
-        if (!isInitialized()) {
+        if (!initializedCorrectly) {
             initHandAll();
             initTrainBank();
         }
@@ -545,8 +547,8 @@ public class Game extends Observable {
         trainDiscards.addAll(discardedCards);
         System.out.println(player.getUsername() + " discarded " + discardedCards.size() + " cards");
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + map.toString(routeName)));
-        // TODO: make this messge nicer
-        addToHistory(new PlayerAction(player.getUsername(), "claimed " + routeName));
+        // TODO: make this message nicer
+        addToHistory(new PlayerAction(player.getUsername(), " claimed " + routeName));
 
 
         return result;
