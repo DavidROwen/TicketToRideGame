@@ -191,12 +191,12 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(switchingTurn, gameId);
     }
 
-    public static void getHand(String playerId, String gameId) {
+    public static void checkHand(String playerId, String gameId) {
         List<TrainCard> hand = new LinkedList<>();
         hand.addAll(ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards());
 
         Command gettingHandCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "gettingHand", new Object[]{playerId, hand}
+                "checkingHand", new Object[]{playerId, hand}
         );
         CommandsManager.addCommandAllPlayers(gettingHandCommand, gameId);
     }

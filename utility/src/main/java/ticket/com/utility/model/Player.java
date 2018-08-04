@@ -13,11 +13,11 @@ import ticket.com.utility.web.Result;
 public class Player {
     public enum COLOR {RED, YELLOW, GREEN, BLUE, BLACK}
 
-    private String username;
-    private String id;
+    private String username = "";
+    private String id = "";
 
     // Game Data
-    private COLOR color;
+    private COLOR color = COLOR.RED;
     private Integer trains = 45;
     private Integer points = 0;
 
@@ -29,6 +29,15 @@ public class Player {
     public Player(String username, String id) {
         this.username = username;
         this.id = id;
+    }
+
+    public boolean isInitialized() {
+        if(id.equals("")) { return false; }
+//        color
+        if(trainCards.size() != 4) { return false; }
+//        destinationCards
+
+        return true;
     }
 
     public String getUsername() {

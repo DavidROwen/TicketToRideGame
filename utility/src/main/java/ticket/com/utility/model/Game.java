@@ -18,30 +18,29 @@ import ticket.com.utility.web.Result;
 
 public class Game extends Observable {
     //General game data
-    private Map<String, Player> players;
-    private List<Chat> chatList;
-    private String id;
-    private String name;
-    private int  maxPlayers;
-    private int numberOfPlayers;
-    private boolean isStarted;
+    private Map<String, Player> players = new HashMap<>();
+    private List<Chat> chatList = new LinkedList<>();
+    private String id = "";
+    private String name = "";
+    private int maxPlayers = 2;
+    private int numberOfPlayers = 0;
+    private boolean isStarted = false;
     private Chat newestChat;
 
     // Stores the playerIDs in turn order
-    private List<String> turnOrder;
+    private List<String> turnOrder = new ArrayList<>();
     private Integer turnNumber = 0;
     private List<TrainCard> trainBank = new LinkedList<>();
 
     // Map data
-    private GameMap map;
-    private List<DestinationCard> destinationCards;
+    private GameMap map = new GameMap();
+    private List<DestinationCard> destinationCards = new ArrayList<>();
     private Stack<TrainCard> trainCardsDeck = new Stack<>();
     private List<TrainCard> trainDiscards = new ArrayList<>();
 
     // Stores player actions viewed in the stats history tab
     private List<PlayerAction> gameHistory = new LinkedList<>();
     private PlayerAction newestHistory;
-    public static final Integer NUM_CARDS_TRAINCARD_DECK = 52;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
 
     public Game(){
@@ -301,7 +300,7 @@ public class Game extends Observable {
             }
         }
         Collections.shuffle(trainCardsDeck, new Random(getId().hashCode()));
-        assert(trainCardsDeck.size() == 110);
+        if(trainCardsDeck.size() != 110) { throw new AssertionError(); }
     }
 
     private TrainCard getRandomTrainCard() {
@@ -310,7 +309,7 @@ public class Game extends Observable {
     }
 
     public void initGame() {
-        if (!IsInitialized()) {
+        if (!isInitialized()) {
             initTurnOrder();
             initColors();
             initTrainCardDeck();
@@ -320,15 +319,27 @@ public class Game extends Observable {
         }
     }
 
-    private boolean IsInitialized(){
-        // TODO: improve the checking here to always be accurate
-        return trainBank.size() != 0;
+    // TODO: improve the checking here to always be accurate
+    private boolean isInitialized(){
+        if(id == null) { return false; }
+        if(!isStarted) { return false; }
+        if(turnOrder == null || turnOrder.size() != players.size()) { return false; }
+        if(trainBank == null || trainBank.size() != 5) { return false; }
+//        if(destinationCards.size() < 2); //called before they've chosen
+        if(trainCardsDeck.size() != 110) { return false; }
+        if(!trainDiscards.isEmpty()) { return false; }
+
+        for(String each : players.keySet()) {
+            if(!players.get(each).isInitialized()) { return false; }
+        }
+
+        return true;
     }
 
     //convenience function so it can be called from the client side also
     //must be separate so train deck can be passed before altered
     public void initGameNonRandom() {
-        if (!IsInitialized()) {
+        if (!isInitialized()) {
             initHandAll();
             initTrainBank();
         }

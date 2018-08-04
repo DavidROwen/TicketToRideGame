@@ -110,9 +110,9 @@ public class GamePlayService {
     }
 
 
-    public static void getHand(String playerId, String gameId) {
+    public static void checkHand(String playerId, String gameId) {
         Command command = new Command(GAME_SERVICE_STRING, null,
-                "getHand", new Object[]{playerId, gameId}
+                "checkHand", new Object[]{playerId, gameId}
         );
         ServerProxy.sendCommand(command);
     }
@@ -219,7 +219,7 @@ public class GamePlayService {
 
     public static void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
 
-    public static void gettingHand(String playerId, LinkedList<TrainCard> hand) {
+    public static void checkingHand(String playerId, LinkedList<TrainCard> hand) {
         List<TrainCard> clientHand = ClientModel.get_instance().getMyActiveGame().getPlayer(playerId).getTrainCards();
 
         TrainCard[] temp = new TrainCard[hand.size()];

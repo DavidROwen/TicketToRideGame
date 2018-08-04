@@ -19,4 +19,3 @@ public enum TYPE {
     ROUTECLAIMED,
     NEW_GAME_ADDED;
 }
-

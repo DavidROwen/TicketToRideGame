@@ -118,14 +118,14 @@ public class GameServiceTest {
     public void testGetHand() {
         initToGameplay();
 
-        service.getHand(userId, gameId);
+        service.checkHand(userId, gameId);
 
         service.drawTrainCard(userId, gameId);
         service.drawTrainCard(userId, gameId);
         service.drawTrainCard(userId, gameId);
         service.drawTrainCard(userId, gameId);
 
-        service.getHand(userId, gameId);
+        service.checkHand(userId, gameId);
         service.drawTrainCard(userId, gameId);
 
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4 + 4 + 1);
