@@ -166,14 +166,14 @@ public class ClientModel extends Observable {
 
     public void removePlayerFromGame(String gameID, String playerId){
         Game game = gameList.get(gameID);
-        if (gameID.equals(myActiveGame.getId())){
-            myActiveGame.removePlayer(playerId);
+
+        if (getCurrentGameID() != null && gameID.equals(getCurrentGameID())){
             myActiveGame = null;
             myPlayer = null;
         }
 
         game.removePlayer(playerId);
-
+        
         setChanged();
         notifyObservers(REMOVED_PLAYER);
     }
