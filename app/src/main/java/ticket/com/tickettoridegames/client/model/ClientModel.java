@@ -25,6 +25,7 @@ import ticket.com.utility.web.Result;
 
 import static ticket.com.utility.TYPE.ALLHISTORY;
 import static ticket.com.utility.TYPE.BANKUPDATE;
+import static ticket.com.utility.TYPE.GAME_OVER;
 import static ticket.com.utility.TYPE.NEW_DESTINATION_CARD;
 import static ticket.com.utility.TYPE.DISCARDDESTINATION;
 import static ticket.com.utility.TYPE.HISTORYUPDATE;
@@ -384,5 +385,16 @@ public class ClientModel extends Observable {
 
     public boolean isInitialized() {
         return getMyActiveGame() != null && getMyActiveGame().isInitialized();
+    }
+
+    public Boolean getGameOver(String gameId) {
+        return gameList.get(gameId).getGameOver();
+    }
+
+    public void setGameOver(String gameId, Boolean gameOver) {
+        gameList.get(gameId).setGameOver(gameOver);
+
+        setChanged();
+        notifyObservers(GAME_OVER);
     }
 }

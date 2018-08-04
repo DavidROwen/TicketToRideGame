@@ -24,12 +24,12 @@ public class GameOverState extends PlayerState {
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){
         gamePlayService.drawDestinationCard(cm.getUserId(), cm.getCurrentGameID());
-        presenter.getMapView().endGame();
+        gamePlayService.endGame(cm.getMyActiveGame().getId());
     }
 
     public void changeTurn(ClientModel cm) {
         gamePlayService.switchTurn(cm.getCurrentGameID());
-        cm.setState(GameOverState.getInstance());
+        gamePlayService.endGame(cm.getMyActiveGame().getId());
     }
 
     @Override
@@ -45,27 +45,27 @@ public class GameOverState extends PlayerState {
         Result result = GamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(),
                 routeName, routeType);
         if (result.isSuccess()){
-            presenter.getMapView().endGame();
+            gamePlayService.endGame(cm.getMyActiveGame().getId());
         }
         return result;
     }
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {
-        ClientModel clientModel = ClientModel.get_instance();
-        Game game = clientModel.getMyActiveGame();
+        ClientModel cm = ClientModel.get_instance();
+        Game game = cm.getMyActiveGame();
 
         // check these before modifying the deck to prevent race conditions
         boolean wildCard = game.isBankCardWild(index);
 
         // send command to server
-        gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
+        gamePlayService.pickupTrainCard(cm.getUserId(), cm.getMyActiveGame().getId(), index);
 
         // end turn based on drawing a bank wild
         if (wildCard) {
-            presenter.getAssetsView().endGame();
+            gamePlayService.endGame(cm.getMyActiveGame().getId());
         }
         else {
-            clientModel.setState(LastDrawState.getInstance());
+            cm.setState(LastDrawState.getInstance());
         }
     }
 

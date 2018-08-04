@@ -117,6 +117,16 @@ public class GamePlayService {
         ServerProxy.sendCommand(command);
     }
 
+    public static void endGame(String gameId){
+        Command command = new Command(GAME_SERVICE_STRING, null ,
+                "endGame",
+                new Object[]{gameId});
+    }
+
+    public static void endGameNow(String gameId){
+        ClientModel.get_instance().setGameOver(gameId, true);
+    }
+
     public static void setTurnOrder(LinkedList<String> order) {
         ClientModel.get_instance().setTurnOrder(order);
     }

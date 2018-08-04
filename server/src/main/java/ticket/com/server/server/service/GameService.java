@@ -206,4 +206,14 @@ public class GameService {
         );
         CommandsManager.addCommandAllPlayers(gettingHandCommand, gameId);
     }
+
+    public static void endGame(String gameId){
+        ServerModel serverModel = ServerModel.getInstance();
+        serverModel.endGame(gameId);
+
+        Command endGameCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
+                "endGameNow", new Object[]{gameId}
+        );
+        CommandsManager.addCommandAllPlayers(endGameCommand, gameId);
+    }
 }

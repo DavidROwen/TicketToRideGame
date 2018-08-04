@@ -272,4 +272,7 @@ public class ServerModel {
         return games.get(gameId);
     }
 
+    public void endGame(String gameId) {
+        getGames().get(gameId).setGameOver(true);
+    }
 }

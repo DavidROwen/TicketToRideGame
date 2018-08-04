@@ -24,7 +24,7 @@ public class LastDrawState extends PlayerState {
 
     public void drawTrainCard(IMapPresenter presenter, ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
-        presenter.getMapView().endGame();
+        gamePlayService.endGame(cm.getMyActiveGame().getId());
     }
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
@@ -42,16 +42,16 @@ public class LastDrawState extends PlayerState {
     }
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {
-        ClientModel clientModel = ClientModel.get_instance();
-        Game game = clientModel.getMyActiveGame();
+        ClientModel cm = ClientModel.get_instance();
+        Game game = cm.getMyActiveGame();
 
         // check these before modifying the deck to prevent race conditions
         boolean wildCard = game.isBankCardWild(index);
 
         // send command to server
         if (!wildCard) {
-            gamePlayService.pickupTrainCard(clientModel.getUserId(), clientModel.getMyActiveGame().getId(), index);
-            presenter.getAssetsView().endGame();
+            gamePlayService.pickupTrainCard(cm.getUserId(), cm.getMyActiveGame().getId(), index);
+            gamePlayService.endGame(cm.getMyActiveGame().getId());
         }
         else {
             presenter.getAssetsView().displayMessage("You are not allowed to draw a locomotive on your second draw.");
