@@ -251,7 +251,7 @@ public class GamePlayService {
                 throw new NullPointerException();
             }
             if (clientHand.size() != serverHand.size()) {
-                throw new AssertionError();
+                 throw new AssertionError();
             }
             for (int i = 0; i < clientHand.size(); i++) {
                 if (clientHand.get(i) == serverHand.get(i)) {

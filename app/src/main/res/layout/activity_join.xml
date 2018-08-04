@@ -27,8 +27,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -49,39 +49,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/privategametext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Private Game: "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Switch
-                android:id="@+id/private_game_switch"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textField"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="nothing"
-                android:textColor="#07000000"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/playerstext"
@@ -95,7 +64,40 @@
                 android:id="@+id/game_player_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/privategametext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Private Game: "
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:visibility="invisible" />
+
+            <Switch
+                android:id="@+id/private_game_switch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="nothing"
+                android:textColor="#07000000"/>
 
         </LinearLayout>
 
@@ -125,7 +127,7 @@
             android:id="@+id/create_game_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="create_game" />
+            android:text="Create Game" />
     </LinearLayout>
 
 
@@ -185,7 +187,7 @@
             android:id="@+id/join_game_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="join_game" />
+            android:text="Join Game" />
 
     </LinearLayout>
 
