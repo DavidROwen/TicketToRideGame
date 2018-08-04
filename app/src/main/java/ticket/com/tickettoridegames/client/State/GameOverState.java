@@ -31,4 +31,6 @@ public class GameOverState extends PlayerState {
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {
     }
+
+    public void checkTurn(IMapPresenter presenter){}
 }

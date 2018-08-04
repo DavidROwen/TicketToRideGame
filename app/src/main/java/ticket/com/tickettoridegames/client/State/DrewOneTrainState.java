@@ -60,4 +60,6 @@ public class DrewOneTrainState extends PlayerState {
             presenter.getAssetsView().displayMessage("You are not allowed to draw a locomotive on your second draw.");
         }
     }
+
+    public void checkTurn(IMapPresenter presenter){}
 }

@@ -47,6 +47,8 @@ public class MyTurnState extends PlayerState {
 
     @Override
     public Result claimRoute(IMapPresenter presenter, ClientModel cm, String routeName, TrainCard.TRAIN_TYPE routeType) {
+
+
         return GamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(),
                 routeName, routeType);
     }
@@ -70,4 +72,16 @@ public class MyTurnState extends PlayerState {
         }
     }
 
+    public void checkTurn(IMapPresenter presenter){
+        ClientModel cm = ClientModel.get_instance();
+        if (cm.isMyTurn()) {
+            cm.setState(MyTurnState.getInstance());
+            presenter.getMapView().displayMessage("It's your turn");
+        }
+        else {
+            cm.setState(NotMyTurnState.getInstance());
+            String playerTurn = "It's " + cm.getTurnUsername() + "'s Turn";
+            presenter.getMapView().displayMessage(playerTurn);
+        }
+    }
 }

@@ -33,4 +33,6 @@ public class PlayerState {
     public boolean canClaim(String routeName) {
         return false;
     }
+
+    public void checkTurn(IMapPresenter presenter){}
 }
