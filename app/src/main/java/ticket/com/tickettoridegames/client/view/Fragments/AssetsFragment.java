@@ -102,7 +102,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
         myHandRecyclerView = view.findViewById(R.id.ownedTrains);
         myHandRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        myAdapter = new ImageAdapter(hand);
+        myAdapter = new ImageAdapter(hand, false);
         myHandRecyclerView.setAdapter(myAdapter);
     }
 
@@ -111,7 +111,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         this.trainBank = trainBank;
         myBankRecyclerView = view.findViewById(R.id.trainBank);
         myBankRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        myAdapter = new ImageAdapter(trainBank);
+        myAdapter = new ImageAdapter(trainBank, true);
         myBankRecyclerView.setAdapter(myAdapter);
     }
 
@@ -161,9 +161,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
         private int selected_position = 0; // You have to set this globally in the ImageAdapter class
         private List<TrainCard> trainCards;
+        private boolean clickable;
 
-        public ImageAdapter(List<TrainCard> trainCards) {
+        public ImageAdapter(List<TrainCard> trainCards, boolean clickable) {
             this.trainCards = trainCards;
+            this.clickable = clickable;
         }
 
         @Override
@@ -172,7 +174,7 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
                     from(viewGroup.getContext()).
                     inflate(R.layout.train_pic, viewGroup, false);
 
-            return new ImageCustomViewHolder(itemView);
+            return new ImageCustomViewHolder(itemView, clickable);
         }
 
         @Override
@@ -188,9 +190,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
 
     class ImageCustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         protected ImageView train;
+        private boolean clickable;
 
-        public ImageCustomViewHolder(View v) {
+        public ImageCustomViewHolder(View v, boolean clickable) {
             super(v);
+            this.clickable = clickable;
             v.setOnClickListener(this);
             train = v.findViewById(R.id.train);
         }
@@ -221,10 +225,12 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         public void onClick(View v) {
             if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
 
-            // if the player can draw then return a toast and say that you drew.
-            v.setBackgroundColor(Color.GREEN);
+            if(clickable) {
+                // if the player can draw then return a toast and say that you drew.
+                v.setBackgroundColor(Color.GREEN);
 
-            presenter.drawFromBank(getAdapterPosition());
+                presenter.drawFromBank(getAdapterPosition());
+            }
         }
     }
 }
