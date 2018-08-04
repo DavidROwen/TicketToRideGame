@@ -189,7 +189,7 @@ public class GameServiceTest {
         GamePlayService.drawTrainCard(userId, gameId);
         while(deck.size() == prevDeckSize);
 
-        assertEquals(deck.size(), 6+4);//check that trainDeck is filled
+        assertEquals(deck.size(), 6+4-1);//check that trainDeck is filled
         assertTrue(discards.isEmpty());//check discards is cleared
         GamePlayService.checkTrainCardsDeck(gameId);//check that games are in sync
         //wait for poller

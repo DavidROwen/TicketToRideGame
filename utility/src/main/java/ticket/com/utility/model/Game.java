@@ -263,7 +263,7 @@ public class Game extends Observable {
     private void makeDiscardsToTrainDeck() {
         Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
         trainCardsDeck.addAll(trainDiscards);
-//        trainDiscards.clear();
+        trainDiscards.clear();
     }
 
     public Map<String,Integer> getTrainCounts() {
