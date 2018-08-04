@@ -109,7 +109,7 @@
                 android:id="@+id/colortext"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:text="Color: "
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -117,7 +117,7 @@
                 android:id="@+id/current_player_color"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0"/>
 
         </LinearLayout>
 
