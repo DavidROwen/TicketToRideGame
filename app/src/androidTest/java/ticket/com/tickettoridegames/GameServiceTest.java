@@ -2,10 +2,10 @@ package ticket.com.tickettoridegames;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
@@ -146,6 +146,56 @@ public class GameServiceTest {
         //claim
         GamePlayService.claimRoute(gameId, userId, "KC_saintLouis_first", TrainCard.TRAIN_TYPE.BLUE); //2 blue
         while(ClientModel.get_instance().getMyActiveGame().getClaimedRoutes().size() == 0);
+    }
+
+    @Test
+    public void testCheckTrainDeck() {
+        initToGameplay();
+
+        //pass
+        GamePlayService.checkTrainCardsDeck(gameId);
+        //wait for poller
+        GamePlayService.drawTrainCard(userId, gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4 + 1);
+
+        //fail
+        ClientModel.get_instance().getMyActiveGame().drawTrainCard(userId);
+        GamePlayService.checkTrainCardsDeck(gameId);
+
+        //wait for poller
+        GamePlayService.drawTrainCard(userId, gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4 + 1 + 1);
+    } //put breakpoint here to have the debugger wait for you to check "checkingTrainCardsDeck"
+
+    @Test
+    public void testMakeDiscardsToTrainDeck() {
+        initToGameplay();
+        Stack<TrainCard> deck = ClientModel.get_instance().getMyActiveGame().getTrainCardsDeck();
+        List<TrainCard> discards = ClientModel.get_instance().getMyActiveGame().getTrainDiscards();
+
+        //draw every card
+        for(int i = 0; i < 110 - 4*2 - 5; i++) {
+            GamePlayService.drawTrainCard(userId, gameId);
+        }
+        while(!deck.isEmpty());
+
+        //add some cards to discard
+        GamePlayService.claimRoute(gameId, userId, "calgary_winnipeg", TrainCard.TRAIN_TYPE.WHITE); //6 white
+        GamePlayService.claimRoute(gameId, userId, "helena_denver", TrainCard.TRAIN_TYPE.GREEN); //4 green
+        while(ClientModel.get_instance().getMyActiveGame().getClaimedRoutes().size() != 2);
+
+        //draw a card from empty deck
+        int prevDeckSize = deck.size();
+        GamePlayService.drawTrainCard(userId, gameId);
+        while(deck.size() == prevDeckSize);
+
+        assertEquals(deck.size(), 6+4);//check that trainDeck is filled
+        assertTrue(discards.isEmpty());//check discards is cleared
+        GamePlayService.checkTrainCardsDeck(gameId);//check that games are in sync
+        //wait for poller
+        int prevHandSize = ClientModel.get_instance().getMyPlayer().getTrainCards().size();
+        GamePlayService.drawTrainCard(userId, gameId);
+        while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != prevHandSize+1);
     }
 
     private void initToGameplay() {

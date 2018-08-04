@@ -256,11 +256,14 @@ public class Game extends Observable {
     }
 
     private TrainCard drawTrainCard() {
-        if (trainCardsDeck.empty()){
-            Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
-            trainCardsDeck.addAll(trainDiscards);
-        }
+        if (trainCardsDeck.empty()){ makeDiscardsToTrainDeck(); }
         return trainCardsDeck.pop();
+    }
+
+    private void makeDiscardsToTrainDeck() {
+        Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
+        trainCardsDeck.addAll(trainDiscards);
+//        trainDiscards.clear();
     }
 
     public Map<String,Integer> getTrainCounts() {
@@ -367,7 +370,7 @@ public class Game extends Observable {
         for(int i = 0; i < NUM_CARDS_TRAINCARD_BANK; i++) {
             trainBank.add(drawTrainCard());
         }
-        assert(trainCardsDeck.size() == 110 - (4*players.size() + 5));
+        assert(trainCardsDeck.size() == 110 - (INIT_HAND_SIZE*players.size() + 5));
         assert(trainBank.size() == 5);
     }
 
@@ -720,5 +723,9 @@ public class Game extends Observable {
 
     public void setGameOver(Boolean gameOver) {
         this.gameOver = gameOver;
+    }
+
+    public List<TrainCard> getTrainDiscards() {
+        return Collections.unmodifiableList(trainDiscards);
     }
 }

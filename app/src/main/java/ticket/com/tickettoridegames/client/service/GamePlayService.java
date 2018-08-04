@@ -117,6 +117,13 @@ public class GamePlayService {
         ServerProxy.sendCommand(command);
     }
 
+    public static void checkTrainCardsDeck(String gameId) {
+        Command command = new Command(GAME_SERVICE_STRING, null,
+                "checkTrainCardsDeck", new Object[]{gameId}
+        );
+        ServerProxy.sendCommand(command);
+    }
+
     public static void endGame(String gameId){
         Command command = new Command(GAME_SERVICE_STRING, null ,
                 "endGame",
@@ -261,13 +268,48 @@ public class GamePlayService {
                     throw new AssertionError();
                 }
             }
+            System.out.println("Confirmed that client and server have the same trainCards");
         } catch (AssertionError e) {
             printHand(clientHand, true);
             printHand(serverHand, false);
             e.printStackTrace();
         }
+    }
 
-        System.out.println("Checked that client and server side have the same trainCards");
+    public static void checkingTrainCardsDeck(Stack<TrainCard> trainDeck) {
+        if(trainDeck == null) {
+            System.out.println("Cannot check server deck because it's null");
+            return;
+        }
+        TrainCard[] temp = new TrainCard[trainDeck.size()];
+        for(int i = temp.length-1; i >= 0; i--) {
+            //convert from LinkedTreeMap
+            Gson gson = new Gson();
+            JsonObject obj = gson.toJsonTree(trainDeck.pop()).getAsJsonObject();
+            TrainCard card = gson.fromJson(obj, TrainCard.class);
+
+            temp[i] = card;
+        }
+        //build stack
+        Stack<TrainCard> serverDeck = new Stack<>();
+        serverDeck.addAll(Arrays.asList(temp));
+
+        Stack<TrainCard> clientDeck = ClientModel.get_instance().getMyActiveGame().getTrainCardsDeck();
+
+        try {
+            if (clientDeck.size() != serverDeck.size()) {
+                throw new AssertionError();
+            }
+            for (int i = 0; i < clientDeck.size(); i++) {
+                if (clientDeck.get(i) == serverDeck.get(i)) {
+                    throw new AssertionError();
+                }
+            }
+            System.out.println("Confirmed that client and server have the same train cards deck");
+        } catch (AssertionError e) {
+            System.out.println("ERROR: client and server do not have the same train cards deck");
+            e.printStackTrace();
+        }
     }
 
     private static void printHand(List<TrainCard> hand, boolean client) {

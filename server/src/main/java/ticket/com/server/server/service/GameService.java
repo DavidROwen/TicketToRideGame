@@ -58,8 +58,8 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(initHands, gameId);
 
         //send staring deck to players
-        for(String playerId : game.getPlayers().keySet()){
-            drawDestinationCard(playerId,gameId);
+        for (String playerId : game.getPlayers().keySet()) {
+            drawDestinationCard(playerId, gameId);
         }
     }
 
@@ -85,7 +85,7 @@ public class GameService {
         );
         CommandsManager.addCommandAllPlayers(pickCard, gameId);
 
-        if (game.tooManyLocos()){
+        if (game.tooManyLocos()) {
             game.resetTrainBank();
             //        new GamePlayService().resetBank(playerId, index);
             Command resetBank = new Command(GAME_PLAY_SERVICE_PATH, null,
@@ -104,18 +104,17 @@ public class GameService {
             Command tempDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
                     "setTempDeck", new Object[]{drawnCards});
             CommandsManager.addCommand(tempDeck, playerId);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards){
+    public static void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards) {
         ServerModel sm = ServerModel.getInstance();
 
         //deserialized destination cards as linkedtreemap
         LinkedList<DestinationCard> temp = new LinkedList<>();
-        for(int i = 0; i < cards.size(); i++) {
+        for (int i = 0; i < cards.size(); i++) {
             //convert from LinkedTreeMap
             Gson gson = new Gson();
             JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
@@ -132,8 +131,7 @@ public class GameService {
         try {
             claimCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
                     "updateDestinationCards", new Object[]{playerId, cards});
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         CommandsManager.addCommandAllPlayers(claimCommand, gameId);
@@ -142,7 +140,7 @@ public class GameService {
     public static void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
         //deserialized destination cards as linkedtreemap
         LinkedList<DestinationCard> temp = new LinkedList<>();
-        for(int i = 0; i < cards.size(); i++) {
+        for (int i = 0; i < cards.size(); i++) {
             //convert from LinkedTreeMap
             Gson gson = new Gson();
             JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
@@ -159,8 +157,7 @@ public class GameService {
             discardCards = new Command(GAME_PLAY_SERVICE_PATH, null,
                     "discardDestinationCards", new Object[]{cards}
             );
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         CommandsManager.addCommandAllPlayers(discardCards, gameId);
@@ -171,7 +168,7 @@ public class GameService {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         Result result = game.claimRoute(playerId, route, typeChoice);
 
-        if(result.isSuccess()) {
+        if (result.isSuccess()) {
 //        new GamePlayService().claimingRoute(playerId, route);
             Command claimRoute = new Command(GAME_PLAY_SERVICE_PATH, null,
                     "claimingRoute", new Object[]{playerId, route, typeChoice}
@@ -201,6 +198,16 @@ public class GameService {
                 "checkingHand", new Object[]{playerId, hand}
         );
         CommandsManager.addCommandAllPlayers(gettingHandCommand, gameId);
+    }
+
+    public static void checkTrainCardsDeck(String gameId) {
+        Stack<TrainCard> deck = new Stack<>();
+        deck.addAll(ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck());
+
+        Command command = new Command(GAME_PLAY_SERVICE_PATH, null,
+                "checkingTrainCardsDeck", new Object[]{deck}
+        );
+        CommandsManager.addCommandAllPlayers(command, gameId);
     }
 
     public static void endGame(String gameId){

@@ -200,12 +200,6 @@ public class GameTest {
         ); //check that it was reset
     }
 
-    @Test
-    public void testReshuffleDeck() {
-        initToGamePlay();
-        //remove every card from deck
-    }
-
     private void initToGamePlay() {
         game = new Game();
         game.setMaxPlayers(4);
