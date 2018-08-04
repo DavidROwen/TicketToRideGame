@@ -20,6 +20,7 @@ import java.util.Set;
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.AssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
+import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
 import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.TrainCard;
@@ -87,6 +88,11 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
         }
         return view;
         //return null;
+    }
+
+    @Override
+    public void endGame(){
+        ((GamePlayActivity) getActivity()).changeView();
     }
 
     @Override

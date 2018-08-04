@@ -26,4 +26,6 @@ public interface IAssetsView {
     void setTrainDeckCount(Integer size);
 
     void setRouteDeckCount(Integer size);
+
+    void endGame();
 }

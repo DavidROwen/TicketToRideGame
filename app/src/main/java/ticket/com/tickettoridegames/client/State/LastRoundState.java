@@ -6,13 +6,13 @@ import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
-public class NotMyTurnState extends PlayerState {
+public class LastRoundState extends PlayerState {
 
-    private static NotMyTurnState instance = new NotMyTurnState();
-    public static NotMyTurnState getInstance(){
+    private static LastRoundState instance = new LastRoundState();
+    public static LastRoundState getInstance(){
         return instance;
     }
-    private NotMyTurnState(){}
+    private LastRoundState(){}
 
     public void drawTrainCard(IMapPresenter presenter, ClientModel cm){
         //can't draw a train card it is not your turn
@@ -28,10 +28,10 @@ public class NotMyTurnState extends PlayerState {
 
         //for now just set it to active turn
         if(cm.isMyTurn()){
-            cm.setState(MyTurnState.getInstance());
+            cm.setState(GameOverState.getInstance());
         }
         else{
-            cm.setState(NotMyTurnState.getInstance());
+            cm.setState(LastRoundState.getInstance());
         }
     }
 
@@ -52,11 +52,11 @@ public class NotMyTurnState extends PlayerState {
     public void checkTurn(IMapPresenter presenter){
         ClientModel cm = ClientModel.get_instance();
         if (cm.isMyTurn()) {
-            cm.setState(MyTurnState.getInstance());
+            cm.setState(GameOverState.getInstance());
             presenter.getMapView().displayMessage("It's your turn");
         }
         else {
-            cm.setState(NotMyTurnState.getInstance());
+            cm.setState(LastRoundState.getInstance());
             String playerTurn = "It's " + cm.getTurnUsername() + "'s Turn";
             presenter.getMapView().displayMessage(playerTurn);
         }

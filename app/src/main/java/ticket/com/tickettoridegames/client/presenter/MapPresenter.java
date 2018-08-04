@@ -78,7 +78,7 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void drawTrainCard() {
-        getCurrentState().drawTrainCard(clientModel);
+        getCurrentState().drawTrainCard(this , clientModel);
     }
 
     /**

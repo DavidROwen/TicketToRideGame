@@ -1,6 +1,7 @@
 package ticket.com.tickettoridegames.client.view.Fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,8 @@ import java.util.Set;
 import ticket.com.tickettoridegames.R;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.presenter.MapPresenter;
+import ticket.com.tickettoridegames.client.view.EndGameActivity;
+import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.tickettoridegames.client.view.IMapView;
 import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.TrainCard;
@@ -340,5 +343,10 @@ public class MapFragment extends BasicFragment implements IMapView{
         buttonToRouteConversion.put("floatingActionButton100", "montreal_newYork");
         buttonToRouteConversion.put("floatingActionButton105", "newYork_boston_first");
         buttonToRouteConversion.put("floatingActionButton106", "newYork_boston_second");
+    }
+
+    @Override
+    public void endGame(){
+        ((GamePlayActivity) getActivity()).changeView();
     }
 }

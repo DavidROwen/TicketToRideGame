@@ -23,7 +23,7 @@ public class MyTurnState extends PlayerState {
         gamePlayService = new GamePlayService();
     }
 
-    public void drawTrainCard(ClientModel cm){
+    public void drawTrainCard(IMapPresenter presenter, ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
         cm.setState(DrewOneTrainState.getInstance());
     }
@@ -47,10 +47,17 @@ public class MyTurnState extends PlayerState {
 
     @Override
     public Result claimRoute(IMapPresenter presenter, ClientModel cm, String routeName, TrainCard.TRAIN_TYPE routeType) {
-
-
-        return GamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(),
+        Result result = GamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(),
                 routeName, routeType);
+        if (result.isSuccess()){
+            if (cm.getMyPlayer().getTrains() <= 3 ){
+                cm.setState(GameOverState.getInstance());
+            }
+            else {
+                cm.setState(NotMyTurnState.getInstance());
+            }
+        }
+        return result;
     }
 
     public void drawFromBank(IAssetsPresenter presenter, Integer index) {
