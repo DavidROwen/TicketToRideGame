@@ -80,7 +80,7 @@ public class MapFragment extends BasicFragment implements IMapView{
             created = true;
             presenter = new MapPresenter(this);
         } else {
-            presenter.checkTurn();
+            presenter.checkIsMyTurn();
         }
 
         presenter.setClaimedRoutes();
@@ -88,7 +88,8 @@ public class MapFragment extends BasicFragment implements IMapView{
         return view;
     }
 
-    public void enableTurn(){
+    @Override
+    public void enableButtons(){
         drawTrainsButton.setEnabled(true);
         drawRoutesButton.setEnabled(true);
 
@@ -98,7 +99,8 @@ public class MapFragment extends BasicFragment implements IMapView{
         }
     }
 
-    public void disableTurn(){
+    @Override
+    public void disableButtons(){
         drawTrainsButton.setEnabled(false);
         drawRoutesButton.setEnabled(false);
 

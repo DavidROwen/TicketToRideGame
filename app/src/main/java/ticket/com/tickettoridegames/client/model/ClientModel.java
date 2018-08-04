@@ -342,7 +342,7 @@ public class ClientModel extends Observable {
         Result result = getMyActiveGame().claimRoute(playerID, route, decidedType);
 
         if (result.isSuccess()) {
-            getCurrentState().changeTurn(this);
+//            getCurrentState().changeTurn(this);
             myNotify(NEWROUTE);
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);

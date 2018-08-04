@@ -69,6 +69,7 @@ public class GameOverState extends PlayerState {
         }
     }
 
+    public void transition(ClientModel clientModel){}
     public void checkTurn(IMapPresenter presenter){
         ClientModel cm = ClientModel.get_instance();
         if (cm.isMyTurn()) {

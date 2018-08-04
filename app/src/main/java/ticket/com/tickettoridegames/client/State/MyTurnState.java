@@ -1,14 +1,10 @@
 package ticket.com.tickettoridegames.client.State;
 
-import java.util.List;
-import java.util.Map;
-
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.utility.model.Game;
-import ticket.com.utility.model.Pair;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
@@ -80,16 +76,10 @@ public class MyTurnState extends PlayerState {
         }
     }
 
-    public void checkTurn(IMapPresenter presenter){
-        ClientModel cm = ClientModel.get_instance();
-        if (cm.isMyTurn()) {
-            cm.setState(MyTurnState.getInstance());
-            presenter.getMapView().displayMessage("It's your turn");
-        }
-        else {
-            cm.setState(NotMyTurnState.getInstance());
-            String playerTurn = "It's " + cm.getTurnUsername() + "'s Turn";
-            presenter.getMapView().displayMessage(playerTurn);
+    @Override
+    public void transition(ClientModel clientModel){
+        if (!clientModel.isMyTurn()) {
+            clientModel.setState(MyTurnState.getInstance());
         }
     }
 }
