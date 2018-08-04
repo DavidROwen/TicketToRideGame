@@ -242,6 +242,16 @@ public class GamePlayService {
 
     public static void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
 
+    public static void checkingInitGame() {
+        if(!ClientModel.get_instance().isInitialized()) {
+            System.out.println("ERROR: game was not initialized correctly");
+            throw new AssertionError(); }
+        for(String each : ClientModel.get_instance().getMyActiveGame().getPlayersId()) {
+            checkHand(each, ClientModel.get_instance().getMyActiveGame().getId());
+        }
+        System.out.println("Confirmed that game was initialized correctly");
+    }
+
     public static void checkingHand(String playerId, LinkedList<TrainCard> hand) {
         if(hand == null) {
             System.out.println("Cannot check server hand because it's null");

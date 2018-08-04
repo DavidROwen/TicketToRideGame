@@ -41,12 +41,13 @@ public class GameServiceTest {
 
     @Test
     public void testInitGame() {
+        initToGameplay();
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4){}
 
         assertEquals(ClientModel.get_instance().getMyActiveGame().getTurnOrder().size(), 2); //turn order
         assertEquals(ClientModel.get_instance().getMyActiveGame().getPlayersColors().size(), 2); //colors
         assertTrue(ClientModel.get_instance().getMyPlayer().getColor() != null);
-        assertTrue(ClientModel.get_instance().getMyActiveGame().getTrainCardsDeck().size() <= 53);
+//        assertTrue(ClientModel.get_instance().getMyActiveGame().getTrainCardsDeck().size() );
     }
 
     @Test
