@@ -155,9 +155,13 @@ public class GamePlayService {
     }
 
     public static void claimingRoute(String playerId, String route, TrainCard.TRAIN_TYPE typeChoice) {
-        if(!ClientModel.get_instance().claimRoute(playerId, route, typeChoice).isSuccess()) {
-            System.out.println(route + " was claimed on the server side but not on the client side");
-        } //the command is only passed if it succeeded on the server side
+       try {
+           if (!ClientModel.get_instance().claimRoute(playerId, route, typeChoice).isSuccess()) {
+               System.out.println(route + " was claimed on the server side but not on the client side");
+           } //the command is only passed if it succeeded on the server side
+       } catch(Exception e) {
+           e.printStackTrace();
+       }
     }
 
     //Destination Cards (Model) functions

@@ -73,6 +73,7 @@ public class GameService {
         );
         CommandsManager.addCommandAllPlayers(addTrainCard, gameId);
 
+        //turns out that they randomly shuffle the same on both sides
     }
 
     public static void pickupTrainCard(String playerId, String gameId, Integer index) {
