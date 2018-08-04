@@ -369,4 +369,8 @@ public class ClientModel extends Observable {
     public Pair<String, String> getNewestPlayerAdded() {
         return newestPlayerAdded;
     }
+
+    public boolean isInitialized() {
+        return getMyActiveGame() != null && getMyActiveGame().isInitialized();
+    }
 }

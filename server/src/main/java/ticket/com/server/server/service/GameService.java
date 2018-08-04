@@ -57,6 +57,12 @@ public class GameService {
         );
         CommandsManager.addCommandAllPlayers(initHands, gameId);
 
+//        new GamePlayService().initiatingGameNonRandom();
+        Command checkInitGame = new Command(GAME_PLAY_SERVICE_PATH, null,
+                "checkingInitGame", new Object[]{}
+        );
+        CommandsManager.addCommandAllPlayers(checkInitGame, gameId);
+
         //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
             drawDestinationCard(playerId,gameId);

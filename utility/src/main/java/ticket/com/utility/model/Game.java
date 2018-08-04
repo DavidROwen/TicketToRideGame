@@ -43,6 +43,8 @@ public class Game extends Observable {
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
 
+    public boolean initializedCorrectly = false;
+
     public Game(){
         this.players = new HashMap<>();
         this.chatList = new ArrayList<>();
@@ -309,7 +311,7 @@ public class Game extends Observable {
     }
 
     public void initGame() {
-        if (!isInitialized()) {
+        if (!initializedCorrectly) {
             initTurnOrder();
             initColors();
             initTrainCardDeck();
@@ -320,19 +322,20 @@ public class Game extends Observable {
     }
 
     // TODO: improve the checking here to always be accurate
-    private boolean isInitialized(){
+    public boolean isInitialized(){
         if(id == null) { return false; }
         if(!isStarted) { return false; }
         if(turnOrder == null || turnOrder.size() != players.size()) { return false; }
         if(trainBank == null || trainBank.size() != 5) { return false; }
 //        if(destinationCards.size() < 2); //called before they've chosen
-        if(trainCardsDeck.size() != 110) { return false; }
+        if(trainCardsDeck.size() != 110 - 4*numberOfPlayers - 5) { return false; } //4 in each hand //5 in the bank
         if(!trainDiscards.isEmpty()) { return false; }
 
         for(String each : players.keySet()) {
             if(!players.get(each).isInitialized()) { return false; }
         }
 
+        initializedCorrectly = true;
         return true;
     }
 

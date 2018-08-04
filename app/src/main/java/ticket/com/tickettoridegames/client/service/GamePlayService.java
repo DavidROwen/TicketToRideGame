@@ -237,7 +237,7 @@ public class GamePlayService {
         serverHand.addAll(Arrays.asList(temp));
 
         try {
-            if(clientHand == null || serverHand == null) {
+            if(clientHand == null) {
                 throw new NullPointerException();
             }
             if (clientHand.size() != serverHand.size()) {
@@ -257,6 +257,13 @@ public class GamePlayService {
         }
 
         System.out.println("Checked that client and server side have the same trainCards");
+    }
+
+    public static void checkingInitGame() {
+        if(!ClientModel.get_instance().isInitialized()) { throw new AssertionError(); }
+        for(String each : ClientModel.get_instance().getMyActiveGame().getPlayersId()) {
+            checkHand(each, ClientModel.get_instance().getMyActiveGame().getId());
+        }
     }
 
     private static void printHand(List<TrainCard> hand, boolean client) {
