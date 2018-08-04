@@ -8,7 +8,6 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.Stack;
 
-import ticket.com.tickettoridegames.client.State.MyTurnState;
 import ticket.com.tickettoridegames.client.State.NotMyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.utility.TYPE;
@@ -37,7 +36,7 @@ import static ticket.com.utility.TYPE.NEWTRAINCARD;
 import static ticket.com.utility.TYPE.REMOVED_PLAYER;
 import static ticket.com.utility.TYPE.ROUTECLAIMED;
 import static ticket.com.utility.TYPE.START;
-import static ticket.com.utility.TYPE.TURNCHANGED;
+import static ticket.com.utility.TYPE.TURN_NUMBER_CHANGED;
 
 
 public class ClientModel extends Observable {
@@ -277,7 +276,7 @@ public class ClientModel extends Observable {
     public void initMyGameNonRandom(){
         getMyActiveGame().initGameNonRandom();
         myNotify(ALLHISTORY);
-        myNotify(TURNCHANGED);
+        myNotify(TURN_NUMBER_CHANGED);
         myNotify(NEWTRAINCARD);
         myNotify(BANKUPDATE);
     }
@@ -319,6 +318,7 @@ public class ClientModel extends Observable {
         else { notifyObservers(); }
     }
 
+    //when the user clicks on endTurn button
     public void changeTurn(String gameId){
         Game game = getGame(gameId);
         game.switchTurn();
@@ -331,8 +331,10 @@ public class ClientModel extends Observable {
 //        }
 
         setChanged();
-        notifyObservers(TURNCHANGED);
+        notifyObservers(TURN_NUMBER_CHANGED);
     }
+
+
 
     public String getTurnUsername(){
         return getMyActiveGame().getTurnUsername();
@@ -346,6 +348,9 @@ public class ClientModel extends Observable {
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);
             myNotify(HISTORYUPDATE);
+
+            getMyActiveGame().switchTurn();
+            myNotify(TURN_NUMBER_CHANGED);
         }
 
         return result;

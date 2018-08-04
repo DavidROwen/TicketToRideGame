@@ -601,11 +601,6 @@ public class Game extends Observable {
         return players.get(turnOrder.get(turnNumber)).getUsername();
     }
 
-    public String playerUpString() {
-        String id = turnOrder.get(turnNumber);
-        return players.get(id).getUsername();
-    }
-
     public Pair<String, Integer> getNewestClaimedRoute() {
         Pair<String, String> routeInfo = map.getNewestClaimedRoute();
         Integer playerColor =  players.get(routeInfo.second).getColorValue();

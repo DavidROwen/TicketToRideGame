@@ -48,7 +48,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
-            case TURNCHANGED:
+            case TURN_NUMBER_CHANGED:
                 checkIsMyTurn();
                 break;
             case NEWTEMPDECK:
@@ -84,7 +84,7 @@ public class MapPresenter implements IMapPresenter, Observer {
             mapView.displayMessage("It's your turn");
             mapView.enableButtons();
         } else if(getCurrentState() instanceof NotMyTurnState) {
-            mapView.displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().playerUpString() + "'s turn");
+            mapView.displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
             mapView.disableButtons();
         }
     }
