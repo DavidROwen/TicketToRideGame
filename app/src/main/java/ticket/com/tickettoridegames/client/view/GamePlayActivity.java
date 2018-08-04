@@ -37,4 +37,9 @@ public class GamePlayActivity extends AppCompatActivity implements IGamePlayActi
 
     @Override
     public void displayMessage(String message) {}
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }

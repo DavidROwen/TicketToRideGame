@@ -174,6 +174,11 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void addPlayer(String gameId, String playerId) {
         myAdapter.notifyDataSetChanged(); //game in client model and game in adapter should be linked
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
 
 class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {

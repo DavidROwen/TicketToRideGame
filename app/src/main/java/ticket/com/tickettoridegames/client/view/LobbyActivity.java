@@ -123,6 +123,11 @@ public class LobbyActivity extends Activity implements ILobbyView{
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     /**
      * Updates the list of joined players
      *
