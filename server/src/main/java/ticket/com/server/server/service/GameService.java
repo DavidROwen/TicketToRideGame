@@ -57,12 +57,6 @@ public class GameService {
         );
         CommandsManager.addCommandAllPlayers(initHands, gameId);
 
-//        new GamePlayService().initiatingGameNonRandom();
-        Command checkInitGame = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "checkingInitGame", new Object[]{}
-        );
-        CommandsManager.addCommandAllPlayers(checkInitGame, gameId);
-
         //send staring deck to players
         for(String playerId : game.getPlayers().keySet()){
             drawDestinationCard(playerId,gameId);
@@ -177,11 +171,13 @@ public class GameService {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         Result result = game.claimRoute(playerId, route, typeChoice);
 
+        if(result.isSuccess()) {
 //        new GamePlayService().claimingRoute(playerId, route);
-        Command claimRoute = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "claimingRoute", new Object[]{playerId, route, typeChoice}
-        );
-        CommandsManager.addCommandAllPlayers(claimRoute, gameId);
+            Command claimRoute = new Command(GAME_PLAY_SERVICE_PATH, null,
+                    "claimingRoute", new Object[]{playerId, route, typeChoice}
+            );
+            CommandsManager.addCommandAllPlayers(claimRoute, gameId);
+        }
 
         return result;
     }

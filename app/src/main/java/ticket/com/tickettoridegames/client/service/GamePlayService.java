@@ -148,7 +148,9 @@ public class GamePlayService {
     }
 
     public static void claimingRoute(String playerId, String route, TrainCard.TRAIN_TYPE typeChoice) {
-        ClientModel.get_instance().claimRoute(playerId, route, typeChoice);
+        if(!ClientModel.get_instance().claimRoute(playerId, route, typeChoice).isSuccess()) {
+            System.out.println(route + " was claimed on the server side but not on the client side");
+        } //the command is only passed if it succeeded on the server side
     }
 
     //Destination Cards (Model) functions
@@ -230,6 +232,10 @@ public class GamePlayService {
     public static void resetBank(String gameId) { ClientModel.get_instance().resetBank(gameId);}
 
     public static void checkingHand(String playerId, LinkedList<TrainCard> hand) {
+        if(hand == null) {
+            System.out.println("Cannot check server hand because it's null");
+            return;
+        }
         List<TrainCard> clientHand = ClientModel.get_instance().getMyActiveGame().getPlayer(playerId).getTrainCards();
 
         TrainCard[] temp = new TrainCard[hand.size()];
@@ -247,9 +253,6 @@ public class GamePlayService {
         serverHand.addAll(Arrays.asList(temp));
 
         try {
-            if(clientHand == null) {
-                throw new NullPointerException();
-            }
             if (clientHand.size() != serverHand.size()) {
                  throw new AssertionError();
             }
@@ -262,18 +265,9 @@ public class GamePlayService {
             printHand(clientHand, true);
             printHand(serverHand, false);
             e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
         }
 
         System.out.println("Checked that client and server side have the same trainCards");
-    }
-
-    public static void checkingInitGame() {
-        if(!ClientModel.get_instance().isInitialized()) { throw new AssertionError(); }
-        for(String each : ClientModel.get_instance().getMyActiveGame().getPlayersId()) {
-            checkHand(each, ClientModel.get_instance().getMyActiveGame().getId());
-        }
     }
 
     private static void printHand(List<TrainCard> hand, boolean client) {

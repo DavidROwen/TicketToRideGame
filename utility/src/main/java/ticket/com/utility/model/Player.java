@@ -95,20 +95,25 @@ public class Player {
         System.out.println(username + " added " + card.toString());
     }
 
-    private Boolean removeTrainCards(TrainCard...cards) {
-        if(!hasTrainCards(cards)) { return false; }
+    //for testing
+    public List<TrainCard> removeTrainCards(TrainCard...cards) {
+        List<TrainCard> removedCards = new LinkedList<>();
+        if(!hasTrainCards(cards)) { return removedCards; }
 
         int wildsUsed = 0;
         for(TrainCard card : cards) {
             if(!trainCards.remove(card)) {
                 trainCards.remove(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+                removedCards.add(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
                 wildsUsed++;
+            } else {
+                removedCards.add(new TrainCard(cards[0].getType()));
             }
         }
         System.out.println(username + " used " + (cards.length - wildsUsed) + " " + cards[0].toString() +
             " and " + wildsUsed + " WILD");
 
-        return true;
+        return removedCards;
     }
 
     //assuming all the same kind in parameter
@@ -222,12 +227,12 @@ public class Player {
         }
     }
 
-    public void claimRoute(TrainCard.TRAIN_TYPE type, Integer length, Integer points) {
-        if(!canClaim(type, length).isSuccess()) { return; }
+    public List<TrainCard> claimRoute(TrainCard.TRAIN_TYPE type, Integer length, Integer points) {
+        if(!canClaim(type, length).isSuccess()) { new LinkedList<>(); }
 
-        removeTrainCards(getNeededCards(type, length));
         this.points += points;
         trains -= length;
+        return removeTrainCards(getNeededCards(type, length));
     }
 
     private TrainCard[] getNeededCards(TrainCard.TRAIN_TYPE type, Integer length) {

@@ -338,7 +338,7 @@ public class ClientModel extends Observable {
         return getMyActiveGame().getTurnUsername();
     }
 
-    public void claimRoute(String playerID, String route, TrainCard.TRAIN_TYPE decidedType) {
+    public Result claimRoute(String playerID, String route, TrainCard.TRAIN_TYPE decidedType) {
         Result result = getMyActiveGame().claimRoute(playerID, route, decidedType);
 
         if (result.isSuccess()) {
@@ -348,6 +348,8 @@ public class ClientModel extends Observable {
             myNotify(ROUTECLAIMED);
             myNotify(HISTORYUPDATE);
         }
+
+        return result;
     }
 
     public List<Pair<String, Integer>> getClaimedRoutes(){

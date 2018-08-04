@@ -43,8 +43,7 @@ public class Game extends Observable {
     private List<PlayerAction> gameHistory = new LinkedList<>();
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
-
-    public boolean initializedCorrectly = false;
+    private final int INIT_HAND_SIZE = 4; //comment
 
     public Game(){
         this.players = new HashMap<>();
@@ -317,7 +316,7 @@ public class Game extends Observable {
     }
 
     public void initGame() {
-        if (!initializedCorrectly) {
+        if (!isInitialized()) {
             initTurnOrder();
             initColors();
             initTrainCardDeck();
@@ -328,7 +327,7 @@ public class Game extends Observable {
     }
 
     // TODO: improve the checking here to always be accurate
-    public boolean isInitialized(){
+    private boolean isInitialized(){
         if(id == null) { return false; }
         if(!isStarted) { return false; }
         if(turnOrder == null || turnOrder.size() != players.size()) { return false; }
@@ -383,7 +382,7 @@ public class Game extends Observable {
     }
 
     private void initHand(Player player) {
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < INIT_HAND_SIZE; i++) {
             drawTrainCard(player.getId());
         }
     }
@@ -539,7 +538,9 @@ public class Game extends Observable {
         if(!result.isSuccess()) { return result; }
 
         map.claimRoute(playerId, routeName);
-        player.claimRoute(routeType, map.getLength(routeName), map.getPoints(routeName));
+        List<TrainCard> discardedCards = player.claimRoute(routeType, map.getLength(routeName), map.getPoints(routeName));
+        trainDiscards.addAll(discardedCards);
+        System.out.println(player.getUsername() + " discarded " + discardedCards.size() + " cards");
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + map.toString(routeName)));
         // TODO: make this messge nicer
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + routeName));
