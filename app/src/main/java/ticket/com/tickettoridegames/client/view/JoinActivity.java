@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -52,6 +53,13 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+
+        findViewById(R.id.joinBackgroundScroll).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        }); //disable scrolling, for when the keyboard is up
 
         createGameButton = findViewById(R.id.create_game_button);
         createGameButton.setOnClickListener(new View.OnClickListener(){

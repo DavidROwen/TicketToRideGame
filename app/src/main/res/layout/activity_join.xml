@@ -1,194 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/joinBackgroundScroll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/train2"
-    tools:context=".client.view.JoinActivity">
-
+    tools:context=".client.view.JoinActivity"
+    android:fillViewport="true"
+    >
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#88000000"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/create_game"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            android:text="Create Game"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:background="#88000000">
+            <ScrollView
+                android:id="@+id/joinLayoutLeftScroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/create_game"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:text="Create Game"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Name: "
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                        <EditText
+                            android:id="@+id/game_name_input"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:inputType="textPersonName" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/playerstext"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Players: "
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                        <Spinner
+                            android:id="@+id/game_player_number"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/privategametext"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Private Game: "
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:visibility="invisible" />
+
+                        <Switch
+                            android:id="@+id/private_game_switch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:id="@+id/textField"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="nothing"
+                            android:textColor="#07000000" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/colortext"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:text="Color: "
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                        <Spinner
+                            android:id="@+id/current_player_color"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+            <Button
+                android:id="@+id/create_game_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Name: "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+                android:layout_alignParentBottom="true"
+                android:text="Create Game" />
+        </RelativeLayout>
 
-            <EditText
-                android:id="@+id/game_name_input"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="textPersonName" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/playerstext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Players: "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Spinner
-                android:id="@+id/game_player_number"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/privategametext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Private Game: "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:visibility="invisible" />
+                android:background="#88000000"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true">
 
-            <Switch
-                android:id="@+id/private_game_switch"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/JoinGame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:text="Join Game"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Name"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Players"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="In Game"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/myrecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/join_game_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/textField"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="nothing"
-                android:textColor="#07000000"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/colortext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Color: "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Spinner
-                android:id="@+id/current_player_color"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/create_game_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create Game" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#88000000"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/JoinGame"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:text="Join Game"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Players"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="In Game"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/myrecyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"/>
-
-        <Button
-            android:id="@+id/join_game_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Join Game" />
+                android:text="Join Game"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
