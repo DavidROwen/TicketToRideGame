@@ -61,5 +61,10 @@ public class DrewOneTrainState extends PlayerState {
         }
     }
 
-    public void checkTurn(IMapPresenter presenter){}
+    @Override
+    public void transition(ClientModel clientModel){
+        if (!clientModel.isMyTurn()) {
+            clientModel.setState(NotMyTurnState.getInstance());
+        }
+    }
 }

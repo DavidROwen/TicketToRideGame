@@ -176,6 +176,30 @@ public class GameTest {
         );
     }
 
+    @Test
+    public void testTooManyLocos() {
+        initToGamePlay();
+        List<TrainCard> trainBank = game.getTrainBank();
+
+        //remove cur wild cards
+        for(int i = 0; i < 5; i++) {
+            TrainCard each = trainBank.get(i);
+            if(each.getType() == TrainCard.TRAIN_TYPE.WILD) { trainBank.set(i, new TrainCard(TrainCard.TRAIN_TYPE.RED)); }
+        }
+        //add 2 wildcards
+        for(int i = 0; i < 2; i++) {
+            trainBank.set(i, new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+        }
+        //setup next draw to wild card
+        game.getTrainCardsDeck().push(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+        //draw from bank
+        game.pickupTrainCard(player1.getId(), 2); //index can't be 0,1
+        assertTrue(trainBank.get(0).getType() != TrainCard.TRAIN_TYPE.WILD
+                && trainBank.get(1).getType() != TrainCard.TRAIN_TYPE.WILD
+                && trainBank.get(2).getType() != TrainCard.TRAIN_TYPE.WILD
+        ); //check that it was reset
+    }
+
     private void initToGamePlay() {
         game = new Game();
         game.setMaxPlayers(4);

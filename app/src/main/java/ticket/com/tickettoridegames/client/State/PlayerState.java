@@ -34,5 +34,5 @@ public class PlayerState {
         return false;
     }
 
-    public void checkTurn(IMapPresenter presenter){}
+    public void transition(ClientModel clientModel){}
 }

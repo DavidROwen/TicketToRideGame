@@ -49,16 +49,10 @@ public class NotMyTurnState extends PlayerState {
         presenter.getAssetsView().displayMessage("It's not your turn.");
     }
 
-    public void checkTurn(IMapPresenter presenter){
-        ClientModel cm = ClientModel.get_instance();
-        if (cm.isMyTurn()) {
-            cm.setState(MyTurnState.getInstance());
-            presenter.getMapView().displayMessage("It's your turn");
-        }
-        else {
-            cm.setState(NotMyTurnState.getInstance());
-            String playerTurn = "It's " + cm.getTurnUsername() + "'s Turn";
-            presenter.getMapView().displayMessage(playerTurn);
+    @Override
+    public void transition(ClientModel clientModel){
+        if (clientModel.isMyTurn()) {
+            clientModel.setState(MyTurnState.getInstance());
         }
     }
 }

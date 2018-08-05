@@ -43,8 +43,9 @@ public class Game extends Observable {
     private List<PlayerAction> gameHistory = new LinkedList<>();
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
+    private final int INIT_HAND_SIZE = 4; //comment
 
-    public boolean initializedCorrectly = false;
+    private boolean initializedCorrectly = false;
 
     public Game(){
         this.players = new HashMap<>();
@@ -257,11 +258,14 @@ public class Game extends Observable {
     }
 
     private TrainCard drawTrainCard() {
-        if (trainCardsDeck.empty()){
-            Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
-            trainCardsDeck.addAll(trainDiscards);
-        }
+        if (trainCardsDeck.empty()){ makeDiscardsToTrainDeck(); }
         return trainCardsDeck.pop();
+    }
+
+    private void makeDiscardsToTrainDeck() {
+        Collections.shuffle(trainDiscards, new Random(getId().hashCode()));
+        trainCardsDeck.addAll(trainDiscards);
+        trainDiscards.clear();
     }
 
     public Map<String,Integer> getTrainCounts() {
@@ -348,7 +352,7 @@ public class Game extends Observable {
     //convenience function so it can be called from the client side also
     //must be separate so train deck can be passed before altered
     public void initGameNonRandom() {
-        if (!isInitialized()) {
+        if (!initializedCorrectly) {
             initHandAll();
             initTrainBank();
         }
@@ -358,7 +362,7 @@ public class Game extends Observable {
     }
 
     public void initHandAll() {
-        for(String curKey : players.keySet()) {
+        for(String curKey : turnOrder) { //key set order isn't random
             Player curPlayer = players.get(curKey);
             initHand(curPlayer);
         }
@@ -368,7 +372,7 @@ public class Game extends Observable {
         for(int i = 0; i < NUM_CARDS_TRAINCARD_BANK; i++) {
             trainBank.add(drawTrainCard());
         }
-        assert(trainCardsDeck.size() == 110 - (4*players.size() + 5));
+        assert(trainCardsDeck.size() == 110 - (INIT_HAND_SIZE*players.size() + 5));
         assert(trainBank.size() == 5);
     }
 
@@ -383,7 +387,7 @@ public class Game extends Observable {
     }
 
     private void initHand(Player player) {
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < INIT_HAND_SIZE; i++) {
             drawTrainCard(player.getId());
         }
     }
@@ -539,10 +543,12 @@ public class Game extends Observable {
         if(!result.isSuccess()) { return result; }
 
         map.claimRoute(playerId, routeName);
-        player.claimRoute(routeType, map.getLength(routeName), map.getPoints(routeName));
+        List<TrainCard> discardedCards = player.claimRoute(routeType, map.getLength(routeName), map.getPoints(routeName));
+        trainDiscards.addAll(discardedCards);
+        System.out.println(player.getUsername() + " discarded " + discardedCards.size() + " cards");
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + map.toString(routeName)));
-        // TODO: make this messge nicer
-        addToHistory(new PlayerAction(player.getUsername(), "claimed " + routeName));
+        // TODO: make this message nicer
+        addToHistory(new PlayerAction(player.getUsername(), " claimed " + routeName));
 
 
         return result;
@@ -593,11 +599,6 @@ public class Game extends Observable {
 
     public String getTurnUsername() {
         return players.get(turnOrder.get(turnNumber)).getUsername();
-    }
-
-    public String playerUpString() {
-        String id = turnOrder.get(turnNumber);
-        return players.get(id).getUsername();
     }
 
     public Pair<String, Integer> getNewestClaimedRoute() {
@@ -719,5 +720,9 @@ public class Game extends Observable {
 
     public void setGameOver(Boolean gameOver) {
         this.gameOver = gameOver;
+    }
+
+    public List<TrainCard> getTrainDiscards() {
+        return Collections.unmodifiableList(trainDiscards);
     }
 }
