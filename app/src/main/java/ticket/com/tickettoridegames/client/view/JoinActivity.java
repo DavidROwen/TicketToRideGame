@@ -54,12 +54,19 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        //disable scrolling
         findViewById(R.id.joinBackgroundScroll).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 return true;
             }
-        }); //disable scrolling, for when the keyboard is up
+        });
+        findViewById(R.id.joinOptionsScroll).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
 
         createGameButton = findViewById(R.id.create_game_button);
         createGameButton.setOnClickListener(new View.OnClickListener(){
