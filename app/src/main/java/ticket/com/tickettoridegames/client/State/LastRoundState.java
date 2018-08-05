@@ -27,6 +27,9 @@ public class LastRoundState extends PlayerState {
         if(cm.isMyTurn()){
             cm.setState(LastTurnState.getInstance());
         }
+        else {
+            cm.setState(LastRoundState.getInstance());
+        }
     }
 
     @Override
@@ -55,4 +58,18 @@ public class LastRoundState extends PlayerState {
             presenter.getMapView().displayMessage(playerTurn);
         }
     }
+
+    public void transition(IMapPresenter presenter, ClientModel clientModel){
+        if (clientModel.isMyTurn()){
+            clientModel.setState(LastTurnState.getInstance());
+            presenter.getMapView().displayMessage("It's your turn");
+            presenter.getMapView().enableButtons();
+        }
+        else {
+            presenter.getMapView().displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
+            presenter.getMapView().disableButtons();
+        }
+    }
+
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
 }

@@ -60,6 +60,7 @@ public class MapPresenter implements IMapPresenter, Observer {
                 mapView.claimRoute(clientModel.getNewestClaimedRoute().first, clientModel.getNewestClaimedRoute().second);
                 GamePlayService.checkHand(ClientModel.get_instance().getMyPlayer().getId(), //todo testing
                         ClientModel.get_instance().getMyActiveGame().getId());
+                getCurrentState().routeClaimed(this, clientModel);
                 break;
             case MAP_DREW_TRAINCARD:
                 TrainCard card = ClientModel.get_instance().getMyPlayer().getNewestTrainCard();
@@ -78,15 +79,15 @@ public class MapPresenter implements IMapPresenter, Observer {
 
     @Override
     public void checkIsMyTurn(){
-        getCurrentState().transition(ClientModel.get_instance());
+        getCurrentState().transition(this, ClientModel.get_instance());
 
-        if(getCurrentState() instanceof MyTurnState) {
-            mapView.displayMessage("It's your turn");
-            mapView.enableButtons();
-        } else if(getCurrentState() instanceof NotMyTurnState) {
-            mapView.displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
-            mapView.disableButtons();
-        }
+//        if(getCurrentState() instanceof MyTurnState || ) {
+//            mapView.displayMessage("It's your turn");
+//            mapView.enableButtons();
+//        } else if(getCurrentState() instanceof NotMyTurnState) {
+//            mapView.displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
+//            mapView.disableButtons();
+//        }
     }
 
     @Override

@@ -74,5 +74,11 @@ public class LastTurnState extends PlayerState {
     }
 
     @Override
-    public void transition(ClientModel clientModel){}
+    public void transition(IMapPresenter presenter, ClientModel clientModel){
+        clientModel.setState(GameEndedState.getInstance());
+        presenter.getMapView().displayMessage("The game is over!");
+        presenter.getMapView().disableButtons();
+    }
+
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
 }

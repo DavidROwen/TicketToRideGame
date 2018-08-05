@@ -62,9 +62,13 @@ public class DrewOneTrainState extends PlayerState {
     }
 
     @Override
-    public void transition(ClientModel clientModel){
+    public void transition(IMapPresenter presenter, ClientModel clientModel){
         if (!clientModel.isMyTurn()) {
             clientModel.setState(NotMyTurnState.getInstance());
+            presenter.getMapView().displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
+            presenter.getMapView().disableButtons();
         }
     }
+
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
 }

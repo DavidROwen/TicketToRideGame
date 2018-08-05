@@ -50,9 +50,15 @@ public class NotMyTurnState extends PlayerState {
     }
 
     @Override
-    public void transition(ClientModel clientModel){
+    public void transition(IMapPresenter presenter, ClientModel clientModel){
         if (clientModel.isMyTurn()) {
             clientModel.setState(MyTurnState.getInstance());
+        }
+    }
+
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){
+        if (cm.getMyPlayer().getTrains() <= 3){
+            cm.setState(LastRoundState.getInstance());
         }
     }
 }

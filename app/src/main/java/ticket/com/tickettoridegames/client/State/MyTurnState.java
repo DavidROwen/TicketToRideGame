@@ -46,7 +46,7 @@ public class MyTurnState extends PlayerState {
         Result result = GamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(),
                 routeName, routeType);
         if (result.isSuccess()){
-            if (cm.getMyPlayer().getTrains() <= 3 ){
+            if (cm.getMyPlayer().getTrains() <= 3){
                 cm.setState(LastRoundState.getInstance());
             }
             else {
@@ -77,9 +77,15 @@ public class MyTurnState extends PlayerState {
     }
 
     @Override
-    public void transition(ClientModel clientModel){
+    public void transition(IMapPresenter presenter, ClientModel clientModel){
         if (!clientModel.isMyTurn()) {
             clientModel.setState(NotMyTurnState.getInstance());
+        }
+    }
+
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){
+        if (cm.getMyPlayer().getTrains() <= 3){
+            cm.setState(LastRoundState.getInstance());
         }
     }
 }

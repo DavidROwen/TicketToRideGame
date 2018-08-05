@@ -25,6 +25,7 @@ public class LastDrawState extends PlayerState {
     public void drawTrainCard(IMapPresenter presenter, ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
         gamePlayService.endGame(cm.getMyActiveGame().getId());
+        cm.setState(GameEndedState.getInstance());
     }
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
@@ -59,4 +60,12 @@ public class LastDrawState extends PlayerState {
     }
 
     public void checkTurn(IMapPresenter presenter){}
+
+    public void transition(IMapPresenter presenter, ClientModel clientModel){
+        clientModel.setState(GameEndedState.getInstance());
+        presenter.getMapView().displayMessage("The game is over!");
+        presenter.getMapView().disableButtons();
+    }
+
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
 }

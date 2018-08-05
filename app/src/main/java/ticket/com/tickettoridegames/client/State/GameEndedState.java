@@ -34,6 +34,8 @@ public class GameEndedState extends  PlayerState{
         return false;
     }
 
-    public void transition(ClientModel clientModel){}
+    public void transition(IMapPresenter presenter, ClientModel clientModel){ }
+
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
 
 }
