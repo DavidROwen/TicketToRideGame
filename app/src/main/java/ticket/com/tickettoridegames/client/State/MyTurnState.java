@@ -47,7 +47,7 @@ public class MyTurnState extends PlayerState {
                 routeName, routeType);
         if (result.isSuccess()){
             if (cm.getMyPlayer().getTrains() <= 3 ){
-                cm.setState(GameOverState.getInstance());
+                cm.setState(LastRoundState.getInstance());
             }
             else {
                 cm.setState(NotMyTurnState.getInstance());

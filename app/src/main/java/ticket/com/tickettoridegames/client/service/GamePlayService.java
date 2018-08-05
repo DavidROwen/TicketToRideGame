@@ -274,6 +274,8 @@ public class GamePlayService {
         //build stack
         LinkedList<TrainCard> serverHand = new LinkedList<>();
         serverHand.addAll(Arrays.asList(temp));
+        clientHand.sort(TrainCard::compareTo);
+        serverHand.sort(TrainCard::compareTo);
 
         try {
             if (clientHand.size() != serverHand.size()) {

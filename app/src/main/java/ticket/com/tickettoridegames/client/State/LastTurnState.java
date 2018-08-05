@@ -8,13 +8,13 @@ import ticket.com.utility.model.Game;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
-public class GameOverState extends PlayerState {
+public class LastTurnState extends PlayerState {
 
-    private static GameOverState instance = new GameOverState();
-    public static GameOverState getInstance(){
+    private static LastTurnState instance = new LastTurnState();
+    public static LastTurnState getInstance(){
         return instance;
     }
-    private GameOverState(){}
+    private LastTurnState(){}
     private GamePlayService gamePlayService;
 
     public void drawTrainCard(IMapPresenter presenter, ClientModel cm){
@@ -25,11 +25,13 @@ public class GameOverState extends PlayerState {
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){
         gamePlayService.drawDestinationCard(cm.getUserId(), cm.getCurrentGameID());
         gamePlayService.endGame(cm.getMyActiveGame().getId());
+        cm.setState(GameEndedState.getInstance());
     }
 
     public void changeTurn(ClientModel cm) {
         gamePlayService.switchTurn(cm.getCurrentGameID());
         gamePlayService.endGame(cm.getMyActiveGame().getId());
+        cm.setState(GameEndedState.getInstance());
     }
 
     @Override
@@ -46,6 +48,7 @@ public class GameOverState extends PlayerState {
                 routeName, routeType);
         if (result.isSuccess()){
             gamePlayService.endGame(cm.getMyActiveGame().getId());
+            cm.setState(GameEndedState.getInstance());
         }
         return result;
     }
@@ -63,6 +66,7 @@ public class GameOverState extends PlayerState {
         // end turn based on drawing a bank wild
         if (wildCard) {
             gamePlayService.endGame(cm.getMyActiveGame().getId());
+            cm.setState(GameEndedState.getInstance());
         }
         else {
             cm.setState(LastDrawState.getInstance());

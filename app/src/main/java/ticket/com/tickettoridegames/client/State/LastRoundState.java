@@ -24,14 +24,8 @@ public class LastRoundState extends PlayerState {
     }
 
     public void changeTurn(ClientModel cm) {
-        //check somehow which state to change to..
-
-        //for now just set it to active turn
         if(cm.isMyTurn()){
-            cm.setState(GameOverState.getInstance());
-        }
-        else{
-            cm.setState(LastRoundState.getInstance());
+            cm.setState(LastTurnState.getInstance());
         }
     }
 
@@ -52,7 +46,7 @@ public class LastRoundState extends PlayerState {
     public void checkTurn(IMapPresenter presenter){
         ClientModel cm = ClientModel.get_instance();
         if (cm.isMyTurn()) {
-            cm.setState(GameOverState.getInstance());
+            cm.setState(LastTurnState.getInstance());
             presenter.getMapView().displayMessage("It's your turn");
         }
         else {
