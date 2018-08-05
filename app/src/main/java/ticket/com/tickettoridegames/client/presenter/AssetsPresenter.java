@@ -1,5 +1,6 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -8,6 +9,7 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
 import ticket.com.tickettoridegames.client.view.IAssetsView;
 import ticket.com.utility.TYPE;
+import ticket.com.utility.model.TrainCard;
 
 public class AssetsPresenter implements IAssetsPresenter, Observer {
     private GamePlayService gamePlayService;
@@ -42,8 +44,7 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
                 assetsView.setRouteDeckCount(clientModel.getDestinationCards().size());
                 break;
             case NEWTRAINCARD:
-                clientModel.getMyPlayer().sortHand();
-                assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
+                assetsView.setHand(getSortedHand());
                 assetsView.setTrainDeckCount(clientModel.getTrainCardsDeck().size());
                 break;
         }
@@ -51,12 +52,19 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
 
     public void updateView(){
         assetsView.setBank(clientModel.getMyActiveGame().getTrainBank());
-        clientModel.getMyPlayer().sortHand();
-        assetsView.setHand(clientModel.getMyPlayer().getTrainCards());
+        assetsView.setHand(getSortedHand());
         assetsView.setRoutes(clientModel.getMyPlayer().getDestinationCards());
         assetsView.setTrainDeckCount(clientModel.getMyActiveGame().getTrainCardsDeck().size());
         assetsView.setRouteDeckCount(clientModel.getMyActiveGame().getDestinationCards().size());
     }
+
+    //makes a copy of players hand before sorting
+    private List<TrainCard> getSortedHand() {
+        List<TrainCard> playerHand = ClientModel.get_instance().getMyPlayer().getCopyTrainCards();
+        playerHand.sort(TrainCard::compareTo);
+        return playerHand;
+    }
+
 
     @Override
     public void drawFromBank(Integer index){

@@ -162,6 +162,12 @@ public class Player {
         return Collections.unmodifiableList(trainCards);
     }
 
+    public List<TrainCard> getCopyTrainCards() {
+        List<TrainCard> copyHand = new LinkedList<>();
+        copyHand.addAll(trainCards);
+        return copyHand;
+    }
+
     public Integer getCardCount(){
         return trainCards.size() + destinationCards.size();
     }
@@ -268,9 +274,5 @@ public class Player {
 
     public TrainCard getNewestTrainCard() {
         return newestTrainCard;
-    }
-
-    public void sortHand() {
-        trainCards.sort(TrainCard::compareTo);
     }
 }
