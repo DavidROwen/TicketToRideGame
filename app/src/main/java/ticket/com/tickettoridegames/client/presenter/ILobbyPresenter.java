@@ -7,4 +7,6 @@ public interface ILobbyPresenter {
     void leaveGame();
 
     void sendMessage(String message);
+
+    void updateView();
 }

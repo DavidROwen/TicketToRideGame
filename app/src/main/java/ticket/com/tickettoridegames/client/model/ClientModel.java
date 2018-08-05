@@ -169,11 +169,10 @@ public class ClientModel extends Observable {
 
         if (getCurrentGameID() != null && gameID.equals(getCurrentGameID())){
             myActiveGame = null;
-            myPlayer = null;
         }
 
         game.removePlayer(playerId);
-        
+
         setChanged();
         notifyObservers(REMOVED_PLAYER);
     }

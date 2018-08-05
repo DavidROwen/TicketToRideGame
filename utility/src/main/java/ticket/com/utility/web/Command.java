@@ -112,8 +112,13 @@ public class Command {
     private Class<?>[] calcTypes(Object[] paramValues) {
         Class<?>[] types = new Class<?>[paramValues.length];
 
-        for(int i = 0; i < paramValues.length; i++) {
-            types[i] = paramValues[i].getClass();
+        try {
+            for (int i = 0; i < paramValues.length; i++) {
+                types[i] = paramValues[i].getClass();
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
         }
 
         return types;

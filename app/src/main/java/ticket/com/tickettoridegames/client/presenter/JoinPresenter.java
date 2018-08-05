@@ -1,5 +1,7 @@
 package ticket.com.tickettoridegames.client.presenter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,6 +24,11 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
 
+        updateView();
+    }
+
+    @Override
+    public void updateView(){
         setGames();
     }
 
@@ -94,10 +101,12 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             case PLAYER_ADDED:
                 joinView.addPlayer(clientModel.getNewestPlayerAdded().first, clientModel.getNewestPlayerAdded().second);
                 break;
+            case REMOVED_PLAYER:
+                List<Game> gameList = new ArrayList<>();
+                gameList.addAll(clientModel.getGames().values());
+                joinView.refreshGameList(gameList);
+                break;
         }
-//        if (!clientModel.getCurrentGameID().isEmpty()){
-//            joinView.changeView();
-//        }
     }
 
 }

@@ -42,6 +42,7 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     private GameAdapter myAdapter;
 
     private View curHighlighted;
+    private boolean created = false;
 
     // EditTexts
     private EditText gameNameText;
@@ -92,7 +93,15 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
         color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColor.setAdapter(color_adapter);
 
-        presenter = new JoinPresenter(this);
+//        presenter = new JoinPresenter(this);
+
+        if(!created) {
+            presenter = new JoinPresenter(this);
+            created = true;
+        }
+        else{
+            presenter.updateView();
+        }
 
 //        //######################################testing purposes##########################################
 //        Game one = new Game("one", 5);
@@ -117,6 +126,15 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     @Override
     public void addGame(Game game) {
         myAdapter.addGame(game);
+        myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void refreshGameList(List<Game> gameslist){
+        myAdapter.clearList();
+        for (Game game: gameslist) {
+            myAdapter.addGame(game);
+        }
         myAdapter.notifyDataSetChanged();
     }
 
@@ -179,91 +197,95 @@ public class JoinActivity extends AppCompatActivity implements IJoinView{
     public void onBackPressed() {
         moveTaskToBack(true);
     }
-}
 
-class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {
+    class GameAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
-    int selected_position = 0; // You have to set this globally in the Adapter class
-    List<Game> games = new LinkedList<>();
-    List<CustomViewHolder> views = new ArrayList<>();
+        int selected_position = 0; // You have to set this globally in the Adapter class
+        List<Game> games = new LinkedList<>();
+        List<CustomViewHolder> views = new ArrayList<>();
 
-    @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.
-                from(viewGroup.getContext()).
-                inflate(R.layout.customlayout, viewGroup, false);
+        @Override
+        public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View itemView = LayoutInflater.
+                    from(viewGroup.getContext()).
+                    inflate(R.layout.customlayout, viewGroup, false);
 
-        return new CustomViewHolder(itemView);
-    }
+            return new CustomViewHolder(itemView);
+        }
 
-    @Override
-    public void onBindViewHolder(CustomViewHolder holder, int i) {
-        holder.bindResult(games.get(i));
-        views.add(holder);
-    }
+        @Override
+        public void onBindViewHolder(CustomViewHolder holder, int i) {
+            holder.bindResult(games.get(i));
+            views.add(holder);
+        }
 
-    @Override
-    public int getItemCount() {
-        return games.size();
-    }
+        @Override
+        public int getItemCount() {
+            return games.size();
+        }
 
-    public void clearSelection(){
-        for (CustomViewHolder holder: views){
-            holder.clearBackground();
+        public void clearSelection(){
+            for (CustomViewHolder holder: views){
+                holder.clearBackground();
+            }
+        }
+
+        public void clearList() {
+            games.clear();
+        }
+
+        public void addGame(Game game) {
+            games.add(game);
         }
     }
 
-    public void addGame(Game game) {
-        games.add(game);
-    }
-}
+    class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private TextView gameName;
+        private TextView playerNames;
+        private TextView playerCount;
+        private String gameId;
+        private View view;
 
-class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    private TextView gameName;
-    private TextView playerNames;
-    private TextView playerCount;
-    private String gameId;
-    private View view;
+        public CustomViewHolder(View v) {
+            super(v);
+            view = v;
+            v.setOnClickListener(this);
+            gameName = v.findViewById(R.id.textView1);
+            playerNames = v.findViewById(R.id.textView2);
+            playerCount = v.findViewById(R.id.textView3);
 
-    public CustomViewHolder(View v) {
-        super(v);
-        view = v;
-        v.setOnClickListener(this);
-        gameName = v.findViewById(R.id.textView1);
-        playerNames = v.findViewById(R.id.textView2);
-        playerCount = v.findViewById(R.id.textView3);
-
-        JoinActivity activity = (JoinActivity) v.getContext();
+            JoinActivity activity = (JoinActivity) v.getContext();
 //        if(activity.getCurHighlighted() != null) {
 //            activity.getCurHighlighted().setBackgroundColor(Color.GREEN);
 //        }
-    }
-
-    public void bindResult(Game game){
-        gameId = game.getId();
-        gameName.setText(game.getName());
-        playerNames.setText(game.getPlayerNamesString());
-        playerCount.setText(game.getNumberOfPlayers() + "/" + game.getMaxPlayers());
-    }
-
-    public void clearBackground(){
-        view.setBackgroundColor(Color.TRANSPARENT);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
-
-        JoinActivity activity = (JoinActivity) v.getContext();
-        //clear prev highlight
-        if(activity.getCurHighlighted() != null) {
-            activity.getCurHighlighted().setBackgroundColor(Color.TRANSPARENT);
         }
-        //set new highlight
-        activity.setCurHighlighted(v);
-        activity.getCurHighlighted().setBackgroundColor(Color.GREEN);
 
-        //makes a hidden text that is read when button is clicked
-        JoinActivity.GameID.setText(gameId);
+        public void bindResult(Game game){
+            gameId = game.getId();
+            gameName.setText(game.getName());
+            playerNames.setText(game.getPlayerNamesString());
+            playerCount.setText(game.getNumberOfPlayers() + "/" + game.getMaxPlayers());
+        }
+
+        public void clearBackground(){
+            view.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+
+            JoinActivity activity = (JoinActivity) v.getContext();
+            //clear prev highlight
+            if(activity.getCurHighlighted() != null) {
+                activity.getCurHighlighted().setBackgroundColor(Color.TRANSPARENT);
+            }
+            //set new highlight
+            activity.setCurHighlighted(v);
+            activity.getCurHighlighted().setBackgroundColor(Color.GREEN);
+
+            //makes a hidden text that is read when button is clicked
+            JoinActivity.GameID.setText(gameId);
+        }
     }
 }

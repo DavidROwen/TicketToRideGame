@@ -23,6 +23,11 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
         clientModel = ClientModel.get_instance();
         clientModel.addObserver(this);
 
+        updateView();
+    }
+
+    @Override
+    public void updateView(){
         resetPlayersList();
         setChat();
     }
@@ -118,7 +123,7 @@ public class LobbyPresenter implements ILobbyPresenter, Observer {
                 lobbyView.addPlayerName(clientModel.getUser().getUsername());
                 break;
             case REMOVED_PLAYER:
-                if (clientModel.getMyPlayer() == null){
+                if (clientModel.getMyActiveGame() == null){
                     lobbyView.leaveGame();
                 }
             default:

@@ -37,6 +37,7 @@ public class LobbyActivity extends Activity implements ILobbyView{
     private ArrayAdapter<String> adapter;     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     private ArrayList<String> listChats=new ArrayList<>();     //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
     private ArrayAdapter<String> adapter2;     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    private Boolean created = false;
 
     /**
      * creates view objects that are used
@@ -95,7 +96,15 @@ public class LobbyActivity extends Activity implements ILobbyView{
             }
         });
 
-        presenter = new LobbyPresenter(this);
+//        presenter = new LobbyPresenter(this);
+
+        if(!created) {
+            presenter = new LobbyPresenter(this);
+            created = true;
+        }
+        else{
+            presenter.updateView();
+        }
 
         //################################testing purposes############################################
 //        Set<String> players = new HashSet<>();

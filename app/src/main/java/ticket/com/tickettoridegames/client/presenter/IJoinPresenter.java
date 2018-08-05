@@ -6,4 +6,5 @@ public interface IJoinPresenter {
 
     void joinGame(String gameID);
 
+    void updateView();
 }
