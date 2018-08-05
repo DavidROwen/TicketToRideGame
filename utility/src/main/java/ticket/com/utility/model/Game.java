@@ -362,7 +362,7 @@ public class Game extends Observable {
     }
 
     public void initHandAll() {
-        for(String curKey : players.keySet()) {
+        for(String curKey : turnOrder) { //key set order isn't random
             Player curPlayer = players.get(curKey);
             initHand(curPlayer);
         }

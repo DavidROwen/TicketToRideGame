@@ -262,7 +262,7 @@ public class GamePlayService {
         List<TrainCard> clientHand = ClientModel.get_instance().getMyActiveGame().getPlayer(playerId).getTrainCards();
 
         TrainCard[] temp = new TrainCard[hand.size()];
-        for(int i = temp.length-1; i >= 0; i--) {
+        for(int i = 0; i < temp.length; i++) {
             //convert from LinkedTreeMap
             Gson gson = new Gson();
             JsonObject obj = gson.toJsonTree(hand.pop()).getAsJsonObject();
@@ -280,7 +280,9 @@ public class GamePlayService {
                  throw new AssertionError();
             }
             for (int i = 0; i < clientHand.size(); i++) {
-                if (!clientHand.get(i).equals(serverHand.get(i))) {
+                if (serverHand.get(i) == null) {
+                    throw new NullPointerException();
+                } else if(!clientHand.get(i).equals(serverHand.get(i))) {
                     throw new AssertionError();
                 }
             }
@@ -289,6 +291,8 @@ public class GamePlayService {
             printHand(clientHand, true);
             printHand(serverHand, false);
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("ERROR: server returned some null cards");
         }
     }
 
@@ -298,7 +302,7 @@ public class GamePlayService {
             return;
         }
         TrainCard[] temp = new TrainCard[trainDeck.size()];
-        for(int i = temp.length-1; i >= 0; i--) {
+        for(int i = temp.length-1; i >= 0; i--) { //backwards because popping
             //convert from LinkedTreeMap
             Gson gson = new Gson();
             JsonObject obj = gson.toJsonTree(trainDeck.pop()).getAsJsonObject();
@@ -317,6 +321,9 @@ public class GamePlayService {
                 throw new AssertionError();
             }
             for (int i = 0; i < clientDeck.size(); i++) {
+                if(serverDeck.get(i) == null) {
+                    throw new NullPointerException();
+                }
                 if (!clientDeck.get(i).equals(serverDeck.get(i))) {
                     throw new AssertionError();
                 }
@@ -325,6 +332,8 @@ public class GamePlayService {
         } catch (AssertionError e) {
             System.out.println("ERROR: client and server do not have the same train cards deck");
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("ERROR: server returned some null cards");
         }
     }
 
