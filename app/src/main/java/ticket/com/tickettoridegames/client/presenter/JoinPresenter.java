@@ -61,7 +61,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
             Result result;
             if(clientModel.getMyActiveGame() == null) { //only join one game
                 result = JoinService.joinGame(userId, gameId);
-            } else if (clientModel.getMyActiveGame().getId() != gameId){
+            } else if (!clientModel.getMyActiveGame().getId().equals(gameId)){
                 result = new Result(false, "", "Already in a game.");
             } else {
                 result = new Result(true, "game is already joined", null);

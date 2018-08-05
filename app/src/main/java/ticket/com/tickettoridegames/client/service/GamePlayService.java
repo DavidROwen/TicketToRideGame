@@ -245,7 +245,9 @@ public class GamePlayService {
     public static void checkingInitGame() {
         if(!ClientModel.get_instance().isInitialized()) {
             System.out.println("ERROR: game was not initialized correctly");
-            throw new AssertionError(); }
+            throw new AssertionError();
+        }
+        checkTrainCardsDeck(ClientModel.get_instance().getMyActiveGame().getId());
         for(String each : ClientModel.get_instance().getMyActiveGame().getPlayersId()) {
             checkHand(each, ClientModel.get_instance().getMyActiveGame().getId());
         }
@@ -278,7 +280,7 @@ public class GamePlayService {
                  throw new AssertionError();
             }
             for (int i = 0; i < clientHand.size(); i++) {
-                if (clientHand.get(i) == serverHand.get(i)) {
+                if (!clientHand.get(i).equals(serverHand.get(i))) {
                     throw new AssertionError();
                 }
             }
@@ -315,7 +317,7 @@ public class GamePlayService {
                 throw new AssertionError();
             }
             for (int i = 0; i < clientDeck.size(); i++) {
-                if (clientDeck.get(i) == serverDeck.get(i)) {
+                if (!clientDeck.get(i).equals(serverDeck.get(i))) {
                     throw new AssertionError();
                 }
             }
