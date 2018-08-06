@@ -50,7 +50,7 @@ public class LastRoundState extends PlayerState {
     public void transition(IMapPresenter presenter, ClientModel clientModel){
         if (clientModel.isMyTurn()){
             clientModel.setState(LastTurnState.getInstance());
-            presenter.getMapView().displayMessage("It's your turn");
+            presenter.getMapView().displayMessage("It's your last turn");
         }
         else {
             presenter.getMapView().displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");

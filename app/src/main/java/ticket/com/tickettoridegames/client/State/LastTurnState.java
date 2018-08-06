@@ -84,9 +84,18 @@ public class LastTurnState extends PlayerState {
             clientModel.setState(GameEndedState.getInstance());
             presenter.getMapView().displayMessage("The game is over!");
         }
+        else {
+            updateMapButtons(presenter);
+        }
     }
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){
+        gamePlayService.endGame(cm.getMyActiveGame().getId());
+        cm.setState(GameEndedState.getInstance());
+    }
+
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
         presenter.getMapView().enableRoutes(true);
         presenter.getMapView().enableTrainCardDeck(true);
         presenter.getMapView().enableDestinationCardDeck(true);
