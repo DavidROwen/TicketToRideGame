@@ -43,7 +43,8 @@ public class Game extends Observable {
     private List<PlayerAction> gameHistory = new LinkedList<>();
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
-    private final int INIT_HAND_SIZE = 4; //comment
+//    private final int INIT_HAND_SIZE = 4; //comment
+    private final int INIT_HAND_SIZE = 15; //comment
 
     private boolean initializedCorrectly = false;
 

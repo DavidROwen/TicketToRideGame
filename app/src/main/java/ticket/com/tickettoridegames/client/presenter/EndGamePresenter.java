@@ -40,7 +40,7 @@ public class EndGamePresenter implements IEndGamePresenter{
             if(player.getPoints() > hiScore){
                 winner = player.getName();
             }
-            if (player.getPoints() == hiScore){
+            if (player.getPoints().equals(hiScore)){
                 winner = "Tie between "+winner+" and "+player.getName();
             }
         }

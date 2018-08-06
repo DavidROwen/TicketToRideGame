@@ -19,8 +19,8 @@ public class Player {
 
     // Game Data
     private COLOR color = COLOR.RED;
-    private Integer trains = 45;
-//    private Integer trains = 4;
+//    private Integer trains = 45;
+    private Integer trains = 15;
     private Integer points = 0;
 
     private List<DestinationCard> tempDeck = new LinkedList<>();
@@ -39,10 +39,10 @@ public class Player {
             return false;
         }
 //        color
-        if (trainCards.size() != 4) {
-            System.out.println("ERROR: Initialization failed because of hand");
-            return false;
-        }
+//        if (trainCards.size() != 4) {
+//            System.out.println("ERROR: Initialization failed because of hand");
+//            return false;
+//        }
 //        destinationCards
 
         return true;
