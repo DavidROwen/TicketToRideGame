@@ -529,9 +529,9 @@ public class Game extends Observable {
         trainBank.set(index, drawTrainCard());
         addToHistory(new PlayerAction(players.get(playerId).getUsername(), "picked up " + pickedCard.getType()));
 
-        if (tooManyLocos()){
-            resetTrainBank();
-        }
+//        if (tooManyLocos()){
+//            resetTrainBank();
+//        }
     }
 
     public boolean tooManyLocos(){
