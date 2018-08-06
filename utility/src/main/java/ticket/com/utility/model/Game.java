@@ -464,37 +464,38 @@ public class Game extends Observable {
         assert destinationCards != null;
 
         //temporary fix
-        destinationCards.add(new DestinationCard(new City("Los Angeles"), new City("New York City"), 21));
-        destinationCards.add(new DestinationCard(new City("Duluth"), new City("Houston"), 8));
-        destinationCards.add(new DestinationCard(new City("Sault Ste. Marie"), new City("Nashville"), 8));
-        destinationCards.add(new DestinationCard(new City("New York City"), new City("Atlanta"), 6));
-        destinationCards.add(new DestinationCard(new City("Portland"), new City("Nashville"), 17));
-        destinationCards.add(new DestinationCard(new City("Vancouver"), new City("Montreal"), 20));
-        destinationCards.add(new DestinationCard(new City("Duluth"), new City("El Paso"), 10));
-        destinationCards.add(new DestinationCard(new City("Toronto"), new City("Miami"), 10));
-        destinationCards.add(new DestinationCard(new City("Portland"), new City("Phoenix"), 11));
-        destinationCards.add(new DestinationCard(new City("Dallas"), new City("New York City"), 11));
-        destinationCards.add(new DestinationCard(new City("Calgary"), new City("Salt Lake City"), 7));
-        destinationCards.add(new DestinationCard(new City("Calgary"), new City("Phoenix"), 13));
-        destinationCards.add(new DestinationCard(new City("Los Angeles"), new City("Miami"), 20));
-        destinationCards.add(new DestinationCard(new City("Winnipeg"), new City("Little Rock"), 11));
-        destinationCards.add(new DestinationCard(new City("San Francisco"), new City("Atlanta"), 17));
-        destinationCards.add(new DestinationCard(new City("Kansas City"), new City("Houston"), 5));
-        destinationCards.add(new DestinationCard(new City("Los Angeles"), new City("Chicago"), 16));
-        destinationCards.add(new DestinationCard(new City("Denver"), new City("Pittsburgh"), 11));
-        destinationCards.add(new DestinationCard(new City("Chicago"), new City("Santa Fe"), 9));
-        destinationCards.add(new DestinationCard(new City("Vancouver"), new City("Santa Fe"), 13));
-        destinationCards.add(new DestinationCard(new City("Boston"), new City("Miami"), 12));
-        destinationCards.add(new DestinationCard(new City("Chicago"), new City("New Orleans"), 7));
-        destinationCards.add(new DestinationCard(new City("Montreal"), new City("Atlanta"), 9));
-        destinationCards.add(new DestinationCard(new City("Seattle"), new City("New York"), 22));
-        destinationCards.add(new DestinationCard(new City("Denver"), new City("El Paso"), 4));
-        destinationCards.add(new DestinationCard(new City("Helena"), new City("Los Angeles"), 8));
-        destinationCards.add(new DestinationCard(new City("Winnipeg"), new City("Houston"), 12));
-        destinationCards.add(new DestinationCard(new City("Montreal"), new City("New Orleans"), 13));
-        destinationCards.add(new DestinationCard(new City("Sault Ste. Marie"), new City("Oklahoma City"), 9));
-        destinationCards.add(new DestinationCard(new City("Seattle"), new City("Los Angeles"), 9));
+        destinationCards.add(new DestinationCard(new City("LA"), new City("newYork"), 21));
+        destinationCards.add(new DestinationCard(new City("duluth"), new City("houston"), 8));
+        destinationCards.add(new DestinationCard(new City("saultStMarie"), new City("nashville"), 8));
+        destinationCards.add(new DestinationCard(new City("newYork"), new City("atlanta"), 6));
+        destinationCards.add(new DestinationCard(new City("portland"), new City("nashville"), 17));
+        destinationCards.add(new DestinationCard(new City("vancouver"), new City("montreal"), 20));
+        destinationCards.add(new DestinationCard(new City("duluth"), new City("elPaso"), 10));
+        destinationCards.add(new DestinationCard(new City("toronto"), new City("miami"), 10));
+        destinationCards.add(new DestinationCard(new City("portland"), new City("phoenix"), 11));
+        destinationCards.add(new DestinationCard(new City("dallas"), new City("newYork"), 11));
+        destinationCards.add(new DestinationCard(new City("calgary"), new City("SLC"), 7));
+        destinationCards.add(new DestinationCard(new City("calgary"), new City("phoenix"), 13));
+        destinationCards.add(new DestinationCard(new City("LA"), new City("miami"), 20));
+        destinationCards.add(new DestinationCard(new City("winnipeg"), new City("littleRock"), 11));
+        destinationCards.add(new DestinationCard(new City("sanFran"), new City("atlanta"), 17));
+        destinationCards.add(new DestinationCard(new City("KC"), new City("houston"), 5));
+        destinationCards.add(new DestinationCard(new City("LA"), new City("chicago"), 16));
+        destinationCards.add(new DestinationCard(new City("denver"), new City("pittsburgh"), 11));
+        destinationCards.add(new DestinationCard(new City("chicago"), new City("santaFe"), 9));
+        destinationCards.add(new DestinationCard(new City("vancouver"), new City("santaFe"), 13));
+        destinationCards.add(new DestinationCard(new City("boston"), new City("miami"), 12));
+        destinationCards.add(new DestinationCard(new City("chicago"), new City("newOrleans"), 7));
+        destinationCards.add(new DestinationCard(new City("montreal"), new City("atlanta"), 9));
+        destinationCards.add(new DestinationCard(new City("seattle"), new City("newYork"), 22));
+        destinationCards.add(new DestinationCard(new City("denver"), new City("elPaso"), 4));
+        destinationCards.add(new DestinationCard(new City("helena"), new City("LA"), 8));
+        destinationCards.add(new DestinationCard(new City("winnipeg"), new City("houston"), 12));
+        destinationCards.add(new DestinationCard(new City("montreal"), new City("newOrleans"), 13));
+        destinationCards.add(new DestinationCard(new City("saultStMarie"), new City("oklahomaCity"), 9));
+        destinationCards.add(new DestinationCard(new City("seattle"), new City("LA"), 9));
         Collections.shuffle(destinationCards);
+
     }
     //END Destination Card Functions
 
@@ -686,43 +687,58 @@ public class Game extends Observable {
         player.addPoints(points); // gives player points from destination cards
     }
 
-//    public ArrayList<ArrayList<String>> TestCompletedDestinationPoints(List<Route> playersRoutes){
-//        ArrayList<ArrayList<String>> groups = new ArrayList<>();
-//        Integer points = 0;
-//        List<Route> storedRoutes = new ArrayList<>();
-//
-//        for (Route route:playersRoutes) {
-//            if(!storedRoutes.contains(route)) {
-//                ArrayList<String> group = new ArrayList<>();
-//                group.add(route.getStartCity());
-//                group.add(route.getEndCity());
-//                storedRoutes.add(route);
-//
-//                while (true) {
-//                    Boolean Continue = false;
-//                    for (Route innerRoute : playersRoutes) {
-//                        if(!storedRoutes.contains(innerRoute)) {
-//                            if (group.contains(innerRoute.getStartCity())) { //never gets here
-//                                group.add(innerRoute.getEndCity());
-//                                storedRoutes.add(innerRoute);
-//                                Continue = true;
-//                            } else if (group.contains(innerRoute.getEndCity())) {
-//                                group.add(innerRoute.getStartCity());
-//                                storedRoutes.add(innerRoute);
-//                                Continue = true;
-//                            }
-//                        }
-//                    }
-//                    if(!Continue){
-//                        break;
-//                    }
-//                }
-//                groups.add(group);
-//            }
-//        }
-//
-//        return groups;
-//    }
+    public Integer TestCompletedDestinationPoints(List<Route> playersRoutes, Player player){
+        ArrayList<ArrayList<String>> groups = new ArrayList<>();
+        Integer points = 0;
+        List<Route> storedRoutes = new ArrayList<>();
+
+        for (Route route:playersRoutes) {
+            if(!storedRoutes.contains(route)) {
+                ArrayList<String> group = new ArrayList<>();
+                group.add(route.getStartCity());
+                group.add(route.getEndCity());
+                storedRoutes.add(route);
+
+                while (true) {
+                    Boolean Continue = false;
+                    for (Route innerRoute : playersRoutes) {
+                        if(!storedRoutes.contains(innerRoute)) {
+                            if (group.contains(innerRoute.getStartCity())) { //never gets here
+                                group.add(innerRoute.getEndCity());
+                                storedRoutes.add(innerRoute);
+                                Continue = true;
+                            } else if (group.contains(innerRoute.getEndCity())) {
+                                group.add(innerRoute.getStartCity());
+                                storedRoutes.add(innerRoute);
+                                Continue = true;
+                            }
+                        }
+                    }
+                    if(!Continue){
+                        break;
+                    }
+                }
+                groups.add(group);
+            }
+        }
+
+        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and gives points for completed ones
+            for(ArrayList<String> group:groups){
+                if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
+                    destinationCard.setCompleted();
+                    points = points + destinationCard.getValue();
+                }
+            }
+        }
+
+        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and subtracts points for uncompleted ones
+            if(!destinationCard.isCompleted()){
+                points = points - destinationCard.getValue();
+            }
+        }
+
+        return points;
+    }
 
     public boolean isBankCardWild(Integer index){
         TrainCard card = getTrainBank().get(index);
