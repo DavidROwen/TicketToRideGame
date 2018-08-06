@@ -347,7 +347,7 @@ public class ClientModel extends Observable {
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);
             myNotify(HISTORYUPDATE);
-            if(getMyPlayer().getId().equals(playerID)) { myNotify(MAP_DREW_TRAINCARD); }
+//            if(getMyPlayer().getId().equals(playerID)) { myNotify(MAP_DREW_TRAINCARD); }
         }
 
         return result;
