@@ -19,8 +19,8 @@ public class Player {
 
     // Game Data
     private COLOR color = COLOR.RED;
-//    private Integer trains = 45;
-    private Integer trains = 4;
+    private Integer trains = 45;
+//    private Integer trains = 4;
     private Integer points = 0;
 
     private List<DestinationCard> tempDeck = new LinkedList<>();
