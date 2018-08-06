@@ -313,7 +313,7 @@ public class Game extends Observable {
             }
         }
         Collections.shuffle(trainCardsDeck, new Random(getId().hashCode()));
-        if(trainCardsDeck.size() != 110) { throw new AssertionError(); }
+        if(trainCardsDeck.size() != 110) { throw new AssertionError("Train Cards Deck size should be 110 but it was "+trainCardsDeck.size()); }
     }
 
     private TrainCard getRandomTrainCard() {

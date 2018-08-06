@@ -1078,7 +1078,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="13dp"
-        android:text="Draw Trains" />
+        android:text="Draw Train Card" />
 
     <Button
         android:id="@+id/button2"
