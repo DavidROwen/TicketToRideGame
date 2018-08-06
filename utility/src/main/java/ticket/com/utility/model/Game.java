@@ -456,16 +456,16 @@ public class Game extends Observable {
         destinationCards.add(new DestinationCard(new City("vancouver"), new City("montreal"), 20));
         destinationCards.add(new DestinationCard(new City("duluth"), new City("elPaso"), 10));
         destinationCards.add(new DestinationCard(new City("toronto"), new City("miami"), 10));
-        destinationCards.add(new DestinationCard(new City("portland"), new City("phoenix"), 11));
+        destinationCards.add(new DestinationCard(new City("portland"), new City("pheonix"), 11)); //also spelt wrong in routes
         destinationCards.add(new DestinationCard(new City("dallas"), new City("newYork"), 11));
         destinationCards.add(new DestinationCard(new City("calgary"), new City("SLC"), 7));
-        destinationCards.add(new DestinationCard(new City("calgary"), new City("phoenix"), 13));
+        destinationCards.add(new DestinationCard(new City("calgary"), new City("pheonix"), 13)); //also spelt wrong in routes
         destinationCards.add(new DestinationCard(new City("LA"), new City("miami"), 20));
         destinationCards.add(new DestinationCard(new City("winnipeg"), new City("littleRock"), 11));
         destinationCards.add(new DestinationCard(new City("sanFran"), new City("atlanta"), 17));
         destinationCards.add(new DestinationCard(new City("KC"), new City("houston"), 5));
         destinationCards.add(new DestinationCard(new City("LA"), new City("chicago"), 16));
-        destinationCards.add(new DestinationCard(new City("denver"), new City("pittsburgh"), 11));
+        destinationCards.add(new DestinationCard(new City("denver"), new City("pittsburg"), 11)); //also spelt wrong in routes
         destinationCards.add(new DestinationCard(new City("chicago"), new City("santaFe"), 9));
         destinationCards.add(new DestinationCard(new City("vancouver"), new City("santaFe"), 13));
         destinationCards.add(new DestinationCard(new City("boston"), new City("miami"), 12));
