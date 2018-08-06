@@ -279,6 +279,7 @@ public class Game extends Observable {
         return counts;
     }
 
+    //only called from gamePlayService
     public void switchTurn() {
         turnNumber = (turnNumber + 1) % players.size();
         //notifies in clientModel

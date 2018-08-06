@@ -79,10 +79,9 @@ public class MapFragment extends BasicFragment implements IMapView{
         if(!created){
             created = true;
             presenter = new MapPresenter(this);
-        } else {
-            presenter.updateMapButtons();
         }
 
+        presenter.updateMapButtons();
         presenter.setClaimedRoutes();
 
         return view;

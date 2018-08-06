@@ -347,9 +347,6 @@ public class ClientModel extends Observable {
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);
             myNotify(HISTORYUPDATE);
-
-            getMyActiveGame().switchTurn();
-            myNotify(TURN_NUMBER_CHANGED);
         }
 
         return result;
