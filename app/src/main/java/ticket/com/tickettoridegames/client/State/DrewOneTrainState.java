@@ -3,7 +3,9 @@ package ticket.com.tickettoridegames.client.State;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
+import ticket.com.tickettoridegames.client.presenter.MapPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
+import ticket.com.tickettoridegames.client.view.Fragments.MapFragment;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
@@ -66,9 +68,14 @@ public class DrewOneTrainState extends PlayerState {
         if (!clientModel.isMyTurn()) {
             clientModel.setState(NotMyTurnState.getInstance());
             presenter.getMapView().displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
-            presenter.getMapView().disableButtons();
         }
     }
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
+
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
+        presenter.getMapView().enableRoutes(false);
+        presenter.getMapView().enableDestinationCardDeck(false);
+    }
 }

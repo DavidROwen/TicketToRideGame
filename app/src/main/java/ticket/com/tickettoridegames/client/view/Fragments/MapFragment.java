@@ -79,35 +79,30 @@ public class MapFragment extends BasicFragment implements IMapView{
         if(!created){
             created = true;
             presenter = new MapPresenter(this);
-        } else {
-            presenter.checkIsMyTurn();
         }
 
+        presenter.updateMapButtons();
         presenter.setClaimedRoutes();
 
         return view;
     }
 
     @Override
-    public void enableButtons(){
-        drawTrainsButton.setEnabled(true);
-        drawRoutesButton.setEnabled(true);
-
+    public void enableRoutes(Boolean enable) {
         for(String buttonName : buttonToRouteConversion.keySet()) {
             FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
-            button.setEnabled(true);
+            button.setEnabled(enable);
         }
     }
 
     @Override
-    public void disableButtons(){
-        drawTrainsButton.setEnabled(false);
-        drawRoutesButton.setEnabled(false);
+    public void enableTrainCardDeck(Boolean enable) {
+        drawTrainsButton.setEnabled(enable);
+    }
 
-        for(String buttonName : buttonToRouteConversion.keySet()) {
-            FloatingActionButton button = view.findViewById(getResources().getIdentifier(buttonName, "id", getActivity().getPackageName()));
-            button.setEnabled(false);
-        }
+    @Override
+    public void enableDestinationCardDeck(Boolean enable) {
+        drawRoutesButton.setEnabled(enable);
     }
 
     public void setFirstCall(boolean val){

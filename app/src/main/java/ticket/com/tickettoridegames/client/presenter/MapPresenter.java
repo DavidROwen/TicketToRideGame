@@ -8,8 +8,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-import ticket.com.tickettoridegames.client.State.MyTurnState;
-import ticket.com.tickettoridegames.client.State.NotMyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
@@ -37,10 +35,11 @@ public class MapPresenter implements IMapPresenter, Observer {
             List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
             Set<DestinationCard> destinationCards = new HashSet<>(cards);
             mapView.displayDestinationCards(destinationCards);
-            //mapView.disableButtons();
         }
 
+        //for rejoining
         checkIsMyTurn();
+        updateMapButtons();
     }
 
     @Override
@@ -48,8 +47,9 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
-            case TURN_NUMBER_CHANGED:
+            case STATE_UPDATE:
                 checkIsMyTurn();
+                updateMapButtons();
                 break;
             case NEWTEMPDECK:
                 List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
@@ -88,6 +88,11 @@ public class MapPresenter implements IMapPresenter, Observer {
 //            mapView.displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
 //            mapView.disableButtons();
 //        }
+    }
+
+    @Override
+    public void updateMapButtons() {
+        getCurrentState().updateMapButtons(this);
     }
 
     @Override

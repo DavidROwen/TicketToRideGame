@@ -4,6 +4,7 @@ import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.presenter.IAssetsPresenter;
 import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
+import ticket.com.tickettoridegames.client.view.GamePlayActivity;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
@@ -46,6 +47,7 @@ public class MyTurnState extends PlayerState {
         Result result = GamePlayService.claimRoute(cm.getMyActiveGame().getId(), cm.getMyPlayer().getId(),
                 routeName, routeType);
         if (result.isSuccess()){
+            GamePlayService.switchTurn(cm.getCurrentGameID());
             if (cm.getMyPlayer().getTrains() <= 3){
                 cm.setState(LastRoundState.getInstance());
             }
@@ -87,5 +89,12 @@ public class MyTurnState extends PlayerState {
         if (cm.getMyPlayer().getTrains() <= 3){
             cm.setState(LastRoundState.getInstance());
         }
+    }
+
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
+        presenter.getMapView().enableRoutes(true);
+        presenter.getMapView().enableTrainCardDeck(true);
+        presenter.getMapView().enableDestinationCardDeck(true);
     }
 }

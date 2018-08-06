@@ -8,6 +8,7 @@ import ticket.com.utility.model.Game;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
+//Version of drewOneTrainState
 public class LastDrawState extends PlayerState {
     private static LastDrawState instance = new LastDrawState();
     private GamePlayService gamePlayService;
@@ -26,7 +27,6 @@ public class LastDrawState extends PlayerState {
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
         gamePlayService.endGame(cm.getMyActiveGame().getId());
         cm.setState(GameEndedState.getInstance());
-        presenter.getMapView().endGame();
     }
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
@@ -54,7 +54,6 @@ public class LastDrawState extends PlayerState {
         if (!wildCard) {
             gamePlayService.pickupTrainCard(cm.getUserId(), cm.getMyActiveGame().getId(), index);
             gamePlayService.endGame(cm.getMyActiveGame().getId());
-            presenter.getAssetsView().endGame();
         }
         else {
             presenter.getAssetsView().displayMessage("You are not allowed to draw a locomotive on your second draw.");
@@ -64,11 +63,18 @@ public class LastDrawState extends PlayerState {
     public void checkTurn(IMapPresenter presenter){}
 
     public void transition(IMapPresenter presenter, ClientModel clientModel){
-        clientModel.setState(GameEndedState.getInstance());
-        presenter.getMapView().displayMessage("The game is over!");
-        presenter.getMapView().disableButtons();
-        presenter.getMapView().endGame();
+        if (!clientModel.isMyTurn()) {
+            clientModel.setState(GameEndedState.getInstance());
+            presenter.getMapView().displayMessage("The game is over!");
+        }
     }
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
+
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
+        presenter.getMapView().enableRoutes(false);
+        presenter.getMapView().enableTrainCardDeck(true);
+        presenter.getMapView().enableDestinationCardDeck(false);
+    }
 }

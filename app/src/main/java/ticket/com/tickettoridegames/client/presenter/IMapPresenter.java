@@ -9,6 +9,8 @@ import ticket.com.utility.model.TrainCard;
 public interface IMapPresenter {
     void checkIsMyTurn();
 
+    void updateMapButtons();
+
     void drawTrainCard();
 
     void drawDestinationCards();

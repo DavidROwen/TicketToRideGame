@@ -38,4 +38,10 @@ public class GameEndedState extends  PlayerState{
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
 
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
+        presenter.getMapView().enableRoutes(false);
+        presenter.getMapView().enableTrainCardDeck(false);
+        presenter.getMapView().enableDestinationCardDeck(false);
+    }
 }

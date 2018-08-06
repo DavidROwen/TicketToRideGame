@@ -275,8 +275,6 @@ public class GamePlayService {
         //build stack
         LinkedList<TrainCard> serverHand = new LinkedList<>();
         serverHand.addAll(Arrays.asList(temp));
-        clientHand.sort(TrainCard::compareTo);
-        serverHand.sort(TrainCard::compareTo);
 
         try {
             if (clientHand.size() != serverHand.size()) {
@@ -289,7 +287,8 @@ public class GamePlayService {
                     throw new AssertionError();
                 }
             }
-            System.out.println("Confirmed that client and server have the same trainCards");
+            System.out.println("Confirmed that client and server have the same trainCards for "
+                    + ClientModel.get_instance().getMyActiveGame().getPlayer(playerId));
         } catch (AssertionError e) {
             printHand(clientHand, true);
             printHand(serverHand, false);

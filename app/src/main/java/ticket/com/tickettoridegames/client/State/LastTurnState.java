@@ -8,6 +8,7 @@ import ticket.com.utility.model.Game;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
+//Version of myTurnState
 public class LastTurnState extends PlayerState {
 
     private static LastTurnState instance = new LastTurnState();
@@ -79,10 +80,15 @@ public class LastTurnState extends PlayerState {
 
     @Override
     public void transition(IMapPresenter presenter, ClientModel clientModel){
-        clientModel.setState(GameEndedState.getInstance());
-        presenter.getMapView().displayMessage("The game is over!");
-        presenter.getMapView().disableButtons();
+        if(!ClientModel.get_instance().isMyTurn()) {
+            clientModel.setState(GameEndedState.getInstance());
+            presenter.getMapView().displayMessage("The game is over!");
+        }
     }
 
-    public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
+    public void routeClaimed(IMapPresenter presenter, ClientModel cm){
+        presenter.getMapView().enableRoutes(true);
+        presenter.getMapView().enableTrainCardDeck(true);
+        presenter.getMapView().enableDestinationCardDeck(true);
+    }
 }
