@@ -170,7 +170,7 @@ public class GameMap {
         temp.put("charleston_raleigh", new Route("charleston_raleigh", new City("charleston"), new City("raleigh"), 2, TrainCard.TRAIN_TYPE.WILD));
         temp.put("raleigh_pittsburg", new Route("raleigh_pittsburg", new City("raleigh"), new City("pittsburg"), 2, TrainCard.TRAIN_TYPE.WILD));
         temp.put("toronto_pittsburg", new Route("toronto_pittsburg", new City( "toronto"), new City("pittsburg"), 2, TrainCard.TRAIN_TYPE.WILD));
-        temp.put("raleigh_washington_first", new Route("raleigh_washington_first", new City("raleigh"), new City("washington"), 3, TrainCard.TRAIN_TYPE.WILD));
+        temp.put("raleigh_washington_first", new Route("raleigh_washington_first", new City("raleigh"), new City("washington"), 2, TrainCard.TRAIN_TYPE.WILD));
         temp.put("raleigh_washington_second", new Route("raleigh_washington_second", new City("raleigh"), new City("washington"), 2, TrainCard.TRAIN_TYPE.WILD));
         temp.put("pittsburg_washington", new Route("pittsburg_washington", new City("pittsburg"), new City("washington"), 2, TrainCard.TRAIN_TYPE.WILD));
         temp.put("washington_newYork_first", new Route("washington_newYork_first", new City("washington"), new City("newYork"), 2, TrainCard.TRAIN_TYPE.ORANGE));
