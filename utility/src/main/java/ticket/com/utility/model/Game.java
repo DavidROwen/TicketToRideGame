@@ -19,23 +19,23 @@ import ticket.com.utility.web.Result;
 public class Game extends Observable {
     //General game data
     private Map<String, Player> players = new HashMap<>();
-    private List<Chat> chatList = new LinkedList<>();
+    private List<Chat> chatList = new ArrayList<>();
     private String id = "";
     private String name = "";
     private int maxPlayers = 2;
     private int numberOfPlayers = 0;
     private boolean isStarted = false;
-    private Chat newestChat;
+    private Chat newestChat = null;
     private Boolean gameOver = false;
 
     // Stores the playerIDs in turn order
-    private List<String> turnOrder = new ArrayList<>();
+    private List<String> turnOrder = new LinkedList<>();
     private Integer turnNumber = 0;
     private List<TrainCard> trainBank = new LinkedList<>();
 
     // Map data
     private GameMap map = new GameMap();
-    private List<DestinationCard> destinationCards = new ArrayList<>();
+    private List<DestinationCard> destinationCards = new LinkedList<>();
     private Stack<TrainCard> trainCardsDeck = new Stack<>();
     private List<TrainCard> trainDiscards = new ArrayList<>();
 
@@ -49,29 +49,13 @@ public class Game extends Observable {
     private boolean initializedCorrectly = false;
 
     public Game(){
-        this.players = new HashMap<>();
-        this.chatList = new ArrayList<>();
-        this.turnOrder = new LinkedList<>();
-        this.map = new GameMap();
-        this.destinationCards = new LinkedList<>();
-        fillDestinationCards();
-
         fillDestinationCards();
     }
 
     public Game(String name, int numberOfPlayers){
-        //collection subject to change
-        this.players = new HashMap<>();
-        this.chatList = new ArrayList<>();
         this.name = name;
         this.maxPlayers = numberOfPlayers;
-        this.numberOfPlayers = 0;
         this.id = UUID.randomUUID().toString();
-        this.newestChat = null;
-        this.isStarted = false;
-        this.turnOrder = new LinkedList<>();
-        this.map = new GameMap();
-        this.destinationCards = new LinkedList<>();
 
         fillDestinationCards();
     }
@@ -670,15 +654,12 @@ public class Game extends Observable {
         }
 
         for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and gives points for completed ones
-                for(ArrayList<String> group:groups){
-                    if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
-                        destinationCard.setCompleted();
-                        points = points + destinationCard.getValue();
-                    }
+            for(ArrayList<String> group:groups){
+                if(group.contains(destinationCard.getLocation().getName()) && group.contains(destinationCard.getLocation2().getName())){
+                    destinationCard.setCompleted();
+                    points = points + destinationCard.getValue();
                 }
-        }
-
-        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and subtracts points for uncompleted ones
+            }
             if(!destinationCard.isCompleted()){
                 points = points - destinationCard.getValue();
             }
