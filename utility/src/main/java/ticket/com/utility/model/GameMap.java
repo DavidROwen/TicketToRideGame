@@ -25,7 +25,8 @@ public class GameMap {
         //check with routs
         if(ROUTES.get(routeName) == null) {
             System.out.println("Failed to claim " + routeName + " because it doesn't exist");
-            return new Result(false, null, "Route doesn't exist"); }
+            return new Result(false, null, "Route doesn't exist");
+        }
         Result result = ROUTES.get(routeName).canClaim();
         if(!result.isSuccess()) {
             System.out.println("Failed to claim " + routeName + " because route is already owned");
