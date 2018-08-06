@@ -177,6 +177,11 @@ public class GameTest {
     }
 
     @Test
+    public void testAddDestPoints() {
+
+    }
+
+    @Test
     public void testTooManyLocos() {
         initToGamePlay();
         List<TrainCard> trainBank = game.getTrainBank();

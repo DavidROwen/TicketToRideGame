@@ -685,43 +685,43 @@ public class Game extends Observable {
         player.addPoints(points); // gives player points from destination cards
     }
 
-    public ArrayList<ArrayList<String>> TestCompletedDestinationPoints(List<Route> playersRoutes){
-        ArrayList<ArrayList<String>> groups = new ArrayList<>();
-        Integer points = 0;
-        List<Route> storedRoutes = new ArrayList<>();
-
-        for (Route route:playersRoutes) {
-            if(!storedRoutes.contains(route)) {
-                ArrayList<String> group = new ArrayList<>();
-                group.add(route.getStartCity());
-                group.add(route.getEndCity());
-                storedRoutes.add(route);
-
-                while (true) {
-                    Boolean Continue = false;
-                    for (Route innerRoute : playersRoutes) {
-                        if(!storedRoutes.contains(innerRoute)) {
-                            if (group.contains(innerRoute.getStartCity())) { //never gets here
-                                group.add(innerRoute.getEndCity());
-                                storedRoutes.add(innerRoute);
-                                Continue = true;
-                            } else if (group.contains(innerRoute.getEndCity())) {
-                                group.add(innerRoute.getStartCity());
-                                storedRoutes.add(innerRoute);
-                                Continue = true;
-                            }
-                        }
-                    }
-                    if(!Continue){
-                        break;
-                    }
-                }
-                groups.add(group);
-            }
-        }
-
-        return groups;
-    }
+//    public ArrayList<ArrayList<String>> TestCompletedDestinationPoints(List<Route> playersRoutes){
+//        ArrayList<ArrayList<String>> groups = new ArrayList<>();
+//        Integer points = 0;
+//        List<Route> storedRoutes = new ArrayList<>();
+//
+//        for (Route route:playersRoutes) {
+//            if(!storedRoutes.contains(route)) {
+//                ArrayList<String> group = new ArrayList<>();
+//                group.add(route.getStartCity());
+//                group.add(route.getEndCity());
+//                storedRoutes.add(route);
+//
+//                while (true) {
+//                    Boolean Continue = false;
+//                    for (Route innerRoute : playersRoutes) {
+//                        if(!storedRoutes.contains(innerRoute)) {
+//                            if (group.contains(innerRoute.getStartCity())) { //never gets here
+//                                group.add(innerRoute.getEndCity());
+//                                storedRoutes.add(innerRoute);
+//                                Continue = true;
+//                            } else if (group.contains(innerRoute.getEndCity())) {
+//                                group.add(innerRoute.getStartCity());
+//                                storedRoutes.add(innerRoute);
+//                                Continue = true;
+//                            }
+//                        }
+//                    }
+//                    if(!Continue){
+//                        break;
+//                    }
+//                }
+//                groups.add(group);
+//            }
+//        }
+//
+//        return groups;
+//    }
 
     public boolean isBankCardWild(Integer index){
         TrainCard card = getTrainBank().get(index);
