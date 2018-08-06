@@ -97,27 +97,27 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
         });
 
 
-        ////////////////////////////Testing////////////////////////////
-        Game game = new Game();
-        Player player = new Player("username", "id");
-        player.addDestinationCard(new DestinationCard(new City("SLC"), new City("Toronto"), 10));
-        player.addDestinationCard(new DestinationCard(new City("Miami"), new City("SLC"), 5));
-        List<Route> playersRoutes = new ArrayList<>();
-        playersRoutes.add(new Route("1", new City("SLC"), new City("Denver"),2,null));
-        playersRoutes.add(new Route("2", new City("Omaha"), new City("KC"),2,null));
-        playersRoutes.add(new Route("3", new City("Omaha"), new City("Chicago"),2,null));
-        playersRoutes.add(new Route("4", new City("Miami"), new City("Charleston"),2,null));
-        playersRoutes.add(new Route("5", new City("Toronto"), new City("Chicago"),2,null));
-        playersRoutes.add(new Route("h6i", new City("Dallas"), new City("Houston"),2,null));
-        playersRoutes.add(new Route("h7i", new City("Charleston"), new City("Atlanta"),2,null));
-        playersRoutes.add(new Route("h8i", new City("Denver"), new City("SantaFe"),2,null));
-        playersRoutes.add(new Route("h9i", new City("SantaFe"), new City("OklahomaCity"),2,null));
-        playersRoutes.add(new Route("h0i", new City("SLC"), new City("LV"),2,null));
-        playersRoutes.add(new Route("h99i", new City("KC"), new City("OklahomaCity"),2,null));
-
-        Integer points = game.TestCompletedDestinationPoints(playersRoutes, player);
-        String fred = "fred";
-        //////////////////////////Testing/////////////////////////////
+//        ////////////////////////////Testing////////////////////////////
+//        Game game = new Game();
+//        Player player = new Player("username", "id");
+//        player.addDestinationCard(new DestinationCard(new City("SLC"), new City("Toronto"), 10));
+//        player.addDestinationCard(new DestinationCard(new City("Miami"), new City("SLC"), 5));
+//        List<Route> playersRoutes = new ArrayList<>();
+//        playersRoutes.add(new Route("1", new City("SLC"), new City("Denver"),2,null));
+//        playersRoutes.add(new Route("2", new City("Omaha"), new City("KC"),2,null));
+//        playersRoutes.add(new Route("3", new City("Omaha"), new City("Chicago"),2,null));
+//        playersRoutes.add(new Route("4", new City("Miami"), new City("Charleston"),2,null));
+//        playersRoutes.add(new Route("5", new City("Toronto"), new City("Chicago"),2,null));
+//        playersRoutes.add(new Route("h6i", new City("Dallas"), new City("Houston"),2,null));
+//        playersRoutes.add(new Route("h7i", new City("Charleston"), new City("Atlanta"),2,null));
+//        playersRoutes.add(new Route("h8i", new City("Denver"), new City("SantaFe"),2,null));
+//        playersRoutes.add(new Route("h9i", new City("SantaFe"), new City("OklahomaCity"),2,null));
+//        playersRoutes.add(new Route("h0i", new City("SLC"), new City("LV"),2,null));
+//        playersRoutes.add(new Route("h99i", new City("KC"), new City("OklahomaCity"),2,null));
+//
+//        Integer points = game.TestCompletedDestinationPoints(playersRoutes, player);
+//        String fred = "fred";
+//        //////////////////////////Testing/////////////////////////////
     }
 
     // Login or register was successful go to the join view.

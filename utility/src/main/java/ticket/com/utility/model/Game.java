@@ -668,58 +668,58 @@ public class Game extends Observable {
         player.addPoints(points); // gives player points from destination cards
     }
 
-    public Integer TestCompletedDestinationPoints(List<Route> playersRoutes, Player player){
-        ArrayList<ArrayList<String>> groups = new ArrayList<>();
-        Integer points = 0;
-        List<Route> storedRoutes = new ArrayList<>();
-
-        for (Route route:playersRoutes) {
-            if(!storedRoutes.contains(route)) {
-                ArrayList<String> group = new ArrayList<>();
-                group.add(route.getStartCity());
-                group.add(route.getEndCity());
-                storedRoutes.add(route);
-
-                while (true) {
-                    Boolean Continue = false;
-                    for (Route innerRoute : playersRoutes) {
-                        if(!storedRoutes.contains(innerRoute)) {
-                            if (group.contains(innerRoute.getStartCity())) { //never gets here
-                                group.add(innerRoute.getEndCity());
-                                storedRoutes.add(innerRoute);
-                                Continue = true;
-                            } else if (group.contains(innerRoute.getEndCity())) {
-                                group.add(innerRoute.getStartCity());
-                                storedRoutes.add(innerRoute);
-                                Continue = true;
-                            }
-                        }
-                    }
-                    if(!Continue){
-                        break;
-                    }
-                }
-                groups.add(group);
-            }
-        }
-
-        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and gives points for completed ones
-            for(ArrayList<String> group:groups){
-                if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
-                    destinationCard.setCompleted();
-                    points = points + destinationCard.getValue();
-                }
-            }
-        }
-
-        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and subtracts points for uncompleted ones
-            if(!destinationCard.isCompleted()){
-                points = points - destinationCard.getValue();
-            }
-        }
-
-        return points;
-    }
+//    public Integer TestCompletedDestinationPoints(List<Route> playersRoutes, Player player){
+//        ArrayList<ArrayList<String>> groups = new ArrayList<>();
+//        Integer points = 0;
+//        List<Route> storedRoutes = new ArrayList<>();
+//
+//        for (Route route:playersRoutes) {
+//            if(!storedRoutes.contains(route)) {
+//                ArrayList<String> group = new ArrayList<>();
+//                group.add(route.getStartCity());
+//                group.add(route.getEndCity());
+//                storedRoutes.add(route);
+//
+//                while (true) {
+//                    Boolean Continue = false;
+//                    for (Route innerRoute : playersRoutes) {
+//                        if(!storedRoutes.contains(innerRoute)) {
+//                            if (group.contains(innerRoute.getStartCity())) { //never gets here
+//                                group.add(innerRoute.getEndCity());
+//                                storedRoutes.add(innerRoute);
+//                                Continue = true;
+//                            } else if (group.contains(innerRoute.getEndCity())) {
+//                                group.add(innerRoute.getStartCity());
+//                                storedRoutes.add(innerRoute);
+//                                Continue = true;
+//                            }
+//                        }
+//                    }
+//                    if(!Continue){
+//                        break;
+//                    }
+//                }
+//                groups.add(group);
+//            }
+//        }
+//
+//        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and gives points for completed ones
+//            for(ArrayList<String> group:groups){
+//                if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
+//                    destinationCard.setCompleted();
+//                    points = points + destinationCard.getValue();
+//                }
+//            }
+//        }
+//
+//        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and subtracts points for uncompleted ones
+//            if(!destinationCard.isCompleted()){
+//                points = points - destinationCard.getValue();
+//            }
+//        }
+//
+//        return points;
+//    }
 
     public boolean isBankCardWild(Integer index){
         TrainCard card = getTrainBank().get(index);
