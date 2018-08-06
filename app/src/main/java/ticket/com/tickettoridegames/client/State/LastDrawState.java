@@ -64,8 +64,15 @@ public class LastDrawState extends PlayerState {
     public void transition(IMapPresenter presenter, ClientModel clientModel){
         clientModel.setState(GameEndedState.getInstance());
         presenter.getMapView().displayMessage("The game is over!");
-        presenter.getMapView().disableButtons();
     }
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
+
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
+//        presenter.getMapView().enableRoutes(false);
+//        presenter.getMapView().enableTrainCardDeck(false);
+//        presenter.getMapView().enableDestinationCardDeck(false);
+        //todo I don't know
+    }
 }

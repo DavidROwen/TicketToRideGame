@@ -10,9 +10,11 @@ public interface IMapView {
 
     void displayMessage(String message);
 
-    void enableButtons();
+    void enableRoutes(Boolean enable);
 
-    void disableButtons();
+    void enableTrainCardDeck(Boolean enable);
+
+    void enableDestinationCardDeck(Boolean enable);
 
     void displayDestinationCards(Set<DestinationCard> destinationCards);
 

@@ -19,5 +19,5 @@ public enum TYPE {
     ROUTECLAIMED,
     REMOVED_PLAYER,
     GAME_OVER,
-    NEW_GAME_ADDED;
+    NEW_GAME_ADDED
 }

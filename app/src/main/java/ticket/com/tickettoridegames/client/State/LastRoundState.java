@@ -6,6 +6,7 @@ import ticket.com.tickettoridegames.client.presenter.IMapPresenter;
 import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.web.Result;
 
+//version of notMyTurnState
 public class LastRoundState extends PlayerState {
 
     private static LastRoundState instance = new LastRoundState();
@@ -63,13 +64,18 @@ public class LastRoundState extends PlayerState {
         if (clientModel.isMyTurn()){
             clientModel.setState(LastTurnState.getInstance());
             presenter.getMapView().displayMessage("It's your turn");
-            presenter.getMapView().enableButtons();
         }
         else {
             presenter.getMapView().displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
-            presenter.getMapView().disableButtons();
         }
     }
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
+
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
+        presenter.getMapView().enableRoutes(false);
+        presenter.getMapView().enableTrainCardDeck(false);
+        presenter.getMapView().enableDestinationCardDeck(false);
+    }
 }

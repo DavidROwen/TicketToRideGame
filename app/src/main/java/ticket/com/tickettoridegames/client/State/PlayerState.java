@@ -37,4 +37,6 @@ public class PlayerState {
     public void transition(IMapPresenter presenter, ClientModel clientModel){}
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){}
+
+    public void updateMapButtons(IMapPresenter presenter) {}
 }

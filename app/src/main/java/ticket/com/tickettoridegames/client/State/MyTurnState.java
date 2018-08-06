@@ -88,4 +88,11 @@ public class MyTurnState extends PlayerState {
             cm.setState(LastRoundState.getInstance());
         }
     }
+
+    @Override
+    public void updateMapButtons(IMapPresenter presenter) {
+        presenter.getMapView().enableRoutes(true);
+        presenter.getMapView().enableTrainCardDeck(true);
+        presenter.getMapView().enableDestinationCardDeck(true);
+    }
 }

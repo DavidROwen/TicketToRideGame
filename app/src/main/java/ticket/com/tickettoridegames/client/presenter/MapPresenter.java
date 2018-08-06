@@ -37,10 +37,7 @@ public class MapPresenter implements IMapPresenter, Observer {
             List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
             Set<DestinationCard> destinationCards = new HashSet<>(cards);
             mapView.displayDestinationCards(destinationCards);
-            //mapView.disableButtons();
         }
-
-        checkIsMyTurn();
     }
 
     @Override
@@ -50,6 +47,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         switch(type){
             case TURN_NUMBER_CHANGED:
                 checkIsMyTurn();
+                updateMapButtons();
                 break;
             case NEWTEMPDECK:
                 List<DestinationCard> cards = clientModel.getMyPlayer().getTempDeck();
@@ -88,6 +86,11 @@ public class MapPresenter implements IMapPresenter, Observer {
 //            mapView.displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
 //            mapView.disableButtons();
 //        }
+    }
+
+    @Override
+    public void updateMapButtons() {
+        getCurrentState().updateMapButtons(this);
     }
 
     @Override
