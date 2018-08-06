@@ -329,13 +329,6 @@ public class ClientModel extends Observable {
         Game game = getGame(gameId);
         game.switchTurn();
 
-//        if (game.isMyTurn(getMyPlayer().getId())){
-//            setState(MyTurnState.getInstance());
-//        }
-//        else {
-//            setState(NotMyTurnState.getInstance());
-//        }
-
         setChanged();
         notifyObservers(STATE_UPDATE);
     }

@@ -10,11 +10,14 @@ import ticket.com.utility.web.Result;
 
 //Version of drewOneTrainState
 public class LastDrawState extends PlayerState {
-    private static LastDrawState instance = new LastDrawState();
+
     private GamePlayService gamePlayService;
+
+    private static LastDrawState instance = new LastDrawState();
     public static LastDrawState getInstance(){
         return instance;
     }
+
     private LastDrawState(){
         gamePlayService = new GamePlayService();
     }
@@ -59,8 +62,6 @@ public class LastDrawState extends PlayerState {
             presenter.getAssetsView().displayMessage("You are not allowed to draw a locomotive on your second draw.");
         }
     }
-
-    public void checkTurn(IMapPresenter presenter){}
 
     public void transition(IMapPresenter presenter, ClientModel clientModel){
         if (!clientModel.isMyTurn()) {

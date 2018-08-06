@@ -80,14 +80,6 @@ public class MapPresenter implements IMapPresenter, Observer {
     @Override
     public void checkIsMyTurn(){
         getCurrentState().transition(this, ClientModel.get_instance());
-
-//        if(getCurrentState() instanceof MyTurnState || ) {
-//            mapView.displayMessage("It's your turn");
-//            mapView.enableButtons();
-//        } else if(getCurrentState() instanceof NotMyTurnState) {
-//            mapView.displayMessage("It's " + ClientModel.get_instance().getMyActiveGame().getTurnUsername() + "'s turn");
-//            mapView.disableButtons();
-//        }
     }
 
     @Override

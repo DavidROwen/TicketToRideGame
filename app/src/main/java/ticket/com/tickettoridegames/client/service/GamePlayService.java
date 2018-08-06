@@ -278,13 +278,13 @@ public class GamePlayService {
 
         try {
             if (clientHand.size() != serverHand.size()) {
-                 throw new AssertionError();
+                 throw new AssertionError("Client hand size does not match server hand size");
             }
             for (int i = 0; i < clientHand.size(); i++) {
                 if (serverHand.get(i) == null) {
                     throw new NullPointerException();
                 } else if(!clientHand.get(i).equals(serverHand.get(i))) {
-                    throw new AssertionError();
+                    throw new AssertionError("Hands do not match");
                 }
             }
             System.out.println("Confirmed that client and server have the same trainCards for "

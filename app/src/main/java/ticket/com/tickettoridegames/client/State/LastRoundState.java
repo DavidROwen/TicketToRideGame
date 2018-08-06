@@ -47,19 +47,6 @@ public class LastRoundState extends PlayerState {
         presenter.getAssetsView().displayMessage("It's not your turn.");
     }
 
-    public void checkTurn(IMapPresenter presenter){
-        ClientModel cm = ClientModel.get_instance();
-        if (cm.isMyTurn()) {
-            cm.setState(LastTurnState.getInstance());
-            presenter.getMapView().displayMessage("It's your turn");
-        }
-        else {
-            cm.setState(LastRoundState.getInstance());
-            String playerTurn = "It's " + cm.getTurnUsername() + "'s Turn";
-            presenter.getMapView().displayMessage(playerTurn);
-        }
-    }
-
     public void transition(IMapPresenter presenter, ClientModel clientModel){
         if (clientModel.isMyTurn()){
             clientModel.setState(LastTurnState.getInstance());
