@@ -669,15 +669,12 @@ public class Game extends Observable {
         }
 
         for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and gives points for completed ones
-                for(ArrayList<String> group:groups){
-                    if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
-                        destinationCard.setCompleted();
-                        points = points + destinationCard.getValue();
-                    }
+            for(ArrayList<String> group:groups){
+                if(group.contains(destinationCard.getLocation()) && group.contains(destinationCard.getLocation2())){
+                    destinationCard.setCompleted();
+                    points = points + destinationCard.getValue();
                 }
-        }
-
-        for(DestinationCard destinationCard:player.getDestinationCards()) { //iterates through owned destinations and subtracts points for uncompleted ones
+            }
             if(!destinationCard.isCompleted()){
                 points = points - destinationCard.getValue();
             }
