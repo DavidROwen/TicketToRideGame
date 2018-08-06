@@ -14,8 +14,11 @@ public class LastTurnState extends PlayerState {
     public static LastTurnState getInstance(){
         return instance;
     }
-    private LastTurnState(){}
+    private LastTurnState(){
+        gamePlayService = new GamePlayService();
+    }
     private GamePlayService gamePlayService;
+
 
     public void drawTrainCard(IMapPresenter presenter, ClientModel cm){
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
@@ -26,6 +29,7 @@ public class LastTurnState extends PlayerState {
         gamePlayService.drawDestinationCard(cm.getUserId(), cm.getCurrentGameID());
         gamePlayService.endGame(cm.getMyActiveGame().getId());
         cm.setState(GameEndedState.getInstance());
+        presenter.getMapView().endGame();
     }
 
     public void changeTurn(ClientModel cm) {

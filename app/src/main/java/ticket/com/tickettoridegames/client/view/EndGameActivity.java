@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ticket.com.tickettoridegames.R;
+import ticket.com.tickettoridegames.client.presenter.EndGamePresenter;
+import ticket.com.tickettoridegames.client.presenter.IEndGamePresenter;
 import ticket.com.utility.model.PlayerStats;
 
 import static android.graphics.Color.GRAY;
@@ -26,11 +28,14 @@ public class EndGameActivity extends AppCompatActivity implements IEndGameView{
     TextView winnerNameText;
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter myAdapter;
+    private IEndGamePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
+
+        presenter = new EndGamePresenter(this);
     }
 
     @Override

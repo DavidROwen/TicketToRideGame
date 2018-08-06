@@ -19,28 +19,29 @@ public class EndGamePresenter implements IEndGamePresenter{
         endGameView = view;
         clientModel = ClientModel.get_instance();
 
+        updateScore(ClientModel.get_instance().getMyActiveGame());
+
         endGameView.setPlayerStats(ClientModel.get_instance().getMyActiveGame().getPlayerStats());
         endGameView.setWinner(calculateWinner());
     }
 
     @Override
     public void updateScore(Game game){
-        Set<String> names = game.getPlayerNames();
-        Map<String, Player> players = game.getPlayers();
-
-        for(String name:names){
-            Player player = players.get(name);
+        for (Player player: game.getPlayers().values()){
             game.addDestinationCardPoints(player);
         }
     }
 
     @Override
     public String calculateWinner(){
-        Integer score = 0;
+        Integer hiScore = 0;
         List<PlayerStats> stats = ClientModel.get_instance().getMyActiveGame().getPlayerStats();
         for (PlayerStats player:stats) {
-            if(player.getPoints() > score){
+            if(player.getPoints() > hiScore){
                 winner = player.getName();
+            }
+            if (player.getPoints() == hiScore){
+                winner = "Tie between "+winner+" and "+player.getName();
             }
         }
         return winner;

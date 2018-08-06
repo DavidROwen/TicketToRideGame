@@ -396,8 +396,8 @@ public class ClientModel extends Observable {
         return gameList.get(gameId).getGameOver();
     }
 
-    public void setGameOver(String gameId, Boolean gameOver) {
-        gameList.get(gameId).setGameOver(gameOver);
+    public void endGame(String gameId) {
+        gameList.get(gameId).setGameOver(true);
 
         setChanged();
         notifyObservers(GAME_OVER);

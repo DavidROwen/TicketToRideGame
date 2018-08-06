@@ -65,7 +65,7 @@ public class GameMap {
 
         for(String each : ROUTES.keySet()) {
             Route route = ROUTES.get(each);
-            if(route.getOwnerId().equals(playerID)) { playersRoutes.add(route); }
+            if(route.isOwned() && route.getOwnerId().equals(playerID)) { playersRoutes.add(route); }
         }
 
         return Collections.unmodifiableList(playersRoutes);

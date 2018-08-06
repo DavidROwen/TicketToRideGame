@@ -26,6 +26,7 @@ public class LastDrawState extends PlayerState {
         gamePlayService.drawTrainCard(cm.getUserId(), cm.getCurrentGameID());
         gamePlayService.endGame(cm.getMyActiveGame().getId());
         cm.setState(GameEndedState.getInstance());
+        presenter.getMapView().endGame();
     }
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){}
@@ -53,6 +54,7 @@ public class LastDrawState extends PlayerState {
         if (!wildCard) {
             gamePlayService.pickupTrainCard(cm.getUserId(), cm.getMyActiveGame().getId(), index);
             gamePlayService.endGame(cm.getMyActiveGame().getId());
+            presenter.getAssetsView().endGame();
         }
         else {
             presenter.getAssetsView().displayMessage("You are not allowed to draw a locomotive on your second draw.");
@@ -65,6 +67,7 @@ public class LastDrawState extends PlayerState {
         clientModel.setState(GameEndedState.getInstance());
         presenter.getMapView().displayMessage("The game is over!");
         presenter.getMapView().disableButtons();
+        presenter.getMapView().endGame();
     }
 
     public void routeClaimed(IMapPresenter presenter, ClientModel cm){}

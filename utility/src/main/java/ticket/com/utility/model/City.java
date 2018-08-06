@@ -18,6 +18,14 @@ public class City {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj.getClass() == String.class){
+            if (name.equals((String) obj)){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
         return ((City)obj).name.equals(this.name);
     }
 
