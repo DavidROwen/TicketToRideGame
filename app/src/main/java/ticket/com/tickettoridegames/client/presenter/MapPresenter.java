@@ -8,8 +8,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-import ticket.com.tickettoridegames.client.State.MyTurnState;
-import ticket.com.tickettoridegames.client.State.NotMyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.tickettoridegames.client.model.ClientModel;
 import ticket.com.tickettoridegames.client.service.GamePlayService;
@@ -38,6 +36,10 @@ public class MapPresenter implements IMapPresenter, Observer {
             Set<DestinationCard> destinationCards = new HashSet<>(cards);
             mapView.displayDestinationCards(destinationCards);
         }
+
+        //for rejoining
+        checkIsMyTurn();
+        updateMapButtons();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
-            case TURN_NUMBER_CHANGED: //used for transition between notMyTurnState -> myTurnState
+            case STATE_UPDATE:
                 checkIsMyTurn();
                 updateMapButtons();
                 break;

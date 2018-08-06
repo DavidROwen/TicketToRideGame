@@ -37,7 +37,7 @@ import static ticket.com.utility.TYPE.NEWTRAINCARD;
 import static ticket.com.utility.TYPE.REMOVED_PLAYER;
 import static ticket.com.utility.TYPE.ROUTECLAIMED;
 import static ticket.com.utility.TYPE.START;
-import static ticket.com.utility.TYPE.TURN_NUMBER_CHANGED;
+import static ticket.com.utility.TYPE.STATE_UPDATE;
 
 
 public class ClientModel extends Observable {
@@ -238,6 +238,7 @@ public class ClientModel extends Observable {
         game.claimDestinationCards(cards, playerId);
         myNotify(NEW_DESTINATION_CARD);
         myNotify(HISTORYUPDATE);
+        if(getMyPlayer().getId().equals(playerId)) { myNotify(MAP_DREW_TRAINCARD); }
     }
 
     public void discardDestinationCards(List<DestinationCard> cards){
@@ -264,7 +265,7 @@ public class ClientModel extends Observable {
     public void setTurnOrder(LinkedList<String> order){
         getMyActiveGame().setTurnOrder(order);
         if(isMyTurn()) { currentState = MyTurnState.getInstance(); } //todo remove
-        myNotify(TURN_NUMBER_CHANGED);
+        myNotify(STATE_UPDATE);
     }
 
     public void setPlayersColors(HashMap<String, Player.COLOR> colors){
@@ -290,7 +291,10 @@ public class ClientModel extends Observable {
         getMyActiveGame().drawTrainCard(playerId);
         myNotify(NEWTRAINCARD);
         myNotify(HISTORYUPDATE);
-        if(getUser().getId().equals(playerId)) { myNotify(MAP_DREW_TRAINCARD); }
+        if(getUser().getId().equals(playerId)) {
+            myNotify(MAP_DREW_TRAINCARD);
+            myNotify(STATE_UPDATE);
+        }
     }
 
     public void pickupTrainCard(String playerId, Integer index){
@@ -298,6 +302,7 @@ public class ClientModel extends Observable {
         myNotify(NEWTRAINCARD);
         myNotify(BANKUPDATE);
         myNotify(HISTORYUPDATE);
+        if(getMyPlayer().getId().equals(playerId)) { myNotify(MAP_DREW_TRAINCARD); }
     }
 
     public List<TrainCard> getTrainBank(){
@@ -332,7 +337,7 @@ public class ClientModel extends Observable {
 //        }
 
         setChanged();
-        notifyObservers(TURN_NUMBER_CHANGED);
+        notifyObservers(STATE_UPDATE);
     }
 
 
@@ -349,6 +354,7 @@ public class ClientModel extends Observable {
             myNotify(NEWTRAINCARD);
             myNotify(ROUTECLAIMED);
             myNotify(HISTORYUPDATE);
+            if(getMyPlayer().getId().equals(playerID)) { myNotify(MAP_DREW_TRAINCARD); }
         }
 
         return result;
