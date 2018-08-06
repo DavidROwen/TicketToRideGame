@@ -45,7 +45,7 @@ public class MapPresenter implements IMapPresenter, Observer {
         clientModel = (ClientModel) observable;
         TYPE type = (TYPE) arg;
         switch(type){
-            case TURN_NUMBER_CHANGED:
+            case TURN_NUMBER_CHANGED: //used for transition between notMyTurnState -> myTurnState
                 checkIsMyTurn();
                 updateMapButtons();
                 break;

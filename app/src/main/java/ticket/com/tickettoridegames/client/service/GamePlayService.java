@@ -286,7 +286,8 @@ public class GamePlayService {
                     throw new AssertionError();
                 }
             }
-            System.out.println("Confirmed that client and server have the same trainCards");
+            System.out.println("Confirmed that client and server have the same trainCards for "
+                    + ClientModel.get_instance().getMyActiveGame().getPlayer(playerId));
         } catch (AssertionError e) {
             printHand(clientHand, true);
             printHand(serverHand, false);

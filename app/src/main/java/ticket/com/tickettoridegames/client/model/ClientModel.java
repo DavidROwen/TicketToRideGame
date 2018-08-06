@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.Stack;
 
+import ticket.com.tickettoridegames.client.State.MyTurnState;
 import ticket.com.tickettoridegames.client.State.NotMyTurnState;
 import ticket.com.tickettoridegames.client.State.PlayerState;
 import ticket.com.utility.TYPE;
@@ -262,6 +263,8 @@ public class ClientModel extends Observable {
     //GamePlay functions
     public void setTurnOrder(LinkedList<String> order){
         getMyActiveGame().setTurnOrder(order);
+        if(isMyTurn()) { currentState = MyTurnState.getInstance(); } //todo remove
+        myNotify(TURN_NUMBER_CHANGED);
     }
 
     public void setPlayersColors(HashMap<String, Player.COLOR> colors){
@@ -275,7 +278,6 @@ public class ClientModel extends Observable {
     public void initMyGameNonRandom(){
         getMyActiveGame().initGameNonRandom();
         myNotify(ALLHISTORY);
-        myNotify(TURN_NUMBER_CHANGED);
         myNotify(NEWTRAINCARD);
         myNotify(BANKUPDATE);
     }

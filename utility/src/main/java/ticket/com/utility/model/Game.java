@@ -282,11 +282,11 @@ public class Game extends Observable {
     //only called from gamePlayService
     public void switchTurn() {
         turnNumber = (turnNumber + 1) % players.size();
-        //notifies in clientModel
+        System.out.println("It's now " + getTurnUsername() + "'s turn");
     }
 
     public Boolean isMyTurn(String playerId) {
-        if (turnOrder.size() == 0){
+        if (turnOrder.size() == 0){ //todo then the server and client would be out of sync
             initTurnOrder();
         }
         return playerId.equals(turnOrder.get(turnNumber));
@@ -334,16 +334,36 @@ public class Game extends Observable {
 
     // TODO: improve the checking here to always be accurate
     public boolean isInitialized(){
-        if(id == null) { return false; }
-        if(!isStarted) { return false; }
-        if(turnOrder == null || turnOrder.size() != players.size()) { return false; }
-        if(trainBank == null || trainBank.size() != 5) { return false; }
+        if (id == null) {
+            System.out.println("ERROR: Initialization failed because of id");
+            return false;
+        }
+        if (!isStarted) {
+            System.out.println("ERROR: Initialization failed because of isStarted");
+            return false;
+        }
+        if (turnOrder == null || turnOrder.size() != players.size()) {
+            System.out.println("ERROR: Initialization failed because of turn order");
+            return false;
+        }
+        if (trainBank == null || trainBank.size() != 5) {
+            System.out.println("ERROR: Initialization failed because of trainBank");
+            return false;
+        }
 //        if(destinationCards.size() < 2); //called before they've chosen
-        if(trainCardsDeck.size() != 110 - 4*numberOfPlayers - 5) { return false; } //4 in each hand //5 in the bank
-        if(!trainDiscards.isEmpty()) { return false; }
+        if (trainCardsDeck.size() != 110 - 4 * numberOfPlayers - 5) {
+            System.out.println("ERROR: Initialization failed because of trainCardsDeck");
+            return false;
+        } //4 in each hand //5 in the bank
+        if (!trainDiscards.isEmpty()) {
+            System.out.println("ERROR: Initialization failed because of trainDiscards");
+            return false;
+        }
 
-        for(String each : players.keySet()) {
-            if(!players.get(each).isInitialized()) { return false; }
+        for (String each : players.keySet()) {
+            if (!players.get(each).isInitialized()) {
+                return false;
+            }
         }
 
         initializedCorrectly = true;
@@ -479,6 +499,7 @@ public class Game extends Observable {
 
     public void setTurnOrder(List<String> turnOrder) {
         this.turnOrder = turnOrder;
+        System.out.println(getTurnUsername() + " is up first");
     }
 
     public Map<String, Player.COLOR> getPlayersColors() {

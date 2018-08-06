@@ -33,9 +33,15 @@ public class Player {
     }
 
     public boolean isInitialized() {
-        if(id.equals("")) { return false; }
+        if (id.equals("")) {
+            System.out.println("ERROR: Initialization failed because of playerId");
+            return false;
+        }
 //        color
-        if(trainCards.size() != 4) { return false; }
+        if (trainCards.size() != 4) {
+            System.out.println("ERROR: Initialization failed because of hand");
+            return false;
+        }
 //        destinationCards
 
         return true;
