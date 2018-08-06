@@ -32,7 +32,6 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
         TYPE type = (TYPE) arg;
         switch(type){
             case BANKUPDATE:
-                // Someone else drew a card so update your view
                 assetsView.setBank(clientModel.getTrainBank());
                 assetsView.setTrainDeckCount(clientModel.getTrainCardsDeck().size());
                 break;
@@ -68,14 +67,6 @@ public class AssetsPresenter implements IAssetsPresenter, Observer {
 
     @Override
     public void drawFromBank(Integer index){
-        // We use the index to indicate what card should change.
-        if (true) {
-            pickupCard(index);
-        }
-    }
-
-    @Override
-    public void pickupCard(Integer index) {
         getCurrentState().drawFromBank(this, index);
     }
 

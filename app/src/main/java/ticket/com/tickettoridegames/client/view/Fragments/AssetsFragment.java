@@ -133,11 +133,6 @@ public class AssetsFragment extends BasicFragment implements IAssetsView{
     }
 
     @Override
-    public void pickupCard(Integer index) {
-        presenter.pickupCard(index);
-    }
-
-    @Override
     public void setRoutes(Set<DestinationCard> destinationCards){
         adapter.clear();
         addRoute(destinationCards);

@@ -21,8 +21,6 @@ public interface IAssetsView {
 
     void displayMessage(String message);
 
-    void pickupCard(Integer index);
-
     void setTrainDeckCount(Integer size);
 
     void setRouteDeckCount(Integer size);
