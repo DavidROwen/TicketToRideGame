@@ -16,7 +16,6 @@ public class NotMyTurnState extends PlayerState {
 
     public void drawTrainCard(IMapPresenter presenter, ClientModel cm){
         //can't draw a train card it is not your turn
-        //should we send back a message or just leave this blank?
     }
 
     public void drawDestinationCard(IMapPresenter presenter, ClientModel cm){
@@ -24,9 +23,6 @@ public class NotMyTurnState extends PlayerState {
     }
 
     public void changeTurn(ClientModel cm) {
-        //check somehow which state to change to..
-
-        //for now just set it to active turn
         if(cm.isMyTurn()){
             cm.setState(MyTurnState.getInstance());
         }

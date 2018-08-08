@@ -87,6 +87,10 @@ public class MapPresenter implements IMapPresenter, Observer {
         getCurrentState().updateMapButtons(this);
     }
 
+    private PlayerState getCurrentState(){
+        return clientModel.getCurrentState();
+    }
+
     @Override
     public void drawTrainCard() {
         getCurrentState().drawTrainCard(this , clientModel);
@@ -183,10 +187,6 @@ public class MapPresenter implements IMapPresenter, Observer {
         for(Pair<String, Integer> each : claimedRoutes) {
             mapView.claimRoute(each.first, each.second);
         }
-    }
-
-    private PlayerState getCurrentState(){
-        return clientModel.getCurrentState();
     }
 
     public IMapView getMapView() {
