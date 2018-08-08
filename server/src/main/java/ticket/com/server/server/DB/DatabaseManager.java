@@ -34,26 +34,22 @@ public class DatabaseManager {
 
     }
 
-    //Called from commandHandler, sends to factory
+    //Called from commandHandler, sends to ICommandDAO
     public Boolean addCommand(Command command){
 
         return null;
     }
-    //Called by the ServerModel, serializes the user and sends it to factory
+    //Called by the ServerModel, serializes the user and sends it to IUserDAO
     public Boolean addUser(User user){
         return null;
     }
-    //Called by the ServerModel, serializes the game and sends it to factory
+    //Called by the ServerModel, serializes the game and sends it to IGameDAO
     public Boolean addGame(Game game){
         return null;
     }
 
-    //called by ????, tells factory to clear database of users
-    public void clearUsers(){
-
-    }
-    //called by ????, tells factory to clear database of commands
-    public void clearCommands(){
+    //called by ServerCommunicator, tells ICommandDAO, IUserDAO, and IGameDAO to clear database
+    public void clearDatabase(){
 
     }
 
@@ -61,11 +57,12 @@ public class DatabaseManager {
     public User getUser(String userID){
         return null;
     }
-    //When the Server reboots it gives the most recent command and asks for all commands after from the factory
+    //When the Server reboots it gives the most recent command and asks for
+    // all commands after from the ICommandDAO
     public Command[] getCommmands(String commandID){
         return null;
     }
-    //When the Server reboots it calls this to get the Game from the factory
+    //When the Server reboots it calls this to get the Game from the IGameDAO
     public Game getGame(String gameID){
         return null;
     }
