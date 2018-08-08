@@ -18,7 +18,7 @@ public class DatabaseManager {
      * @post you now have a DatabaseManager instance
      * @return DatabaseManager instance
      */
-    public static DatabaseManager instance() {
+    public static DatabaseManager getInstance() {
         if(instance == null) { instance = new DatabaseManager(); }
         return instance;
     }
@@ -34,38 +34,44 @@ public class DatabaseManager {
 
     }
 
+    //Called from commandHandler, sends to factory
+    public Boolean addCommand(Command command){
 
+        return null;
+    }
+    //Called by the ServerModel, serializes the user and sends it to factory
     public Boolean addUser(User user){
         return null;
     }
-
-    public User getUser(String userID){
-        return null;
-    }
-
-    public void clearUsers(){
-    }
-
-    public Boolean addCommand(Command command){
-        return null;
-    }
-
-    public Command[] getCommmand(String commandID){
-        return null;
-    }
-
-    public void clearCommands(){
-
-    }
-
+    //Called by the ServerModel, serializes the game and sends it to factory
     public Boolean addGame(Game game){
         return null;
     }
 
+    //called by ????, tells factory to clear database of users
+    public void clearUsers(){
+
+    }
+    //called by ????, tells factory to clear database of commands
+    public void clearCommands(){
+
+    }
+
+    //When the Server reboots it calls this to get the User from the factory
+    public User getUser(String userID){
+        return null;
+    }
+    //When the Server reboots it gives the most recent command and asks for all commands after from the factory
+    public Command[] getCommmands(String commandID){
+        return null;
+    }
+    //When the Server reboots it calls this to get the Game from the factory
     public Game getGame(String gameID){
         return null;
     }
 
+    // called by the ServerModel every n commands, it
+    // clears the recent commands, re-serializes, and sends the game to the factory
     public Boolean updateGame(String gameID, Game game){
         return null;
     }
