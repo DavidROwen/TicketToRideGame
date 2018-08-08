@@ -5,6 +5,8 @@ import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class DatabaseManager {
+    IDbFactory factory = null;
+
     /**
      * private instance that creates a singleton pattern
      */
@@ -34,45 +36,71 @@ public class DatabaseManager {
 
     }
 
-    //Called from commandHandler, sends to factory
+    public void assignFactory(IDbFactory factory){
+        this.factory = factory;
+    }
+
+    //Called from commandHandler, sends to ICommandDAO
     public Boolean addCommand(Command command){
-
-        return null;
+        try {
+            factory.getCommandDAO().addCommand(command);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
-    //Called by the ServerModel, serializes the user and sends it to factory
+    //Called by the ServerModel, serializes the user and sends it to IUserDAO
     public Boolean addUser(User user){
-        return null;
+        try {
+            factory.getUserDAO().addUser(user);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
-    //Called by the ServerModel, serializes the game and sends it to factory
+    //Called by the ServerModel, serializes the game and sends it to IGameDAO
     public Boolean addGame(Game game){
-        return null;
+        try {
+            factory.getGameDAO().addGame(game);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
-    //called by ????, tells factory to clear database of users
-    public void clearUsers(){
-
-    }
-    //called by ????, tells factory to clear database of commands
-    public void clearCommands(){
-
+    //called by ServerCommunicator, tells ICommandDAO, IUserDAO, and IGameDAO to clear database
+    public void clearDatabase(){
+        factory.getGameDAO().clearGames();
+        factory.getUserDAO().clearUsers();
+        factory.getCommandDAO().clearCommands();
     }
 
     //When the Server reboots it calls this to get the User from the factory
     public User getUser(String userID){
-        return null;
+        return factory.getUserDAO().getUser(userID);
     }
-    //When the Server reboots it gives the most recent command and asks for all commands after from the factory
-    public Command[] getCommmands(String commandID){
-        return null;
+    //When the Server reboots it gives the most recent command and asks for
+    // all commands after from the ICommandDAO
+    public Command getCommmand(String commandID){
+        return factory.getCommandDAO().getCommand(commandID);
     }
-    //When the Server reboots it calls this to get the Game from the factory
+    //When the Server reboots it calls this to get the Game from the IGameDAO
     public Game getGame(String gameID){
-        return null;
+        return factory.getGameDAO().getGame(gameID);
     }
 
     // called by the ServerModel every n commands, it
     // clears the recent commands, re-serializes, and sends the game to the factory
     public Boolean updateGame(String gameID, Game game){
-        return null;
+        try {
+            factory.getGameDAO().updateGame(gameID, game);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 }

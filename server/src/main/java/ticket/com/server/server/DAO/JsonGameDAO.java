@@ -14,6 +14,11 @@ public class JsonGameDAO implements  IGameDAO {
         return null;
     }
 
+    public Boolean clearGames(){
+        //placeholder
+        return null;
+    }
+
     public Boolean updateGame(String gameId, Game game){
         //placeholder
         return true;
