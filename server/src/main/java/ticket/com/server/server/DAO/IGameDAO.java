@@ -8,5 +8,7 @@ public interface IGameDAO {
 
     Game getGame(String gameId);
 
+    Boolean clearGames();
+
     Boolean updateGame(String gameId, Game game);
 }
