@@ -18,10 +18,10 @@ public class JsonDbFactory implements IDbFactory {
     private Gson gson;
 
     private final String COMMAND_FILE = "commands.json";
-    private final String USER_FILE = "users.json";
+    private final String USER_FILE = "C:\\Users\\dastin\\Documents\\BYUSummer2018\\cs340\\TicketToRideGame\\users.json";
     private final String GAMESTATE_FILE = "gamestate.json";
 
-    private JsonDbFactory(){
+    public JsonDbFactory(){
         commandCount = 0;
         gson = new Gson();
     }
@@ -33,33 +33,35 @@ public class JsonDbFactory implements IDbFactory {
         return instance;
     }
     public void startTransaction(){
-
+        System.out.println("Starting Database Transaction");
     }
     public void finishTransaction(Boolean commit){
-
+        if(commit){
+            System.out.println("Database updated");
+        }
+        else{
+            System.out.println("Database failed to Update");
+        }
     }
 
     public IGameDAO getGameDAO(){
-        File file = openFile(GAMESTATE_FILE);
-        return new JsonGameDAO(file);
+        return new JsonGameDAO(GAMESTATE_FILE);
     }
 
     public IUserDAO getUserDAO(){
-        File file = openFile(USER_FILE);
-        return new JsonUserDAO(file);
+        return new JsonUserDAO(USER_FILE);
     }
 
     public ICommandDAO getCommandDAO(){
-        File file = openFile(COMMAND_FILE);
-        return new JsonCommandDAO(file);
+        return new JsonCommandDAO(COMMAND_FILE);
     }
 
     public void clearDB(){
 
     }
 
-    private File openFile(String filename){
-        return new File(filename);
+    private void openFile(String filename){
+
     }
 
     private void writeFile(String filename){

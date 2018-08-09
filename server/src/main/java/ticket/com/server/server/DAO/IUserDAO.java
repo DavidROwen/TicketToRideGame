@@ -6,7 +6,7 @@ public interface IUserDAO {
 
     Boolean addUser(User user);
 
-    User getUser(String playerId);
+    User getUser(String username);
 
     void clearUsers();
 }

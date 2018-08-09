@@ -10,29 +10,30 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import ticket.com.utility.model.User;
 
 public class JsonUserDAO implements IUserDAO {
 
-    private File file;
+    private String filename;
     private Gson gson;
 
-    public JsonUserDAO(File file){
-        this.file = file;
+    public JsonUserDAO(String file){
+        this.filename = file;
         gson = new Gson();
     }
 
     public Boolean addUser(User user){
         List<User> users = getCurrentJson();
         if(users == null){
-            return false;
+            users = new ArrayList<>();
         }
         users.add(user);
         String json = gson.toJson(users);
         try{
-            FileWriter fw = new FileWriter(file, true);
+            FileWriter fw = new FileWriter(filename, false);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(json);
             bw.flush();
@@ -45,14 +46,14 @@ public class JsonUserDAO implements IUserDAO {
         }
     }
 
-    public User getUser(String playerId){
+    public User getUser(String username){
         List<User> users = getCurrentJson();
         if(users == null){
             return null;
         }
         else{
             for(User user : users){
-                if(user.getId().equals(playerId)){
+                if(user.getUsername().equals(username)){
                     return user;
                 }
             }
@@ -62,7 +63,7 @@ public class JsonUserDAO implements IUserDAO {
 
     public void clearUsers(){
         try {
-            PrintWriter pw = new PrintWriter(file);
+            PrintWriter pw = new PrintWriter(filename);
             pw.close();
         }
         catch (IOException e){
@@ -73,7 +74,7 @@ public class JsonUserDAO implements IUserDAO {
 
     private List<User> getCurrentJson(){
         try {
-            byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
+            byte[] encoded = Files.readAllBytes(Paths.get(filename));
             String currentJson = new String(encoded);
              return gson.fromJson(currentJson, new TypeToken<List<User>>() {}.getType());
         }

@@ -6,10 +6,10 @@ import ticket.com.utility.web.Command;
 
 public class JsonCommandDAO implements ICommandDAO {
 
-    private File file;
+    private String filename;
 
-    public JsonCommandDAO(File file){
-        this.file = file;
+    public JsonCommandDAO(String file){
+        this.filename = file;
     }
 
     public Boolean addCommand(Command command){

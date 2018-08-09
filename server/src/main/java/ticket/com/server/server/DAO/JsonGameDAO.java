@@ -1,18 +1,16 @@
 package ticket.com.server.server.DAO;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
 
 import ticket.com.utility.model.Game;
 
 public class JsonGameDAO implements  IGameDAO {
 
-    private File file;
+    private String filename;
 
-    public JsonGameDAO(File file){
-        this.file = file;
+    public JsonGameDAO(String file){
+        this.filename = file;
     }
 
     public Boolean addGame(Game game){
