@@ -43,26 +43,35 @@ public class ServerCommunicator {
 	}
 
 	public static void main(String[] args) {
-		if(!canRun(args)) { return; }
+		if(args.length >= 3) {
+			if (!canRun(args)) {
+				return;
+			}
 
-		//setup server
-		serverPortNumber = Integer.valueOf(args[0]);
-//		new ServerCommunicator().run(); //todo no client to server communication
+			//setup server
+			serverPortNumber = Integer.valueOf(args[0]);
 
-		//setup manager
-		boolean loadedDescriptions = pluginManager.loadDescriptions(PLUGIN_DESC_PATH);
-		if(!loadedDescriptions) { return; }
+			//setup manager
+			boolean loadedDescriptions = pluginManager.loadDescriptions(PLUGIN_DESC_PATH);
+			if (!loadedDescriptions) {
+				return;
+			}
 
-		//setup database
-		if(!canUsePluginName(args[1])) { return; }
-		IDbFactory dbFactory = pluginManager.createPlugin(args[1], Integer.valueOf(args[2]));
-		DatabaseManager.getInstance().setDbFactory(dbFactory);
+			//setup database
+			if (!canUsePluginName(args[1])) {
+				return;
+			}
+			IDbFactory dbFactory = pluginManager.createPlugin(args[1], Integer.valueOf(args[2]));
+			DatabaseManager.getInstance().setDbFactory(dbFactory);
 
-		if(args.length > 3) {
-			DatabaseManager.getInstance().wipe();
+			if (args.length > 3) {
+				DatabaseManager.getInstance().wipe();
+			}
+
+			DatabaseManager.getInstance().addCommand(new Command(null, (Object) null, null, null));
 		}
 
-		DatabaseManager.getInstance().addCommand(new Command(null, (Object) null, null, null));
+		new ServerCommunicator().run();
 	}
 
 	private static boolean canRun(String[] args) {
