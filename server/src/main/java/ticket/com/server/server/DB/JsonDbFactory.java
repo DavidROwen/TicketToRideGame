@@ -1,5 +1,9 @@
 package ticket.com.server.server.DB;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+
 import ticket.com.server.server.DAO.ICommandDAO;
 import ticket.com.server.server.DAO.IGameDAO;
 import ticket.com.server.server.DAO.IUserDAO;
@@ -9,14 +13,24 @@ import ticket.com.server.server.DAO.JsonUserDAO;
 
 public class JsonDbFactory implements IDbFactory {
 
+    private JsonDbFactory instance;
     private int commandCount;
+    private Gson gson;
 
-    public JsonDbFactory(){
+    private final String COMMAND_FILE = "commands.json";
+    private final String USER_FILE = "users.json";
+    private final String GAMESTATE_FILE = "gamestate.json";
+
+    private JsonDbFactory(){
         commandCount = 0;
+        gson = new Gson();
     }
 
-    public void getInstance(){
-
+    public IDbFactory getInstance(){
+        if(instance == null){
+            instance = new JsonDbFactory();
+        }
+        return instance;
     }
     public void startTransaction(){
 
@@ -26,23 +40,26 @@ public class JsonDbFactory implements IDbFactory {
     }
 
     public IGameDAO getGameDAO(){
-        return new JsonGameDAO();
+        File file = openFile(GAMESTATE_FILE);
+        return new JsonGameDAO(file);
     }
 
     public IUserDAO getUserDAO(){
-        return new JsonUserDAO();
+        File file = openFile(USER_FILE);
+        return new JsonUserDAO(file);
     }
 
     public ICommandDAO getCommandDAO(){
-        return new JsonCommandDAO();
+        File file = openFile(COMMAND_FILE);
+        return new JsonCommandDAO(file);
     }
 
     public void clearDB(){
 
     }
 
-    private void openFile(String filename){
-
+    private File openFile(String filename){
+        return new File(filename);
     }
 
     private void writeFile(String filename){

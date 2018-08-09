@@ -7,7 +7,7 @@ import ticket.com.server.server.DAO.IUserDAO;
 public interface IDbFactory {
     //Integer commandCount;
 
-    void getInstance();
+    IDbFactory getInstance();
     void startTransaction();
     void finishTransaction(Boolean commit);
     IGameDAO getGameDAO();
