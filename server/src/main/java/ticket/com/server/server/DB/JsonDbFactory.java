@@ -17,9 +17,10 @@ public class JsonDbFactory implements IDbFactory {
     private int commandCount;
     private Gson gson;
 
-    private final String COMMAND_FILE = "commands.json";
+    //SET THESE TO YOUR LOCAL FILES!
+    private final String COMMAND_FILE = "C:\\Users\\dastin\\Documents\\BYUSummer2018\\cs340\\TicketToRideGame\\commands.json";
     private final String USER_FILE = "C:\\Users\\dastin\\Documents\\BYUSummer2018\\cs340\\TicketToRideGame\\users.json";
-    private final String GAMESTATE_FILE = "gamestate.json";
+    private final String GAMESTATE_FILE = "C:\\Users\\dastin\\Documents\\BYUSummer2018\\cs340\\TicketToRideGame\\gamestate.json";
 
     public JsonDbFactory(){
         commandCount = 0;
