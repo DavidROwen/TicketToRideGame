@@ -1,11 +1,20 @@
 package ticket.com.server.server.DB;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import ticket.com.server.server.model.ServerModel;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class DatabaseManager {
     IDbFactory factory = null;
+    Integer commandCount;
+    Integer refreshCount;
+    ServerModel sm = ServerModel.getInstance();
+    Map<String, Integer> commandCounts = new HashMap<String, Integer>();//needs to store a count for each game
+
 
     /**
      * private instance that creates a singleton pattern
@@ -40,10 +49,25 @@ public class DatabaseManager {
         this.factory = factory;
     }
 
+    public void assignRefreshCount(Integer n){
+        this.refreshCount = n;
+    }
+
     //Called from commandHandler, sends to ICommandDAO
-    public Boolean addCommand(Command command){
+    public Boolean addCommand(Command command, String gameID){
+        if(!commandCounts.containsKey(gameID)){
+            commandCounts.put(gameID, 0);
+        }
+
         try {
             factory.getCommandDAO().addCommand(command);
+            commandCounts.put(gameID, commandCounts.get(gameID) + 1);
+
+            if(commandCounts.get(gameID) == refreshCount){
+                commandCounts.put(gameID, 0);
+                factory.getCommandDAO().clearCommands();
+                factory.getGameDAO().updateGame(gameID, sm.getGameById(gameID)); //update game for n commands
+            }
             return true;
         }
         catch (Exception e){
