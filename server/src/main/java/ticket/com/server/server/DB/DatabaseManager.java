@@ -9,6 +9,8 @@ import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class DatabaseManager {
+    IDbFactory dbFactory = null;
+
     IDbFactory factory = null;
     Integer commandCount;
     Integer refreshCount;
@@ -84,6 +86,24 @@ public class DatabaseManager {
             return false;
         }
     }
+
+    public Boolean addCommand(Command command){
+        if(dbFactory == null) {
+            System.out.println("ERROR: dbFactory hasn't been initialized");
+        }
+        dbFactory.startTransaction();
+
+        return null;
+    }
+
+    public Command[] getCommmand(String commandID){
+        return null;
+    }
+
+    public void clearCommands(){
+
+    }
+
     //Called by the ServerModel, serializes the game and sends it to IGameDAO
     public Boolean addGame(Game game){
         try {
@@ -126,5 +146,15 @@ public class DatabaseManager {
         catch (Exception e){
             return false;
         }
+    }
+
+    //todo clear all data in all databases
+    public void wipe() {
+        System.out.println("All of the databases were wiped");
+    }
+
+    public void setDbFactory(IDbFactory dbFactory) {
+        this.dbFactory = dbFactory;
+        System.out.println("The manager's database was successfully set");
     }
 }
