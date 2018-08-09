@@ -1,0 +1,12 @@
+[
+  {
+    "NAME": "Stub",
+    "DESCRIPTION": "Stub just prints to the screen what function it's in",
+    "JAR_PATH": "jar:file:///Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/plugins/pluginStub.jar!/",
+    "IMPLEMENTATION_NAME": "com.example.pluginstub.DbFactoryStub"
+  }
+]
+
+//To add a plugin
+//jar path = jar:file:/// + FULL path + !/
+//implementation name = RELATIVE path
