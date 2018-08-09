@@ -96,10 +96,6 @@ public class DatabaseManager {
         return null;
     }
 
-    public Command[] getCommmand(String commandID){
-        return null;
-    }
-
     public void clearCommands(){
 
     }

@@ -56,13 +56,13 @@ public class ServerCommunicator {
 		//setup database
 		if(!canUsePluginName(args[1])) { return; }
 		IDbFactory dbFactory = pluginManager.createPlugin(args[1], Integer.valueOf(args[2]));
-		DatabaseManager.instance().setDbFactory(dbFactory);
+		DatabaseManager.getInstance().setDbFactory(dbFactory);
 
 		if(args.length > 3) {
-			DatabaseManager.instance().wipe();
+			DatabaseManager.getInstance().wipe();
 		}
 
-		DatabaseManager.instance().addCommand(new Command(null, (Object) null, null, null));
+		DatabaseManager.getInstance().addCommand(new Command(null, (Object) null, null, null));
 	}
 
 	private static boolean canRun(String[] args) {
