@@ -244,6 +244,11 @@ public class Game extends Observable {
 
     private TrainCard drawTrainCard() {
         if (trainCardsDeck.empty()){ makeDiscardsToTrainDeck(); }
+        if (trainCardsDeck.empty()) {
+            System.out.println("ERROR: trainCardsDeck was never initialized");
+            return null;
+        }
+
         return trainCardsDeck.pop();
     }
 

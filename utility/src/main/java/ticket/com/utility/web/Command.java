@@ -86,6 +86,14 @@ public class Command {
         return paramTypes;
     }
 
+    public void setInstanceType(Class<?> instanceType) {
+        this.instanceType = instanceType;
+    }
+
+    public void setInstance(Object instance) {
+        this.instance = instance;
+    }
+
     public String toString() {
         String str = "";
         str += className + " " + instance + "." + methodName + "(";
@@ -104,8 +112,8 @@ public class Command {
     private String methodName;
     private Class<?> instanceType = null; //for serialization
     private Object instance;
-    private final Class<?>[] paramTypes; //for serialization
-    private final Object[] paramValues;
+    private Class<?>[] paramTypes; //for serialization
+    private Object[] paramValues;
 
     public final Integer ID;
 
