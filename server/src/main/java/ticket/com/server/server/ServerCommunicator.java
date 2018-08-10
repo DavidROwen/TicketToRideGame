@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import ticket.com.server.server.DB.DatabaseManager;
-import ticket.com.server.server.DB.IDbFactory;
+import ticket.com.utility.db.IDbFactory;
 import ticket.com.utility.web.Command;
 
 public class ServerCommunicator {

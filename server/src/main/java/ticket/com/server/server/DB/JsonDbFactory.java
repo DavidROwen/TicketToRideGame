@@ -2,14 +2,13 @@ package ticket.com.server.server.DB;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-
-import ticket.com.server.server.DAO.ICommandDAO;
-import ticket.com.server.server.DAO.IGameDAO;
-import ticket.com.server.server.DAO.IUserDAO;
-import ticket.com.server.server.DAO.JsonCommandDAO;
-import ticket.com.server.server.DAO.JsonGameDAO;
-import ticket.com.server.server.DAO.JsonUserDAO;
+import ticket.com.utility.db.IDbFactory;
+import ticket.com.utility.db.dao.ICommandDAO;
+import ticket.com.utility.db.dao.IGameDAO;
+import ticket.com.utility.db.dao.IUserDAO;
+import ticket.com.server.server.DB.DAO.JsonCommandDAO;
+import ticket.com.server.server.DB.DAO.JsonGameDAO;
+import ticket.com.server.server.DB.DAO.JsonUserDAO;
 
 public class JsonDbFactory implements IDbFactory {
 

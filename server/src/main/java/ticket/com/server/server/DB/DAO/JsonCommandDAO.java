@@ -1,7 +1,6 @@
-package ticket.com.server.server.DAO;
+package ticket.com.server.server.DB.DAO;
 
-import java.io.File;
-
+import ticket.com.utility.db.dao.ICommandDAO;
 import ticket.com.utility.web.Command;
 
 public class JsonCommandDAO implements ICommandDAO {

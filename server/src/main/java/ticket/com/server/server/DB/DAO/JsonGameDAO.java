@@ -1,11 +1,10 @@
-package ticket.com.server.server.DAO;
-
-import java.io.File;
+package ticket.com.server.server.DB.DAO;
 
 
+import ticket.com.utility.db.dao.IGameDAO;
 import ticket.com.utility.model.Game;
 
-public class JsonGameDAO implements  IGameDAO {
+public class JsonGameDAO implements IGameDAO {
 
     private String filename;
 

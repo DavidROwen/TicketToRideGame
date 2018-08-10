@@ -1,8 +1,8 @@
-package ticket.com.server.server.DB;
+package ticket.com.utility.db;
 
-import ticket.com.server.server.DAO.ICommandDAO;
-import ticket.com.server.server.DAO.IGameDAO;
-import ticket.com.server.server.DAO.IUserDAO;
+import ticket.com.utility.db.dao.ICommandDAO;
+import ticket.com.utility.db.dao.IGameDAO;
+import ticket.com.utility.db.dao.IUserDAO;
 
 public interface IDbFactory {
     //Integer commandCount;

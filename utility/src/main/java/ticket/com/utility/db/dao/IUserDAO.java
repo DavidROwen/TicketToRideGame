@@ -1,4 +1,4 @@
-package ticket.com.server.server.DAO;
+package ticket.com.utility.db.dao;
 
 import ticket.com.utility.model.User;
 

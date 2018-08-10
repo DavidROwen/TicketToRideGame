@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import ticket.com.server.server.DB.IDbFactory;
+import ticket.com.utility.db.IDbFactory;
 
 public class PluginManager {
     private Map<String, PluginDescription> descriptions = new HashMap<>(); //key is pluginName

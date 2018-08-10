@@ -1,4 +1,4 @@
-package ticket.com.server.server.DAO;
+package ticket.com.server.server.DB.DAO;
 
 
 import org.junit.After;
@@ -7,8 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import ticket.com.server.server.DB.IDbFactory;
+import ticket.com.utility.db.IDbFactory;
 import ticket.com.server.server.DB.JsonDbFactory;
+import ticket.com.utility.db.dao.IUserDAO;
 import ticket.com.utility.model.User;
 
 public class JsonUserDAOTest {
