@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,11 +17,11 @@ import ticket.com.utility.db.dao.IUserDAO;
 import ticket.com.utility.model.User;
 
 public class JsonUserDao implements IUserDAO {
-    private String filename;
+    private File file;
     private Gson gson;
 
-    public JsonUserDao(String file){
-        this.filename = file;
+    public JsonUserDao(File file){
+        this.file = file;
         gson = new Gson();
     }
 
@@ -32,7 +33,7 @@ public class JsonUserDao implements IUserDAO {
         users.add(user);
         String json = gson.toJson(users);
         try{
-            FileWriter fw = new FileWriter(filename, false);
+            FileWriter fw = new FileWriter(file, false);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(json);
             bw.flush();
@@ -62,7 +63,7 @@ public class JsonUserDao implements IUserDAO {
 
     public void clearUsers(){
         try {
-            PrintWriter pw = new PrintWriter(filename);
+            PrintWriter pw = new PrintWriter(file);
             pw.close();
         }
         catch (IOException e){
@@ -73,7 +74,7 @@ public class JsonUserDao implements IUserDAO {
 
     private List<User> getCurrentJson(){
         try {
-            byte[] encoded = Files.readAllBytes(Paths.get(filename));
+            byte[] encoded = Files.readAllBytes(Paths.get(file.getCanonicalPath()));
             String currentJson = new String(encoded);
             return gson.fromJson(currentJson, new TypeToken<List<User>>() {}.getType());
         }

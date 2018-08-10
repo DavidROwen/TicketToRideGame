@@ -1,14 +1,16 @@
 package ticket.com.jsondb.dao;
 
+import java.io.File;
+
 import ticket.com.utility.db.dao.ICommandDAO;
 import ticket.com.utility.web.Command;
 
 public class JsonCommandDao implements ICommandDAO {
 
-    private String filename;
+    private File file;
 
-    public JsonCommandDao(String file){
-        this.filename = file;
+    public JsonCommandDao(File file){
+        this.file = file;
     }
 
     public Boolean addCommand(Command command){

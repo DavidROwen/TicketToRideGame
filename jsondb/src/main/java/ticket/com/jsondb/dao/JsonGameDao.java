@@ -1,13 +1,16 @@
 package ticket.com.jsondb.dao;
 
+import java.io.File;
+
 import ticket.com.utility.db.dao.IGameDAO;
 import ticket.com.utility.model.Game;
 
 public class JsonGameDao implements IGameDAO {
-    private String filename;
 
-    public JsonGameDao(String file){
-        this.filename = file;
+    private File file;
+
+    public JsonGameDao(File file){
+        this.file = file;
     }
 
     public Boolean addGame(Game game){
