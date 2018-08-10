@@ -18,12 +18,11 @@ public class JsonCommandDao implements ICommandDAO {
         return true;
     }
 
-
     public Command getCommand(String gameId){
         return null;
     }
 
-    public void clearCommands(){
-
+    public Boolean clearCommands(){
+        return true;
     }
 }
