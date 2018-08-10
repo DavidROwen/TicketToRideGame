@@ -20,7 +20,7 @@ public class JsonUserDao implements IUserDAO {
     public Boolean addUser(User user){
         List<User> users;
         try {
-            users = (List<User>) helper.getCurrentJson(file.getCanonicalPath());
+            users = helper.getCurrentJsonUser(file.getCanonicalPath());
         }
         catch (IOException e){
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class JsonUserDao implements IUserDAO {
     public User getUser(String username){
         List<User> users = null;
         try {
-            users = (List<User>) helper.getCurrentJson(file.getCanonicalPath());
+            users = helper.getCurrentJsonUser(file.getCanonicalPath());
         }
         catch (IOException e){
             e.printStackTrace();

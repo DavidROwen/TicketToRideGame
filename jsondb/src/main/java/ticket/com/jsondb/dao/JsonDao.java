@@ -12,7 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import ticket.com.utility.model.Game;
 import ticket.com.utility.model.User;
+import ticket.com.utility.web.Command;
+import ticket.com.utility.web.Serializer;
 
 public class JsonDao {
 
@@ -22,7 +25,7 @@ public class JsonDao {
         gson = new Gson();
     }
 
-    public List<?> getCurrentJson(String filename){
+    public List<User> getCurrentJsonUser(String filename){
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(filename));
             String currentJson = new String(encoded);
@@ -34,8 +37,36 @@ public class JsonDao {
         }
     }
 
+    public List<Game> getCurrentJsonGame(String filename){
+        try {
+            byte[] encoded = Files.readAllBytes(Paths.get(filename));
+            String currentJson = new String(encoded);
+            return gson.fromJson(currentJson, new TypeToken<List<Game>>() {}.getType());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+     public List<?> getCurrentJsonCustom(String filename){
+         try {
+             byte[] encoded = Files.readAllBytes(Paths.get(filename));
+             String currentJson = new String(encoded);
+             return gson.fromJson(currentJson, new TypeToken<List<Command>>() {}.getType());
+         }
+         catch (IOException e){
+             e.printStackTrace();
+             return null;
+         }
+     }
+
     public String toJson(List<?> list){
         return gson.toJson(list);
+    }
+
+    public String toJsonCustom(List<?> list){
+        return Serializer.toJson(list);
     }
 
     public boolean writeToFile(File file, String text){
