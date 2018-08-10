@@ -24,8 +24,7 @@ public class PluginManager {
     public PluginManager() {}
 
     public boolean loadDescriptions(String descriptionsFileName) {
-        boolean validFile = canUseFile(descriptionsFileName);
-        if(!validFile) {
+        if(!canUseFile(descriptionsFileName)) {
             System.out.println("Could not load descriptions");
             return false;
         }
@@ -36,8 +35,7 @@ public class PluginManager {
             return false;
         }
 
-        boolean validDescriptions = canUseDescriptionsArray(descriptionsArray);
-        if(!validDescriptions) {
+        if(!canUseDescriptionsArray(descriptionsArray)) {
             System.out.println("Could not load descriptions");
             return false;
         }
@@ -89,10 +87,8 @@ public class PluginManager {
 
     private boolean canUseDescriptionsArray(PluginDescription[] descriptionsArray) {
         for(PluginDescription each : descriptionsArray) {
-            try {
-                each.canUse();
-            } catch(AssertionError e) {
-                e.printStackTrace();
+            if(!each.canUse()) {
+                System.out.println("ERROR: One or more array elements were not formatted correctly");
                 return false;
             }
 
@@ -127,7 +123,8 @@ public class PluginManager {
                 return false;
             }
         }
-        System.out.println("Confirmed that all plugin descriptions are valid");
+
+        System.out.println("Confirmed that all of the json's plugin descriptions are valid");
         return true;
     }
 
@@ -193,11 +190,13 @@ class PluginDescription {
     public boolean canUse() {
         //fields can't be null
         if (NAME == null || DESCRIPTION == null || JAR_PATH == null || IMPLEMENTATION_NAME == null) {
-            throw new AssertionError("ERROR: \"" + NAME + "\"'s description fields cannot have null values");
+            System.out.println("ERROR: \"" + NAME + "\"'s description fields cannot have null values");
+            return false;
         }
         //all names must be unique
         if (usedNames.contains(NAME)) {
-            throw new AssertionError("ERROR: \"" + NAME + "/ is already being used");
+            System.out.println("ERROR: \"" + NAME + "/ is already being used");
+            return false;
         }
         return true;
     }
