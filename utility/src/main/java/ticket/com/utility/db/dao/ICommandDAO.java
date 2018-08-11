@@ -8,9 +8,6 @@ public interface ICommandDAO {
 
     Boolean addCommand(Command command);
 
-    //some sort of array or list?
-    Command getCommand(String gameId);
-
     List<Command> getAllCommands();
 
     Boolean clearCommands();

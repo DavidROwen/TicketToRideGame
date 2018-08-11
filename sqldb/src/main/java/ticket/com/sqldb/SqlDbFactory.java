@@ -85,7 +85,6 @@ public class SqlDbFactory implements IDbFactory{
                         "    game_id text NOT NULL UNIQUE,\n" +
                         "    game blob NOT NULL )");
                 stmt.executeUpdate("create table command (  " +
-                        "    game_id text NOT NULL,\n" +
                         "    command text NOT NULL UNIQUE )");
             }
             finally {
