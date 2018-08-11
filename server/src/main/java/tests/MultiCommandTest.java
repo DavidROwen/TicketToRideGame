@@ -34,7 +34,7 @@ public class MultiCommandTest {
         List<Command> commands = new LinkedList<>();
         commands.add(new Command(ServerModel.class.getName(), null, "getInstance", null));
         commands.add(new Command(ServerModel.class.getName(), null, "getGames", null));
-        commands.add(new Command(HashMap.class.getName(), "get", new Class<?>[]{Object.class}, new Object[]{gameId}));
+        commands.add(new Command(HashMap.class.getName(), null, null,"get", new Class<?>[]{Object.class}, new Object[]{gameId}));
         commands.add(new Command(Game.class.getName(), null, "drawTrainCard", new Object[]{playerId}));
 
         List<Class<?>> returnTypes = new LinkedList<>();

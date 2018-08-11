@@ -147,7 +147,7 @@ public class Serializer {
             Object instance = calcInstance(jsonObject, instanceType);
 
             //build object
-            return new Command(methodsClass.getName(), methodName, paramTypes, paramValues); //types may be object
+            return new Command(methodsClass.getName(), instanceType, instance, methodName, paramTypes, paramValues); //types may be object
         }
 
         private Class<?> calcMethodsClass(JsonObject jsonObject) {
