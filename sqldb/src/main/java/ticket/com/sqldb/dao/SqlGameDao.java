@@ -1,5 +1,7 @@
 package ticket.com.sqldb.dao;
 
+import java.util.List;
+
 import ticket.com.utility.db.IDbFactory;
 import ticket.com.utility.db.dao.IGameDAO;
 import ticket.com.utility.model.Game;
@@ -15,6 +17,11 @@ public class SqlGameDao implements IGameDAO {
     }
 
     public Game getGame(String gameId){
+        return null;
+    }
+
+    @Override
+    public List<Game> getAllGames() {
         return null;
     }
 
