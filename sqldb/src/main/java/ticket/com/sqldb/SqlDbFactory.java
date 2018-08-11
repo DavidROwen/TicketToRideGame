@@ -46,6 +46,10 @@ public class SqlDbFactory implements IDbFactory{
         }
     }
 
+    public Connection getConnection(){
+        return conn;
+    }
+
     @Override
     public void finishTransaction(Boolean commit){
         try {
@@ -120,6 +124,8 @@ public class SqlDbFactory implements IDbFactory{
 
     @Override
     public void clear(){
-
+        getCommandDAO().clearCommands();
+        getGameDAO().clearGames();
+        getUserDAO().clearUsers();
     }
 }

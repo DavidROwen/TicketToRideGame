@@ -97,6 +97,7 @@ public class DatabaseManager {
     }
 
     public void clearCommands(){
+        factory.clear();
 
     }
 

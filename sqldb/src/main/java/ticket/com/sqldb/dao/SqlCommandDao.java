@@ -10,13 +10,16 @@ public class SqlCommandDao implements ICommandDAO {
 
     private IDbFactory factory;
 
-    public SqlCommandDao(IDbFactory factory){}
+    public SqlCommandDao(IDbFactory factory){
+        this.factory = factory;
+    }
 
+    @Override
     public Boolean addCommand(Command command){
         return true;
     }
 
-    //some sort of array or list?
+    @Override
     public Command getCommand(String gameId){
         return null;
     }
@@ -26,6 +29,7 @@ public class SqlCommandDao implements ICommandDAO {
         return null;
     }
 
+    @Override
     public Boolean clearCommands(){
         return true;
     }
