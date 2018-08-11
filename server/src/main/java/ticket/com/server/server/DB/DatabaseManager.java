@@ -90,7 +90,6 @@ public class DatabaseManager {
     }
 
     public void clearCommands(){
-        dbFactory.getCommandDAO().clearCommands();
         dbFactory.startTransaction();
         dbFactory.getCommandDAO().clearCommands();
         dbFactory.finishTransaction(true);
