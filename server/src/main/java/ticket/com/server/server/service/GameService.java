@@ -3,6 +3,7 @@ package ticket.com.server.server.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.sql.ClientInfoStatus;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class GameService {
         Command gCommand = new Command(Game.class.getName(), null, "initGame", null);
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
         DatabaseManager.getInstance().addCommand(dbCommand);
-        //todo update db with random's
+        DatabaseManager.getInstance().updateGame(gameId, ServerModel.getInstance().getGames().get(gameId)); //update db with random's
 
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
@@ -128,7 +129,12 @@ public class GameService {
     public static void drawDestinationCard(String playerId, String gameId) {
         //draw card
         List<DestinationCard> drawnCards = ServerModel.getInstance().drawTemporaryDestinationCards(gameId);
-        //todo check that this doesn't change the game
+
+        //update database
+        Command gCommand2 = new Command(Game.class.getName(), null, "drawDestinationCards", new Object[]{});
+        Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
+        DatabaseManager.getInstance().addCommand(dbCommand2);
+
 
         try {
             Command tempDeck = new Command(GAME_PLAY_SERVICE_PATH, null,

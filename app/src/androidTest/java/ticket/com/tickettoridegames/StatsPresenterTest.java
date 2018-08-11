@@ -56,9 +56,9 @@ public class StatsPresenterTest {
         initToGameplay();
 
         service.initGame(gameId);
-        while(view.history.size() != 8); //todo if set history is
+        while(view.history.size() != 8); //if set history is
         System.out.println(view.history.size());
-        Integer initSize = view.history.size(); //todo if set history is used then they are added twice
+        Integer initSize = view.history.size(); //if set history is used then they are added twice
 
         service.pickupTrainCard(userId, gameId, 0);
         while(view.history.size() == initSize);

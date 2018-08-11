@@ -1,5 +1,6 @@
 package ticket.com.server.server.service;
 
+import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.server.server.model.ServerModel;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.web.Result;
@@ -16,7 +17,7 @@ public class CreateGameService {
         try {
             Game newGame = new Game(gameName,numberOfPlayers);
             sm.addNewGame(newGame, userId);
-            //todo update db
+            DatabaseManager.getInstance().addGame(newGame);
             result.setSuccess(true);
             result.setMessage(newGame.getId());
         }

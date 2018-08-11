@@ -1,5 +1,6 @@
 package ticket.com.server.server.service;
 
+import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.server.server.model.ServerModel;
 import ticket.com.utility.model.User;
 import ticket.com.utility.web.Result;
@@ -18,7 +19,9 @@ public class RegisterService {
         User newUser = new User(username, password);
         try{
             sm.addNewUser(newUser);
-            //todo update db
+            //todo also updates active users
+            DatabaseManager.getInstance().addUser(newUser);
+
             result.setSuccess(true);
             result.setMessage(newUser.getId());
         }

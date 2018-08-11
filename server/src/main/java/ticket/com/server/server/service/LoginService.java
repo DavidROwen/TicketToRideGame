@@ -13,7 +13,7 @@ public class LoginService {
 
         try {
             String userId = sm.loginUser(username, password);
-            //todo update db
+            //todo update db updates active users
             if (userId == null) {
                 result.setSuccess(false);
                 result.setErrorMessage("Password incorrect");

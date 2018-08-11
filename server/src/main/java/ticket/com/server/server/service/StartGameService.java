@@ -10,7 +10,6 @@ public class StartGameService {
         ServerModel sm = ServerModel.getInstance();
 
         try{
-            //todo update db
             if(sm.startGame(gameId)){
                 result.setSuccess(true);
                 result.setMessage("Starting Game");

@@ -161,7 +161,7 @@ public class PluginManager {
 }
 
 class PluginDescription {
-    private static List<String> usedNames = new LinkedList<>(); //todo never set
+    private static List<String> usedNames = new LinkedList<>(); //never set
 
     public final String NAME;
     public final String DESCRIPTION;

@@ -276,9 +276,6 @@ public class Game extends Observable {
     }
 
     public Boolean isMyTurn(String playerId) {
-        if (turnOrder.size() == 0){ //todo then the server and client would be out of sync
-            initTurnOrder();
-        }
         return playerId.equals(turnOrder.get(turnNumber));
     }
 
@@ -322,7 +319,6 @@ public class Game extends Observable {
         }
     }
 
-    // TODO: improve the checking here to always be accurate
     public boolean isInitialized(){
         if (id == null) {
             System.out.println("ERROR: Initialization failed because of id");
@@ -560,7 +556,6 @@ public class Game extends Observable {
         trainDiscards.addAll(discardedCards);
         System.out.println(player.getUsername() + " discarded " + discardedCards.size() + " cards");
         addToHistory(new PlayerAction(player.getUsername(), "claimed " + map.toString(routeName)));
-        // TODO: make this message nicer
         addToHistory(new PlayerAction(player.getUsername(), " claimed " + routeName));
 
 

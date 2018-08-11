@@ -242,6 +242,12 @@ public class ServerModel {
         }
         if(game.getNumberOfPlayers() == game.getMaxPlayers()){
             game.setStarted(true);
+
+            //update database
+            Command gCommand = new Command(Game.class.getName(), null, "setStarted", new Object[]{});
+            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+            DatabaseManager.getInstance().addCommand(dbCommand);
+
             for(String playerId : game.getPlayersId()){
                 Command command;
                 try{
