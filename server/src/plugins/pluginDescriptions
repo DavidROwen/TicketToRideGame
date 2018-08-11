@@ -8,7 +8,7 @@
   {
       "NAME": "JsonDb",
       "DESCRIPTION": "Database using json files",
-      "JAR_PATH": "jar:file:///C:/Users/dastin/Documents/BYUSummer2018/cs340/TicketToRideGame/server/src/plugins/jsondb.jar!/",
+      "JAR_PATH": "jar:file:////Users/aaron/Documents/AndroidStudioProjects/TicketToRideGame/server/src/plugins/jsondb.jar!/",
       "IMPLEMENTATION_NAME": "ticket.com.jsondb.JsonDbFactory"
    },
    {
