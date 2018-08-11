@@ -1,5 +1,6 @@
 package ticket.com.server.server.DB;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,7 @@ public class DatabaseManager {
     IDbFactory dbFactory = null;
 
     Integer commandCount;
-    Integer refreshCount;
-    Map<String, Integer> commandCounts = new HashMap<String, Integer>();//needs to store a count for each game
-
+    Integer commandDelta;
 
     /**
      * private instance that creates a singleton pattern
@@ -51,29 +50,37 @@ public class DatabaseManager {
         ServerModel.getInstance();
     }
 
-    public void assignRefreshCount(Integer n){
-        this.refreshCount = n;
+    public void setCommandDelta(Integer delta){
+        this.commandDelta = delta;
     }
 
     //Called from commandHandler, sends to ICommandDAO
-    public Boolean addCommand(Command command, String gameID){
-        if(!commandCounts.containsKey(gameID)){
-            commandCounts.put(gameID, 0);
-        }
-
+    public void addCommand(Command command, String gameID){
         try {
+            dbFactory.startTransaction();
             dbFactory.getCommandDAO().addCommand(command);
-            commandCounts.put(gameID, commandCounts.get(gameID) + 1);
+            dbFactory.finishTransaction(true);
+            commandCount++;
 
-            if(commandCounts.get(gameID) == refreshCount){
-                commandCounts.put(gameID, 0);
-                dbFactory.getCommandDAO().clearCommands();
-                dbFactory.getGameDAO().updateGame(gameID, ServerModel.getInstance().getGameById(gameID)); //update game for n commands
+            if(commandCount >= commandDelta){
+
+                List<Command> commands = getAllCommands();
+
+                for (Command c: commands){
+                    c.execute();
+                }
+
+                List<Game> games = new ArrayList<>(ServerModel.getInstance().getGames().values());
+
+                for (Game game: games){
+                    updateGame(game.getId(), game);
+                }
+
+                clearCommands();
             }
-            return true;
         }
         catch (Exception e){
-            return false;
+            e.printStackTrace();
         }
     }
     //Called by the ServerModel, serializes the user and sends it to IUserDAO
@@ -93,6 +100,8 @@ public class DatabaseManager {
         dbFactory.startTransaction();
         dbFactory.getCommandDAO().clearCommands();
         dbFactory.finishTransaction(true);
+
+        commandCount = 0;
     }
 
     //Called by the ServerModel, serializes the game and sends it to IGameDAO

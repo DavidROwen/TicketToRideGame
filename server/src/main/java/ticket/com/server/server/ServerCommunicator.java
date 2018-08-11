@@ -5,6 +5,8 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import javax.xml.crypto.Data;
+
 import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.utility.db.IDbFactory;
 import ticket.com.utility.web.Command;
@@ -61,11 +63,12 @@ public class ServerCommunicator {
 			if (!canUsePluginName(args[1])) {
 				return;
 			}
-			IDbFactory dbFactory = pluginManager.createPlugin(args[1], Integer.valueOf(args[2]));
+			IDbFactory dbFactory = pluginManager.createPlugin(args[1]);
+			DatabaseManager.getInstance().setCommandDelta(Integer.valueOf(args[2]));
 			DatabaseManager.getInstance().setDbFactory(dbFactory);
 			DatabaseManager.getInstance().createServerModel();
 
-			if (args.length > 3) {
+			if (args.length >= 4 && args[3].equals("-wipe")) {
 				DatabaseManager.getInstance().clearDatabase();
 			}
 		}

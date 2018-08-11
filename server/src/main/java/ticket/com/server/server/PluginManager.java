@@ -53,7 +53,7 @@ public class PluginManager {
 
     //assumes that name and ratio were already checked
     //assumes that the descriptions were already checked
-    public IDbFactory createPlugin(String name, Integer ratio){
+    public IDbFactory createPlugin(String name){
         try {
             //find jar
             URL[] classLoaderUrls = new URL[]{new URL(descriptions.get(name).JAR_PATH)};
@@ -63,7 +63,7 @@ public class PluginManager {
             //build class
             return (IDbFactory) pluginClass.getConstructor().newInstance();
         } catch(Exception e) {
-            System.out.println("Failed to create plugin \"" + name + "\", with ratio \"" + ratio + "\"");
+            System.out.println("Failed to create plugin \"" + name);
             e.printStackTrace();
             return null;
         }
