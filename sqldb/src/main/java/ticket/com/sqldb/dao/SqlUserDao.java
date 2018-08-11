@@ -24,7 +24,7 @@ public class SqlUserDao implements IUserDAO {
         try {
             PreparedStatement stmt = null;
             try{
-                stmt = factory.getConnection().prepareStatement("insert into event " +
+                stmt = factory.getConnection().prepareStatement("INSERT into user " +
                         "values ((?),(?),(?))");
                 stmt.setString(1, user.getId());
                 stmt.setString(2, user.getUsername());
@@ -50,8 +50,7 @@ public class SqlUserDao implements IUserDAO {
         User temp = new User();
         try {
             try {
-                stmt = factory.getConnection().prepareStatement("SELECT * FROM user WHERE user_name " +
-                        "values((?))");
+                stmt = factory.getConnection().prepareStatement("SELECT * FROM user WHERE user_name= ?");
                 stmt.setString(1, username);
                 ResultSet resultSet = stmt.executeQuery();
 
@@ -69,6 +68,7 @@ public class SqlUserDao implements IUserDAO {
         }
         catch (SQLException e){
             System.out.println(e.toString());
+            e.printStackTrace();
             return null;
         }
         return temp;
@@ -109,7 +109,7 @@ public class SqlUserDao implements IUserDAO {
         try {
             PreparedStatement stmt = null;
             try{
-                stmt = factory.getConnection().prepareStatement("DELETE from Users");
+                stmt = factory.getConnection().prepareStatement("DELETE from user");
                 stmt.executeUpdate();
             }
             finally {

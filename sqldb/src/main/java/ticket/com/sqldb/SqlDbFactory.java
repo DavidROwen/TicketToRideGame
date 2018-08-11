@@ -36,7 +36,7 @@ public class SqlDbFactory implements IDbFactory{
     @Override
     public void startTransaction(){
         try {
-            final String CONNECTION_URL = "jdbc:sqlite:fms.sqlite";
+            final String CONNECTION_URL = "jdbc:sqlite:tickettoride.sqlite";
 
             conn = DriverManager.getConnection(CONNECTION_URL);
             conn.setAutoCommit(false);
