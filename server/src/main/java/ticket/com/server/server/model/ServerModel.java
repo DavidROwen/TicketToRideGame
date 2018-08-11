@@ -21,10 +21,29 @@ public class ServerModel {
     private static ServerModel instance = null;
     public static ServerModel getInstance(){
         if(instance == null){
-            instance  = new ServerModel();
+            instance = new ServerModel();
+            initWithDb();
         }
         return instance;
     }
+
+    private static void initWithDb() {
+        getInstance().setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
+        getInstance().setGames(DatabaseManager.getInstance().getAllGames());
+        getInstance().executeCommands(DatabaseManager.getInstance().getAllCommands());
+    }
+
+    private void executeCommands(List<Command> commands) {
+        for(Command each : commands) {
+            try {
+                each.execute();
+            } catch(Exception e) {
+                System.out.println("ERROR: Server failed to execute command");
+                e.printStackTrace();
+            }
+        }
+    }
+
     //Map of users that stores the Username as the key
     private Map<String, User> registeredUsers;
     //Map of games that stores the GameId ast he key
@@ -325,6 +344,18 @@ public class ServerModel {
         } catch(Exception e) {
             System.out.println("ERROR: command failed to execute");
             return false;
+        }
+    }
+
+    public void setRegisteredUsers(List<User> registeredUsers) {
+        for(User each : registeredUsers) {
+            this.registeredUsers.put(each.getId(), each);
+        }
+    }
+
+    public void setGames(List<Game> games) {
+        for(Game each : games) {
+            this.games.put(each.getId(), each);
         }
     }
 }

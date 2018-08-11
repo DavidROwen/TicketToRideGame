@@ -1,6 +1,7 @@
 package ticket.com.server.server.DB;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ticket.com.server.server.model.ServerModel;
@@ -153,5 +154,47 @@ public class DatabaseManager {
     public void setDbFactory(IDbFactory dbFactory) {
         this.dbFactory = dbFactory;
         System.out.println("The manager's database was successfully set");
+    }
+
+    public List<User> getAllUsers() {
+        dbFactory.startTransaction();
+
+        List<User> users = dbFactory.getUserDAO().getAllUsers();
+        if(users == null) {
+            System.out.println("ERROR: dbFactory returned null when getAllUsers() was called");
+            dbFactory.finishTransaction(false);
+            return null;
+        }
+
+        dbFactory.finishTransaction(true);
+        return users;
+    }
+
+    public List<Game> getAllGames() {
+        dbFactory.startTransaction();
+
+        List<Game> games = dbFactory.getGameDAO().getAllGames();
+        if(games == null) {
+            System.out.println("ERROR: dbFactory returned null when getAllGames() was called");
+            dbFactory.finishTransaction(false);
+            return null;
+        }
+
+        dbFactory.finishTransaction(true);
+        return games;
+    }
+
+    public List<Command> getAllCommands() {
+        dbFactory.startTransaction();
+
+        List<Command> commands = dbFactory.getCommandDAO().getAllCommands();
+        if(commands == null) {
+            System.out.println("ERROR: dbFactory returned null when getAllCommands() was called");
+            dbFactory.finishTransaction(false);
+            return null;
+        }
+
+        dbFactory.finishTransaction(true);
+        return commands;
     }
 }
