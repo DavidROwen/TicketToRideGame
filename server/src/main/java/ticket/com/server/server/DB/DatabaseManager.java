@@ -15,7 +15,6 @@ public class DatabaseManager {
 
     Integer commandCount;
     Integer refreshCount;
-    ServerModel sm = ServerModel.getInstance();
     Map<String, Integer> commandCounts = new HashMap<String, Integer>();//needs to store a count for each game
 
 
