@@ -31,7 +31,7 @@ public class GameService {
         Command gCommand = new Command(Game.class.getName(), null, "initGame", null);
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
-        DatabaseManager.getInstance().updateGame(gameId, ServerModel.getInstance().getGames().get(gameId)); //update db with random's
+        //DatabaseManager.getInstance().updateGame(gameId, ServerModel.getInstance().getGames().get(gameId)); //update db with random's
 
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
