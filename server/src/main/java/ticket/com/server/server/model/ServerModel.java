@@ -22,16 +22,16 @@ public class ServerModel {
     public static ServerModel getInstance(){
         if(instance == null){
             instance = new ServerModel();
-            initWithDb();
+            instance.initWithDb();
         }
         return instance;
     }
 
-    private static void initWithDb() {
+    private void initWithDb() {
         try {
-            getInstance().setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
-            getInstance().setGames(DatabaseManager.getInstance().getAllGames());
-            getInstance().executeCommands(DatabaseManager.getInstance().getAllCommands());
+            setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
+            setGames(DatabaseManager.getInstance().getAllGames());
+            executeCommands(DatabaseManager.getInstance().getAllCommands());
         } catch (Exception e) {
             System.out.println("ERROR: Server failed to initialize from db");
             e.printStackTrace();
