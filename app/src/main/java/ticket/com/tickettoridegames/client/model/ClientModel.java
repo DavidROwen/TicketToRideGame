@@ -233,14 +233,14 @@ public class ClientModel extends Observable {
         getMyPlayer().clearTempDeck();
     }
 
-    public void updateDestinationCards(String playerId, List<DestinationCard> cards){
+    public void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
         Game game = getMyActiveGame();
         game.claimDestinationCards(cards, playerId);
         myNotify(NEW_DESTINATION_CARD);
         myNotify(HISTORYUPDATE);
     }
 
-    public void discardDestinationCards(List<DestinationCard> cards){
+    public void discardDestinationCards(LinkedList<DestinationCard> cards){
         Game game = getMyActiveGame();
         game.discardDestinationCards(cards);
         myNotify(DISCARDDESTINATION);
