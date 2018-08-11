@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Random;
 import java.util.Set;
@@ -744,5 +745,62 @@ public class Game extends Observable {
 
     public List<TrainCard> getTrainDiscards() {
         return Collections.unmodifiableList(trainDiscards);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Game)) return false;
+        Game game = (Game) o;
+        return getMaxPlayers() == game.getMaxPlayers() &&
+                getNumberOfPlayers() == game.getNumberOfPlayers() &&
+                isStarted() == game.isStarted() &&
+                initializedCorrectly == game.initializedCorrectly &&
+                Objects.equals(getPlayers(), game.getPlayers()) &&
+                Objects.equals(getChatList(), game.getChatList()) &&
+                Objects.equals(getId(), game.getId()) &&
+                Objects.equals(getName(), game.getName()) &&
+                Objects.equals(getNewestChat(), game.getNewestChat()) &&
+                Objects.equals(getGameOver(), game.getGameOver()) &&
+                Objects.equals(getTurnOrder(), game.getTurnOrder()) &&
+                Objects.equals(turnNumber, game.turnNumber) &&
+                Objects.equals(getTrainBank(), game.getTrainBank()) &&
+                Objects.equals(getMap(), game.getMap()) &&
+                Objects.equals(getDestinationCards(), game.getDestinationCards()) &&
+                Objects.equals(getTrainCardsDeck(), game.getTrainCardsDeck()) &&
+                Objects.equals(getTrainDiscards(), game.getTrainDiscards()) &&
+                Objects.equals(getGameHistory(), game.getGameHistory()) &&
+                Objects.equals(getNewestHistory(), game.getNewestHistory());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPlayers(), getChatList(), getId(), getName(), getMaxPlayers(), getNumberOfPlayers(), isStarted(), getNewestChat(), getGameOver(), getTurnOrder(), turnNumber, getTrainBank(), getMap(), getDestinationCards(), getTrainCardsDeck(), getTrainDiscards(), getGameHistory(), getNewestHistory(), INIT_HAND_SIZE, initializedCorrectly);
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "players=" + players +
+                ", chatList=" + chatList +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", maxPlayers=" + maxPlayers +
+                ", numberOfPlayers=" + numberOfPlayers +
+                ", isStarted=" + isStarted +
+                ", newestChat=" + newestChat +
+                ", gameOver=" + gameOver +
+                ", turnOrder=" + turnOrder +
+                ", turnNumber=" + turnNumber +
+                ", trainBank=" + trainBank +
+                ", map=" + map +
+                ", destinationCards=" + destinationCards +
+                ", trainCardsDeck=" + trainCardsDeck +
+                ", trainDiscards=" + trainDiscards +
+                ", gameHistory=" + gameHistory +
+                ", newestHistory=" + newestHistory +
+                ", INIT_HAND_SIZE=" + INIT_HAND_SIZE +
+                ", initializedCorrectly=" + initializedCorrectly +
+                '}';
     }
 }

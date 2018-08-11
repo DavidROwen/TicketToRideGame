@@ -114,21 +114,15 @@ public class DatabaseManager {
 
     //called by ServerCommunicator, tells ICommandDAO, IUserDAO, and IGameDAO to clear database
     public void clearDatabase(){
-        dbFactory.getGameDAO().clearGames();
-        dbFactory.getUserDAO().clearUsers();
-        dbFactory.getCommandDAO().clearCommands();
+        dbFactory.clear();
     }
 
     //When the Server reboots it calls this to get the User from the factory
     public User getUser(String userID){
         return dbFactory.getUserDAO().getUser(userID);
     }
-    //When the Server reboots it gives the most recent command and asks for
-    // all commands after from the ICommandDAO
-    public Command getCommmand(String commandID){
-        return null;
-        //return dbFactory.getCommandDAO().getCommand(commandID);
-    }
+
+
     //When the Server reboots it calls this to get the Game from the IGameDAO
     public Game getGame(String gameID){
         return dbFactory.getGameDAO().getGame(gameID);
