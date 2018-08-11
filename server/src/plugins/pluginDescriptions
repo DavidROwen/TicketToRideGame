@@ -11,6 +11,12 @@
       "JAR_PATH": "jar:file:///C:/Users/dastin/Documents/BYUSummer2018/cs340/TicketToRideGame/server/src/plugins/jsondb.jar!/",
       "IMPLEMENTATION_NAME": "ticket.com.jsondb.JsonDbFactory"
    }
+   {
+     "NAME": "sqldb",
+     "DESCRIPTION": "Database using SQLite files",
+     "JAR_PATH": "jar:file:///C:\Users\David\Desktop\David_Proj\CS340\TicketToRideGames\server\src\plugins\sqldb.jar!/",
+     "IMPLEMENTATION_NAME": "ticket.com.sqldb.SqlDbFactory"
+   }
 ]
 
 //To add a plugin
