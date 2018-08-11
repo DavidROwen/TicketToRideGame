@@ -15,23 +15,23 @@ import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class ServerModel {
-    public static final String JOIN_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.JoinService";
-    public static final String LOBBY_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.LobbyService";
+    private static final String JOIN_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.JoinService";
+    private static final String LOBBY_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.LobbyService";
 
     private static ServerModel instance = null;
     public static ServerModel getInstance(){
         if(instance == null){
             instance = new ServerModel();
-            initWithDb();
+            instance.initWithDb();
         }
         return instance;
     }
 
-    private static void initWithDb() {
+    private void initWithDb() {
         try {
-            getInstance().setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
-            getInstance().setGames(DatabaseManager.getInstance().getAllGames());
-            getInstance().executeCommands(DatabaseManager.getInstance().getAllCommands());
+            setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
+            setGames(DatabaseManager.getInstance().getAllGames());
+            executeCommands(DatabaseManager.getInstance().getAllCommands());
         } catch (Exception e) {
             System.out.println("ERROR: Server failed to initialize from db");
             e.printStackTrace();
@@ -56,12 +56,12 @@ public class ServerModel {
     //Map of games that stores the GameId ast he key
     private Map<String, Game> games; //key is gameId
     //Map of users that stores the UserID as the kay
-//    private Map<String, User> activeUsers; //key is userId
+    private Map<String, User> activeUsers; //key is userId
 
     private ServerModel(){
         registeredUsers = new HashMap<>();
         games = new HashMap<>();
-//        activeUsers = new HashMap<>();
+        activeUsers = new HashMap<>();
     }
 
     public void clear(){
@@ -73,6 +73,8 @@ public class ServerModel {
             throw new Exception();
         }
         else{
+            registeredUsers.put(user.getUsername(), user);
+            activeUsers.put(user.getId(), user);
             registeredUsers.put(user.getId(), user);
 //            activeUsers.put(user.getId(), user);
             System.out.println("User: "+user.getId()+" registered ");
@@ -100,8 +102,8 @@ public class ServerModel {
         }
         else{
             if(user.getPassword().equals(password)){
-                if(!registeredUsers.containsKey(user.getId())){
-                    registeredUsers.put(user.getId(), user);
+                if(!activeUsers.containsKey(user.getId())){
+                    activeUsers.put(user.getId(), user);
                     System.out.println("User: " + user.getId() + " Logged in");
                 }
                 for(String gameId : games.keySet()){
@@ -126,7 +128,7 @@ public class ServerModel {
         }
     }
 
-    public void addNewGame(Game game, String userId) throws Exception{
+    public void addNewGame(Game game) throws Exception{
         if(games.containsKey(game.getId())){
             throw new Exception("Game already exists.");
         }
@@ -134,7 +136,7 @@ public class ServerModel {
             games.put(game.getId(), game);
             System.out.println("Game with id: " + game.getId() + " created "+game.toString());
             //send commands to other connected Users
-            for(String id : registeredUsers.keySet()){
+            for(String id : activeUsers.keySet()){
                 Command command;
                 try{
                     command = new Command(JOIN_SERVICE_PATH,
@@ -180,7 +182,7 @@ public class ServerModel {
 
             if(addSuccess){
                 System.out.println("User: " + player.getId() + " added to game: " + gameId);
-                for(String id : registeredUsers.keySet()){
+                for(String id : activeUsers.keySet()){
                     Command command;
                     try{
                         command = new Command(JOIN_SERVICE_PATH,
@@ -322,10 +324,10 @@ public class ServerModel {
     //End Destination Card Functions
 
     //Game History Function
-    public void addToGameHistory(String gameId, PlayerAction pa){
-        Game game = games.get(gameId);
-        game.addToHistory(pa);
-    }
+//    public void addToGameHistory(String gameId, PlayerAction pa){
+//        Game game = games.get(gameId);
+//        game.addToHistory(pa);
+//    }
 
     public Map<String, Game> getGames() {
         return games;
@@ -358,13 +360,13 @@ public class ServerModel {
         }
     }
 
-    public void setRegisteredUsers(List<User> registeredUsers) {
+    private void setRegisteredUsers(List<User> registeredUsers) {
         for(User each : registeredUsers) {
             this.registeredUsers.put(each.getId(), each);
         }
     }
 
-    public void setGames(List<Game> games) {
+    private void setGames(List<Game> games) {
         for(Game each : games) {
             this.games.put(each.getId(), each);
         }
