@@ -18,6 +18,7 @@ public class RegisterService {
         User newUser = new User(username, password);
         try{
             sm.addNewUser(newUser);
+            //todo update db
             result.setSuccess(true);
             result.setMessage(newUser.getId());
         }

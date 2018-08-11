@@ -16,6 +16,7 @@ public class CreateGameService {
         try {
             Game newGame = new Game(gameName,numberOfPlayers);
             sm.addNewGame(newGame, userId);
+            //todo update db
             result.setSuccess(true);
             result.setMessage(newGame.getId());
         }

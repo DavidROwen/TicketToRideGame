@@ -12,6 +12,7 @@ public class Tester {
     public static Result clear(){
         ServerModel serverModel = ServerModel.getInstance();
         serverModel.clear();
+        //todo update db
 
         return new Result(true, "Server Model Cleared", null);
     }
