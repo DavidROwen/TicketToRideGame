@@ -1,5 +1,6 @@
 package ticket.com.sqldb.tests;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,6 +11,15 @@ import ticket.com.utility.model.User;
 import static junit.framework.TestCase.assertTrue;
 
 public class userDaoTest {
+
+    @After
+    public void teardown(){
+        SqlDbFactory factory = new SqlDbFactory();
+
+        factory.startTransaction();
+        boolean status = factory.getUserDAO().clearUsers();
+        factory.finishTransaction(status);
+    }
 
     @Test
     public void testAddGetUsers(){

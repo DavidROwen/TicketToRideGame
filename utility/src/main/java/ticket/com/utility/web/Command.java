@@ -4,6 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class Command {
+
+    public Command(){
+        ID = curId++;
+    }
+
     public Command(String methodsClass, Object instance, String methodName, Object[] paramValues) {
         this.className = methodsClass;
         this.instance = instance;
@@ -130,5 +135,25 @@ public class Command {
         }
 
         return types;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public void setParamTypes(Class<?>[] paramTypes) {
+        this.paramTypes = paramTypes;
+    }
+
+    public void setParamValues(Object[] paramValues) {
+        this.paramValues = paramValues;
+    }
+
+    public Integer getID() {
+        return ID;
     }
 }
