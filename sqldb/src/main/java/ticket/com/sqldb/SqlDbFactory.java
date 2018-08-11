@@ -24,11 +24,12 @@ public class SqlDbFactory implements IDbFactory{
 
     @Override
     public IDbFactory getInstance(){
+
         return new SqlDbFactory();
     }
 
     public SqlDbFactory(){
-
+        createTables();
     }
 
     private Connection conn;
