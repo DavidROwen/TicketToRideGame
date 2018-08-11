@@ -64,7 +64,9 @@ public class JsonUserDao implements IUserDAO {
         catch (IOException e){
             e.printStackTrace();
         }
-        return users;
+
+        if(users != null) { return users; }
+        else { return new ArrayList<User>(); }
     }
 
     public Boolean clearUsers(){

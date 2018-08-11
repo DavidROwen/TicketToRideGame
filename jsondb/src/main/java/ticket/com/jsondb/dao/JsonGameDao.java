@@ -67,7 +67,9 @@ public class JsonGameDao implements IGameDAO {
         catch (IOException e){
             e.printStackTrace();
         }
-        return games;
+
+        if(games == null) { return new ArrayList<>(); } //before any games were added
+        else { return games; }
     }
 
     public Boolean clearGames(){

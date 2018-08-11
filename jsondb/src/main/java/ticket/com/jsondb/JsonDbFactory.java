@@ -27,14 +27,10 @@ public class JsonDbFactory implements IDbFactory {
         }
         return instance;
     }
-    public void startTransaction(){
-        System.out.println("Starting Database Transaction");
-    }
+    public void startTransaction(){ }
+
     public void finishTransaction(Boolean commit){
-        if(commit){
-            System.out.println("Database updated");
-        }
-        else{
+        if(!commit){
             System.out.println("Database failed to Update");
         }
     }
