@@ -64,7 +64,7 @@ public class JoinPresenter implements IJoinPresenter, Observer {
         if (gameId == null || gameId.equals("")) {
             joinView.displayMessage("Invalid game id.");
         } else {
-            String userId = clientModel.getUser().getUsername();
+            String userId = clientModel.getUserId();
             Result result;
             if(clientModel.getMyActiveGame() == null) { //only join one game
                 result = JoinService.joinGame(userId, gameId);
