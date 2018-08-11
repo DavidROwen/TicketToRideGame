@@ -416,7 +416,7 @@ public class Game extends Observable {
         return list;
     }
 
-    public void claimDestinationCards(List<DestinationCard> cards, String playerId){
+    public void claimDestinationCards(LinkedList<DestinationCard> cards, String playerId){
         Player player = players.get(playerId);
         try {
             for (DestinationCard card : cards) {
@@ -436,7 +436,7 @@ public class Game extends Observable {
      * @post destinatonCards.size() >= 1
      * @param cards a list of destination cards
      */
-    public void discardDestinationCards(List<DestinationCard> cards){
+    public void discardDestinationCards(LinkedList<DestinationCard> cards){
         for(DestinationCard card : cards){
             addDestinationCard(card);
         }

@@ -1,6 +1,7 @@
 package ticket.com.server.server.model;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -270,7 +271,7 @@ public class ServerModel {
             game.setStarted(true);
 
             //update database
-            Command gCommand = new Command(Game.class.getName(), null, "setStarted", new Object[]{});
+            Command gCommand = new Command(Game.class.getName(), null, "setStarted", new Object[]{true});
             Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
             DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
@@ -297,7 +298,7 @@ public class ServerModel {
         return games.get(gameId).drawDestinationCards();
     }
 
-    public void claimDestinationCards(String playerId, String gameId, List<DestinationCard> cards){
+    public void claimDestinationCards(String playerId, String gameId, LinkedList<DestinationCard> cards){
         Game game = games.get(gameId);
         game.claimDestinationCards(cards, playerId);
 
@@ -307,7 +308,7 @@ public class ServerModel {
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
     }
 
-    public void addDestinationCard(String gameId, List<DestinationCard> card) {
+    public void addDestinationCard(String gameId, LinkedList<DestinationCard> card) {
         games.get(gameId).discardDestinationCards(card);
 
         //update database
