@@ -37,8 +37,8 @@ public class SqlUserDao implements IUserDAO {
                 }
             }
         }
-        catch (SQLException ex){
-            System.out.println(ex.toString());
+        catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -47,7 +47,7 @@ public class SqlUserDao implements IUserDAO {
     @Override
     public User getUser(String username){
         PreparedStatement stmt = null;
-        User temp = new User();
+        User temp = null;
         try {
             try {
                 stmt = factory.getConnection().prepareStatement("SELECT * FROM user WHERE user_name= ?");
@@ -55,6 +55,7 @@ public class SqlUserDao implements IUserDAO {
                 ResultSet resultSet = stmt.executeQuery();
 
                 while (resultSet.next()){
+                    temp = new User();
                     temp.setUsername(resultSet.getString("user_name"));
                     temp.setPassword(resultSet.getString("password"));
                     temp.setId(resultSet.getString("user_id"));
@@ -67,7 +68,6 @@ public class SqlUserDao implements IUserDAO {
             }
         }
         catch (SQLException e){
-            System.out.println(e.toString());
             e.printStackTrace();
             return null;
         }
@@ -98,7 +98,7 @@ public class SqlUserDao implements IUserDAO {
             }
         }
         catch (SQLException e){
-            System.out.println(e.toString());
+            e.printStackTrace();
             return null;
         }
         return users;
@@ -118,8 +118,8 @@ public class SqlUserDao implements IUserDAO {
                 }
             }
         }
-        catch (SQLException ex){
-            System.out.println(ex.toString());
+        catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
         return true;
