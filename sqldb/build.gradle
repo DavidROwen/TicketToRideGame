@@ -1,5 +1,15 @@
 apply plugin: 'java-library'
 
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'The Big Jar',
+                'Main-Class': 'ticket.com.sqldb.SqlDbFactory'
+    }
+    baseName = project.name
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':utility')
