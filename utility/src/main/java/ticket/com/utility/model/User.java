@@ -7,7 +7,6 @@ public class User {
     private String password;
     private String id;
     private String gameId;
-    private String color;
 
     public User(String username, String password){
         this.username = username;
@@ -47,13 +46,5 @@ public class User {
 
     public void setGameId(String gameId) {
         this.gameId = gameId;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 }
