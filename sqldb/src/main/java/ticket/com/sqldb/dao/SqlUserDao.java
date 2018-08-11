@@ -1,5 +1,7 @@
 package ticket.com.sqldb.dao;
 
+import java.util.List;
+
 import ticket.com.utility.db.IDbFactory;
 import ticket.com.utility.db.dao.IUserDAO;
 import ticket.com.utility.model.User;
@@ -15,6 +17,11 @@ public class SqlUserDao implements IUserDAO {
     }
 
     public User getUser(String username){
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
         return null;
     }
 

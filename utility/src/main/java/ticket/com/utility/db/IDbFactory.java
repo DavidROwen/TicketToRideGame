@@ -8,9 +8,16 @@ public interface IDbFactory {
     //Integer commandCount;
 
     IDbFactory getInstance();
+
     void startTransaction();
+
     void finishTransaction(Boolean commit);
+
     IGameDAO getGameDAO();
+
     IUserDAO getUserDAO();
+
     ICommandDAO getCommandDAO();
+
+    void clear();
 }

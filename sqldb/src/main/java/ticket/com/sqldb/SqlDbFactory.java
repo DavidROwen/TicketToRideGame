@@ -22,8 +22,9 @@ public class SqlDbFactory implements IDbFactory{
         }
     }
 
+    @Override
     public IDbFactory getInstance(){
-        return null;
+        return new SqlDbFactory();
     }
 
     public SqlDbFactory(){
@@ -32,6 +33,7 @@ public class SqlDbFactory implements IDbFactory{
 
     private Connection conn;
 
+    @Override
     public void startTransaction(){
         try {
             final String CONNECTION_URL = "jdbc:sqlite:fms.sqlite";
@@ -44,6 +46,7 @@ public class SqlDbFactory implements IDbFactory{
         }
     }
 
+    @Override
     public void finishTransaction(Boolean commit){
         try {
             if (commit) {
@@ -92,14 +95,17 @@ public class SqlDbFactory implements IDbFactory{
         }
     }
 
+    @Override
     public IGameDAO getGameDAO(){
         return new SqlGameDao(this);
     }
 
+    @Override
     public IUserDAO getUserDAO(){
         return new SqlUserDao(this);
     }
 
+    @Override
     public ICommandDAO getCommandDAO(){
         return new SqlCommandDao(this);
     }
@@ -110,5 +116,10 @@ public class SqlDbFactory implements IDbFactory{
         db.startTransaction();
         db.createTables();
         db.finishTransaction(true);
+    }
+
+    @Override
+    public void clear(){
+
     }
 }
