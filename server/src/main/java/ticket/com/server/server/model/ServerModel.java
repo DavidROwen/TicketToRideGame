@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import ticket.com.server.server.CommandsManager;
-import ticket.com.server.server.service.GameService;
 import ticket.com.utility.model.Chat;
 import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Game;
@@ -274,5 +273,24 @@ public class ServerModel {
 
     public void endGame(String gameId) {
         getGames().get(gameId).setGameOver(true);
+    }
+
+    public static boolean execOnGame(String gameId, Command command) {
+        Game game = getInstance().getGames().get(gameId);
+        if (game == null) {
+            System.out.println("ERROR: Couldn't find game for " + gameId);
+            return false;
+        }
+
+        command.setInstance(game);
+        command.setInstanceType(Game.class);
+
+        try {
+            command.execute();
+            return true;
+        } catch(Exception e) {
+            System.out.println("ERROR: command failed to execute");
+            return false;
+        }
     }
 }
