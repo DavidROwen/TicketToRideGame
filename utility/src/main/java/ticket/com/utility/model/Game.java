@@ -277,7 +277,7 @@ public class Game extends Observable {
     }
 
     public Boolean isMyTurn(String playerId) {
-        return playerId.equals(turnOrder.get(turnNumber));
+        return playerId.equals(turnOrder.get(turnNumber % players.size()));
     }
 
     private void initTurnOrder() {
