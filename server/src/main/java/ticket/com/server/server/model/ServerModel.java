@@ -69,7 +69,7 @@ public class ServerModel {
     }
 
     public void addNewUser(User user) throws Exception {
-        if(registeredUsers.containsKey(user.getId())){
+        if(getUserByName(user.getUsername()) != null) { //user passed in is new user created with credentials, so id's wouldn't match up
             throw new Exception();
         }
         else{
