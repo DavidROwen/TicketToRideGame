@@ -40,6 +40,7 @@ public class SqlCommandDao implements ICommandDAO {
             e.printStackTrace();
             return false;
         }
+        System.out.println("SQL: command added to db "+command.toString());
         return true;
     }
 
@@ -86,6 +87,7 @@ public class SqlCommandDao implements ICommandDAO {
             e.printStackTrace();
             return false;
         }
+        System.out.println("SQL: all commands cleared from db");
         return true;
     }
 
