@@ -56,12 +56,12 @@ public class ServerModel {
     //Map of games that stores the GameId ast he key
     private Map<String, Game> games; //key is gameId
     //Map of users that stores the UserID as the kay
-//    private Map<String, User> activeUsers; //key is userId
+    private Map<String, User> activeUsers; //key is userId
 
     private ServerModel(){
         registeredUsers = new HashMap<>();
         games = new HashMap<>();
-//        activeUsers = new HashMap<>();
+        activeUsers = new HashMap<>();
     }
 
     public void clear(){
@@ -74,7 +74,7 @@ public class ServerModel {
         }
         else{
             registeredUsers.put(user.getUsername(), user);
-//            activeUsers.put(user.getId(), user);
+            activeUsers.put(user.getId(), user);
             System.out.println("User: "+user.getId()+" registered ");
             for(String gameId : games.keySet()){
                 Command command;
@@ -100,8 +100,8 @@ public class ServerModel {
         }
         else{
             if(user.getPassword().equals(password)){
-                if(!registeredUsers.containsKey(user.getId())){
-                    registeredUsers.put(user.getId(), user);
+                if(!activeUsers.containsKey(user.getId())){
+                    activeUsers.put(user.getId(), user);
                     System.out.println("User: " + user.getId() + " Logged in");
                 }
                 for(String gameId : games.keySet()){
@@ -134,7 +134,7 @@ public class ServerModel {
             games.put(game.getId(), game);
             System.out.println("Game with id: " + game.getId() + " created "+game.toString());
             //send commands to other connected Users
-            for(String id : registeredUsers.keySet()){
+            for(String id : activeUsers.keySet()){
                 Command command;
                 try{
                     command = new Command(JOIN_SERVICE_PATH,
@@ -156,7 +156,7 @@ public class ServerModel {
     }
 
     public User getUserById(String id){
-        return registeredUsers.get(id);
+        return activeUsers.get(id);
     }
 
     public boolean addPlayerToGame(String userId, String gameId) throws Exception{
@@ -176,7 +176,7 @@ public class ServerModel {
 
             if(addSuccess){
                 System.out.println("User: " + player.getId() + " added to game: " + gameId);
-                for(String id : registeredUsers.keySet()){
+                for(String id : activeUsers.keySet()){
                     Command command;
                     try{
                         command = new Command(JOIN_SERVICE_PATH,
@@ -211,7 +211,7 @@ public class ServerModel {
 
             if(removeSuccess){
                 System.out.println("User: " + playerId + " removed from game: " + gameId);
-                for(String id : registeredUsers.keySet()){
+                for(String id : activeUsers.keySet()){
                     Command command;
                     try{
                         command = new Command(LOBBY_SERVICE_PATH,
@@ -234,7 +234,7 @@ public class ServerModel {
 
     public void addChatToGame(String gameId, String playerId, String message){
         Game game = games.get(gameId);
-        User player = registeredUsers.get(playerId);
+        User player = activeUsers.get(playerId);
         Chat chat = new Chat(player.getUsername(), message);
         game.addToChat(chat);
 
