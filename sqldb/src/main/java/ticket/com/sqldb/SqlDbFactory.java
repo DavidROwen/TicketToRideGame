@@ -29,7 +29,9 @@ public class SqlDbFactory implements IDbFactory{
     }
 
     public SqlDbFactory(){
+        startTransaction();
         createTables();
+        finishTransaction(true);
     }
 
     private Connection conn;
