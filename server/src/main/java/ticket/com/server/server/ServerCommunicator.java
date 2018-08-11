@@ -43,7 +43,7 @@ public class ServerCommunicator {
 	}
 
 	public static void main(String[] args) {
-		if(args.length >= 3) {
+		if(args.length >= 3) { //if they specified plugins
 			if (!canRun(args)) {
 				return;
 			}
@@ -67,8 +67,6 @@ public class ServerCommunicator {
 			if (args.length > 3) {
 				DatabaseManager.getInstance().wipe();
 			}
-
-			DatabaseManager.getInstance().addCommand(new Command(null, (Object) null, null, null));
 		}
 
 		new ServerCommunicator().run();
@@ -76,19 +74,20 @@ public class ServerCommunicator {
 
 	private static boolean canRun(String[] args) {
 		if(args.length < 3) {
-			throw new AssertionError(
+			System.out.println(
 					"ERROR: Program expects arguments for:\n "
 							+ "port number (\"8082\" for default)\n"
 							+ "plugin type (\"none\" fore default)\n"
 							+ "plugin ratio (\"1\" for default)\n"
 			);
+			return false;
 		}
 
 		if(!canUsePort(args[0])
 			|| !canUsePluginRatio(args[2])
 			|| (args.length > 3 && !canUsePluginCommand(args[3]))
 		) {
-			System.out.println("Can't run server because of incorrect arguments");
+			System.out.println("ERROR: Can't run server because of incorrect arguments");
 			return false;
 		}
 		return true;
@@ -96,11 +95,15 @@ public class ServerCommunicator {
 
 	private static boolean canUsePluginCommand(String command) {
 		if(command.charAt(0) != '-') {
-			throw new AssertionError("ERROR: Start plugin command \"" + command + "\" s with -");
-		} else if(!command.contains("wipe")) {
-			throw new AssertionError("ERROR: Invalid plugin command \"" + command + "\""
-					+ "\n possible commands include : -wipe");
+			System.out.println("ERROR: Start plugin command \"" + command + "\" s with -");
+			return false;
 		}
+		if(!command.contains("wipe")) {
+			System.out.println("ERROR: Invalid plugin command \"" + command + "\""
+					+ "\n possible commands include : -wipe");
+			return false;
+		}
+
 		return true;
 	}
 
@@ -108,12 +111,15 @@ public class ServerCommunicator {
 		//check that it's an integer
 		for(Character each : ratioString.toCharArray()) {
 			if(!Character.isDigit(each)) {
-				throw new AssertionError("ERROR: Plugin ratio \"" + ratioString + "\" must be an integer");
+				System.out.println("ERROR: Plugin ratio \"" + ratioString + "\" must be an integer");
+				return false;
 			}
 		}
 		if(Integer.valueOf(ratioString) < 0) {
-			throw new AssertionError("ERROR: Plugin ratio \"" + ratioString + "\"  must be positive");
+			System.out.println("ERROR: Plugin ratio \"" + ratioString + "\"  must be positive");
+			return false;
 		}
+
 		return true;
 	}
 
@@ -124,8 +130,9 @@ public class ServerCommunicator {
 				possiblePluginNamesString += " " + each;
 			}
 
-			throw new AssertionError("ERROR: Invalid plugin name \"" + name
+			System.out.println("ERROR: Invalid plugin name \"" + name
 					+ "\" possible names include: " + possiblePluginNamesString);
+			return false;
 		}
 		return true;
 	}
@@ -134,12 +141,15 @@ public class ServerCommunicator {
 		//check that it's an integer
 		for(Character each : portString.toCharArray()) {
 			if(!Character.isDigit(each)) {
-				throw new AssertionError("ERROR: Port \"" + portString + "\" must be an integer");
+				System.out.println("ERROR: Port \"" + portString + "\" must be an integer");
+				return false;
 			}
 		}
 		if(Integer.valueOf(portString) < 0) {
-			throw new AssertionError("ERROR: Port \"" + portString + "\" must be positive");
+			System.out.println("ERROR: Port \"" + portString + "\" must be positive");
+			return false;
 		}
+
 		return true;
 	}
 

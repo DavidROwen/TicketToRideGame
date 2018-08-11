@@ -1,5 +1,4 @@
-package ticket.com.server.server.DB.DAO;
-
+package ticket.com.jsondb.dao;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,12 +6,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import ticket.com.jsondb.JsonDbFactory;
 import ticket.com.utility.db.IDbFactory;
-import ticket.com.server.server.DB.JsonDbFactory;
 import ticket.com.utility.db.dao.IUserDAO;
 import ticket.com.utility.model.User;
 
-public class JsonUserDAOTest {
+public class JsonUserDaoTest {
 
     IDbFactory factory;
 
@@ -40,5 +39,4 @@ public class JsonUserDAOTest {
         User found2 = userDAO.getUser("Bob");
         assertTrue(found2 != null);
     }
-
 }

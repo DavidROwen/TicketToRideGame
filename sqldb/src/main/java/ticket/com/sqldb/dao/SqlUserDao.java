@@ -18,7 +18,7 @@ public class SqlUserDao implements IUserDAO {
         return null;
     }
 
-    public void clearUsers(){
-
+    public Boolean clearUsers(){
+        return true;
     }
 }

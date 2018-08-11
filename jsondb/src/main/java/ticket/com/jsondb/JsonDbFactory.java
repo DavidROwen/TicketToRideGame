@@ -1,25 +1,27 @@
-package ticket.com.server.server.DB;
+package ticket.com.jsondb;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.IOException;
+
+import ticket.com.jsondb.dao.JsonCommandDao;
+import ticket.com.jsondb.dao.JsonGameDao;
+import ticket.com.jsondb.dao.JsonUserDao;
 import ticket.com.utility.db.IDbFactory;
 import ticket.com.utility.db.dao.ICommandDAO;
 import ticket.com.utility.db.dao.IGameDAO;
 import ticket.com.utility.db.dao.IUserDAO;
-import ticket.com.server.server.DB.DAO.JsonCommandDAO;
-import ticket.com.server.server.DB.DAO.JsonGameDAO;
-import ticket.com.server.server.DB.DAO.JsonUserDAO;
 
 public class JsonDbFactory implements IDbFactory {
-
     private JsonDbFactory instance;
     private int commandCount;
     private Gson gson;
 
     //SET THESE TO YOUR LOCAL FILES!
-    private final String COMMAND_FILE = "C:\\Users\\dastin\\Documents\\BYUSummer2018\\cs340\\TicketToRideGame\\commands.json";
-    private final String USER_FILE = "C:\\Users\\dastin\\Documents\\BYUSummer2018\\cs340\\TicketToRideGame\\users.json";
-    private final String GAMESTATE_FILE = "C:\\Users\\dastin\\Documents\\BYUSummer2018\\cs340\\TicketToRideGame\\gamestate.json";
+    private final String COMMAND_FILE = "commands.json";
+    private final String USER_FILE = "users.json";
+    private final String GAMESTATE_FILE = "gamestate.json";
 
     public JsonDbFactory(){
         commandCount = 0;
@@ -45,23 +47,26 @@ public class JsonDbFactory implements IDbFactory {
     }
 
     public IGameDAO getGameDAO(){
-        return new JsonGameDAO(GAMESTATE_FILE);
+        File file = openFile(GAMESTATE_FILE);
+        return new JsonGameDao(file);
     }
 
     public IUserDAO getUserDAO(){
-        return new JsonUserDAO(USER_FILE);
+        File file = openFile(USER_FILE);
+        return new JsonUserDao(file);
     }
 
     public ICommandDAO getCommandDAO(){
-        return new JsonCommandDAO(COMMAND_FILE);
+        File file = openFile(COMMAND_FILE);
+        return new JsonCommandDao(file);
     }
 
     public void clearDB(){
 
     }
 
-    private void openFile(String filename){
-
+    private File openFile(String filename){
+        return new File(filename);
     }
 
     private void writeFile(String filename){

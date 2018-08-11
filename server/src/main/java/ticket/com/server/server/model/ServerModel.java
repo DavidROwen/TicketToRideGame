@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import ticket.com.server.server.CommandsManager;
-import ticket.com.server.server.service.GameService;
+import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.utility.model.Chat;
 import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Game;
@@ -142,6 +142,12 @@ public class ServerModel {
         }
         else{
             boolean addSuccess = game.addPlayers(player);
+
+            //update database
+            Command gCommand = new Command(Game.class.getName(), null, "addPlayers", new Object[]{player});
+            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+            DatabaseManager.getInstance().addCommand(dbCommand);
+
             if(addSuccess){
                 System.out.println("User: " + player.getId() + " added to game: " + gameId);
                 for(String id : activeUsers.keySet()){
@@ -172,6 +178,11 @@ public class ServerModel {
         }
         else{
             boolean removeSuccess = game.removePlayer(playerId);
+            //update database
+            Command gCommand = new Command(Game.class.getName(), null, "removePlayer", new Object[]{playerId});
+            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+            DatabaseManager.getInstance().addCommand(dbCommand);
+
             if(removeSuccess){
                 System.out.println("User: " + playerId + " removed from game: " + gameId);
                 for(String id : activeUsers.keySet()){
@@ -200,6 +211,12 @@ public class ServerModel {
         User player = activeUsers.get(playerId);
         Chat chat = new Chat(player.getUsername(), message);
         game.addToChat(chat);
+
+        //update database
+        Command gCommand = new Command(Game.class.getName(), null, "addToChat", new Object[]{chat});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        DatabaseManager.getInstance().addCommand(dbCommand);
+
         System.out.println("User: " + playerId + " added chat to game: " + gameId);
         //send commands to all the users in the game.
         for(String id : game.getPlayersId()){
@@ -225,6 +242,12 @@ public class ServerModel {
         }
         if(game.getNumberOfPlayers() == game.getMaxPlayers()){
             game.setStarted(true);
+
+            //update database
+            Command gCommand = new Command(Game.class.getName(), null, "setStarted", new Object[]{});
+            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+            DatabaseManager.getInstance().addCommand(dbCommand);
+
             for(String playerId : game.getPlayersId()){
                 Command command;
                 try{
@@ -251,10 +274,20 @@ public class ServerModel {
     public void claimDestinationCards(String playerId, String gameId, List<DestinationCard> cards){
         Game game = games.get(gameId);
         game.claimDestinationCards(cards, playerId);
+
+        //update database
+        Command gCommand = new Command(Game.class.getName(), null, "claimDestinationCards", new Object[]{cards, playerId});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        DatabaseManager.getInstance().addCommand(dbCommand);
     }
 
     public void addDestinationCard(String gameId, List<DestinationCard> card) {
         games.get(gameId).discardDestinationCards(card);
+
+        //update database
+        Command gCommand = new Command(Game.class.getName(), null, "discardDestinationCards", new Object[]{card});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        DatabaseManager.getInstance().addCommand(dbCommand);
     }
     //End Destination Card Functions
 
@@ -274,5 +307,24 @@ public class ServerModel {
 
     public void endGame(String gameId) {
         getGames().get(gameId).setGameOver(true);
+    }
+
+    public static boolean execOnGame(String gameId, Command command) {
+        Game game = getInstance().getGames().get(gameId);
+        if (game == null) {
+            System.out.println("ERROR: Couldn't find game for " + gameId);
+            return false;
+        }
+
+        command.setInstance(game);
+        command.setInstanceType(Game.class);
+
+        try {
+            command.execute();
+            return true;
+        } catch(Exception e) {
+            System.out.println("ERROR: command failed to execute");
+            return false;
+        }
     }
 }

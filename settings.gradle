@@ -1,1 +1,1 @@
-include ':app', ':server', ':utility', ':pluginStub', ':sqldb', ':sqldb'
+include ':app', ':server', ':utility', ':pluginStub', ':sqldb', ':sqldb', ':jsondb'

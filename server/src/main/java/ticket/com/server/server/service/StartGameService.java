@@ -29,7 +29,6 @@ public class StartGameService {
     public static Result leaveGame(String gameId, String playerId){
         Result result = new Result();
         ServerModel sm = ServerModel.getInstance();
-
         try{
             if(sm.removePlayerFromGame(gameId, playerId)){
                 result.setSuccess(true);

@@ -1,11 +1,10 @@
 apply plugin: 'java-library'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.google.code.gson:gson:2.8.2'
-    testImplementation 'junit:junit:4.12'
     implementation 'junit:junit:4.12'
-    compile project(path: ':utility')
+    implementation project(':utility')
 }
 
 sourceCompatibility = "1.8"

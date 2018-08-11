@@ -58,15 +58,15 @@ public class MapPresenter implements IMapPresenter, Observer {
                 break;
             case ROUTECLAIMED:
                 mapView.claimRoute(clientModel.getNewestClaimedRoute().first, clientModel.getNewestClaimedRoute().second);
-                GamePlayService.checkHand(ClientModel.get_instance().getMyPlayer().getId(), //todo testing
-                        ClientModel.get_instance().getMyActiveGame().getId());
+//                GamePlayService.checkHand(ClientModel.get_instance().getMyPlayer().getId(),
+//                        ClientModel.get_instance().getMyActiveGame().getId());
                 getCurrentState().routeClaimed(this, clientModel);
                 break;
             case MAP_DREW_TRAINCARD:
                 TrainCard card = ClientModel.get_instance().getMyPlayer().getNewestTrainCard();
                 mapView.displayMessage("You drew a " + card.toString());
-                GamePlayService.checkHand(ClientModel.get_instance().getMyPlayer().getId(), //todo testing
-                        ClientModel.get_instance().getMyActiveGame().getId());
+//                GamePlayService.checkHand(ClientModel.get_instance().getMyPlayer().getId(),
+//                        ClientModel.get_instance().getMyActiveGame().getId());
                 break;
             case GAME_OVER:
                 if (clientModel.getMyActiveGame().getGameOver()){

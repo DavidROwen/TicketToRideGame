@@ -19,8 +19,8 @@ public class SqlCommandDao implements ICommandDAO {
         return null;
     }
 
-    public void clearCommands(){
-
+    public Boolean clearCommands(){
+        return true;
     }
 
 }

@@ -263,7 +263,7 @@ public class ClientModel extends Observable {
     //GamePlay functions
     public void setTurnOrder(LinkedList<String> order){
         getMyActiveGame().setTurnOrder(order);
-        if(isMyTurn()) { currentState = MyTurnState.getInstance(); } //todo remove
+        if(isMyTurn()) { currentState = MyTurnState.getInstance(); } //notify never triggers update
         myNotify(STATE_UPDATE);
     }
 

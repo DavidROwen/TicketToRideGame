@@ -8,5 +8,5 @@ public interface IUserDAO {
 
     User getUser(String username);
 
-    void clearUsers();
+    Boolean clearUsers();
 }
