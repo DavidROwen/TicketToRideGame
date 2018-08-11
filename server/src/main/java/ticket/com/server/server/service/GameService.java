@@ -26,6 +26,7 @@ public class GameService {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         game.initGame();
 
+
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "initGame", null);
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});

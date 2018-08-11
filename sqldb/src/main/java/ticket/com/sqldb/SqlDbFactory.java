@@ -77,17 +77,17 @@ public class SqlDbFactory implements IDbFactory{
             try {
                 stmt = conn.createStatement();
 
-                stmt.executeUpdate("drop table if exists user");
-                stmt.executeUpdate("drop table if exists game");
-                stmt.executeUpdate("drop table if exists command");
-                stmt.executeUpdate("create table user ( " +
+//                stmt.executeUpdate("drop table if exists user");
+//                stmt.executeUpdate("drop table if exists game");
+//                stmt.executeUpdate("drop table if exists command");
+                stmt.executeUpdate("create table IF NOT EXISTS user ( " +
                         "    user_id text NOT NULL UNIQUE, " +
                         "    user_name text NOT NULL UNIQUE, " +
                         "    password text NOT NULL )");
-                stmt.executeUpdate("create table game ( " +
+                stmt.executeUpdate("create table IF NOT EXISTS game ( " +
                         "    game_id text NOT NULL UNIQUE,\n" +
                         "    game blob NOT NULL )");
-                stmt.executeUpdate("create table command (  " +
+                stmt.executeUpdate("create table IF NOT EXISTS command (  " +
                         "    command text NOT NULL UNIQUE )");
             }
             finally {
