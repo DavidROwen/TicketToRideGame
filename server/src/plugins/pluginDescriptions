@@ -15,4 +15,4 @@
 
 //To add a plugin
 //jar path = jar:file:/// + FULL path + !/
-//implementation name = RELATIVE path
+//implementation name = RELATIVE path of IMPLEMENTATION in the file where json was formed
