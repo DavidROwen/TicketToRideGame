@@ -49,7 +49,9 @@ public class JsonCommandDao implements ICommandDAO {
         catch (IOException e){
             e.printStackTrace();
         }
-        return commands;
+
+        if(commands != null) { return commands; }
+        else { return new ArrayList<>(); } //before any games were added
     }
 
     public Boolean clearCommands(){

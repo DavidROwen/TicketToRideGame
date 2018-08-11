@@ -34,7 +34,10 @@ public class ServerModel {
             getInstance().executeCommands(DatabaseManager.getInstance().getAllCommands());
         } catch (Exception e) {
             System.out.println("ERROR: Server failed to initialize from db");
+            e.printStackTrace();
+            return;
         }
+        System.out.println("Server was successfully initialized from db");
     }
 
     private void executeCommands(List<Command> commands) {
