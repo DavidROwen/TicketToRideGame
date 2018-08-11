@@ -66,7 +66,7 @@ public class ServerCommunicator {
 			DatabaseManager.getInstance().createServerModel();
 
 			if (args.length > 3) {
-				DatabaseManager.getInstance().wipe();
+				DatabaseManager.getInstance().clearDatabase();
 			}
 		}
 

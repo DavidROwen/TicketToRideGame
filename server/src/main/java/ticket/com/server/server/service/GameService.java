@@ -29,7 +29,7 @@ public class GameService {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "initGame", null);
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
         DatabaseManager.getInstance().updateGame(gameId, ServerModel.getInstance().getGames().get(gameId)); //update db with random's
 
         //turnOrder //because it's generated randomly
@@ -83,7 +83,7 @@ public class GameService {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "drawTrainCard", new Object[]{playerId});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().drawingTrainCard(playerId);
         Command addTrainCard = new Command(GAME_PLAY_SERVICE_PATH, null,
@@ -101,7 +101,7 @@ public class GameService {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "pickupTrainCard", new Object[]{playerId, index});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().pickingUpTrainCard(playerId, index);
         Command pickCard = new Command(GAME_PLAY_SERVICE_PATH, null,
@@ -115,7 +115,7 @@ public class GameService {
             //update database
             Command gCommand2 = new Command(Game.class.getName(), null, "resetTrainBank", new Object[]{});
             Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
-            DatabaseManager.getInstance().addCommand(dbCommand2);
+            DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
             //        new GamePlayService().resetBank(playerId, index);
             Command resetBank = new Command(GAME_PLAY_SERVICE_PATH, null,
@@ -133,7 +133,7 @@ public class GameService {
         //update database
         Command gCommand2 = new Command(Game.class.getName(), null, "drawDestinationCards", new Object[]{});
         Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
-        DatabaseManager.getInstance().addCommand(dbCommand2);
+        DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
 
         try {
@@ -207,7 +207,7 @@ public class GameService {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "claimRoute", new Object[]{playerId, route, typeChoice});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         if (result.isSuccess()) {
 //        new GamePlayService().claimingRoute(playerId, route);
@@ -227,7 +227,7 @@ public class GameService {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "switchTurn", new Object[]{});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().switchingTurn();
         Command switchingTurn = new Command(GAME_PLAY_SERVICE_PATH, null,

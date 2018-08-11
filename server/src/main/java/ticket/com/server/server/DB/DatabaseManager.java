@@ -51,10 +51,6 @@ public class DatabaseManager {
         ServerModel.getInstance();
     }
 
-    public void assignFactory(IDbFactory factory){
-        this.dbFactory = factory;
-    }
-
     public void assignRefreshCount(Integer n){
         this.refreshCount = n;
     }
@@ -93,61 +89,52 @@ public class DatabaseManager {
         }
     }
 
-    public Boolean addCommand(Command command){
-        if(dbFactory == null) {
-            System.out.println("ERROR: dbFactory hasn't been initialized");
-            return false;
-        }
-        return null;
-    }
-
     public void clearCommands(){
-        dbFactory.clear();
-
+        dbFactory.startTransaction();
+        dbFactory.getCommandDAO().clearCommands();
+        dbFactory.finishTransaction(true);
     }
 
     //Called by the ServerModel, serializes the game and sends it to IGameDAO
-    public Boolean addGame(Game game){
-        try {
-            dbFactory.getGameDAO().addGame(game);
-            return true;
-        }
-        catch (Exception e){
-            return false;
-        }
+    public void addGame(Game game){
+        dbFactory.startTransaction();
+        boolean status = dbFactory.getGameDAO().addGame(game);
+        dbFactory.finishTransaction(status);
     }
 
     //called by ServerCommunicator, tells ICommandDAO, IUserDAO, and IGameDAO to clear database
     public void clearDatabase(){
+        dbFactory.startTransaction();
         dbFactory.clear();
+        dbFactory.finishTransaction(true);
+        System.out.println("All of the databases were wiped");
     }
 
     //When the Server reboots it calls this to get the User from the factory
     public User getUser(String userID){
-        return dbFactory.getUserDAO().getUser(userID);
+        dbFactory.startTransaction();
+        User user = dbFactory.getUserDAO().getUser(userID);
+        dbFactory.finishTransaction(true);
+
+        return user;
     }
 
 
     //When the Server reboots it calls this to get the Game from the IGameDAO
     public Game getGame(String gameID){
-        return dbFactory.getGameDAO().getGame(gameID);
+        dbFactory.startTransaction();
+        Game game = dbFactory.getGameDAO().getGame(gameID);
+        dbFactory.finishTransaction(true);
+
+        return game;
     }
 
     // called by the ServerModel every n commands, it
     // clears the recent commands, re-serializes, and sends the game to the factory
-    public Boolean updateGame(String gameID, Game game){
-        try {
-            dbFactory.getGameDAO().updateGame(gameID, game);
-            return true;
-        }
-        catch (Exception e){
-            return false;
-        }
-    }
-
-    //todo clear all data in all databases
-    public void wipe() {
-        System.out.println("All of the databases were wiped");
+    public void updateGame(String gameID, Game game){
+        dbFactory.startTransaction();
+        boolean status = dbFactory.getGameDAO().updateGame(gameID, game);
+        dbFactory.finishTransaction(status);
     }
 
     public void setDbFactory(IDbFactory dbFactory) {
