@@ -63,7 +63,30 @@ public class JsonGameDao implements IGameDAO {
     }
 
     public Boolean updateGame(String gameId, Game game){
-        //placeholder
-        return true;
+        List<Game> games;
+        try{
+            games = helper.getCurrentJsonGame(file.getCanonicalPath());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+        if(games == null){
+            return false;
+        }
+        boolean removed = false;
+        for(Game cgame : games){
+            if(cgame.getId().equals(gameId)){
+                removed = games.remove(cgame);
+            }
+        }
+        if(removed){
+            games.add(game);
+            String json = helper.toJson(games);
+            return helper.writeToFile(file, json);
+        }
+        else {
+            return false;
+        }
     }
 }
