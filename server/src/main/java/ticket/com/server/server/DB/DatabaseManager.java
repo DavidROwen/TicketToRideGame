@@ -91,9 +91,8 @@ public class DatabaseManager {
     public Boolean addCommand(Command command){
         if(dbFactory == null) {
             System.out.println("ERROR: dbFactory hasn't been initialized");
+            return false;
         }
-        dbFactory.startTransaction();
-
         return null;
     }
 
