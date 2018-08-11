@@ -58,6 +58,18 @@ public class JsonGameDao implements IGameDAO {
         return null;
     }
 
+    public List<Game> getAllGames(){
+
+        List<Game> games = null;
+        try{
+            games = helper.getCurrentJsonGame(file.getCanonicalPath());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return games;
+    }
+
     public Boolean clearGames(){
         return helper.clearFile(file);
     }
