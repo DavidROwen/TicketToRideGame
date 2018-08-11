@@ -15,8 +15,8 @@ import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
 public class ServerModel {
-    public static final String JOIN_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.JoinService";
-    public static final String LOBBY_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.LobbyService";
+    private static final String JOIN_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.JoinService";
+    private static final String LOBBY_SERVICE_PATH = "ticket.com.tickettoridegames.client.service.LobbyService";
 
     private static ServerModel instance = null;
     public static ServerModel getInstance(){
@@ -126,7 +126,7 @@ public class ServerModel {
         }
     }
 
-    public void addNewGame(Game game, String userId) throws Exception{
+    public void addNewGame(Game game) throws Exception{
         if(games.containsKey(game.getId())){
             throw new Exception("Game already exists.");
         }
@@ -155,7 +155,7 @@ public class ServerModel {
         return registeredUsers.get(username);
     }
 
-    public User getUserById(String id){
+    private User getUserById(String id){
         return activeUsers.get(id);
     }
 
@@ -318,10 +318,10 @@ public class ServerModel {
     //End Destination Card Functions
 
     //Game History Function
-    public void addToGameHistory(String gameId, PlayerAction pa){
-        Game game = games.get(gameId);
-        game.addToHistory(pa);
-    }
+//    public void addToGameHistory(String gameId, PlayerAction pa){
+//        Game game = games.get(gameId);
+//        game.addToHistory(pa);
+//    }
 
     public Map<String, Game> getGames() {
         return games;
@@ -354,13 +354,13 @@ public class ServerModel {
         }
     }
 
-    public void setRegisteredUsers(List<User> registeredUsers) {
+    private void setRegisteredUsers(List<User> registeredUsers) {
         for(User each : registeredUsers) {
             this.registeredUsers.put(each.getUsername(), each);
         }
     }
 
-    public void setGames(List<Game> games) {
+    private void setGames(List<Game> games) {
         for(Game each : games) {
             this.games.put(each.getId(), each);
         }

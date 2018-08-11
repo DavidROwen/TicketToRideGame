@@ -16,7 +16,7 @@ public class CreateGameService {
 
         try {
             Game newGame = new Game(gameName,numberOfPlayers);
-            sm.addNewGame(newGame, userId);
+            sm.addNewGame(newGame);
             DatabaseManager.getInstance().addGame(newGame);
             result.setSuccess(true);
             result.setMessage(newGame.getId());
