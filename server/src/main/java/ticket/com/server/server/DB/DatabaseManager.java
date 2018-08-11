@@ -68,7 +68,7 @@ public class DatabaseManager {
             if(commandCounts.get(gameID) == refreshCount){
                 commandCounts.put(gameID, 0);
                 dbFactory.getCommandDAO().clearCommands();
-                dbFactory.getGameDAO().updateGame(gameID, sm.getGameById(gameID)); //update game for n commands
+                dbFactory.getGameDAO().updateGame(gameID, ServerModel.getInstance().getGameById(gameID)); //update game for n commands
             }
             return true;
         }
