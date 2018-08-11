@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -49,11 +50,12 @@ public class JsonDao {
         }
     }
 
-     public List<?> getCurrentJsonCustom(String filename){
+     public List<Command> getCurrentJsonCustom(String filename){
+         final Type COMMANDS_TYPE = new TypeToken<List<Command>>(){}.getType();
          try {
              byte[] encoded = Files.readAllBytes(Paths.get(filename));
              String currentJson = new String(encoded);
-             return gson.fromJson(currentJson, new TypeToken<List<Command>>() {}.getType());
+             return (List<Command>)Serializer.fromJson(currentJson, COMMANDS_TYPE);
          }
          catch (IOException e){
              e.printStackTrace();

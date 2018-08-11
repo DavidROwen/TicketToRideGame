@@ -18,7 +18,6 @@ public class JsonDbFactory implements IDbFactory {
     private int commandCount;
     private Gson gson;
 
-    //SET THESE TO YOUR LOCAL FILES!
     private final String COMMAND_FILE = "commands.json";
     private final String USER_FILE = "users.json";
     private final String GAMESTATE_FILE = "gamestate.json";
@@ -61,8 +60,10 @@ public class JsonDbFactory implements IDbFactory {
         return new JsonCommandDao(file);
     }
 
-    public void clearDB(){
-
+    public void clear(){
+        getUserDAO().clearUsers();
+        getGameDAO().clearGames();
+        getCommandDAO().clearCommands();
     }
 
     private File openFile(String filename){

@@ -22,7 +22,7 @@ public class JsonCommandDao implements ICommandDAO {
     public Boolean addCommand(Command command){
         List<Command> commands;
         try {
-            commands = (List<Command>) helper.getCurrentJsonCustom(file.getCanonicalPath());
+            commands = helper.getCurrentJsonCustom(file.getCanonicalPath());
         }
         catch (IOException e){
             e.printStackTrace();
@@ -39,6 +39,17 @@ public class JsonCommandDao implements ICommandDAO {
     public Command getCommand(String gameId){
         //hard to do unless we add a variable to the commands class
         return null;
+    }
+
+    public List<Command> getAllCommands(){
+        List<Command> commands = null;
+        try{
+            commands = helper.getCurrentJsonCustom(file.getCanonicalPath());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return commands;
     }
 
     public Boolean clearCommands(){

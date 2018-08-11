@@ -7,6 +7,7 @@ import org.junit.Test;
 import ticket.com.jsondb.JsonDbFactory;
 import ticket.com.utility.db.IDbFactory;
 import ticket.com.utility.db.dao.ICommandDAO;
+import ticket.com.utility.model.Game;
 import ticket.com.utility.web.Command;
 
 import static org.junit.Assert.assertTrue;
@@ -27,10 +28,8 @@ public class JsonCommandDaoTest {
 
     @Test
     public void testAddUser(){
-        Command comm1 = new Command("ticket.com.tickettoridegame.client.service.GamePlay",
-                null, "setTurnOrder", new Object[]{"Hello World"});
-        Command comm2 = new Command("ticket.com.tickettoridegame.client.service.stuff", null,
-                "finishProject", new Object[]{"More Stuff"});
+        Command comm1 = new Command(Game.class.getName(), null, "drawDestinationCards", new Object[]{});
+        Command comm2 = new Command(Game.class.getName(), null, "initGame", null);
         ICommandDAO commandDao = factory.getCommandDAO();
         commandDao.addCommand(comm1);
         commandDao.addCommand(comm2);

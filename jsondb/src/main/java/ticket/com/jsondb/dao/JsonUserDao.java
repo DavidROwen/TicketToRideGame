@@ -55,6 +55,18 @@ public class JsonUserDao implements IUserDAO {
         }
     }
 
+    public List<User> getAllUsers(){
+
+        List<User> users = null;
+        try {
+            users = helper.getCurrentJsonUser(file.getCanonicalPath());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return users;
+    }
+
     public Boolean clearUsers(){
         return helper.clearFile(file);
     }
