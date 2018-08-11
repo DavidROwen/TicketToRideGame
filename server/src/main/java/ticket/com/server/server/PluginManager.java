@@ -112,6 +112,9 @@ public class PluginManager {
                         + "\" did not exist");
                 e.printStackTrace();
                 return false;
+            } catch (Exception e) {
+                System.out.println("ERROR: jar is outdated");
+                return false;
             }
 
             //check correct implementation type
