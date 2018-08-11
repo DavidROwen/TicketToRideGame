@@ -353,7 +353,7 @@ public class ServerModel {
 
     public void setRegisteredUsers(List<User> registeredUsers) {
         for(User each : registeredUsers) {
-            this.registeredUsers.put(each.getId(), each);
+            this.registeredUsers.put(each.getUsername(), each);
         }
     }
 

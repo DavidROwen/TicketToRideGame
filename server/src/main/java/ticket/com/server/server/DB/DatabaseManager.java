@@ -47,6 +47,10 @@ public class DatabaseManager {
 
     }
 
+    public void createServerModel(){
+        ServerModel.getInstance();
+    }
+
     public void assignFactory(IDbFactory factory){
         this.dbFactory = factory;
     }
