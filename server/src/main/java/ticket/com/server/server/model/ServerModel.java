@@ -172,7 +172,7 @@ public class ServerModel {
             //update database
             Command gCommand = new Command(Game.class.getName(), null, "addPlayers", new Object[]{player});
             Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-            DatabaseManager.getInstance().addCommand(dbCommand);
+            DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             if(addSuccess){
                 System.out.println("User: " + player.getId() + " added to game: " + gameId);
@@ -207,7 +207,7 @@ public class ServerModel {
             //update database
             Command gCommand = new Command(Game.class.getName(), null, "removePlayer", new Object[]{playerId});
             Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-            DatabaseManager.getInstance().addCommand(dbCommand);
+            DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             if(removeSuccess){
                 System.out.println("User: " + playerId + " removed from game: " + gameId);
@@ -241,7 +241,7 @@ public class ServerModel {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "addToChat", new Object[]{chat});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         System.out.println("User: " + playerId + " added chat to game: " + gameId);
         //send commands to all the users in the game.
@@ -272,7 +272,7 @@ public class ServerModel {
             //update database
             Command gCommand = new Command(Game.class.getName(), null, "setStarted", new Object[]{});
             Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-            DatabaseManager.getInstance().addCommand(dbCommand);
+            DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             for(String playerId : game.getPlayersId()){
                 Command command;
@@ -304,7 +304,7 @@ public class ServerModel {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "claimDestinationCards", new Object[]{cards, playerId});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
     }
 
     public void addDestinationCard(String gameId, List<DestinationCard> card) {
@@ -313,7 +313,7 @@ public class ServerModel {
         //update database
         Command gCommand = new Command(Game.class.getName(), null, "discardDestinationCards", new Object[]{card});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand);
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
     }
     //End Destination Card Functions
 

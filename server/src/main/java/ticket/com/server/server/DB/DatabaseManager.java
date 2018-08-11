@@ -51,10 +51,6 @@ public class DatabaseManager {
         ServerModel.getInstance();
     }
 
-    public void assignFactory(IDbFactory factory){
-        this.dbFactory = factory;
-    }
-
     public void assignRefreshCount(Integer n){
         this.refreshCount = n;
     }
@@ -93,17 +89,8 @@ public class DatabaseManager {
         }
     }
 
-    public Boolean addCommand(Command command){
-        if(dbFactory == null) {
-            System.out.println("ERROR: dbFactory hasn't been initialized");
-            return false;
-        }
-        return null;
-    }
-
     public void clearCommands(){
-        dbFactory.clear();
-
+        dbFactory.getCommandDAO().clearCommands();
     }
 
     //Called by the ServerModel, serializes the game and sends it to IGameDAO
@@ -120,6 +107,7 @@ public class DatabaseManager {
     //called by ServerCommunicator, tells ICommandDAO, IUserDAO, and IGameDAO to clear database
     public void clearDatabase(){
         dbFactory.clear();
+        System.out.println("All of the databases were wiped");
     }
 
     //When the Server reboots it calls this to get the User from the factory
@@ -143,11 +131,6 @@ public class DatabaseManager {
         catch (Exception e){
             return false;
         }
-    }
-
-    //todo clear all data in all databases
-    public void wipe() {
-        System.out.println("All of the databases were wiped");
     }
 
     public void setDbFactory(IDbFactory dbFactory) {
