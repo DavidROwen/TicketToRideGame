@@ -52,7 +52,7 @@ public class ServerModel {
     }
 
     //Map of users that stores the Username as the key
-    private Map<String, User> registeredUsers;
+    private Map<String, User> registeredUsers; //key is userId
     //Map of games that stores the GameId ast he key
     private Map<String, Game> games; //key is gameId
     //Map of users that stores the UserID as the kay
@@ -69,11 +69,11 @@ public class ServerModel {
     }
 
     public void addNewUser(User user) throws Exception {
-        if(registeredUsers.containsKey(user.getUsername())){
+        if(registeredUsers.containsKey(user.getId())){
             throw new Exception();
         }
         else{
-            registeredUsers.put(user.getUsername(), user);
+            registeredUsers.put(user.getId(), user);
 //            activeUsers.put(user.getId(), user);
             System.out.println("User: "+user.getId()+" registered ");
             for(String gameId : games.keySet()){
@@ -152,7 +152,11 @@ public class ServerModel {
     }
 
     private User getUserByName(String username) {
-        return registeredUsers.get(username);
+        for(String each : registeredUsers.keySet()) {
+            User user = registeredUsers.get(each);
+            if(user.getUsername().equals(username)) { return user; }
+        }
+        return null;
     }
 
     public User getUserById(String id){
@@ -356,7 +360,7 @@ public class ServerModel {
 
     public void setRegisteredUsers(List<User> registeredUsers) {
         for(User each : registeredUsers) {
-            this.registeredUsers.put(each.getUsername(), each);
+            this.registeredUsers.put(each.getId(), each);
         }
     }
 
