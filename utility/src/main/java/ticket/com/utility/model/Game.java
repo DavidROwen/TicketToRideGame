@@ -781,26 +781,11 @@ public class Game extends Observable {
     @Override
     public String toString() {
         return "Game{" +
-                "players=" + players +
-                ", chatList=" + chatList +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", maxPlayers=" + maxPlayers +
                 ", numberOfPlayers=" + numberOfPlayers +
                 ", isStarted=" + isStarted +
-                ", newestChat=" + newestChat +
-                ", gameOver=" + gameOver +
-                ", turnOrder=" + turnOrder +
-                ", turnNumber=" + turnNumber +
-                ", trainBank=" + trainBank +
-                ", map=" + map +
-                ", destinationCards=" + destinationCards +
-                ", trainCardsDeck=" + trainCardsDeck +
-                ", trainDiscards=" + trainDiscards +
-                ", gameHistory=" + gameHistory +
-                ", newestHistory=" + newestHistory +
-                ", INIT_HAND_SIZE=" + INIT_HAND_SIZE +
-                ", initializedCorrectly=" + initializedCorrectly +
                 '}';
     }
 }

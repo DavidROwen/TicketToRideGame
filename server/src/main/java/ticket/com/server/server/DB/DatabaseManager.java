@@ -83,7 +83,9 @@ public class DatabaseManager {
     //Called by the ServerModel, serializes the user and sends it to IUserDAO
     public Boolean addUser(User user){
         try {
+            dbFactory.startTransaction();
             dbFactory.getUserDAO().addUser(user);
+            dbFactory.finishTransaction(true);
             return true;
         }
         catch (Exception e){

@@ -42,6 +42,7 @@ public class SqlGameDao implements IGameDAO {
             e.printStackTrace();
             return false;
         }
+        System.out.println("SQL: added game to db "+game.toString());
         return true;
     }
 
@@ -140,6 +141,7 @@ public class SqlGameDao implements IGameDAO {
             e.printStackTrace();
             return false;
         }
+        System.out.println("SQL: all games cleared from db");
         return true;
     }
 }

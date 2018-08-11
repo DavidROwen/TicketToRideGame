@@ -47,4 +47,13 @@ public class User {
     public void setGameId(String gameId) {
         this.gameId = gameId;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

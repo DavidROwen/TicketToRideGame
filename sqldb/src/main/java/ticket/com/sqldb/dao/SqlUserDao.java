@@ -39,8 +39,10 @@ public class SqlUserDao implements IUserDAO {
         }
         catch (SQLException e){
             e.printStackTrace();
+            System.out.println("SQL: failed to add user to db "+user.toString());
             return false;
         }
+        System.out.println("SQL: added user to db "+user.toString());
         return true;
     }
 
@@ -122,6 +124,7 @@ public class SqlUserDao implements IUserDAO {
             e.printStackTrace();
             return false;
         }
+        System.out.println("SQL: all users cleared from db");
         return true;
     }
 }
