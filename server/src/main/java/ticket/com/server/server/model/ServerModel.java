@@ -345,6 +345,7 @@ public class ServerModel {
     private void initWithDb() {
         try {
             setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
+            setActiveUsers(DatabaseManager.getInstance().getAllUsers()); //todo
             setGames(DatabaseManager.getInstance().getAllGames());
             executeCommands(DatabaseManager.getInstance().getAllCommands());
         } catch (Exception e) {
@@ -363,6 +364,12 @@ public class ServerModel {
                 System.out.println("ERROR: Server failed to execute command");
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void setActiveUsers(List<User> activeUsers) {
+        for(User each : activeUsers) {
+            this.activeUsers.put(each.getUsername(), each);
         }
     }
 }
