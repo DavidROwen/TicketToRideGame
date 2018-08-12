@@ -82,7 +82,6 @@ public class GameServiceTest {
         //prepare
         TrainCard prev0 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(0);
         TrainCard prev1 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(1);
-        System.out.println(prev0.getType());
 
         //run
         service.pickupTrainCard(userId, gameId, 0);

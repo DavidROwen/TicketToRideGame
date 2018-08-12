@@ -169,13 +169,16 @@ public class GamePlayService {
     }
 
     //Destination Cards (Model) functions
-    public static void setTempDeck(DestinationCard[] tempDeck){
-        ClientModel.get_instance().setMyPlayerTempDeck(Arrays.asList(tempDeck));
+    public static void setTempDeck(DestinationCard[] tempDeckArray){
+        List<DestinationCard> tempDeck = new LinkedList<>();
+        tempDeck.addAll(Arrays.asList(tempDeckArray)); //because asList is un mutable
+        ClientModel.get_instance().setMyPlayerTempDeck(tempDeck);
     }
 
-    public static void updateDestinationCards(String playerId, DestinationCard[] cards){
-        ClientModel.get_instance().updateDestinationCards(
-                playerId, new LinkedList<>(Arrays.asList(cards)));
+    public static void updateDestinationCards(String playerId, DestinationCard[] cardsArray){
+        LinkedList<DestinationCard> cards = new LinkedList<>();
+        cards.addAll(Arrays.asList(cardsArray)); //because asList is un mutable
+        ClientModel.get_instance().updateDestinationCards(playerId, cards);
     }
 
     public static void discardDestinationCards(DestinationCard[] cards){

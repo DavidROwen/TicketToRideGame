@@ -126,7 +126,7 @@ public class GameService {
     //Destination Card Functions
     public static void drawDestinationCard(String playerId, String gameId) {
         //draw card
-        List<DestinationCard> drawnCards = ServerModel.getInstance().drawTemporaryDestinationCards(gameId);
+        List<DestinationCard> drawnCards = ServerModel.drawTemporaryDestinationCards(gameId);
 
         //update database //ServerModel.drawTemporaryDestinationCards(gameId);
         Command dbCommand = new Command(ServerModel.class.getName(), null, "drawTemporaryDestinationCards", new Object[]{gameId});
@@ -134,7 +134,7 @@ public class GameService {
 
         try {
             Command tempDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
-                    "setTempDeck", new Object[]{drawnCards.toArray(new TrainCard[drawnCards.size()])});
+                    "setTempDeck", new Object[]{drawnCards.toArray(new DestinationCard[drawnCards.size()])});
             CommandsManager.addCommand(tempDeck, playerId);
         } catch (Exception e) {
             e.printStackTrace();
