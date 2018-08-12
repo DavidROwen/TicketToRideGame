@@ -63,11 +63,12 @@ public class ServerCommunicator {
 			}
 			IDbFactory dbFactory = pluginManager.createPlugin(args[1], Integer.valueOf(args[2]));
 			DatabaseManager.getInstance().setDbFactory(dbFactory);
-			DatabaseManager.getInstance().createServerModel();
 
 			if (args.length > 3) {
 				DatabaseManager.getInstance().clearDatabase();
 			}
+
+			DatabaseManager.getInstance().createServerModel(); //updates from db
 		}
 
 		new ServerCommunicator().run();
