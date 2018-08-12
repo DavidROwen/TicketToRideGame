@@ -277,8 +277,11 @@ public class Game extends Observable {
     }
 
     public Boolean isMyTurn(String playerId) {
-//        return playerId.equals(turnOrder.get(turnNumber % players.size()));
-        return true;
+        if(turnOrder.isEmpty()) {
+            System.out.println("ERROR: Turn order is empty");
+            return true;
+        }
+        return playerId.equals(turnOrder.get(turnNumber));
     }
 
     private void initTurnOrder() {
@@ -396,6 +399,10 @@ public class Game extends Observable {
     }
 
     private void initHand(Player player) {
+        if(!player.getTrainCards().isEmpty()) {
+            System.out.println("ERROR: tried to init " + player.getUsername() + "'s hand twice");
+            return;
+        }
         for(int i = 0; i < INIT_HAND_SIZE; i++) {
             drawTrainCard(player.getId());
         }
