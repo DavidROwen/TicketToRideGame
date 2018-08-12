@@ -136,6 +136,7 @@ public class ServerModel {
         }
         else{
             games.put(game.getId(), game);
+            //todo doesn't add a game to db
             System.out.println("Game with id: " + game.getId() + " created "+game.toString());
             //send commands to other connected Users
             for(String id : activeUsers.keySet()){

@@ -231,7 +231,7 @@ public class GameServiceTest {
         LobbyService.startGame(gameId);
         while(!ClientModel.get_instance().isGameStarted(gameId)){}
 
-        //init game
+//        init game
         service = new GamePlayService();
         service.initGame(gameId);
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4);

@@ -4,13 +4,10 @@ import com.google.gson.reflect.TypeToken;
 
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import sun.awt.image.ImageWatched;
-import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.server.server.MultiCommand;
 import ticket.com.server.server.model.ServerModel;
 import ticket.com.server.server.service.Tester;

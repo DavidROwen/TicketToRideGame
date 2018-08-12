@@ -2,6 +2,7 @@ package ticket.com.server.server.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +25,6 @@ public class GameService {
     public static void initGame(String gameId) {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         game.initGame();
-
 
         //update database
         Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "initGame", new Object[]{gameId});
@@ -154,10 +154,11 @@ public class GameService {
             temp.add(card);
         }
 
-        sm.claimDestinationCards(playerId, gameId, temp);
-        //add some kind of error checking with the above function?
         //update database
-        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "claimDestinationCards", new Object[]{playerId,gameId,temp});
+        sm.claimDestinationCards(playerId, gameId, temp);
+        Class<?> listType = new TypeToken<LinkedList<TrainCard>>(){}.getRawType();
+        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.class, ServerModel.getInstance(),
+                "claimDestinationCards", new Class<?>[]{String.class, String.class, listType}, new Object[]{playerId,gameId,temp});
         DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
 
@@ -186,7 +187,9 @@ public class GameService {
         ServerModel.getInstance().addDestinationCard(gameId, temp);
 
         //update database
-        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addDestinationCard", new Object[]{gameId, temp});
+        Class<?> listType = new TypeToken<LinkedList<TrainCard>>(){}.getRawType();
+        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.class, ServerModel.getInstance(),
+                "addDestinationCard", new Class<?>[]{String.class, listType}, new Object[]{gameId, temp});
         DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
 
