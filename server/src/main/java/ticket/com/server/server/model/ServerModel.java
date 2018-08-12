@@ -300,6 +300,8 @@ public class ServerModel {
         getInstance().getGameById(gameId).initGame();
     }
 
+    public static void initGameNonRandom(String gameId) { getInstance().getGameById(gameId).initGameNonRandom(); }
+
     public static void drawTrainCard(String gameId, String playerId){
         getInstance().getGameById(gameId).drawTrainCard(playerId);
     }

@@ -54,7 +54,12 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(setTrainCardsDeck, gameId);
 
         //everything else
-        ServerModel.getInstance().getGames().get(gameId).initGameNonRandom();
+        ServerModel.initGameNonRandom(gameId);
+
+        //update database
+        Command db2Command = new Command(ServerModel.class.getName(), null, "initGameNonRandom", new Object[]{gameId});
+        DatabaseManager.getInstance().addCommand(db2Command, gameId);
+
 //        new GamePlayService().initiatingGameNonRandom();
         Command initHands = new Command(GAME_PLAY_SERVICE_PATH, null,
                 "initiatingGameNonRandom", new Object[]{}
