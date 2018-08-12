@@ -331,7 +331,7 @@ public class ServerModel {
     }
 
     public static void stAddChatToGame(String gameId, String playerId, String message) {
-        Chat chat = new Chat(getInstance().activeUsers.get(playerId).getUsername(), message);
+        Chat chat = new Chat(getInstance().users.get(playerId).getUsername(), message);
         getInstance().games.get(gameId).addToChat(chat);
     }
 
@@ -344,8 +344,7 @@ public class ServerModel {
 
     private void initWithDb() {
         try {
-            setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
-            setActiveUsers(DatabaseManager.getInstance().getAllUsers()); //todo
+            setUsers(DatabaseManager.getInstance().getAllUsers());
             setGames(DatabaseManager.getInstance().getAllGames());
             executeCommands(DatabaseManager.getInstance().getAllCommands());
         } catch (Exception e) {
@@ -364,12 +363,6 @@ public class ServerModel {
                 System.out.println("ERROR: Server failed to execute command");
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void setActiveUsers(List<User> activeUsers) {
-        for(User each : activeUsers) {
-            this.activeUsers.put(each.getUsername(), each);
         }
     }
 }
