@@ -26,7 +26,7 @@ public class GameService {
         //update database
         Command dbCommand = new Command(ServerModel.class.getName(), null, "initGame", new Object[]{gameId});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
-//        DatabaseManager.getInstance().updateGame(gameId, ServerModel.getInstance().getGames().get(gameId)); //update db with random's
+
 
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
@@ -45,11 +45,11 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(initColors, gameId);
 
         //trainDeck //because it's generated randomly
-        Stack<TrainCard> trainCardsDeck = new Stack<>();
+        List<TrainCard> trainCardsDeck = new LinkedList<>();
         trainCardsDeck.addAll(game.getTrainCardsDeck()); //otherwise it's getting changed before transfer
 //        new GamePlayService().setTrainCardsDeck(trainCardsDeck);
         Command setTrainCardsDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "setTrainCardsDeck", new Object[]{trainCardsDeck}
+                "setTrainCardsDeck", new Object[]{trainCardsDeck.toArray(new TrainCard[trainCardsDeck.size()])}
         );
         CommandsManager.addCommandAllPlayers(setTrainCardsDeck, gameId);
 
@@ -129,7 +129,7 @@ public class GameService {
 
         try {
             Command tempDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
-                    "setTempDeck", new Object[]{drawnCards});
+                    "setTempDeck", new Object[]{drawnCards.toArray(new TrainCard[drawnCards.size()])});
             CommandsManager.addCommand(tempDeck, playerId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -213,22 +213,18 @@ public class GameService {
     }
 
     public static void checkHand(String playerId, String gameId) {
-        //todo doesn't change original
-//        List<TrainCard> hand = new LinkedList<>();
-//        hand.addAll(ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards());
-        List<TrainCard> trainCards = ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards();
+        List<TrainCard> hand = new LinkedList<>();
+        hand.addAll(ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards());
 
         Command gettingHandCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "checkingHand", new Object[]{playerId, trainCards.toArray(new TrainCard[trainCards.size()])}
+                "checkingHand", new Object[]{playerId, hand.toArray(new TrainCard[hand.size()])}
         );
         CommandsManager.addCommandAllPlayers(gettingHandCommand, gameId);
     }
 
     public static void checkTrainCardsDeck(String gameId) {
-        //todo doesn't change original
-//        Stack<TrainCard> deck = new Stack<>();
-//        deck.addAll(ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck());
-        Stack<TrainCard> deck = ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck();
+        Stack<TrainCard> deck = new Stack<>();
+        deck.addAll(ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck());
 
         Command command = new Command(GAME_PLAY_SERVICE_PATH, null,
                 "checkingTrainCardsDeck", new Object[]{deck.toArray(new TrainCard[deck.size()])}

@@ -169,49 +169,17 @@ public class GamePlayService {
     }
 
     //Destination Cards (Model) functions
-    public static void setTempDeck(ArrayList<DestinationCard> tempDeck){
-        //deserialized destination cards as linkedtreemap
-        ArrayList<DestinationCard> temp = new ArrayList<>();
-        for(int i = 0; i < tempDeck.size(); i++) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(tempDeck.get(i)).getAsJsonObject();
-            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
-
-            temp.add(card);
-        }
-
-        ClientModel.get_instance().setMyPlayerTempDeck(temp);
+    public static void setTempDeck(DestinationCard[] tempDeck){
+        ClientModel.get_instance().setMyPlayerTempDeck(Arrays.asList(tempDeck));
     }
 
-    public static void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
-        //deserialized destination cards as linkedtreemap
-        LinkedList<DestinationCard> temp = new LinkedList<>();
-        for(int i = 0; i < cards.size(); i++) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
-            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
-
-            temp.add(card);
-        }
-
-        ClientModel.get_instance().updateDestinationCards(playerId, temp);
+    public static void updateDestinationCards(String playerId, DestinationCard[] cards){
+        ClientModel.get_instance().updateDestinationCards(
+                playerId, new LinkedList<>(Arrays.asList(cards)));
     }
 
-    public static void discardDestinationCards(LinkedList<DestinationCard> cards){
-        //deserialized destination cards as linkedtreemap
-        LinkedList<DestinationCard> temp = new LinkedList<>();
-        for(int i = 0; i < cards.size(); i++) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
-            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
-
-            temp.add(card);
-        }
-
-        ClientModel.get_instance().discardDestinationCards(temp);
+    public static void discardDestinationCards(DestinationCard[] cards){
+        ClientModel.get_instance().discardDestinationCards(new LinkedList<>(Arrays.asList(cards)));
     }
     //END Destination Cards (Model) functions
 
@@ -221,22 +189,9 @@ public class GamePlayService {
     }
     //END Game History functions
 
-    public static void setTrainCardsDeck(Stack<TrainCard> trainCardsDeck) {
-        //build array //in order
-        TrainCard[] temp = new TrainCard[trainCardsDeck.size()];
-        for(int i = temp.length-1; i >= 0; i--) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(trainCardsDeck.pop()).getAsJsonObject();
-            TrainCard card = gson.fromJson(obj, TrainCard.class);
-
-            temp[i] = card;
-        }
-
-        //build stack
+    public static void setTrainCardsDeck(TrainCard[] trainCardsDeck) {
         Stack<TrainCard> deck = new Stack<>();
-        deck.addAll(Arrays.asList(temp));
-
+        deck.addAll(Arrays.asList(trainCardsDeck));
         ClientModel.get_instance().setTrainCardsDeck(deck);
     }
 
