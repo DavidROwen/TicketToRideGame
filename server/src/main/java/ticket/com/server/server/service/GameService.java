@@ -3,7 +3,6 @@ package ticket.com.server.server.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import java.sql.ClientInfoStatus;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +27,7 @@ public class GameService {
 
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "initGame", null);
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "initGame", new Object[]{gameId});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
         //DatabaseManager.getInstance().updateGame(gameId, ServerModel.getInstance().getGames().get(gameId)); //update db with random's
 
@@ -82,8 +80,7 @@ public class GameService {
         game.drawTrainCard(playerId);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "drawTrainCard", new Object[]{playerId});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "drawTrainCard", new Object[]{gameId, playerId});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().drawingTrainCard(playerId);
@@ -100,8 +97,7 @@ public class GameService {
         game.pickupTrainCard(playerId, index);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "pickupTrainCard", new Object[]{playerId, index});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "pickupTrainCard", new Object[]{gameId, playerId, index});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().pickingUpTrainCard(playerId, index);
@@ -114,8 +110,7 @@ public class GameService {
             game.resetTrainBank();
 
             //update database
-            Command gCommand2 = new Command(Game.class.getName(), null, "resetTrainBank", new Object[]{});
-            Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
+            Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "resetTrainBank", new Object[]{gameId});
             DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
             //        new GamePlayService().resetBank(playerId, index);
@@ -132,8 +127,7 @@ public class GameService {
         List<DestinationCard> drawnCards = ServerModel.getInstance().drawTemporaryDestinationCards(gameId);
 
         //update database
-        Command gCommand2 = new Command(Game.class.getName(), null, "drawDestinationCards", new Object[]{});
-        Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
+        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "drawTemporaryDestinationCards", new Object[]{gameId});
         DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
 
@@ -162,6 +156,10 @@ public class GameService {
 
         sm.claimDestinationCards(playerId, gameId, temp);
         //add some kind of error checking with the above function?
+        //update database
+        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "claimDestinationCards", new Object[]{playerId,gameId,temp});
+        DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
+
 
         //send commands to the other games updating destination cards.
         Command claimCommand = null;
@@ -187,6 +185,10 @@ public class GameService {
         }
         ServerModel.getInstance().addDestinationCard(gameId, temp);
 
+        //update database
+        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addDestinationCard", new Object[]{gameId, temp});
+        DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
+
 
 //        ServerModel.getInstance().addDestinationCard(gameId, cards);
         Command discardCards = null;
@@ -206,8 +208,7 @@ public class GameService {
         Result result = game.claimRoute(playerId, route, typeChoice);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "claimRoute", new Object[]{playerId, route, typeChoice});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "claimRoute", new Object[]{gameId, playerId, route, typeChoice});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         if (result.isSuccess()) {
@@ -226,8 +227,7 @@ public class GameService {
         game.switchTurn();
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "switchTurn", new Object[]{});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "switchTurn", new Object[]{gameId});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().switchingTurn();
@@ -260,6 +260,10 @@ public class GameService {
     public static void endGame(String gameId){
         ServerModel serverModel = ServerModel.getInstance();
         serverModel.endGame(gameId);
+
+        //update database
+        Command dbCommand2 = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "endGame", new Object[]{gameId});
+        DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
         Command endGameCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
                 "endGameNow", new Object[]{gameId}
