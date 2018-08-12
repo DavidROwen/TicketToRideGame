@@ -136,9 +136,8 @@ public class GamePlayService {
         ClientModel.get_instance().endGame(gameId);
     }
 
-    public static void setTurnOrder(ArrayList<String> order) {
-        LinkedList<String> turnOrder = new LinkedList<>(order);
-        ClientModel.get_instance().setTurnOrder(turnOrder);
+    public static void setTurnOrder(LinkedList<String> order) {
+        ClientModel.get_instance().setTurnOrder(order);
     }
 
     public static void setPlayersColors(HashMap<String, Player.COLOR> colors) {
