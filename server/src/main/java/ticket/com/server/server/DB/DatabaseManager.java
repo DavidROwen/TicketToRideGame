@@ -139,7 +139,7 @@ public class DatabaseManager {
 
     public void setDbFactory(IDbFactory dbFactory) {
         this.dbFactory = dbFactory;
-        System.out.println("The manager's database was successfully set");
+        System.out.println("The manager's database factory was successfully set");
     }
 
     public List<User> getAllUsers() {

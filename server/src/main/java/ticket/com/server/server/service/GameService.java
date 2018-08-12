@@ -1,9 +1,6 @@
 package ticket.com.server.server.service;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import java.sql.ClientInfoStatus;
+import java.lang.reflect.Array;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -139,25 +136,14 @@ public class GameService {
         }
     }
 
-    public static void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards) {
+    public static void claimDestinationCard(String playerId, String gameId, DestinationCard[] cards) {
         ServerModel sm = ServerModel.getInstance();
 
-        //deserialized destination cards as linkedtreemap
-        DestinationCard[] temp = new DestinationCard[cards.size()];
-        for (int i = 0; i < cards.size(); i++) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
-            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
-
-            temp[i] = card;
-        }
-
-        sm.claimDestinationCards(playerId, gameId, temp);
+        ServerModel.claimDestinationCards(playerId, gameId, cards);
 
         //update database //ServerModel.claimDestinationCards(playerId, gameId, temp);
         Command dbCommand = new Command(ServerModel.class.getName(), null, "claimDestinationCards",
-                new Object[]{playerId, gameId, temp});
+                new Object[]{playerId, gameId, cards});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         //send commands to the other games updating destination cards.
@@ -171,25 +157,15 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(claimCommand, gameId);
     }
 
-    public static void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
-        //deserialized destination cards as linkedtreemap
-        DestinationCard[] temp = new DestinationCard[cards.size()];
-        for (int i = 0; i < cards.size(); i++) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
-            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
+    public static void returnDestinationCard(String gameId, DestinationCard[] cards) {
+        ServerModel.getInstance().addDestinationCards(gameId, cards);
 
-            temp[i] = card;
-        }
-        ServerModel.getInstance().addDestinationCard(gameId, temp);
-
-        //update database //ServerModel.addDestinationCard(gameId, temp);
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "addDestinationCard",
-                new Object[]{gameId, temp});
+        //update database //ServerModel.addDestinationCards(gameId, temp);
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "addDestinationCards",
+                new Object[]{gameId, cards});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
-//        ServerModel.getInstance().addDestinationCard(gameId, cards);
+//        ServerModel.getInstance().addDestinationCards(gameId, cards);
         Command discardCards = null;
         try {
             discardCards = new Command(GAME_PLAY_SERVICE_PATH, null,
@@ -237,21 +213,25 @@ public class GameService {
     }
 
     public static void checkHand(String playerId, String gameId) {
-        List<TrainCard> hand = new LinkedList<>();
-        hand.addAll(ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards());
+        //todo doesn't change original
+//        List<TrainCard> hand = new LinkedList<>();
+//        hand.addAll(ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards());
+        List<TrainCard> trainCards = ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards();
 
         Command gettingHandCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "checkingHand", new Object[]{playerId, hand}
+                "checkingHand", new Object[]{playerId, trainCards.toArray(new TrainCard[trainCards.size()])}
         );
         CommandsManager.addCommandAllPlayers(gettingHandCommand, gameId);
     }
 
     public static void checkTrainCardsDeck(String gameId) {
-        Stack<TrainCard> deck = new Stack<>();
-        deck.addAll(ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck());
+        //todo doesn't change original
+//        Stack<TrainCard> deck = new Stack<>();
+//        deck.addAll(ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck());
+        Stack<TrainCard> deck = ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck();
 
         Command command = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "checkingTrainCardsDeck", new Object[]{deck}
+                "checkingTrainCardsDeck", new Object[]{deck.toArray(new TrainCard[deck.size()])}
         );
         CommandsManager.addCommandAllPlayers(command, gameId);
     }

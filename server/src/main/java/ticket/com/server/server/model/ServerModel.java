@@ -262,7 +262,7 @@ public class ServerModel {
         getInstance().games.get(gameId).claimDestinationCards(cardsList, playerId);
     }
 
-    public static void addDestinationCard(String gameId, DestinationCard[] cards) {
+    public static void addDestinationCards(String gameId, DestinationCard[] cards) {
         LinkedList<DestinationCard> cardsList = new LinkedList<>(Arrays.asList(cards));
         getInstance().games.get(gameId).discardDestinationCards(cardsList);
     }

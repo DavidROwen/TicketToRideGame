@@ -433,6 +433,7 @@ public class Game extends Observable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        System.out.println(players.get(playerId).getUsername() + " claimed " + cards.size() + " destination cards");
         addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + String.valueOf(cards.size()) + " destination cards"));
     }
 
@@ -448,6 +449,7 @@ public class Game extends Observable {
         for(DestinationCard card : cards){
             addDestinationCard(card);
         }
+        System.out.println("Player returned " + cards.size() + " destination cards");
     }
 
     private void addDestinationCard(DestinationCard card) {

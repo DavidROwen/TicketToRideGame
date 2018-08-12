@@ -45,10 +45,7 @@ public class ClientCommunicator {
 		@Override
 		protected String doInBackground(Command... commands) {
 			HttpURLConnection connection = openConnection(GENERIC_DESIGNATOR);
-			if(connection == null) {
-				return "null";
-			}
-
+			if(connection == null) { return null; }
 			sendToServer(connection, commands[0]);
 			String input = receive(connection);
 			connection.disconnect();
@@ -84,7 +81,7 @@ public class ClientCommunicator {
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			System.out.println("Could not connect to " + designator);
+			System.out.println("Could not connect to " + urlPrefix + designator);
 //			e.printStackTrace(); //expected when the server is down
 			return null;
 		}
