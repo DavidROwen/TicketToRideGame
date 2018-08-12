@@ -1,5 +1,6 @@
 package ticket.com.server.server.model;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,7 @@ import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.model.Player;
 import ticket.com.utility.model.PlayerAction;
+import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
@@ -294,27 +296,18 @@ public class ServerModel {
         return false;
     }
     //Destination Card Functions
-    public List<DestinationCard> drawTemporaryDestinationCards(String gameId) {
-        return games.get(gameId).drawDestinationCards();
+    public static List<DestinationCard> drawTemporaryDestinationCards(String gameId) {
+        return getInstance().games.get(gameId).drawDestinationCards();
     }
 
-    public void claimDestinationCards(String playerId, String gameId, LinkedList<DestinationCard> cards){
-        Game game = games.get(gameId);
-        game.claimDestinationCards(cards, playerId);
-
-        //update database
-        Command gCommand = new Command(Game.class.getName(), null, "claimDestinationCards", new Object[]{cards, playerId});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
+    public static void claimDestinationCards(String playerId, String gameId, DestinationCard[] cards){
+        LinkedList<DestinationCard> cardsList = new LinkedList<>(Arrays.asList(cards));
+        getInstance().games.get(gameId).claimDestinationCards(cardsList, playerId);
     }
 
-    public void addDestinationCard(String gameId, LinkedList<DestinationCard> card) {
-        games.get(gameId).discardDestinationCards(card);
-
-        //update database
-        Command gCommand = new Command(Game.class.getName(), null, "discardDestinationCards", new Object[]{card});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
-        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
+    public static void addDestinationCard(String gameId, DestinationCard[] cards) {
+        LinkedList<DestinationCard> cardsList = new LinkedList<>(Arrays.asList(cards));
+        getInstance().games.get(gameId).discardDestinationCards(cardsList);
     }
     //End Destination Card Functions
 

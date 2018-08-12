@@ -131,11 +131,9 @@ public class GameService {
         //draw card
         List<DestinationCard> drawnCards = ServerModel.getInstance().drawTemporaryDestinationCards(gameId);
 
-        //update database
-        Command gCommand2 = new Command(Game.class.getName(), null, "drawDestinationCards", new Object[]{});
-        Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
-        DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
-
+        //update database //ServerModel.drawTemporaryDestinationCards(gameId);
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "drawTemporaryDestinationCards", new Object[]{gameId});
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         try {
             Command tempDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
@@ -150,18 +148,22 @@ public class GameService {
         ServerModel sm = ServerModel.getInstance();
 
         //deserialized destination cards as linkedtreemap
-        LinkedList<DestinationCard> temp = new LinkedList<>();
+        DestinationCard[] temp = new DestinationCard[cards.size()];
         for (int i = 0; i < cards.size(); i++) {
             //convert from LinkedTreeMap
             Gson gson = new Gson();
             JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
             DestinationCard card = gson.fromJson(obj, DestinationCard.class);
 
-            temp.add(card);
+            temp[i] = card;
         }
 
         sm.claimDestinationCards(playerId, gameId, temp);
-        //add some kind of error checking with the above function?
+
+        //update database //ServerModel.claimDestinationCards(playerId, gameId, temp);
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "claimDestinationCards",
+                new Object[]{playerId, gameId, temp});
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         //send commands to the other games updating destination cards.
         Command claimCommand = null;
@@ -176,17 +178,21 @@ public class GameService {
 
     public static void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
         //deserialized destination cards as linkedtreemap
-        LinkedList<DestinationCard> temp = new LinkedList<>();
+        DestinationCard[] temp = new DestinationCard[cards.size()];
         for (int i = 0; i < cards.size(); i++) {
             //convert from LinkedTreeMap
             Gson gson = new Gson();
             JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
             DestinationCard card = gson.fromJson(obj, DestinationCard.class);
 
-            temp.add(card);
+            temp[i] = card;
         }
         ServerModel.getInstance().addDestinationCard(gameId, temp);
 
+        //update database //ServerModel.addDestinationCard(gameId, temp);
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "addDestinationCard",
+                new Object[]{gameId, temp});
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        ServerModel.getInstance().addDestinationCard(gameId, cards);
         Command discardCards = null;
