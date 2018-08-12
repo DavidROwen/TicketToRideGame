@@ -173,8 +173,7 @@ public class ServerModel {
             boolean addSuccess = game.addPlayers(player);
 
             //update database
-            Command gCommand = new Command(Game.class.getName(), null, "addPlayers", new Object[]{player});
-            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addPlayerToGame", new Object[]{userId, gameId});
             DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             if(addSuccess){
@@ -208,8 +207,7 @@ public class ServerModel {
         else{
             boolean removeSuccess = game.removePlayer(playerId);
             //update database
-            Command gCommand = new Command(Game.class.getName(), null, "removePlayer", new Object[]{playerId});
-            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "removePlayerFromGame", new Object[]{gameId, playerId});
             DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             if(removeSuccess){
@@ -242,8 +240,7 @@ public class ServerModel {
         game.addToChat(chat);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "addToChat", new Object[]{chat});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addChatToGame", new Object[]{gameId, playerId, message});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         System.out.println("User: " + playerId + " added chat to game: " + gameId);
@@ -273,8 +270,7 @@ public class ServerModel {
             game.setStarted(true);
 
             //update database
-            Command gCommand = new Command(Game.class.getName(), null, "setStarted", new Object[]{true});
-            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "startGame", new Object[]{gameId});
             DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             for(String playerId : game.getPlayersId()){
@@ -358,5 +354,29 @@ public class ServerModel {
         for(Game each : games) {
             this.games.put(each.getId(), each);
         }
+    }
+
+    public void initGame(String gameId){
+        getGameById(gameId).initGame();
+    }
+
+    public void drawTrainCard(String gameId, String playerId){
+        getGameById(gameId).drawTrainCard(playerId);
+    }
+
+    public void pickupTrainCard(String gameId, String playerId, Integer index){
+        getGameById(gameId).pickupTrainCard(playerId, index);
+    }
+
+    public void resetTrainBank(String gameId){
+        getGameById(gameId).resetTrainBank();
+    }
+
+    public void claimRoute(String gameId, String playerId, String route, TrainCard.TRAIN_TYPE typeChoice){
+        getGameById(gameId).claimRoute(playerId, route, typeChoice);
+    }
+
+    public void switchTurn(String gameId){
+        getGameById(gameId).switchTurn();
     }
 }
