@@ -183,7 +183,7 @@ public class GamePlayService {
 
     public static void updateDestinationCards(String playerId, LinkedList<DestinationCard> cards){
         //deserialized destination cards as linkedtreemap
-        ArrayList<DestinationCard> temp = new ArrayList<>();
+        LinkedList<DestinationCard> temp = new LinkedList<>();
         for(int i = 0; i < cards.size(); i++) {
             //convert from LinkedTreeMap
             Gson gson = new Gson();
@@ -198,7 +198,7 @@ public class GamePlayService {
 
     public static void discardDestinationCards(LinkedList<DestinationCard> cards){
         //deserialized destination cards as linkedtreemap
-        ArrayList<DestinationCard> temp = new ArrayList<>();
+        LinkedList<DestinationCard> temp = new LinkedList<>();
         for(int i = 0; i < cards.size(); i++) {
             //convert from LinkedTreeMap
             Gson gson = new Gson();

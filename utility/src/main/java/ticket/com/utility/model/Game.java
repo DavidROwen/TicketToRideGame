@@ -45,7 +45,7 @@ public class Game extends Observable {
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
 //    private final int INIT_HAND_SIZE = 4; //comment
-    private final int INIT_HAND_SIZE = 15; //comment
+    private final int INIT_HAND_SIZE = 4; //comment
 
     private boolean initializedCorrectly = false;
 
@@ -176,7 +176,7 @@ public class Game extends Observable {
         return isStarted;
     }
 
-    public void setStarted(boolean started) {
+    public void setStarted(Boolean started) {
         isStarted = started;
     }
 
@@ -277,7 +277,8 @@ public class Game extends Observable {
     }
 
     public Boolean isMyTurn(String playerId) {
-        return playerId.equals(turnOrder.get(turnNumber));
+//        return playerId.equals(turnOrder.get(turnNumber % players.size()));
+        return true;
     }
 
     private void initTurnOrder() {
@@ -416,7 +417,7 @@ public class Game extends Observable {
         return list;
     }
 
-    public void claimDestinationCards(List<DestinationCard> cards, String playerId){
+    public void claimDestinationCards(LinkedList<DestinationCard> cards, String playerId){
         Player player = players.get(playerId);
         try {
             for (DestinationCard card : cards) {
@@ -436,7 +437,7 @@ public class Game extends Observable {
      * @post destinatonCards.size() >= 1
      * @param cards a list of destination cards
      */
-    public void discardDestinationCards(List<DestinationCard> cards){
+    public void discardDestinationCards(LinkedList<DestinationCard> cards){
         for(DestinationCard card : cards){
             addDestinationCard(card);
         }
