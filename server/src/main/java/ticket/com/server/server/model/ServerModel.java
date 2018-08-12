@@ -1,5 +1,7 @@
 package ticket.com.server.server.model;
 
+import com.google.gson.reflect.TypeToken;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +14,7 @@ import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.model.Player;
 import ticket.com.utility.model.PlayerAction;
+import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
@@ -303,16 +306,18 @@ public class ServerModel {
         game.claimDestinationCards(cards, playerId);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "claimDestinationCards", new Object[]{cards, playerId});
+        Class<?> listType = new TypeToken<LinkedList<TrainCard>>(){}.getRawType();
+        Command gCommand = new Command(Game.class.getName(), null, null, "claimDestinationCards", new Class<?>[]{listType}, new Object[]{cards, playerId});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
     }
 
-    public void addDestinationCard(String gameId, LinkedList<DestinationCard> card) {
-        games.get(gameId).discardDestinationCards(card);
+    public void addDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
+        games.get(gameId).discardDestinationCards(cards);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "discardDestinationCards", new Object[]{card});
+        Class<?> listType = new TypeToken<LinkedList<TrainCard>>(){}.getRawType();
+        Command gCommand = new Command(Game.class.getName(), null, null, "discardDestinationCards", new Class<?>[]{listType}, new Object[]{cards});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
     }

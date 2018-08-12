@@ -1,5 +1,7 @@
 package tests;
 
+import com.google.gson.reflect.TypeToken;
+
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import sun.awt.image.ImageWatched;
 import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.server.server.MultiCommand;
 import ticket.com.server.server.model.ServerModel;
@@ -88,5 +91,17 @@ public class SerializerTest {
 
         boolean successful = (boolean) dbCommand2.execute();
         assertTrue(successful);
+    }
+
+    @Test
+    public void testListAdapter() {
+        LinkedList<TrainCard> cards = new LinkedList<>();
+        cards.add(new TrainCard(TrainCard.TRAIN_TYPE.WILD));
+
+        String cardsJson = Serializer.toJson(cards);
+        Class<?> listType = new TypeToken<LinkedList<TrainCard>>(){}.getRawType();
+        LinkedList<TrainCard> cards2 = (LinkedList<TrainCard>) Serializer.fromJson(cardsJson, listType);
+
+        assertEquals(cards2.getFirst().getType(), TrainCard.TRAIN_TYPE.WILD);
     }
 }
