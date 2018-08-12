@@ -30,30 +30,6 @@ public class ServerModel {
         return instance;
     }
 
-    private void initWithDb() {
-        try {
-            setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
-            setGames(DatabaseManager.getInstance().getAllGames());
-            executeCommands(DatabaseManager.getInstance().getAllCommands());
-        } catch (Exception e) {
-            System.out.println("ERROR: Server failed to initialize from db");
-            e.printStackTrace();
-            return;
-        }
-        System.out.println("Server was successfully initialized from db");
-    }
-
-    private void executeCommands(List<Command> commands) {
-        for(Command each : commands) {
-            try {
-                each.execute();
-            } catch(Exception e) {
-                System.out.println("ERROR: Server failed to execute command");
-                e.printStackTrace();
-            }
-        }
-    }
-
     //Map of users that stores the Username as the key
     private Map<String, User> registeredUsers;
     //Map of games that stores the GameId ast he key
@@ -172,10 +148,6 @@ public class ServerModel {
         else{
             boolean addSuccess = game.addPlayers(player);
 
-            //update database
-            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addPlayerToGame", new Object[]{userId, gameId});
-            DatabaseManager.getInstance().addCommand(dbCommand, gameId);
-
             if(addSuccess){
                 System.out.println("User: " + player.getId() + " added to game: " + gameId);
                 for(String id : activeUsers.keySet()){
@@ -206,9 +178,6 @@ public class ServerModel {
         }
         else{
             boolean removeSuccess = game.removePlayer(playerId);
-            //update database
-            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "removePlayerFromGame", new Object[]{gameId, playerId});
-            DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             if(removeSuccess){
                 System.out.println("User: " + playerId + " removed from game: " + gameId);
@@ -239,10 +208,6 @@ public class ServerModel {
         Chat chat = new Chat(player.getUsername(), message);
         game.addToChat(chat);
 
-        //update database
-        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addChatToGame", new Object[]{gameId, playerId, message});
-        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
-
         System.out.println("User: " + playerId + " added chat to game: " + gameId);
         //send commands to all the users in the game.
         for(String id : game.getPlayersId()){
@@ -268,10 +233,6 @@ public class ServerModel {
         }
         if(game.getNumberOfPlayers() == game.getMaxPlayers()){
             game.setStarted(true);
-
-            //update database
-            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "startGame", new Object[]{gameId});
-            DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             for(String playerId : game.getPlayersId()){
                 Command command;
@@ -307,11 +268,9 @@ public class ServerModel {
     }
     //End Destination Card Functions
 
-    //Game History Function
-//    public void addToGameHistory(String gameId, PlayerAction pa){
-//        Game game = games.get(gameId);
-//        game.addToHistory(pa);
-//    }
+    public static void addToGameHistory(String gameId, PlayerAction pa){
+        getInstance().games.get(gameId).addToHistory(pa);
+    }
 
     public Map<String, Game> getGames() {
         return games;
@@ -321,27 +280,8 @@ public class ServerModel {
         return games.get(gameId);
     }
 
-    public void endGame(String gameId) {
-        getGames().get(gameId).setGameOver(true);
-    }
-
-    public static boolean execOnGame(String gameId, Command command) {
-        Game game = getInstance().getGames().get(gameId);
-        if (game == null) {
-            System.out.println("ERROR: Couldn't find game for " + gameId);
-            return false;
-        }
-
-        command.setInstance(game);
-        command.setInstanceType(Game.class);
-
-        try {
-            command.execute();
-            return true;
-        } catch(Exception e) {
-            System.out.println("ERROR: command failed to execute");
-            return false;
-        }
+    public static void endGame(String gameId) {
+        getInstance().getGames().get(gameId).setGameOver(true);
     }
 
     private void setRegisteredUsers(List<User> registeredUsers) {
@@ -356,27 +296,73 @@ public class ServerModel {
         }
     }
 
-    public void initGame(String gameId){
-        getGameById(gameId).initGame();
+    public static void initGame(String gameId){
+        getInstance().getGameById(gameId).initGame();
     }
 
-    public void drawTrainCard(String gameId, String playerId){
-        getGameById(gameId).drawTrainCard(playerId);
+    public static void drawTrainCard(String gameId, String playerId){
+        getInstance().getGameById(gameId).drawTrainCard(playerId);
     }
 
-    public void pickupTrainCard(String gameId, String playerId, Integer index){
-        getGameById(gameId).pickupTrainCard(playerId, index);
+    public static void pickupTrainCard(String gameId, String playerId, Integer index){
+        getInstance().getGameById(gameId).pickupTrainCard(playerId, index);
     }
 
-    public void resetTrainBank(String gameId){
-        getGameById(gameId).resetTrainBank();
+    public static void resetTrainBank(String gameId){
+        getInstance().getGameById(gameId).resetTrainBank();
     }
 
-    public void claimRoute(String gameId, String playerId, String route, TrainCard.TRAIN_TYPE typeChoice){
-        getGameById(gameId).claimRoute(playerId, route, typeChoice);
+    public static void claimRoute(String gameId, String playerId, String route, TrainCard.TRAIN_TYPE typeChoice){
+        getInstance().getGameById(gameId).claimRoute(playerId, route, typeChoice);
     }
 
-    public void switchTurn(String gameId){
-        getGameById(gameId).switchTurn();
+    public static void switchTurn(String gameId){
+        getInstance().getGameById(gameId).switchTurn();
+    }
+
+    public static void stAddPlayerToGame(String gameId, String userId) {
+        User user = getInstance().getUserById(userId);
+        Player player = new Player(user.getUsername(),user.getId());
+        getInstance().games.get(gameId).addPlayers(player);
+    }
+
+    public static void stRemovePlayerFromGame(String gameId, String playerId) {
+        getInstance().games.get(gameId).removePlayer(playerId);
+    }
+
+    public static void stAddChatToGame(String gameId, String playerId, String message) {
+        Chat chat = new Chat(getInstance().activeUsers.get(playerId).getUsername(), message);
+        getInstance().games.get(gameId).addToChat(chat);
+    }
+
+    public static void stStartGame(String gameId) {
+        Game game = getInstance().games.get(gameId);
+        if(game.getNumberOfPlayers() == game.getMaxPlayers()) {
+            game.setStarted(true);
+        }
+    }
+
+    private void initWithDb() {
+        try {
+            setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
+            setGames(DatabaseManager.getInstance().getAllGames());
+            executeCommands(DatabaseManager.getInstance().getAllCommands());
+        } catch (Exception e) {
+            System.out.println("ERROR: Server failed to initialize from db");
+            e.printStackTrace();
+            return;
+        }
+        System.out.println("Server was successfully initialized from db");
+    }
+
+    private void executeCommands(List<Command> commands) {
+        for(Command each : commands) {
+            try {
+                each.execute();
+            } catch(Exception e) {
+                System.out.println("ERROR: Server failed to execute command");
+                e.printStackTrace();
+            }
+        }
     }
 }

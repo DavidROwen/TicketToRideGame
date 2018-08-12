@@ -1,6 +1,8 @@
 package ticket.com.server.server.service;
 
+import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.server.server.model.ServerModel;
+import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class JoinService {
@@ -26,6 +28,12 @@ public class JoinService {
             result.setSuccess(false);
             result.setErrorMessage("Failed to Join Game");
         }
+
+//        ServerModel.stAddPlayerToGame(gameId, userId);
+        DatabaseManager.getInstance().addCommand(
+                new Command(ServerModel.class.getName(), null, "stAddPlayerToGame", new Object[]{gameId, userId}),
+                gameId
+        );
 
         return result;
     }

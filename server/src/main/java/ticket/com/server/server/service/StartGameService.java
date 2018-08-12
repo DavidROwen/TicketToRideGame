@@ -1,6 +1,8 @@
 package ticket.com.server.server.service;
 
+import ticket.com.server.server.DB.DatabaseManager;
 import ticket.com.server.server.model.ServerModel;
+import ticket.com.utility.web.Command;
 import ticket.com.utility.web.Result;
 
 public class StartGameService {
@@ -23,6 +25,13 @@ public class StartGameService {
             result.setSuccess(false);
             result.setErrorMessage("Error: Can't start game");
         }
+
+//        ServerModel.stStartGame(gameId);
+        DatabaseManager.getInstance().addCommand(
+                new Command(ServerModel.class.getName(), null, "stStartGame", new Object[]{gameId}),
+                gameId
+        );
+
         return result;
     }
 
@@ -43,6 +52,13 @@ public class StartGameService {
             result.setSuccess(false);
             result.setErrorMessage(e.toString());
         }
+
+//        ServerModel.stAddPlayerToGame(gameId, playerId);
+        DatabaseManager.getInstance().addCommand(
+                new Command(ServerModel.class.getName(), null, "stAddPlayerToGame", new Object[]{gameId, playerId}),
+                gameId
+        );
+
         return result;
     }
 
