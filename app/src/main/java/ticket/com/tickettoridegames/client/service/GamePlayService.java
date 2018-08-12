@@ -3,6 +3,7 @@ package ticket.com.tickettoridegames.client.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -135,8 +136,9 @@ public class GamePlayService {
         ClientModel.get_instance().endGame(gameId);
     }
 
-    public static void setTurnOrder(LinkedList<String> order) {
-        ClientModel.get_instance().setTurnOrder(order);
+    public static void setTurnOrder(ArrayList<String> order) {
+        LinkedList<String> turnOrder = new LinkedList<>(order);
+        ClientModel.get_instance().setTurnOrder(turnOrder);
     }
 
     public static void setPlayersColors(HashMap<String, Player.COLOR> colors) {
