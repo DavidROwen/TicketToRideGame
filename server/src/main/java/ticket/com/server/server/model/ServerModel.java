@@ -1,7 +1,5 @@
 package ticket.com.server.server.model;
 
-import com.google.gson.reflect.TypeToken;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +12,6 @@ import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.model.Player;
 import ticket.com.utility.model.PlayerAction;
-import ticket.com.utility.model.TrainCard;
 import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
@@ -136,7 +133,6 @@ public class ServerModel {
         }
         else{
             games.put(game.getId(), game);
-            //todo doesn't add a game to db
             System.out.println("Game with id: " + game.getId() + " created "+game.toString());
             //send commands to other connected Users
             for(String id : activeUsers.keySet()){
@@ -175,7 +171,8 @@ public class ServerModel {
             boolean addSuccess = game.addPlayers(player);
 
             //update database
-            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addPlayerToGame", new Object[]{userId, gameId});
+            Command gCommand = new Command(Game.class.getName(), null, "addPlayers", new Object[]{player});
+            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
             DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             if(addSuccess){
@@ -209,7 +206,8 @@ public class ServerModel {
         else{
             boolean removeSuccess = game.removePlayer(playerId);
             //update database
-            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "removePlayerFromGame", new Object[]{gameId, playerId});
+            Command gCommand = new Command(Game.class.getName(), null, "removePlayer", new Object[]{playerId});
+            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
             DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             if(removeSuccess){
@@ -242,7 +240,8 @@ public class ServerModel {
         game.addToChat(chat);
 
         //update database
-        Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "addChatToGame", new Object[]{gameId, playerId, message});
+        Command gCommand = new Command(Game.class.getName(), null, "addToChat", new Object[]{chat});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         System.out.println("User: " + playerId + " added chat to game: " + gameId);
@@ -272,7 +271,8 @@ public class ServerModel {
             game.setStarted(true);
 
             //update database
-            Command dbCommand = new Command(ServerModel.class.getName(), ServerModel.getInstance(), "startGame", new Object[]{gameId});
+            Command gCommand = new Command(Game.class.getName(), null, "setStarted", new Object[]{true});
+            Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
             DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
             for(String playerId : game.getPlayersId()){
@@ -303,18 +303,16 @@ public class ServerModel {
         game.claimDestinationCards(cards, playerId);
 
         //update database
-        Class<?> listType = new TypeToken<LinkedList<TrainCard>>(){}.getRawType();
-        Command gCommand = new Command(Game.class.getName(), null, null, "claimDestinationCards", new Class<?>[]{listType}, new Object[]{cards, playerId});
+        Command gCommand = new Command(Game.class.getName(), null, "claimDestinationCards", new Object[]{cards, playerId});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
     }
 
-    public void addDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
-        games.get(gameId).discardDestinationCards(cards);
+    public void addDestinationCard(String gameId, LinkedList<DestinationCard> card) {
+        games.get(gameId).discardDestinationCards(card);
 
         //update database
-        Class<?> listType = new TypeToken<LinkedList<TrainCard>>(){}.getRawType();
-        Command gCommand = new Command(Game.class.getName(), null, null, "discardDestinationCards", new Class<?>[]{listType}, new Object[]{cards});
+        Command gCommand = new Command(Game.class.getName(), null, "discardDestinationCards", new Object[]{card});
         Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
     }
@@ -368,35 +366,4 @@ public class ServerModel {
             this.games.put(each.getId(), each);
         }
     }
-
-
-    public void initGame(String gameId){
-        getGameById(gameId).initGame();
-    }
-
-    public void drawTrainCard(String gameId, String playerId){
-        getGameById(gameId).drawTrainCard(playerId);
-    }
-
-    public void pickupTrainCard(String gameId, String playerId, Integer index){
-        getGameById(gameId).pickupTrainCard(playerId, index);
-    }
-
-    public void resetTrainBank(String gameId){
-        getGameById(gameId).resetTrainBank();
-    }
-
-    public void claimRoute(String gameId, String playerId, String route, TrainCard.TRAIN_TYPE typeChoice){
-        getGameById(gameId).claimRoute(playerId, route, typeChoice);
-    }
-
-    public void switchTurn(String gameId){
-        getGameById(gameId).switchTurn();
-    }
-
-
-
-
-
-
 }
