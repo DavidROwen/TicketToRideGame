@@ -10,7 +10,6 @@ import ticket.com.utility.model.Chat;
 import ticket.com.utility.model.DestinationCard;
 import ticket.com.utility.model.Game;
 import ticket.com.utility.model.Player;
-import ticket.com.utility.model.PlayerAction;
 import ticket.com.utility.model.User;
 import ticket.com.utility.web.Command;
 
@@ -29,7 +28,7 @@ public class ServerModel {
 
     private void initWithDb() {
         try {
-            setRegisteredUsers(DatabaseManager.getInstance().getAllUsers());
+            setUsers(DatabaseManager.getInstance().getAllUsers());
             setGames(DatabaseManager.getInstance().getAllGames());
             executeCommands(DatabaseManager.getInstance().getAllCommands());
         } catch (Exception e) {
@@ -52,16 +51,13 @@ public class ServerModel {
     }
 
     //Map of users that stores the Username as the key
-    private Map<String, User> registeredUsers; //key is userId
+    private Map<String, User> users; //key is userId
     //Map of games that stores the GameId ast he key
     private Map<String, Game> games; //key is gameId
-    //Map of users that stores the UserID as the kay
-    private Map<String, User> activeUsers; //key is userId
 
     private ServerModel(){
-        registeredUsers = new HashMap<>();
+        users = new HashMap<>();
         games = new HashMap<>();
-        activeUsers = new HashMap<>();
     }
 
     public void clear(){
@@ -73,10 +69,7 @@ public class ServerModel {
             throw new Exception();
         }
         else{
-            registeredUsers.put(user.getUsername(), user);
-            activeUsers.put(user.getId(), user);
-            registeredUsers.put(user.getId(), user);
-//            activeUsers.put(user.getId(), user);
+            users.put(user.getId(), user);
             System.out.println("User: "+user.getId()+" registered ");
             for(String gameId : games.keySet()){
                 Command command;
@@ -102,8 +95,8 @@ public class ServerModel {
         }
         else{
             if(user.getPassword().equals(password)){
-                if(!activeUsers.containsKey(user.getId())){
-                    activeUsers.put(user.getId(), user);
+                if(!users.containsKey(user.getId())){
+                    users.put(user.getId(), user);
                     System.out.println("User: " + user.getId() + " Logged in");
                 }
                 for(String gameId : games.keySet()){
@@ -136,7 +129,7 @@ public class ServerModel {
             games.put(game.getId(), game);
             System.out.println("Game with id: " + game.getId() + " created "+game.toString());
             //send commands to other connected Users
-            for(String id : activeUsers.keySet()){
+            for(String id : users.keySet()){
                 Command command;
                 try{
                     command = new Command(JOIN_SERVICE_PATH,
@@ -154,15 +147,15 @@ public class ServerModel {
     }
 
     private User getUserByName(String username) {
-        for(String each : registeredUsers.keySet()) {
-            User user = registeredUsers.get(each);
+        for(String each : users.keySet()) {
+            User user = users.get(each);
             if(user.getUsername().equals(username)) { return user; }
         }
         return null;
     }
 
     public User getUserById(String id){
-        return registeredUsers.get(id);
+        return users.get(id);
     }
 
     public boolean addPlayerToGame(String userId, String gameId) throws Exception{
@@ -182,7 +175,7 @@ public class ServerModel {
 
             if(addSuccess){
                 System.out.println("User: " + player.getId() + " added to game: " + gameId);
-                for(String id : activeUsers.keySet()){
+                for(String id : users.keySet()){
                     Command command;
                     try{
                         command = new Command(JOIN_SERVICE_PATH,
@@ -217,7 +210,7 @@ public class ServerModel {
 
             if(removeSuccess){
                 System.out.println("User: " + playerId + " removed from game: " + gameId);
-                for(String id : registeredUsers.keySet()){
+                for(String id : users.keySet()){
                     Command command;
                     try{
                         command = new Command(LOBBY_SERVICE_PATH,
@@ -240,7 +233,7 @@ public class ServerModel {
 
     public void addChatToGame(String gameId, String playerId, String message){
         Game game = games.get(gameId);
-        User player = registeredUsers.get(playerId);
+        User player = users.get(playerId);
         Chat chat = new Chat(player.getUsername(), message);
         game.addToChat(chat);
 
@@ -360,9 +353,9 @@ public class ServerModel {
         }
     }
 
-    private void setRegisteredUsers(List<User> registeredUsers) {
-        for(User each : registeredUsers) {
-            this.registeredUsers.put(each.getId(), each);
+    private void setUsers(List<User> users) {
+        for(User each : users) {
+            this.users.put(each.getId(), each);
         }
     }
 
