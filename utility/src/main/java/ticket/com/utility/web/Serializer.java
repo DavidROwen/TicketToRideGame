@@ -55,8 +55,8 @@ public class Serializer {
     private static final Gson GSON = new GsonBuilder()
         .registerTypeAdapter(Command.class, new GenericCommandSerializer())
         .registerTypeAdapter(Command.class, new GenericCommandDeserializer())
-        .registerTypeAdapter(new TypeToken<LinkedList<TrainCard>>(){}.getRawType(), new TrainCardListAdapter())
-        .registerTypeAdapter(new TypeToken<LinkedList<DestinationCard>>(){}.getRawType(), new DestinationCardListAdapter())
+//        .registerTypeAdapter(new TypeToken<LinkedList<TrainCard>>(){}.getRawType(), new TrainCardListAdapter())
+//        .registerTypeAdapter(new TypeToken<LinkedList<DestinationCard>>(){}.getRawType(), new DestinationCardListAdapter())
         .create();
 
     private static class GenericCommandSerializer implements JsonSerializer<Command> {
@@ -246,59 +246,59 @@ public class Serializer {
         }
     }
 
-    private static class TrainCardListAdapter extends TypeAdapter<LinkedList<TrainCard>> {
-
-        @Override
-        public void write(JsonWriter out, LinkedList<TrainCard> cards) throws IOException {
-            out.beginArray();
-
-            for(TrainCard each : cards) {
-                out.value(GSON.toJson(each));
-            }
-
-            out.endArray();
-        }
-
-        @Override
-        public LinkedList<TrainCard> read(JsonReader in) throws IOException {
-            LinkedList<TrainCard> cards = new LinkedList<>();
-
-            in.beginArray();
-            while(in.hasNext()) {
-                TrainCard card = GSON.fromJson(in.nextString(), TrainCard.class);
-                cards.add(card);
-            }
-            in.endArray();
-
-            return cards;
-        }
-    }
-
-    private static class DestinationCardListAdapter extends TypeAdapter<LinkedList<DestinationCard>> {
-
-        @Override
-        public void write(JsonWriter out, LinkedList<DestinationCard> cards) throws IOException {
-            out.beginArray();
-
-            for(DestinationCard each : cards) {
-                out.value(GSON.toJson(each));
-            }
-
-            out.endArray();
-        }
-
-        @Override
-        public LinkedList<DestinationCard> read(JsonReader in) throws IOException {
-            LinkedList<DestinationCard> cards = new LinkedList<>();
-
-            in.beginArray();
-            while(in.hasNext()) {
-                DestinationCard card = GSON.fromJson(in.nextString(), DestinationCard.class);
-                cards.add(card);
-            }
-            in.endArray();
-
-            return cards;
-        }
-    }
+//    private static class TrainCardListAdapter extends TypeAdapter<LinkedList<TrainCard>> {
+//
+//        @Override
+//        public void write(JsonWriter out, LinkedList<TrainCard> cards) throws IOException {
+//            out.beginArray();
+//
+//            for(TrainCard each : cards) {
+//                out.value(GSON.toJson(each));
+//            }
+//
+//            out.endArray();
+//        }
+//
+//        @Override
+//        public LinkedList<TrainCard> read(JsonReader in) throws IOException {
+//            LinkedList<TrainCard> cards = new LinkedList<>();
+//
+//            in.beginArray();
+//            while(in.hasNext()) {
+//                TrainCard card = GSON.fromJson(in.nextString(), TrainCard.class);
+//                cards.add(card);
+//            }
+//            in.endArray();
+//
+//            return cards;
+//        }
+//    }
+//
+//    private static class DestinationCardListAdapter extends TypeAdapter<LinkedList<DestinationCard>> {
+//
+//        @Override
+//        public void write(JsonWriter out, LinkedList<DestinationCard> cards) throws IOException {
+//            out.beginArray();
+//
+//            for(DestinationCard each : cards) {
+//                out.value(GSON.toJson(each));
+//            }
+//
+//            out.endArray();
+//        }
+//
+//        @Override
+//        public LinkedList<DestinationCard> read(JsonReader in) throws IOException {
+//            LinkedList<DestinationCard> cards = new LinkedList<>();
+//
+//            in.beginArray();
+//            while(in.hasNext()) {
+//                DestinationCard card = GSON.fromJson(in.nextString(), DestinationCard.class);
+//                cards.add(card);
+//            }
+//            in.endArray();
+//
+//            return cards;
+//        }
+//    }
 }
