@@ -43,7 +43,7 @@ public class DatabaseManager {
      * @post Commands Manager object is now created
      */
     private DatabaseManager() {
-
+        commandCount = 0;
     }
 
     public void createServerModel(){
