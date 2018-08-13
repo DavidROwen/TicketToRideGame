@@ -104,7 +104,7 @@ public class Command {
         str += className + " " + instance + "." + methodName + "(";
         for(int i = 0; i < paramTypes.length; i++) {
             str += paramTypes[i].toString() + " ";
-            str += paramValues[i].toString() + ", ";
+            if(i+1 != paramTypes.length) { str += paramValues[i].toString() + ", "; }
         }
         str += ")";
 

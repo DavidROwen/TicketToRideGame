@@ -92,6 +92,7 @@ public class JsonGameDao implements IGameDAO {
         for(Game cgame : games){
             if(cgame.getId().equals(gameId)){
                 removed = games.remove(cgame);
+                break;
             }
         }
         if(removed){

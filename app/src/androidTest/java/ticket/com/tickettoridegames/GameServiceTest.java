@@ -2,6 +2,7 @@ package ticket.com.tickettoridegames;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class GameServiceTest {
     @Test
     public void testInitToGameplay() {
         initToGameplay();
+
         assertTrue(otherId != null && userId != null && gameId != null);
         assertTrue(ClientModel.get_instance().getMyActiveGame() != null);
         assertTrue(ClientModel.get_instance().getMyPlayer() != null);
@@ -60,6 +62,7 @@ public class GameServiceTest {
         //test when you draw
         service.drawTrainCard(userId, gameId);
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() == 4){} //added here
+        service.checkHand(userId, gameId);
 
         //test when others draw
         service.drawTrainCard(otherId, gameId);
@@ -67,6 +70,7 @@ public class GameServiceTest {
         do {
             countsOfCards = ClientModel.get_instance().getMyActiveGame().getCountsOfCardsInHand();
         } while(countsOfCards.get(otherId) != 5); //added there
+        service.checkHand(userId, gameId);
     }
 
     @Test
@@ -78,7 +82,6 @@ public class GameServiceTest {
         //prepare
         TrainCard prev0 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(0);
         TrainCard prev1 = ClientModel.get_instance().getMyActiveGame().getTrainBank().get(1);
-        System.out.println(prev0.getType());
 
         //run
         service.pickupTrainCard(userId, gameId, 0);
@@ -231,7 +234,7 @@ public class GameServiceTest {
         LobbyService.startGame(gameId);
         while(!ClientModel.get_instance().isGameStarted(gameId)){}
 
-        //init game
+//        init game
         service = new GamePlayService();
         service.initGame(gameId);
         while(ClientModel.get_instance().getMyPlayer().getTrainCards().size() != 4);

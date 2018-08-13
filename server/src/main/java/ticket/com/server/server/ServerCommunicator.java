@@ -66,11 +66,13 @@ public class ServerCommunicator {
 			IDbFactory dbFactory = pluginManager.createPlugin(args[1]);
 			DatabaseManager.getInstance().setCommandDelta(Integer.valueOf(args[2]));
 			DatabaseManager.getInstance().setDbFactory(dbFactory);
-			DatabaseManager.getInstance().createServerModel();
+			DatabaseManager.getInstance().assignRefreshCount(Integer.valueOf(args[2]));
 
 			if (args.length >= 4 && args[3].equals("-wipe")) {
 				DatabaseManager.getInstance().clearDatabase();
 			}
+
+			DatabaseManager.getInstance().createServerModel(); //updates from db
 		}
 
 		new ServerCommunicator().run();

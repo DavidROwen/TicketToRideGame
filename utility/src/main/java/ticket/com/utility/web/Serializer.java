@@ -12,15 +12,28 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.LinkedList;
+
+import ticket.com.utility.model.DestinationCard;
+import ticket.com.utility.model.TrainCard;
 
 public class Serializer {
     public static String toJson(Object obj) {
         return GSON.toJson(obj);
+    }
+
+    public static String toJson(Object obj, Class<?> type) {
+        return GSON.toJson(obj, type);
     }
 
     public static Object fromJson(InputStreamReader in, Class<?> returnType ) {
@@ -39,13 +52,11 @@ public class Serializer {
         GSON.toJson(result, outputStreamWriter);
     }
 
-    public static Object fromInputJson(InputStreamReader inputStreamReader, Type returnType) {
-        return GSON.fromJson(inputStreamReader, returnType);
-    }
-    
     private static final Gson GSON = new GsonBuilder()
         .registerTypeAdapter(Command.class, new GenericCommandSerializer())
         .registerTypeAdapter(Command.class, new GenericCommandDeserializer())
+//        .registerTypeAdapter(new TypeToken<LinkedList<TrainCard>>(){}.getRawType(), new TrainCardListAdapter())
+//        .registerTypeAdapter(new TypeToken<LinkedList<DestinationCard>>(){}.getRawType(), new DestinationCardListAdapter())
         .create();
 
     private static class GenericCommandSerializer implements JsonSerializer<Command> {
@@ -86,12 +97,14 @@ public class Serializer {
         private JsonElement calcParamValues(Command src) {
             JsonArray paramValues = new JsonArray();
 
-            for (Object cur : src.getParamValues()) {
+            for (int i = 0; i < src.getParamValues().length; i++) {
+                Object cur = src.getParamValues()[i];
+                Class<?> curType = src.getParamTypes()[i];
                 if(isJsonObject(cur)) {
-                    JsonObject paramValue = calcJsonObject(cur);
+                    JsonObject paramValue = calcJsonObject(cur, curType);
                     paramValues.add(paramValue);
                 } else if(isJsonArray(cur)) {
-                    JsonArray paramValue = calcJsonArray(cur);
+                    JsonArray paramValue = calcJsonArray(cur, curType);
                     paramValues.add(paramValue);
                 } else {
                     paramValues.add(cur.toString());
@@ -111,14 +124,14 @@ public class Serializer {
             return parser.parse(toJson(cur)).isJsonArray();
         }
 
-        private JsonObject calcJsonObject(Object cur) {
+        private JsonObject calcJsonObject(Object cur, Class<?> curType) {
             JsonParser parser = new JsonParser();
-            return parser.parse(toJson(cur)).getAsJsonObject();
+            return parser.parse(toJson(cur, curType)).getAsJsonObject();
         }
 
-        private JsonArray calcJsonArray(Object cur) {
+        private JsonArray calcJsonArray(Object cur, Class<?> curType) {
             JsonParser parser = new JsonParser();
-            return parser.parse(toJson(cur)).getAsJsonArray();
+            return parser.parse(toJson(cur, curType)).getAsJsonArray();
         }
 
         private JsonElement calcParamTypes(Command src) {
@@ -193,11 +206,8 @@ public class Serializer {
                 paramValuesStr = value.toString();
             }
 
-            //to reader
-            InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream(paramValuesStr.getBytes()));
-
             //to obj
-            obj = fromJson(reader, type);
+            obj = fromJson(paramValuesStr, type);
 
             return obj;
         }
@@ -235,4 +245,60 @@ public class Serializer {
             }
         }
     }
+
+//    private static class TrainCardListAdapter extends TypeAdapter<LinkedList<TrainCard>> {
+//
+//        @Override
+//        public void write(JsonWriter out, LinkedList<TrainCard> cards) throws IOException {
+//            out.beginArray();
+//
+//            for(TrainCard each : cards) {
+//                out.value(GSON.toJson(each));
+//            }
+//
+//            out.endArray();
+//        }
+//
+//        @Override
+//        public LinkedList<TrainCard> read(JsonReader in) throws IOException {
+//            LinkedList<TrainCard> cards = new LinkedList<>();
+//
+//            in.beginArray();
+//            while(in.hasNext()) {
+//                TrainCard card = GSON.fromJson(in.nextString(), TrainCard.class);
+//                cards.add(card);
+//            }
+//            in.endArray();
+//
+//            return cards;
+//        }
+//    }
+//
+//    private static class DestinationCardListAdapter extends TypeAdapter<LinkedList<DestinationCard>> {
+//
+//        @Override
+//        public void write(JsonWriter out, LinkedList<DestinationCard> cards) throws IOException {
+//            out.beginArray();
+//
+//            for(DestinationCard each : cards) {
+//                out.value(GSON.toJson(each));
+//            }
+//
+//            out.endArray();
+//        }
+//
+//        @Override
+//        public LinkedList<DestinationCard> read(JsonReader in) throws IOException {
+//            LinkedList<DestinationCard> cards = new LinkedList<>();
+//
+//            in.beginArray();
+//            while(in.hasNext()) {
+//                DestinationCard card = GSON.fromJson(in.nextString(), DestinationCard.class);
+//                cards.add(card);
+//            }
+//            in.endArray();
+//
+//            return cards;
+//        }
+//    }
 }

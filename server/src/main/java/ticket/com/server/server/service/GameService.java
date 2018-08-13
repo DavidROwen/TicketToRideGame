@@ -1,9 +1,6 @@
 package ticket.com.server.server.service;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import java.sql.ClientInfoStatus;
+import java.lang.reflect.Array;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +23,10 @@ public class GameService {
         Game game = ServerModel.getInstance().getGames().get(gameId);
         game.initGame();
 
-
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "initGame", null);
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "initGame", new Object[]{gameId});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
-        //DatabaseManager.getInstance().updateGame(gameId, ServerModel.getInstance().getGames().get(gameId)); //update db with random's
+
 
         //turnOrder //because it's generated randomly
         List<String> turnOrder = game.getTurnOrder();
@@ -50,16 +45,21 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(initColors, gameId);
 
         //trainDeck //because it's generated randomly
-        Stack<TrainCard> trainCardsDeck = new Stack<>();
+        List<TrainCard> trainCardsDeck = new LinkedList<>();
         trainCardsDeck.addAll(game.getTrainCardsDeck()); //otherwise it's getting changed before transfer
 //        new GamePlayService().setTrainCardsDeck(trainCardsDeck);
         Command setTrainCardsDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "setTrainCardsDeck", new Object[]{trainCardsDeck}
+                "setTrainCardsDeck", new Object[]{trainCardsDeck.toArray(new TrainCard[trainCardsDeck.size()])}
         );
         CommandsManager.addCommandAllPlayers(setTrainCardsDeck, gameId);
 
         //everything else
-        ServerModel.getInstance().getGames().get(gameId).initGameNonRandom();
+        ServerModel.initGameNonRandom(gameId);
+
+        //update database
+        Command db2Command = new Command(ServerModel.class.getName(), null, "initGameNonRandom", new Object[]{gameId});
+        DatabaseManager.getInstance().addCommand(db2Command, gameId);
+
 //        new GamePlayService().initiatingGameNonRandom();
         Command initHands = new Command(GAME_PLAY_SERVICE_PATH, null,
                 "initiatingGameNonRandom", new Object[]{}
@@ -82,8 +82,7 @@ public class GameService {
         game.drawTrainCard(playerId);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "drawTrainCard", new Object[]{playerId});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "drawTrainCard", new Object[]{gameId, playerId});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().drawingTrainCard(playerId);
@@ -100,8 +99,7 @@ public class GameService {
         game.pickupTrainCard(playerId, index);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "pickupTrainCard", new Object[]{playerId, index});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "pickupTrainCard", new Object[]{gameId, playerId, index});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().pickingUpTrainCard(playerId, index);
@@ -114,8 +112,7 @@ public class GameService {
             game.resetTrainBank();
 
             //update database
-            Command gCommand2 = new Command(Game.class.getName(), null, "resetTrainBank", new Object[]{});
-            Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
+            Command dbCommand2 = new Command(ServerModel.class.getName(), null, "resetTrainBank", new Object[]{gameId});
             DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
             //        new GamePlayService().resetBank(playerId, index);
@@ -129,39 +126,30 @@ public class GameService {
     //Destination Card Functions
     public static void drawDestinationCard(String playerId, String gameId) {
         //draw card
-        List<DestinationCard> drawnCards = ServerModel.getInstance().drawTemporaryDestinationCards(gameId);
+        List<DestinationCard> drawnCards = ServerModel.drawTemporaryDestinationCards(gameId);
 
-        //update database
-        Command gCommand2 = new Command(Game.class.getName(), null, "drawDestinationCards", new Object[]{});
-        Command dbCommand2 = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand2});
-        DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
-
+        //update database //ServerModel.drawTemporaryDestinationCards(gameId);
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "drawTemporaryDestinationCards", new Object[]{gameId});
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         try {
             Command tempDeck = new Command(GAME_PLAY_SERVICE_PATH, null,
-                    "setTempDeck", new Object[]{drawnCards});
+                    "setTempDeck", new Object[]{drawnCards.toArray(new DestinationCard[drawnCards.size()])});
             CommandsManager.addCommand(tempDeck, playerId);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void claimDestinationCard(String playerId, String gameId, LinkedList<DestinationCard> cards) {
+    public static void claimDestinationCard(String playerId, String gameId, DestinationCard[] cards) {
         ServerModel sm = ServerModel.getInstance();
 
-        //deserialized destination cards as linkedtreemap
-        LinkedList<DestinationCard> temp = new LinkedList<>();
-        for (int i = 0; i < cards.size(); i++) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
-            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
+        ServerModel.claimDestinationCards(playerId, gameId, cards);
 
-            temp.add(card);
-        }
-
-        sm.claimDestinationCards(playerId, gameId, temp);
-        //add some kind of error checking with the above function?
+        //update database //ServerModel.claimDestinationCards(playerId, gameId, temp);
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "claimDestinationCards",
+                new Object[]{playerId, gameId, cards});
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         //send commands to the other games updating destination cards.
         Command claimCommand = null;
@@ -174,21 +162,15 @@ public class GameService {
         CommandsManager.addCommandAllPlayers(claimCommand, gameId);
     }
 
-    public static void returnDestinationCard(String gameId, LinkedList<DestinationCard> cards) {
-        //deserialized destination cards as linkedtreemap
-        LinkedList<DestinationCard> temp = new LinkedList<>();
-        for (int i = 0; i < cards.size(); i++) {
-            //convert from LinkedTreeMap
-            Gson gson = new Gson();
-            JsonObject obj = gson.toJsonTree(cards.get(i)).getAsJsonObject();
-            DestinationCard card = gson.fromJson(obj, DestinationCard.class);
+    public static void returnDestinationCard(String gameId, DestinationCard[] cards) {
+        ServerModel.getInstance().addDestinationCards(gameId, cards);
 
-            temp.add(card);
-        }
-        ServerModel.getInstance().addDestinationCard(gameId, temp);
+        //update database //ServerModel.addDestinationCards(gameId, temp);
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "addDestinationCards",
+                new Object[]{gameId, cards});
+        DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
-
-//        ServerModel.getInstance().addDestinationCard(gameId, cards);
+//        ServerModel.getInstance().addDestinationCards(gameId, cards);
         Command discardCards = null;
         try {
             discardCards = new Command(GAME_PLAY_SERVICE_PATH, null,
@@ -206,8 +188,7 @@ public class GameService {
         Result result = game.claimRoute(playerId, route, typeChoice);
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "claimRoute", new Object[]{playerId, route, typeChoice});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "claimRoute", new Object[]{gameId, playerId, route, typeChoice});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
         if (result.isSuccess()) {
@@ -226,8 +207,7 @@ public class GameService {
         game.switchTurn();
 
         //update database
-        Command gCommand = new Command(Game.class.getName(), null, "switchTurn", new Object[]{});
-        Command dbCommand = new Command(ServerModel.class.getName(), null, "execOnGame", new Object[]{gameId, gCommand});
+        Command dbCommand = new Command(ServerModel.class.getName(), null, "switchTurn", new Object[]{gameId});
         DatabaseManager.getInstance().addCommand(dbCommand, gameId);
 
 //        new GamePlayService().switchingTurn();
@@ -242,7 +222,7 @@ public class GameService {
         hand.addAll(ServerModel.getInstance().getGameById(gameId).getPlayer(playerId).getTrainCards());
 
         Command gettingHandCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "checkingHand", new Object[]{playerId, hand}
+                "checkingHand", new Object[]{playerId, hand.toArray(new TrainCard[hand.size()])}
         );
         CommandsManager.addCommandAllPlayers(gettingHandCommand, gameId);
     }
@@ -252,7 +232,7 @@ public class GameService {
         deck.addAll(ServerModel.getInstance().getGameById(gameId).getTrainCardsDeck());
 
         Command command = new Command(GAME_PLAY_SERVICE_PATH, null,
-                "checkingTrainCardsDeck", new Object[]{deck}
+                "checkingTrainCardsDeck", new Object[]{deck.toArray(new TrainCard[deck.size()])}
         );
         CommandsManager.addCommandAllPlayers(command, gameId);
     }
@@ -260,6 +240,10 @@ public class GameService {
     public static void endGame(String gameId){
         ServerModel serverModel = ServerModel.getInstance();
         serverModel.endGame(gameId);
+
+        //update database
+        Command dbCommand2 = new Command(ServerModel.class.getName(), null, "endGame", new Object[]{gameId});
+        DatabaseManager.getInstance().addCommand(dbCommand2, gameId);
 
         Command endGameCommand = new Command(GAME_PLAY_SERVICE_PATH, null,
                 "endGameNow", new Object[]{gameId}

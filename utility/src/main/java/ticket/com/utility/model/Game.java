@@ -45,7 +45,7 @@ public class Game extends Observable {
     private PlayerAction newestHistory;
     public static final Integer NUM_CARDS_TRAINCARD_BANK = 5;
 //    private final int INIT_HAND_SIZE = 4; //comment
-    private final int INIT_HAND_SIZE = 15; //comment
+    private final int INIT_HAND_SIZE = 4; //comment
 
     private boolean initializedCorrectly = false;
 
@@ -176,7 +176,7 @@ public class Game extends Observable {
         return isStarted;
     }
 
-    public void setStarted(boolean started) {
+    public void setStarted(Boolean started) {
         isStarted = started;
     }
 
@@ -277,7 +277,11 @@ public class Game extends Observable {
     }
 
     public Boolean isMyTurn(String playerId) {
-        return playerId.equals(turnOrder.get(turnNumber % players.size()));
+        if(turnOrder.isEmpty()) {
+            System.out.println("ERROR: Turn order is empty");
+            return true;
+        }
+        return playerId.equals(turnOrder.get(turnNumber));
     }
 
     private void initTurnOrder() {
@@ -395,6 +399,10 @@ public class Game extends Observable {
     }
 
     private void initHand(Player player) {
+        if(!player.getTrainCards().isEmpty()) {
+            System.out.println("ERROR: tried to init " + player.getUsername() + "'s hand twice");
+            return;
+        }
         for(int i = 0; i < INIT_HAND_SIZE; i++) {
             drawTrainCard(player.getId());
         }
@@ -425,6 +433,7 @@ public class Game extends Observable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        System.out.println(players.get(playerId).getUsername() + " claimed " + cards.size() + " destination cards");
         addToHistory(new PlayerAction(players.get(playerId).getUsername(), "drew " + String.valueOf(cards.size()) + " destination cards"));
     }
 
@@ -440,6 +449,7 @@ public class Game extends Observable {
         for(DestinationCard card : cards){
             addDestinationCard(card);
         }
+        System.out.println("Player returned " + cards.size() + " destination cards");
     }
 
     private void addDestinationCard(DestinationCard card) {
